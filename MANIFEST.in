@@ -1,0 +1,15 @@
+# core docs
+include README.md
+include CHANGES.md
+include LICENSE
+include docs/Makefile
+
+# main docs
+graft docs/source
+
+# package data
+graft resources
+
+# litter
+global-exclude *.py[cod]
+global-exclude .DS_Store

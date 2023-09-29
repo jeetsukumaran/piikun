@@ -1,0 +1,9 @@
+# [Requirements syntax](https://pip.pypa.io/en/stable/cli/pip_install/):
+# python-package-name==3.14.2
+numpy
+pandas
+seaborn
+matplotlib
+scipy
+yakherd @ git+https://github.com/jeetsukumaran/yakherd@main
+# dendropy @ git+https://github.com/jeetsukumaran/dendropy@development-main
