@@ -145,12 +145,12 @@ def main(args=None):
         output_configuration=config_d,
     )
 
-    # plotter = plot.Plotter(
-    #     runtime_context=runtime_context,
-    #     config_d=config_d,
-    # )
-    # df = utility.read_files_to_dataframe(filepaths=args.src_path)
-    # plotter.plot(df=df)
+    df = utility.read_files_to_dataframe(filepaths=args.src_path)
+    plotter = plot.Plotter(
+        runtime_context=runtime_context,
+        config_d=config_d,
+    )
+    plotter.load_data(df)
 
 
 if __name__ == "__main__":
