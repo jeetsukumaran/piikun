@@ -199,9 +199,17 @@ def main(args=None):
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
     fig = visualize_distances_on_regionalized_support_space_plotly(
         df=df,
+        # background_palette="Plasma",
+        # scatterplot_palette="Plasma",
         background_palette="Turbo",
         scatterplot_palette="Turbo",
+        # background_palette="Electric",
+        # scatterplot_palette="Electric",
         )
+    visualization_name = "distance-vs-support-quanitles"
+    format = "html"
+    output_filepath = f"{pathlib.Path(args.src_path[0]).stem}_{visualization_name}.{format}"
+    fig.write_html(output_filepath)
 
 if __name__ == "__main__":
     main()
