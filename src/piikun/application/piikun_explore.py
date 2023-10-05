@@ -93,7 +93,8 @@ def visualize_distances_on_regionalized_support_space_plotly(
             subset = bgdf[
                 ptn1_condition(bgdf["ptn1_support"]) & ptn2_condition(bgdf["ptn2_support"])
             ]
-            mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
+            # mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
+            mean_values[i, j] = subset["vi_distance"].mean()
 
     # Create the plotly plot
     fig = go.Figure()
