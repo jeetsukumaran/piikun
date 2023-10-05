@@ -105,7 +105,8 @@ def visualize_distances_on_regionalized_support_space_plotly(
             x=bounds,
             y=bounds,
             colorscale=background_palette,
-            colorbar=dict(title="vi_distance")
+            colorbar=dict(title="vi_distance"),
+            opacity=0.8,
         )
     )
 
