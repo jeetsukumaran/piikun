@@ -203,10 +203,12 @@ def main(args=None):
         df=df,
         # background_palette="Plasma",
         # scatterplot_palette="Plasma",
-        background_palette="Turbo",
-        scatterplot_palette="Turbo",
+        # background_palette="Turbo",
+        # scatterplot_palette="Turbo",
         # background_palette="Electric",
-        # scatterplot_palette="Electric",
+        # scatterplot_palette="electric",
+         background_palette="Portland",
+        scatterplot_palette="Portland",
         )
     visualization_name = "distance-vs-support-quantiles"
     format = "html"
