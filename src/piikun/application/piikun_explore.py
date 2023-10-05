@@ -67,47 +67,47 @@ def main(args=None):
         nargs="+",
         help="Path to data source file.",
     )
-    plot_options = parent_parser.add_argument_group("Plot Options")
-    plot_options.add_argument(
-            "--num-support-vs-distance-hue-bins",
-            dest="num_support_vs_distance_bins",
-            action="store",
-            type=int,
-            default=25,
-            # help="Number of (probability) bins; if '0' or 'None', number of bins set to number of partitions [default=%(default)s].")
-            help="Number of bins for distance color gradient.")
-    plot_options.add_argument(
-            "--add-jitter",
-            dest="is_jitter_support",
-            action=argparse.BooleanOptionalAction,
-            default=True,
-            help="Add / do not add small noise to separate identical support value when plotting.",
-        )
-    output_options = parent_parser.add_argument_group("Output Options")
-    output_options.add_argument(
-        "-o",
-        "--output-title",
-        action="store",
-        default="piikun",
-        help="Prefix for output filenames [default='%(default)s'].",
-    )
-    output_options.add_argument(
-        "-O",
-        "--output-directory",
-        action="store",
-        default=os.curdir,
-        help="Directory for output files [default='%(default)s'].",
-    )
-    output_options.add_argument(
-            "-F", "--output-format",
-            action="append",
-            default=None,
-            help="Output format [default='jpg'].")
-    output_options.add_argument(
-            "--dpi",
-            action="append",
-            default=300,
-            help="DPI [default=%(default)s].")
+    # plot_options = parent_parser.add_argument_group("Plot Options")
+    # plot_options.add_argument(
+    #         "--num-support-vs-distance-hue-bins",
+    #         dest="num_support_vs_distance_bins",
+    #         action="store",
+    #         type=int,
+    #         default=25,
+    #         # help="Number of (probability) bins; if '0' or 'None', number of bins set to number of partitions [default=%(default)s].")
+    #         help="Number of bins for distance color gradient.")
+    # plot_options.add_argument(
+    #         "--add-jitter",
+    #         dest="is_jitter_support",
+    #         action=argparse.BooleanOptionalAction,
+    #         default=True,
+    #         help="Add / do not add small noise to separate identical support value when plotting.",
+    #     )
+    # output_options = parent_parser.add_argument_group("Output Options")
+    # output_options.add_argument(
+    #     "-o",
+    #     "--output-title",
+    #     action="store",
+    #     default="piikun",
+    #     help="Prefix for output filenames [default='%(default)s'].",
+    # )
+    # output_options.add_argument(
+    #     "-O",
+    #     "--output-directory",
+    #     action="store",
+    #     default=os.curdir,
+    #     help="Directory for output files [default='%(default)s'].",
+    # )
+    # output_options.add_argument(
+    #         "-F", "--output-format",
+    #         action="append",
+    #         default=None,
+    #         help="Output format [default='jpg'].")
+    # output_options.add_argument(
+    #         "--dpi",
+    #         action="append",
+    #         default=300,
+    #         help="DPI [default=%(default)s].")
     # cluster_plot_options = parent_parser.add_argument_group("Cluster Plot Options")
     # cluster_plot_options.add_argument(
     #     "--cluster-rows",
@@ -124,25 +124,30 @@ def main(args=None):
     #     help="Reorder / do not reorder partition colums to show clusters clearly",
     # )
 
-    logger_configuration_parser = yakherd.LoggerConfigurationParser(name="piikun")
-    logger_configuration_parser.attach(parent_parser)
-    logger_configuration_parser.console_logging_parser_group.add_argument(
-        "--progress-report-frequency",
-        type=int,
-        action="store",
-        help="Frequency of progress reporting.",
-    )
+    # logger_configuration_parser = yakherd.LoggerConfigurationParser(name="piikun")
+    # logger_configuration_parser.attach(parent_parser)
+    # logger_configuration_parser.console_logging_parser_group.add_argument(
+    #     "--progress-report-frequency",
+    #     type=int,
+    #     action="store",
+    #     help="Frequency of progress reporting.",
+    # )
     args = parent_parser.parse_args(args)
-    if not args.output_format:
-        args.output_format = ["jpg"]
+    # parser.add_argument(
+    #         "visualization_name",
+    #         metavar="<VISUALIZATION>",
+    #         action="store",
+    #         type=str,
+    #         help="Help for argument [default=%(default)s].")
+    # if not args.output_format:
+    #     args.output_format = ["jpg"]
     config_d = dict(vars(args))
-    logger = logger_configuration_parser.get_logger(args_d=config_d)
     runtime_context = utility.RuntimeContext(
-        logger=logger,
-        random_seed=None,
-        output_directory=args.output_directory,
-        output_title=args.output_title,
-        output_configuration=config_d,
+        logger=None,
+        # random_seed=None,
+        # output_directory=args.output_directory,
+        # output_title=args.output_title,
+        # output_configuration=config_d,
     )
 
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
@@ -150,7 +155,9 @@ def main(args=None):
         runtime_context=runtime_context,
         config_d=config_d,
     )
-    plotter.load_data(df)
+    # plotter.load_data(df)
+    rv = plot.visualize_distances_on_regionalized_support_space(df=df)
+    plt.show()
 
 
 if __name__ == "__main__":

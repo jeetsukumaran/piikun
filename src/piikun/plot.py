@@ -117,13 +117,26 @@ def extract_profile(df, key_col, prop_cols):
 
 def visualize_distances_on_regionalized_support_space(
     df,
-    support_quantiles,
-    distance_quantiles,
-    gradient_calibration,
+    support_quantiles=None,
+    distance_quantiles=None,
+    gradient_calibration="shared",
     background_palette="coolwarm",
     scatterplot_palette="coolwarm",
     is_log_scale=True,
 ):
+    if not support_quantiles:
+        support_quantiles = [0.25, 0.5, 0.75]
+    if not distance_quantiles:
+        distance_quantiles = [
+                    0.1,
+                    0.2,
+                    0.3,
+                    0.4,
+                    0.5,
+                    0.6,
+                    0.7,
+                    0.8,
+                ]
     df = df.copy()
     # df = df[ df["vi_distance"] > 1e-8 ]
     if is_log_scale:
@@ -353,22 +366,22 @@ class Plotter(utility.RuntimeClient):
             plot_fn=visualize_distances_on_regionalized_support_space,
             kwargs={
                 "df": self._data,
-                "support_quantiles": [0.25, 0.5, 0.75],
-                "distance_quantiles": [
-                    # 0.01,
-                    # 0.05,
-                    0.1,
-                    0.2,
-                    0.3,
-                    0.4,
-                    0.5,
-                    0.6,
-                    0.7,
-                    0.8,
-                ],
-                "gradient_calibration": "shared",
-                "background_palette":  "coolwarm",
-                "scatterplot_palette": "coolwarm",
+                # "support_quantiles": [0.25, 0.5, 0.75],
+                # "distance_quantiles": [
+                #     # 0.01,
+                #     # 0.05,
+                #     0.1,
+                #     0.2,
+                #     0.3,
+                #     0.4,
+                #     0.5,
+                #     0.6,
+                #     0.7,
+                #     0.8,
+                # ],
+                # "gradient_calibration": "shared",
+                # "background_palette":  "coolwarm",
+                # "scatterplot_palette": "coolwarm",
             },
             name_parts=[f"distance-vs-support-quantiles"],
         )

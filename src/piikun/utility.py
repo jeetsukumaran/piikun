@@ -376,6 +376,28 @@ class RuntimeContext:
         rng._random_seed = random_seed
         return rng
 
+
+    @property
+    def logger(self):
+        if (
+            not hasattr(self, "_logger")
+            or self._logger is None
+        ):
+            if self._logger is None:
+                self._logger = yakherd.Logger(
+                    name="piikun",
+                    max_allowed_message_noise_level=0,
+                    is_enable_console=True,
+                    console_logging_level="ERROR",
+                    is_colorize=True,
+                    is_enable_log_file=False,
+                    logfile_path=None,
+                    )
+        return self._logger
+    @logger.setter
+    def logger(self, value):
+        self._logger = value
+
     def __init__(
         self,
         random_seed=None,
@@ -385,16 +407,7 @@ class RuntimeContext:
         output_configuration=None,
     ):
         self.logger = logger
-        if self.logger is None:
-            from yakherd import Logger
-            self.logger = Logger(
-                name="piikun",
-                max_allowed_message_noise_level=0,
-                is_enable_console=True,
-                is_colorize=True,
-                is_enable_log_file=False,
-                logfile_path=None,
-                )
+            # from yakherd import Logger
         self.logger.log_info(
             f"Initializing system runtime context at: {datetime.datetime.now()}"
         )
