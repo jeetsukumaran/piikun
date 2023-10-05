@@ -52,10 +52,52 @@ from scipy.stats import binned_statistic_2d
 from matplotlib import cm
 from matplotlib.colors import LogNorm, BoundaryNorm, ListedColormap
 
+import plotly.express as px
+
 import yakherd
 from piikun import partitionmodel
 from piikun import utility
 from piikun import plot
+
+def visualize_distances_on_regionalized_support_space_plotly_default_colors(
+    df,
+    support_quantiles=None,
+    distance_quantiles=None,
+    gradient_calibration="shared",
+    is_log_scale=True,
+):
+    if not support_quantiles:
+        support_quantiles = [0.25, 0.5, 0.75]
+    if not distance_quantiles:
+        distance_quantiles = [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+        ]
+    df = df.copy()
+    if is_log_scale:
+        df["ptn1_support"] = np.log2(df["ptn1_support"])
+        df["ptn2_support"] = np.log2(df["ptn2_support"])
+
+    fig = px.scatter(
+        df,
+        x='ptn1_support',
+        y='ptn2_support',
+        color='vi_distance',
+        labels={"ptn1_support": "log(ptn1_support)", "ptn2_support": "log(ptn2_support)"},
+        hover_data=['vi_distance'],
+        title="Scatterplot with Hover Annotations"
+    )
+
+    fig.update_traces(marker=dict(size=5), selector=dict(mode='markers'))
+
+    return fig
+
 
 def main(args=None):
     parent_parser = argparse.ArgumentParser()
@@ -151,13 +193,17 @@ def main(args=None):
     )
 
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
-    plotter = plot.Plotter(
-        runtime_context=runtime_context,
-        config_d=config_d,
-    )
+
+    # plotter = plot.Plotter(
+    #     runtime_context=runtime_context,
+    #     config_d=config_d,
+    # )
     # plotter.load_data(df)
-    rv = plot.visualize_distances_on_regionalized_support_space(df=df)
-    plt.show()
+
+    # rv = plot.visualize_distances_on_regionalized_support_space(df=df)
+    # plt.show()
+
+    visualize_distances_on_regionalized_support_space_plotly_default_colors(df).show()
 
 
 if __name__ == "__main__":
