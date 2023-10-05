@@ -109,9 +109,13 @@ def visualize_distances_on_regionalized_support_space_plotly(
         )
     )
 
-    # Add scatter plot for the data points
-    df['hovertext'] = df.apply(
-        lambda row: f'ptn1_support: {row.ptn1_support}<br>ptn2_support: {row.ptn2_support}<br>vi_distance: {row.vi_distance}',
+    # def scatter_annotation_fn(row):
+    #     content = ""
+    #     for col in df.columns():
+    #         content.
+
+    df['scatter_hovertext'] = df.apply(
+        lambda row: f'ptn1: {row.ptn1}<br>ptn2: {row.ptn2}<br>ptn1_support: {row.ptn1_support}<br>ptn2_support: {row.ptn2_support}<br>vi_distance: {row.vi_distance}',
         axis=1
     )
 
@@ -125,7 +129,7 @@ def visualize_distances_on_regionalized_support_space_plotly(
                 colorscale=scatterplot_palette,
                 size=6
             ),
-            text=df['hovertext'],
+            text=df['scatter_hovertext'],
             hoverinfo='text'
         )
     )
@@ -138,6 +142,7 @@ def visualize_distances_on_regionalized_support_space_plotly(
     )
 
     fig.show()
+    return fig
 
 
 def visualize_scatter(
@@ -192,7 +197,11 @@ def main(args=None):
     )
     args = parent_parser.parse_args(args)
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
-    visualize_distances_on_regionalized_support_space_plotly(df)
+    fig = visualize_distances_on_regionalized_support_space_plotly(
+        df=df,
+        background_palette="turbid",
+        scatterplot_palette="turbid",
+        )
 
 if __name__ == "__main__":
     main()
