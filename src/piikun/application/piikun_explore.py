@@ -208,7 +208,7 @@ def main(args=None):
         # background_palette="Electric",
         # scatterplot_palette="Electric",
         )
-    visualization_name = "distance-vs-support-quanitles"
+    visualization_name = "distance-vs-support-quantiles"
     format = "html"
     output_filepath = f"{pathlib.Path(args.src_path[0]).stem}_{visualization_name}.{format}"
     fig.write_html(output_filepath)
