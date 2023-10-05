@@ -38,28 +38,109 @@ import json
 import math
 import functools
 
+from piikun import utility
+
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.spatial.distance import squareform
-from scipy.cluster import hierarchy
-from matplotlib.colors import LogNorm, Normalize
-from scipy.interpolate import griddata
-from scipy.spatial import ConvexHull, Delaunay
-from matplotlib.path import Path
-from scipy.stats import binned_statistic_2d
-from matplotlib import cm
-from matplotlib.colors import LogNorm, BoundaryNorm, ListedColormap
-
 import plotly.express as px
 
-import yakherd
-from piikun import partitionmodel
-from piikun import utility
-from piikun import plot
 
-def visualize_distances_on_regionalized_support_space_plotly_default_colors(
+import plotly.graph_objects as go
+
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+
+def visualize_distances_on_regionalized_support_space_plotly(
+    df,
+    support_quantiles=None,
+    distance_quantiles=None,
+    gradient_calibration="shared",
+    background_palette="Viridis",
+    scatterplot_palette="Viridis",
+    is_log_scale=True,
+):
+    if not support_quantiles:
+        support_quantiles = [0.25, 0.5, 0.75]
+    if not distance_quantiles:
+        distance_quantiles = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+
+    df = df.copy()
+    if is_log_scale:
+        df["ptn1_support"] = np.log2(df["ptn1_support"])
+        df["ptn2_support"] = np.log2(df["ptn2_support"])
+
+    padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
+    internal_thresholds = df["ptn1_support"].quantile(support_quantiles).tolist()
+    thresholds = [df["ptn1_support"].min() - padding]
+    thresholds.extend(internal_thresholds)
+    thresholds.append(df["ptn1_support"].max() + padding)
+    bounds = np.array(thresholds)
+
+    range_fns = []
+    for idx, threshold in enumerate(thresholds[:-1]):
+        next_threshold = thresholds[idx + 1]
+        range_fns.append(
+            lambda x, t1=threshold, t2=next_threshold: (x >= t1) & (x < t2)
+        )
+
+    n_ranges = len(range_fns)
+    mean_values = np.zeros((n_ranges, n_ranges))
+
+    bgdf = df[df["vi_distance"] > 1e-8]
+    for i, ptn1_condition in enumerate(range_fns):
+        for j, ptn2_condition in enumerate(range_fns):
+            subset = bgdf[
+                ptn1_condition(bgdf["ptn1_support"]) & ptn2_condition(bgdf["ptn2_support"])
+            ]
+            mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
+
+    # Create the plotly plot
+    fig = go.Figure()
+
+    # Add a heatmap for the background
+    fig.add_trace(
+        go.Heatmap(
+            z=mean_values,
+            x=bounds,
+            y=bounds,
+            colorscale=background_palette,
+            colorbar=dict(title="vi_distance")
+        )
+    )
+
+    # Add scatter plot for the data points
+    df['hovertext'] = df.apply(
+        lambda row: f'ptn1_support: {row.ptn1_support}<br>ptn2_support: {row.ptn2_support}<br>vi_distance: {row.vi_distance}',
+        axis=1
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=df["ptn1_support"],
+            y=df["ptn2_support"],
+            mode="markers",
+            marker=dict(
+                color=df["vi_distance"],
+                colorscale=scatterplot_palette,
+                size=6
+            ),
+            text=df['hovertext'],
+            hoverinfo='text'
+        )
+    )
+
+    # Set axis labels and title
+    fig.update_layout(
+        xaxis_title="log(ptn1_support)",
+        yaxis_title="log(ptn2_support)",
+        title="Visualize Distances on Regionalized Support Space"
+    )
+
+    fig.show()
+
+
+def visualize_scatter(
     df,
     support_quantiles=None,
     distance_quantiles=None,
@@ -109,102 +190,9 @@ def main(args=None):
         nargs="+",
         help="Path to data source file.",
     )
-    # plot_options = parent_parser.add_argument_group("Plot Options")
-    # plot_options.add_argument(
-    #         "--num-support-vs-distance-hue-bins",
-    #         dest="num_support_vs_distance_bins",
-    #         action="store",
-    #         type=int,
-    #         default=25,
-    #         # help="Number of (probability) bins; if '0' or 'None', number of bins set to number of partitions [default=%(default)s].")
-    #         help="Number of bins for distance color gradient.")
-    # plot_options.add_argument(
-    #         "--add-jitter",
-    #         dest="is_jitter_support",
-    #         action=argparse.BooleanOptionalAction,
-    #         default=True,
-    #         help="Add / do not add small noise to separate identical support value when plotting.",
-    #     )
-    # output_options = parent_parser.add_argument_group("Output Options")
-    # output_options.add_argument(
-    #     "-o",
-    #     "--output-title",
-    #     action="store",
-    #     default="piikun",
-    #     help="Prefix for output filenames [default='%(default)s'].",
-    # )
-    # output_options.add_argument(
-    #     "-O",
-    #     "--output-directory",
-    #     action="store",
-    #     default=os.curdir,
-    #     help="Directory for output files [default='%(default)s'].",
-    # )
-    # output_options.add_argument(
-    #         "-F", "--output-format",
-    #         action="append",
-    #         default=None,
-    #         help="Output format [default='jpg'].")
-    # output_options.add_argument(
-    #         "--dpi",
-    #         action="append",
-    #         default=300,
-    #         help="DPI [default=%(default)s].")
-    # cluster_plot_options = parent_parser.add_argument_group("Cluster Plot Options")
-    # cluster_plot_options.add_argument(
-    #     "--cluster-rows",
-    #     action=argparse.BooleanOptionalAction,
-    #     dest="is_cluster_rows",
-    #     default=False,
-    #     help="Reorder / do not reorder partition rows to show clusters clearly",
-    # )
-    # cluster_plot_options.add_argument(
-    #     "--cluster-cols",
-    #     action=argparse.BooleanOptionalAction,
-    #     dest="is_cluster_cols",
-    #     default=False,
-    #     help="Reorder / do not reorder partition colums to show clusters clearly",
-    # )
-
-    # logger_configuration_parser = yakherd.LoggerConfigurationParser(name="piikun")
-    # logger_configuration_parser.attach(parent_parser)
-    # logger_configuration_parser.console_logging_parser_group.add_argument(
-    #     "--progress-report-frequency",
-    #     type=int,
-    #     action="store",
-    #     help="Frequency of progress reporting.",
-    # )
     args = parent_parser.parse_args(args)
-    # parser.add_argument(
-    #         "visualization_name",
-    #         metavar="<VISUALIZATION>",
-    #         action="store",
-    #         type=str,
-    #         help="Help for argument [default=%(default)s].")
-    # if not args.output_format:
-    #     args.output_format = ["jpg"]
-    config_d = dict(vars(args))
-    runtime_context = utility.RuntimeContext(
-        logger=None,
-        # random_seed=None,
-        # output_directory=args.output_directory,
-        # output_title=args.output_title,
-        # output_configuration=config_d,
-    )
-
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
-
-    # plotter = plot.Plotter(
-    #     runtime_context=runtime_context,
-    #     config_d=config_d,
-    # )
-    # plotter.load_data(df)
-
-    # rv = plot.visualize_distances_on_regionalized_support_space(df=df)
-    # plt.show()
-
-    visualize_distances_on_regionalized_support_space_plotly_default_colors(df).show()
-
+    visualize_distances_on_regionalized_support_space_plotly(df)
 
 if __name__ == "__main__":
     main()
