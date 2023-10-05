@@ -199,8 +199,8 @@ def main(args=None):
     df = utility.read_files_to_dataframe(filepaths=args.src_path)
     fig = visualize_distances_on_regionalized_support_space_plotly(
         df=df,
-        background_palette="turbid",
-        scatterplot_palette="turbid",
+        background_palette="Turbo",
+        scatterplot_palette="Turbo",
         )
 
 if __name__ == "__main__":
