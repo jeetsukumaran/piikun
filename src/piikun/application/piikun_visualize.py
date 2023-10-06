@@ -57,13 +57,19 @@ def visualize_support_cdf(
     palette="Geyser",
 ):
     x = profile_df["label"].astype(str)
-    y = profile_df["support"]
-    y = profile_df["support"].cumsum()
-    fig = go.Figure(data=go.Scatter(
+    y1 = profile_df["support"]
+    y2 = profile_df["support"].cumsum()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
         x=x,
-        y=y,
+        y=y1,
         mode='lines+markers'
     ))
+    # fig.add_trace(go.Scatter(
+    #     x=x,
+    #     y=y2,
+    #     mode='lines+markers'
+    # ))
     fig.update_layout(title="Cumulative Sum of Probabilities",
                     xaxis_title="Labels",
                     yaxis_title="Cumulative Probability")
