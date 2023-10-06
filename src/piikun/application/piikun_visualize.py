@@ -58,6 +58,7 @@ def visualize_support_cdf(
 ):
     x = profile_df["label"].astype(str)
     y = profile_df["support"]
+    y = profile_df["support"].cumsum()
     fig = go.Figure(data=go.Scatter(
         x=x,
         y=y,
