@@ -54,25 +54,33 @@ import plotly.graph_objects as go
 def visualize_support_cdf(
     distance_df,
     profile_df,
-    palette="Geyser",
+    palette="Portland",
 ):
     x = profile_df["label"].astype(str)
     y1 = profile_df["support"]
     y2 = profile_df["support"].cumsum()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(
+    fig.add_trace(go.Bar(
         x=x,
         y=y1,
-        mode='lines+markers'
+        yaxis="y1",
+        marker=dict(color=y1, colorscale=palette + "_r")
+    ))
+    fig.add_trace(go.Scatter(
+        x=x,
+        y=y2,
+        mode='lines+markers',
+        yaxis="y2",
     ))
     # fig.add_trace(go.Scatter(
     #     x=x,
     #     y=y2,
     #     mode='lines+markers'
     # ))
-    fig.update_layout(title="Cumulative Sum of Probabilities",
-                    xaxis_title="Labels",
-                    yaxis_title="Cumulative Probability")
+    fig.update_layout(title="Support and Cumulative Support",
+                  xaxis_title="Labels",
+                  yaxis_title="Support",
+                  yaxis2=dict(title="Cumulative Support", overlaying="y", side="right"))
     return fig
 
 
@@ -302,8 +310,7 @@ def main(args=None):
         "-v", "--visualize",
         metavar="<NAME>",
         dest="selected_visualizations",
-        action="store",
-        default="all",
+        action="append",
         help=(f"One or more of the following visualization types: {visualization_types_str}. Default is 'all'."),
     )
     plot_options = parent_parser.add_argument_group("Plot Options")
@@ -375,7 +382,7 @@ def main(args=None):
         "palette": args.palette,
     }
 
-    for visualization_type_key in visualization_types:
+    for visualization_type_key in visualizations:
         visualization_name = visualization_type_key
         visualization_d = visualization_types[visualization_type_key]
         _log_info(f"Visualization: {visualization_name}")
