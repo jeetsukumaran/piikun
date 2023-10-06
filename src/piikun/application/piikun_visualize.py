@@ -51,17 +51,31 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
+def visualize_support_cdf(
+    distance_df,
+    profile_df,
+    palette="Geyser",
+):
+    x = profile_df["label"],
+    y = profile_df["support"].cumsum()
+    fig = go.Figure(data=go.Scatter(x=x, y=y, mode='lines+markers'))
+    fig.update_layout(title="Cumulative Sum of Probabilities",
+                    xaxis_title="Labels",
+                    yaxis_title="Cumulative Probability")
+    return fig
+
 
 def visualize_distances_on_regionalized_support_space(
     distance_df,
     profile_df,
+    palette="Geyser",
     support_quantiles=None,
     distance_quantiles=None,
     gradient_calibration="shared",
-    background_palette="Portland",
-    scatterplot_palette="Portland",
     is_log_scale=True,
 ):
+    background_palette = palette
+    scatterplot_palette = palette
     if not support_quantiles:
         support_quantiles = [0.25, 0.5, 0.75]
     if not distance_quantiles:
@@ -256,7 +270,10 @@ def main(args=None):
         # }
         "distance-vs-support-quantiles": {
             "plot_fn": visualize_distances_on_regionalized_support_space,
-        }
+        },
+        "cumulative-support": {
+            "plot_fn": visualize_support_cdf,
+        },
     }
     visualization_types_str = ", ".join(f"'{vkey}'" for vkey in visualization_types)
 
@@ -344,8 +361,7 @@ def main(args=None):
     common_plot_kwargs = {
         "profile_df": profile_df,
         "distance_df": distance_df,
-        "background_palette": args.palette,
-        "scatterplot_palette": args.palette,
+        "palette": args.palette,
     }
 
     for visualization_type_key in visualization_types:
