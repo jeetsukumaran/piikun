@@ -149,8 +149,8 @@ def visualize_distances_on_regionalized_support_space(
 
 def visualize_scatter(
     df,
-    support_quantiles=None,
-    distance_quantiles=None,
+    x_key,
+    y_key,
     gradient_calibration="shared",
     is_log_scale=True,
 ):
@@ -244,14 +244,24 @@ class PlotGenerator:
 
 
 def main(args=None):
+    visualization_types = [
+        "distance-vs-support-quantiles",
+    ]
     parent_parser = argparse.ArgumentParser()
-    input_options = parent_parser.add_argument_group("Input Options")
-    input_options.add_argument(
+    data_source_options = parent_parser.add_argument_group("Data Source Options")
+    data_source_options.add_argument(
         "src_path",
-        action="store",
-        metavar="FILE",
+        action="append",
+        metavar="DATAFILE",
         nargs="+",
-        help="Path to data source file.",
+        help="Path to data source file(s).",
+    )
+    visualization_options = parent_parser.add_argument_group("Visualization Types")
+    visualization_options.add_argument(
+        "-v", "--visualize",
+        action="store",
+        default="all",
+        help=(f"One or more of the following isualization types: {visualization_types}. Default is 'all'."),
     )
     plot_options = parent_parser.add_argument_group("Plot Options")
     plot_options.add_argument(
@@ -266,7 +276,7 @@ def main(args=None):
         "--output-title",
         action="store",
         default=None,
-        help="Custom prefix for output filenames (defaults to input filepath stem).",
+        help="Custom prefix for output filenames (defaults to first source filepath stem).",
     )
     output_options.add_argument(
         "-O",
@@ -279,6 +289,7 @@ def main(args=None):
         "-F",
         "--output-format",
         action="append",
+        nargs="+",
         default=None,
         help="Output format (multiple formats may be specified; defaults to 'html' and 'jpg').",
     )
