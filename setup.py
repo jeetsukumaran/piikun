@@ -38,7 +38,7 @@ setup(
             # "name-of-executable = module.with:function_to_execute"
             "piikun-analyze = piikun.application.piikun_analyze:main",
             "piikun-plot-metrics = piikun.application.piikun_plot_metrics:main",
-            "piikun-explore = piikun.application.piikun_explore:main",
+            "piikun-visualize = piikun.application.piikun_visualize:main",
             "piikun-enumerate = piikun.application.piikun_enumerate:main",
             "piikun-mirror-distances = piikun.application.piikun_mirror_distances:main",
             "piikun-validate-metric = piikun.application.piikun_validate_metric:main",

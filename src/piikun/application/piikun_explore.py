@@ -194,17 +194,16 @@ class PlotGenerator:
 
     def __init__(
         self,
-        is_show_plot=False,
-        is_save_plot=True,
         output_directory=None,
         output_name_stem=None,
         output_formats=None,
+        is_show_plot=False,
+        is_save_plot=True,
     ):
-        self.is_show_plot = is_show_plot
-        self.is_save_plot = is_save_plot
-        if not output_directory:
-            output_directory = os.curdir
-        self.output_directory = pathlib.Path(output_directory)
+        if output_directory:
+            self.output_directory = pathlib.Path(output_directory)
+        else:
+            self.output_directory = pathlib.Path.cwd()
         if output_name_stem:
             self.output_name_stem = output_name_stem
         else:
@@ -214,6 +213,8 @@ class PlotGenerator:
             self.output_formats = ["html", "jpg"]
         else:
             self.output_formats = output_formats
+        self.is_show_plot = is_show_plot
+        self.is_save_plot = is_save_plot
 
 
     def generate_plot(
