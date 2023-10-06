@@ -301,7 +301,7 @@ def main(args=None):
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
         output_directory = args.output_directory,
-        output_name_stem = args.src_path[0],
+        output_name_stem = pathlib.Path(args.src_path[0]).stem,
         output_formats = args.output_format,
     )
 
