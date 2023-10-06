@@ -189,6 +189,10 @@ def visualize_scatter(
 
     return fig
 
+def _log_info(*args, **kwargs):
+    sys.stderr.write("[piikun-visualize] ")
+    sys.stderr.write(*args, **kwargs)
+    sys.stderr.write("\n")
 
 class PlotGenerator:
 
@@ -235,6 +239,7 @@ class PlotGenerator:
             else:
                 ext = f".{format_type}"
             output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
+            _log_info(f"- Saving to: '{output_filepath}'")
             if format_type == "html":
                 fig.write_html(output_filepath)
             else:
@@ -327,6 +332,7 @@ def main(args=None):
         "scatterplot_palette": args.palette,
     }
     for visualization_name, visualization_d in visualization_types.items():
+        _log_info(f"Visualization: {visualization_name}")
         plot_kwargs = dict(common_plot_kwargs)
         if "plot_kwargs" in visualization_d:
             plot_kwargs.update(visualization_d["plot_kwargs"])
