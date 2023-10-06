@@ -53,7 +53,8 @@ import plotly.graph_objects as go
 
 
 def visualize_distances_on_regionalized_support_space(
-    df,
+    distance_df,
+    profile_df,
     support_quantiles=None,
     distance_quantiles=None,
     gradient_calibration="shared",
@@ -66,16 +67,16 @@ def visualize_distances_on_regionalized_support_space(
     if not distance_quantiles:
         distance_quantiles = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
-    df = df.copy()
+    distance_df = distance_df.copy()
     if is_log_scale:
-        df["ptn1_support"] = np.log2(df["ptn1_support"])
-        df["ptn2_support"] = np.log2(df["ptn2_support"])
+        distance_df["ptn1_support"] = np.log2(distance_df["ptn1_support"])
+        distance_df["ptn2_support"] = np.log2(distance_df["ptn2_support"])
 
-    padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
-    internal_thresholds = df["ptn1_support"].quantile(support_quantiles).tolist()
-    thresholds = [df["ptn1_support"].min() - padding]
+    padding = (distance_df["ptn1_support"].max() - distance_df["ptn1_support"].min()) * 0.05
+    internal_thresholds = distance_df["ptn1_support"].quantile(support_quantiles).tolist()
+    thresholds = [distance_df["ptn1_support"].min() - padding]
     thresholds.extend(internal_thresholds)
-    thresholds.append(df["ptn1_support"].max() + padding)
+    thresholds.append(distance_df["ptn1_support"].max() + padding)
     bounds = np.array(thresholds)
 
     range_fns = []
@@ -88,7 +89,7 @@ def visualize_distances_on_regionalized_support_space(
     n_ranges = len(range_fns)
     mean_values = np.zeros((n_ranges, n_ranges))
 
-    bgdf = df[df["vi_distance"] > 1e-8]
+    bgdf = distance_df[distance_df["vi_distance"] > 1e-8]
     for i, ptn1_condition in enumerate(range_fns):
         for j, ptn2_condition in enumerate(range_fns):
             subset = bgdf[
@@ -115,24 +116,24 @@ def visualize_distances_on_regionalized_support_space(
 
     # def scatter_annotation_fn(row):
     #     content = ""
-    #     for col in df.columns():
+    #     for col in distance_df.columns():
     #         content.
 
-    df["scatter_hovertext"] = df.apply(
+    distance_df["scatter_hovertext"] = distance_df.apply(
         lambda row: f"ptn1: {row.ptn1}<br>ptn2: {row.ptn2}<br>ptn1_support: {row.ptn1_support}<br>ptn2_support: {row.ptn2_support}<br>vi_distance: {row.vi_distance}",
         axis=1,
     )
 
-    # hover_data = list(df.columns)
+    # hover_data = list(distance_df.columns)
     fig.add_trace(
         go.Scatter(
-            x=df["ptn1_support"],
-            y=df["ptn2_support"],
+            x=distance_df["ptn1_support"],
+            y=distance_df["ptn2_support"],
             mode="markers",
             marker=dict(
-                color=df["vi_distance"], colorscale=scatterplot_palette, size=6
+                color=distance_df["vi_distance"], colorscale=scatterplot_palette, size=6
             ),
-            text=df["scatter_hovertext"],
+            text=distance_df["scatter_hovertext"],
             hoverinfo="text",
         )
     )
@@ -323,7 +324,7 @@ def main(args=None):
     )
     args = parent_parser.parse_args(args)
     src_paths = [i for sublist in args.src_path for i in sublist]
-    df = utility.read_files_to_dataframe(filepaths=src_paths)
+    distance_df = utility.read_files_to_dataframe(filepaths=src_paths)
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
@@ -335,8 +336,14 @@ def main(args=None):
         visualizations = list(args.selected_visualizations)
     else:
         visualizations = list(visualization_types)
+    profile_df = utility.extract_profile(
+        df=distance_df,
+        key_col="ptn1",
+        prop_col_filter_fn=lambda x: x.startswith("ptn1"),
+    )
     common_plot_kwargs = {
-        "df": df,
+        "profile_df": profile_df,
+        "distance_df": distance_df,
         "background_palette": args.palette,
         "scatterplot_palette": args.palette,
     }

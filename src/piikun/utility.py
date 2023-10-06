@@ -13,7 +13,33 @@ import pandas as pd
 import numpy as np
 from yakherd import container
 import yakherd
+
 import csv
+
+def extract_profile(df, key_col, prop_col_filter_fn):
+    prop_cols = [
+            col for col in df.columns if prop_col_filter_fn(col)
+    ]
+    grouped_by_key = df.groupby(key_col)
+    result_d = {}
+    # result_d["ptn1"] = list(grouped_by_key.groups.keys())
+    result_d["ptn1"] = [str(k) for k in grouped_by_key.groups.keys()]
+    for prop in prop_cols:
+        result_d[prop] = []
+        for key, group_df in grouped_by_key:
+            unique_values = group_df[prop].unique()
+            # Assertion to ensure all values are the same for each key
+            assert (
+                len(unique_values) == 1
+                ), f"All values for key {key} in column {prop} must be the same."
+            result_d[prop].append(unique_values[0])
+    profile_df = pd.DataFrame(result_d).rename(
+        lambda x: x.replace("ptn1_", "") if "ptn1_" in x else "label", axis="columns"
+        )
+    # profile_df["label"] = profile_df["label"].map(str)
+    # print(profile_df)
+    return profile_df
+
 
 def bin_indices(X, Y, num_bins):
     from scipy.stats import binned_statistic_2d

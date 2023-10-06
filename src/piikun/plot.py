@@ -76,44 +76,22 @@ def df_to_dict_by_key_single_value(df, key_col, prop_cols):
     return result_dict
 
 
-def extract_profile(df, key_col, prop_cols):
-    grouped_by_key = df.groupby(key_col)
-    result_d = {}
-    result_d["label"] = [k for k in grouped_by_key.groups.keys()]
-    for prop in prop_cols:
-        result_d[prop] = []
-        for key, group_df in grouped_by_key:
-            unique_values = group_df[prop].unique()
-            # Assertion to ensure all values are the same for each key
-            assert (
-                len(unique_values) == 1
-            ), f"All values for key {key} in column {prop} must be the same."
-            result_d[prop].append(unique_values[0])
-    # profile_df = pd.DataFrame(result_d).rename(lambda x: x.replace("ptn1_", "") if "ptn1_" in x else "label", axis="columns")
-    profile_df = pd.DataFrame(result_d).rename(lambda x: x.replace("ptn1_", ""))
-    return profile_df
-
-
-def extract_profile(df, key_col, prop_cols):
-    grouped_by_key = df.groupby(key_col)
-    result_d = {}
-    # result_d["ptn1"] = list(grouped_by_key.groups.keys())
-    result_d["ptn1"] = [str(k) for k in grouped_by_key.groups.keys()]
-    for prop in prop_cols:
-        result_d[prop] = []
-        for key, group_df in grouped_by_key:
-            unique_values = group_df[prop].unique()
-            # Assertion to ensure all values are the same for each key
-            assert (
-                len(unique_values) == 1
-            ), f"All values for key {key} in column {prop} must be the same."
-            result_d[prop].append(unique_values[0])
-    profile_df = pd.DataFrame(result_d).rename(
-        lambda x: x.replace("ptn1_", "") if "ptn1_" in x else "label", axis="columns"
-    )
-    # profile_df["label"] = profile_df["label"].map(str)
-    # print(profile_df)
-    return profile_df
+# def extract_profile(df, key_col, prop_cols):
+#     grouped_by_key = df.groupby(key_col)
+#     result_d = {}
+#     result_d["label"] = [k for k in grouped_by_key.groups.keys()]
+#     for prop in prop_cols:
+#         result_d[prop] = []
+#         for key, group_df in grouped_by_key:
+#             unique_values = group_df[prop].unique()
+#             # Assertion to ensure all values are the same for each key
+#             assert (
+#                 len(unique_values) == 1
+#             ), f"All values for key {key} in column {prop} must be the same."
+#             result_d[prop].append(unique_values[0])
+#     # profile_df = pd.DataFrame(result_d).rename(lambda x: x.replace("ptn1_", "") if "ptn1_" in x else "label", axis="columns")
+#     profile_df = pd.DataFrame(result_d).rename(lambda x: x.replace("ptn1_", ""))
+#     return profile_df
 
 
 def visualize_distances_on_regionalized_support_space(
@@ -335,13 +313,10 @@ class Plotter(utility.RuntimeClient):
 
     def load_data(self, data):
         self._data = data.copy()
-        ptn_attribute_column_names = [
-            col for col in self._data.columns if col.startswith("ptn1_")
-        ]
-        self._profile_df = extract_profile(
+        self._profile_df = utility.extract_profile(
             df=self._data,
             key_col="ptn1",
-            prop_cols=ptn_attribute_column_names,
+            prop_col_filter_fn=lambda x: x.startswith("ptn1"),
         )
         if f"ptn1_{self.support_key}" in data.columns:
             self._data[f"ptn1_{self.support_key}_original"] = self._data[
