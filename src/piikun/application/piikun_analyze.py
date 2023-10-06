@@ -752,6 +752,8 @@ def main(args=None):
     logger.log_info(f"Data source format: '{data_format}'")
     if not data_format:
         data_format = "delineate"
+    if args.output_title is None:
+        args.output_title = pathlib.Path(config_d["src_path"]).stem
     runtime_context = utility.RuntimeContext(
         logger=logger,
         random_seed=None,
