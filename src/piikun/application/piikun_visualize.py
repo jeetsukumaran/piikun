@@ -261,7 +261,7 @@ def main(args=None):
         "-v", "--visualize",
         action="store",
         default="all",
-        help=(f"One or more of the following isualization types: {visualization_types}. Default is 'all'."),
+        help=(f"One or more of the following visualization types: {visualization_types}. Default is 'all'."),
     )
     plot_options = parent_parser.add_argument_group("Plot Options")
     plot_options.add_argument(
@@ -308,12 +308,13 @@ def main(args=None):
         help="Save / do not save plots in interactive viewer",
     )
     args = parent_parser.parse_args(args)
-    df = utility.read_files_to_dataframe(filepaths=args.src_path)
+    src_paths = [i for sublist in args.src_path for i in sublist]
+    df = utility.read_files_to_dataframe(filepaths=src_paths)
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
         output_directory = args.output_directory,
-        output_name_stem = pathlib.Path(args.src_path[0]).stem,
+        output_name_stem = pathlib.Path(src_paths[0]).stem,
         output_formats = args.output_format,
     )
 
