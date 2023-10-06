@@ -244,9 +244,13 @@ class PlotGenerator:
 
 
 def main(args=None):
-    visualization_types = [
-        "distance-vs-support-quantiles",
-    ]
+    visualization_types = {
+        "distance-vs-support-quantiles": {
+            "plot_fn": visualize_distances_on_regionalized_support_space,
+        }
+    }
+    visualization_types_str = ", ".join(f"'{vkey}'" for vkey in visualization_types)
+
     parent_parser = argparse.ArgumentParser()
     data_source_options = parent_parser.add_argument_group("Data Source Options")
     data_source_options.add_argument(
@@ -261,7 +265,7 @@ def main(args=None):
         "-v", "--visualize",
         action="store",
         default="all",
-        help=(f"One or more of the following visualization types: {visualization_types}. Default is 'all'."),
+        help=(f"One or more of the following visualization types: {visualization_types_str}. Default is 'all'."),
     )
     plot_options = parent_parser.add_argument_group("Plot Options")
     plot_options.add_argument(
@@ -317,16 +321,20 @@ def main(args=None):
         output_name_stem = pathlib.Path(src_paths[0]).stem,
         output_formats = args.output_format,
     )
-
-    plotter.generate_plot(
-        plot_name = "distance-vs-support-quantiles",
-        plot_fn = visualize_distances_on_regionalized_support_space,
-        plot_kwargs = {
-            "df": df,
-            "background_palette": args.palette,
-            "scatterplot_palette": args.palette,
-        }
-    )
+    common_plot_kwargs = {
+        "df": df,
+        "background_palette": args.palette,
+        "scatterplot_palette": args.palette,
+    }
+    for visualization_name, visualization_d in visualization_types.items():
+        plot_kwargs = dict(common_plot_kwargs)
+        if "plot_kwargs" in visualization_d:
+            plot_kwargs.update(visualization_d["plot_kwargs"])
+        plotter.generate_plot(
+            plot_name = visualization_name,
+            plot_fn = visualization_d["plot_fn"],
+            plot_kwargs = plot_kwargs,
+        )
 
 
 if __name__ == "__main__":
