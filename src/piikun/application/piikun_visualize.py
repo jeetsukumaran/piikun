@@ -250,6 +250,9 @@ class PlotGenerator:
 
 def main(args=None):
     visualization_types = {
+        # "partition-support-profile": {
+        #     "plot_fn": visualize_scatter,
+        # }
         "distance-vs-support-quantiles": {
             "plot_fn": visualize_distances_on_regionalized_support_space,
         }
@@ -268,6 +271,8 @@ def main(args=None):
     visualization_options = parent_parser.add_argument_group("Visualization Types")
     visualization_options.add_argument(
         "-v", "--visualize",
+        metavar="<NAME>",
+        dest="selected_visualizations",
         action="store",
         default="all",
         help=(f"One or more of the following visualization types: {visualization_types_str}. Default is 'all'."),
@@ -326,12 +331,19 @@ def main(args=None):
         output_name_stem = pathlib.Path(src_paths[0]).stem,
         output_formats = args.output_format,
     )
+    if args.selected_visualizations:
+        visualizations = list(args.selected_visualizations)
+    else:
+        visualizations = list(visualization_types)
     common_plot_kwargs = {
         "df": df,
         "background_palette": args.palette,
         "scatterplot_palette": args.palette,
     }
-    for visualization_name, visualization_d in visualization_types.items():
+
+    for visualization_type_key in visualization_types:
+        visualization_name = visualization_type_key
+        visualization_d = visualization_types[visualization_type_key]
         _log_info(f"Visualization: {visualization_name}")
         plot_kwargs = dict(common_plot_kwargs)
         if "plot_kwargs" in visualization_d:
