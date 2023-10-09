@@ -159,7 +159,7 @@ def visualize_distances_on_regionalized_support_space(
 
     # hover_data = list(distance_df.columns)
     fig.add_trace(
-        go.Scatter(
+        go.Scattergl(
             x=distance_df["ptn1_support"],
             y=distance_df["ptn2_support"],
             mode="markers",
