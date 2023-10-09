@@ -366,6 +366,9 @@ def main(args=None):
         for fspecs in args.output_format:
             for fspec in fspecs:
                 output_format.append(fspec)
+    else:
+        output_format.append("html")
+        output_format.append("jpg")
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
