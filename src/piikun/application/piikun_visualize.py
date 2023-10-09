@@ -267,17 +267,18 @@ class PlotGenerator:
         fig = plot_fn(**plot_kwargs)
         if post_plot_fn:
             post_plot_fn(fig)
-        for format_type in self.output_formats:
-            if format_type.startswith("."):
-                ext = format_type
-            else:
-                ext = f".{format_type}"
-            output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
-            _log_info(f"- Saving to: '{output_filepath}'")
-            if format_type == "html":
-                fig.write_html(output_filepath)
-            else:
-                fig.write_image(output_filepath)
+        if self.is_save_plot:
+            for format_type in self.output_formats:
+                if format_type.startswith("."):
+                    ext = format_type
+                else:
+                    ext = f".{format_type}"
+                output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
+                _log_info(f"- Saving to: '{output_filepath}'")
+                if format_type == "html":
+                    fig.write_html(output_filepath)
+                else:
+                    fig.write_image(output_filepath)
         if self.is_show_plot:
             fig.show()
 
@@ -360,12 +361,17 @@ def main(args=None):
     args = parent_parser.parse_args(args)
     src_paths = [i for sublist in args.src_path for i in sublist]
     distance_df = utility.read_files_to_dataframe(filepaths=src_paths)
+    output_format = []
+    if args.output_format:
+        for fspecs in args.output_format:
+            for fspec in fspecs:
+                output_format.append(fspec)
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
         output_directory = args.output_directory,
         output_name_stem = pathlib.Path(src_paths[0]).stem,
-        output_formats = args.output_format,
+        output_formats = output_format,
     )
     if args.selected_visualizations:
         visualizations = list(args.selected_visualizations)

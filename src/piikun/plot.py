@@ -379,6 +379,9 @@ class Plotter(utility.RuntimeClient):
             name_parts=[f"distance-vs-support-quantiles"],
         )
         qdf = rv["quantile_df"]
+        print(qdf)
+        print(qdf.mean())
+        print(qdf.max())
         for metric_summary in ("max", "mean", "min", "range"):
             kwargs = {"qdf": qdf}
             kwargs["is_add_lines"] = True
