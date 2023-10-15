@@ -35,7 +35,7 @@ A typical `piikun` analysis consists of:
   This can be the results of a DELINEATE, BPP, or some other species delimitation analysis.
   Or it can be a manual based on arrangements described in literature, speculatively, etc.
 
-- **Describing** the partition definitions and associated information from the species delimitation model sources.
+- **Defining** the partition definitions and associated information from the species delimitation model sources.
 
 - **Combining** partition definitions from one or more sources into an input dataset.
 
@@ -44,7 +44,7 @@ A typical `piikun` analysis consists of:
 - **Visualizing** the resuts.
 
 
-### ``piikun-parse``: Reading the Species Delimitation Model Sources
+### ``piikun-parse``: Extracting the Partition Data from the Species Delimitation Model Sources
 
 ``piikun-parse`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
 ``piikun-parse`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
@@ -110,7 +110,7 @@ See ``--help`` for details on this and other options.
 
 ### ``piikun-concat``: Collating and Combining Multiple Sources
 
-The data files produced by ``piikun-parse`` can be analyzed by ``piikun-analyze`` individually directly.
+The data files produced by ``piikun-parse`` can be analyzed by ``piikun-evaluate`` individually directly.
 To analyze data from multiple sources you can use ``piikun-concat`` to merge these sources into a single data source, while ensuring that the species delimitation or partition labels or identifiers are unique across the entire domain.
 
 ```bash
@@ -133,7 +133,7 @@ $ piikun-concat \
 See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
 
 
-### ``piikun-analyze``: Calculate Statistics and Distances
+### ``piikun-evaluate``: Calculate Statistics and Distances
 
 This command carries out the main calculations of this package.
 It takes as its input the ``.partitions.json`` data file produced by ``piikun-parse`` or ``piikun-concat``.
@@ -147,10 +147,10 @@ $ piikun-parse -f bpp-a11 bpp1.out.txt bpp2.out.txt
 
 # Independent/separate comparative analysis of species
 # delimitation models from multiple sources
-$ piikun-analyze delineate1-results.partitions.json
-$ piikun-analyze delineate2-results.partitions.json
-$ piikun-analyze bpp1.out.partitions.json
-$ piikun-analyze bpp2.out.partitions.json
+$ piikun-evaluate delineate1-results.partitions.json
+$ piikun-evaluate delineate2-results.partitions.json
+$ piikun-evaluate bpp1.out.partitions.json
+$ piikun-evaluate bpp2.out.partitions.json
 
 # Single joint analysis of species delimitation models
 # from multiple sources
@@ -166,17 +166,17 @@ $ piikun-concat \
 
 # Joint/single comparative analysis of species
 # delimitation models from multiple sources
-$ piikun-analyze concatd-data.partitions.json
+$ piikun-evaluate concatd-data.partitions.json
 
 
 ```
 
 ```bash
-$ piikun-analyze \
+$ piikun-evaluate \
     -o project42 \
     -O analysis_dir \
     data.partitions.json
-$ piikun-analyze \
+$ piikun-evaluate \
     --output-title project42 \
     --output-directory analysis_dir \
     data.partitions.json
@@ -187,7 +187,7 @@ See ``--help`` for details on this and other options, such as setting the output
 -   The number of partitions can are read from the input set can be restricted to the first $n$ partitions using the ``--limit-partitions`` option:
 
     ```bash
-    $ piikun-analyze \
+    $ piikun-evaluate \
         --format delineate \
         --output-title project42 \
         --output-directory analysis_dir \
@@ -201,7 +201,7 @@ See ``--help`` for details on this and other options, such as setting the output
 
 #### Output
 
-``piikun-analyze`` will generate two tab-delimited (``.tsv``) files (named and located based on the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options):
+``piikun-evaluate`` will generate two tab-delimited (``.tsv``) files (named and located based on the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options):
 
 - ``output-directory/output-title-profiles.tsv``
 - ``output-directory/output-title-comparisons.tsv``
@@ -230,7 +230,7 @@ The ``-comparisons`` file includes the variance of information distance statisti
 |----------------------|-----------------------------|---------------------------------------|
 | ``piikun-parse``     | (Various)                   | ``<title>-partitions.json``           |
 | ``piikun-concat``    | ``<title>-partitions.json`` | ``<title>-partitions.json``           |
-| ``piikun-analyze``   | ``<title>-partitions.json`` | ``<title>-partitions-profiles.json``  |
+| ``piikun-evaluate``  | ``<title>-partitions.json`` | ``<title>-partitions-profiles.json``  |
 |                      |                             | ``<title>-partitions-distances.json`` |
 | ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>-<visualization-name>.html`` |
 |                      |                             | ``<title>-<visualization-name>.jpg``  |
