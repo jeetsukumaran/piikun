@@ -27,80 +27,166 @@ or
 $ python3 -m pip install --user --upgrade git+git://github.com/jeetsukumaran/piikun.git
 ```
 
-## Applications
+## Usage
 
-### Analysis
+A typical `piikun` analysis consists of:
 
-``piikun-analyze`` is a command-line program that analyzes a collection of partition definitions.
+- **Generating** the source or sources species delimitation models to be analyzed.
+  This can be the results of a DELINEATE, BPP, or some other species delimitation analysis.
+  Or it can be a manual based on arrangements described in literature, speculatively, etc.
 
-#### Input Formats
+- **Describing** the partition definitions and associated information from the species delimitation model sources.
 
-``piikun-analyze`` takes as its input a collection of partitions specified in one of the following data formats:
+- **Combining** partition definitions from one or more sources into an input dataset.
 
--   A simple list of of lists in JSON format.
-    For e.g., given four populations: ``pop1``, ``pop2``, ``pop3``, and ``pop4``:
+- **Analyzing** the partition data to calculate the various measures of information for each partition and associated distances between each distinct pair of partitions.
 
-    ``` json
-    [
-        [["pop1", "pop2", "pop3", "pop4"]],
-        [["pop1"], ["pop2", "pop3", "pop4"]],
-        [["pop1", "pop2"], ["pop3", "pop4"]],
-        [["pop2"], ["pop1", "pop3", "pop4"]],
-        [["pop1"], ["pop2"], ["pop3", "pop4"]],
-        [["pop1", "pop2", "pop3"], ["pop4"]],
-        [["pop2", "pop3"], ["pop1", "pop4"]],
-        [["pop1"], ["pop2", "pop3"], ["pop4"]],
-        [["pop1", "pop3"], ["pop2", "pop4"]],
-        [["pop3"], ["pop1", "pop2", "pop4"]],
-        [["pop1"], ["pop3"], ["pop2", "pop4"]],
-        [["pop1", "pop2"], ["pop3"], ["pop4"]],
-        [["pop2"], ["pop1", "pop3"], ["pop4"]],
-        [["pop2"], ["pop3"], ["pop1", "pop4"]],
-        [["pop1"], ["pop2"], ["pop3"], ["pop4"]]
-    ]
+- **Visualizing** the resuts.
+
+
+### ``piikun-parse``: Reading the Species Delimitation Model Sources
+
+``piikun-parse`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
+``piikun-parse`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
+
+-   "``delineate``": [DELINEATE](https://github.com/jsukumaran/delineate) results
+
+    This specifies the primary ``.json`` results files produces by DELINEATE as sources.
+
+    ```bash
+    $ piikun-parse -f delineate delineate-results.json
+    $ piikun-parse --format delineate delineate-results.json
     ```
 
-    This can be explicitly specified by passing the argument "json-list" to the ``-f`` or ``--format`` option:
+-   "``bpp-a11``: BPP (A11 mode) format
 
-    ```
-    $ piikun-analyze -f json-list partitions.json
-    $ piikun-analyze --format json-list partitions.json
-    ```
+    This specifies the output log files from BPP as sources.
 
--   [DELINEATE](https://github.com/jsukumaran/delineate)
-
-    ```
-    $ piikun-analyze -f delineate delineate-results.json
-    $ piikun-analyze --format delineate delineate-results.json
+    ```bash
+    $ piikun-parse -f bpp-a11 output.txt
+    $ piikun-parse --format bpp-a11 output.txt
     ```
 
-- SPART-XML
+-   "``spart-xml``": SPART-XML
 
-    ```
-    $ piikun-analyze -f spart-xml data.xml
-    $ piikun-analyze --format spart-xml data.xml
+    This specifies the "SPART"-format XML as sources.
+
+    ```bash
+    $ piikun-parse -f spart-xml data.xml
+    $ piikun-parse --format spart-xml data.xml
     ```
 
-#### Analysis Options
+- "``json-dict``": Generic JSON dictionary
 
--   The output file names and paths can be specified by using the ``-o``/``--output-title`` and ``-O``/``--output-directory``
+    This specifies the sources will be dictionaries in JSON format, with a specific set of keys/elements (see below for details).
 
+    ```bash
+    $ piikun-parse -f json-dict data.json
+    $ piikun-parse --format json-dict data.json
     ```
-    $ piikun-analyze \
-        -f delineate \
-        -o project42 \
-        -O analysis_dir \
-        delineate-results.json
-    $ piikun-analyze \
-        --format delineate \
-        --output-title project42 \
-        --output-directory analysis_dir \
-        delineate-results.json
+
+- "``json-list``": Generic JSON list (of lists)
+
+    This specifies the sources will be lists of lists in JSON format (see below for details).
+
+    ```bash
+    $ piikun-parse -f json-dict data.json
+    $ piikun-parse --format json-dict data.json
     ```
+
+The output file names and paths can be specified by using the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options.
+
+Additional information can be added using the "``--set-property``" flag.
+For example, the following adds information regarding the source that can be referenced in visualizations and analysis downstream:
+
+```bash
+$ piikun-parse \
+    -f delineate delineate-results.json \
+    --set-property n_genes:143 \
+    --set-property hypothesis:geographical \
+```
+
+See ``--help`` for details on this and other options.
+
+### ``piikun-concat``: Collating and Combining Multiple Sources
+
+The data files produced by ``piikun-parse`` can be analyzed by ``piikun-analyze`` individually directly.
+To analyze data from multiple sources you can use ``piikun-concat`` to merge these sources into a single data source, while ensuring that the species delimitation or partition labels or identifiers are unique across the entire domain.
+
+```bash
+# Produces: ``delineate1-results.partitions.json``, ``delineate2-results.partitions.json``
+$ piikun-parse -f delineate delineate1-results.json delineate2-results.json
+
+# Produces: ``bpp1.out.partitions.json``, ``bpp2.out.partitions.json``
+$ piikun-parse -f bpp-a11 bpp1.out.txt bpp2.out.txt
+
+# Produces unified dataset for analysis: "``concatd-data.partitions.json``"
+$ piikun-concat \
+    delineate1-results.partitions.json \
+    delineate2-results.partitions.json \
+    bpp1.out.partitions.json \
+    bpp2.out.partitions.json \
+    -o concatd-data
+```
+
+
+See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
+
+
+### ``piikun-analyze``: Calculate Statistics and Distances
+
+This command carries out the main calculations of this package.
+It takes as its input the ``.partitions.json`` data file produced by ``piikun-parse`` or ``piikun-concat``.
+
+```bash
+# Produces: ``delineate1-results.partitions.json``, ``delineate2-results.partitions.json``
+$ piikun-parse -f delineate delineate1-results.json delineate2-results.json
+
+# Produces: ``bpp1.out.partitions.json``, ``bpp2.out.partitions.json``
+$ piikun-parse -f bpp-a11 bpp1.out.txt bpp2.out.txt
+
+# Independent/separate comparative analysis of species
+# delimitation models from multiple sources
+$ piikun-analyze delineate1-results.partitions.json
+$ piikun-analyze delineate2-results.partitions.json
+$ piikun-analyze bpp1.out.partitions.json
+$ piikun-analyze bpp2.out.partitions.json
+
+# Single joint analysis of species delimitation models
+# from multiple sources
+
+# Combine species delimitation models from multiple sources
+# into single data file: ``concatd-data.partitions.json``
+$ piikun-concat \
+    delineate1-results.partitions.json \
+    delineate2-results.partitions.json \
+    bpp1.out.partitions.json \
+    bpp2.out.partitions.json \
+    -o concatd-data
+
+# Joint/single comparative analysis of species
+# delimitation models from multiple sources
+$ piikun-analyze concatd-data.partitions.json
+
+
+```
+
+```bash
+$ piikun-analyze \
+    -o project42 \
+    -O analysis_dir \
+    data.partitions.json
+$ piikun-analyze \
+    --output-title project42 \
+    --output-directory analysis_dir \
+    data.partitions.json
+```
+
+See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
 
 -   The number of partitions can are read from the input set can be restricted to the first $n$ partitions using the ``--limit-partitions`` option:
 
-    ```
+    ```bash
     $ piikun-analyze \
         --format delineate \
         --output-title project42 \
@@ -124,7 +210,7 @@ These files provide univariate and a mix of univariate and bivariate statistics,
 
 Both of these files can be directly loaded as a PANDAS data frame for more detailed analysis:
 
-```
+```bash
 >>> import pandas as pd
 >>> df1 = pd.read_cs(
 ...     "output-directory/output-title-comparisons.tsv",
@@ -133,6 +219,138 @@ Both of these files can be directly loaded as a PANDAS data frame for more detai
 ```
 
 The ``-comparisons`` file includes the variance of information distance statistics: ``vi_distance`` and ``vi_normalized_kraskov``.
+
+## Reference
+
+
+
+### Standard Workflow Tool Chain
+
+| Command              | Input                       | Output                                |
+|----------------------|-----------------------------|---------------------------------------|
+| ``piikun-parse``     | (Various)                   | ``<title>-partitions.json``           |
+| ``piikun-concat``    | ``<title>-partitions.json`` | ``<title>-partitions.json``           |
+| ``piikun-analyze``   | ``<title>-partitions.json`` | ``<title>-partitions-profiles.json``  |
+|                      |                             | ``<title>-partitions-distances.json`` |
+| ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>-<visualization-name>.html`` |
+|                      |                             | ``<title>-<visualization-name>.jpg``  |
+|                      |                             | ``<title>-<visualization-name>.pdf``  |
+
+
+
+### Internal Data Formats
+
+
+#### ``json-dicts``: JSON Dictionaries
+
+##### Basic Example
+
+```json
+{
+    "partitions": {
+        "Model1": {
+            "clusters": [
+                ["Deme1", "Deme2", "Deme3"]
+            ]
+        },
+        "Model2": {
+            "clusters": [
+            ["Deme1"],
+            ["Deme2", "Deme3"]
+            ]
+        },
+        "Model3": {
+            "clusters": [
+            ["Deme2"],
+            ["Deme1", "Deme3"]
+            ]
+        },
+        "Model4": {
+            "clusters": [
+            ["Deme3"],
+            ["Deme1", "Deme2"]
+            ]
+        },
+        "Model5": {
+            "clusters": [
+            ["Deme1"],
+            ["Deme2"],
+            ["Deme2"]
+            ]
+        }
+    }
+}
+```
+
+##### Extended Example
+
+```json
+{
+    "analysis": "Multiple DELINEATE run on dataset A303",
+    "status": "Pilot study",
+    "URL": "https://foo.org",
+    "date": "2023-01-01T04:00"
+    "partitions": {
+        "Model1": {
+            "support": 1.8E-2,
+            "clusters": [
+                ["Deme1", "Deme2", "Deme3"]
+            ]
+        },
+        "Model2": {
+            "support": 1.2E-2,
+            "clusters": [
+            ["Deme1"],
+            ["Deme2", "Deme3"]
+            ]
+        },
+        "Model3": {
+            "support": 1.0E-4,
+            "clusters": [
+            ["Deme2"],
+            ["Deme1", "Deme3"]
+            ]
+        },
+        "Model4": {
+            "support": 2.0E-5,
+            "clusters": [
+            ["Deme3"],
+            ["Deme1", "Deme2"]
+            ]
+        },
+        "Model5": {
+            "support": 1.2E-5,
+            "clusters": [
+            ["Deme1"],
+            ["Deme2"],
+            ["Deme2"]
+            ]
+        }
+    }
+}
+```
+
+### ``json-lists``
+
+``` json
+[
+    [["pop1", "pop2", "pop3", "pop4"]],
+    [["pop1"], ["pop2", "pop3", "pop4"]],
+    [["pop1", "pop2"], ["pop3", "pop4"]],
+    [["pop2"], ["pop1", "pop3", "pop4"]],
+    [["pop1"], ["pop2"], ["pop3", "pop4"]],
+    [["pop1", "pop2", "pop3"], ["pop4"]],
+    [["pop2", "pop3"], ["pop1", "pop4"]],
+    [["pop1"], ["pop2", "pop3"], ["pop4"]],
+    [["pop1", "pop3"], ["pop2", "pop4"]],
+    [["pop3"], ["pop1", "pop2", "pop4"]],
+    [["pop1"], ["pop3"], ["pop2", "pop4"]],
+    [["pop1", "pop2"], ["pop3"], ["pop4"]],
+    [["pop2"], ["pop1", "pop3"], ["pop4"]],
+    [["pop2"], ["pop3"], ["pop1", "pop4"]],
+    [["pop1"], ["pop2"], ["pop3"], ["pop4"]]
+]
+```
 
 
 

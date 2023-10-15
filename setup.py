@@ -36,12 +36,13 @@ setup(
     entry_points={
         "console_scripts": [
             # "name-of-executable = module.with:function_to_execute"
-            "piikun-analyze = piikun.application.piikun_analyze:main",
-            "piikun-plot-metrics = piikun.application.piikun_plot_metrics:main",
-            "piikun-visualize = piikun.application.piikun_visualize:main",
-            "piikun-enumerate = piikun.application.piikun_enumerate:main",
-            "piikun-mirror-distances = piikun.application.piikun_mirror_distances:main",
-            "piikun-validate-metric = piikun.application.piikun_validate_metric:main",
+            "piikun-read = piikun.application.piikun_read:main",
+            # "piikun-analyze = piikun.application.piikun_analyze:main",
+            # "piikun-plot-metrics = piikun.application.piikun_plot_metrics:main",
+            # "piikun-visualize = piikun.application.piikun_visualize:main",
+            # "piikun-enumerate = piikun.application.piikun_enumerate:main",
+            # "piikun-mirror-distances = piikun.application.piikun_mirror_distances:main",
+            # "piikun-validate-metric = piikun.application.piikun_validate_metric:main",
         ]
     },
     include_package_data=True,
