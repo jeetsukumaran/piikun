@@ -35,7 +35,6 @@ import json
 import math
 import functools
 import collections
-import yakherd
 
 # https://stackoverflow.com/a/30134039
 def iterate_partitions(collection):
@@ -102,7 +101,7 @@ class Partition:
         if metadata_d:
             self.metadata_d.update(metadata_d)
         if partition_d is not None:
-            self.parse_partition_d(partition_d)
+            self.parse_subsets(partition_d.values())
         elif subsets is not None:
             self.parse_subsets(subsets)
 
@@ -146,9 +145,9 @@ class Partition:
         self._subsets.append(s)
         return s
 
-    def parse_partition_d(self, partition_d):
-        for label, v in partition_d.items():
-            self.new_subset(label=label, elements=v)
+    # def parse_partition_d(self, partition_d):
+    #     for label, v in partition_d.items():
+    #         self.new_subset(label=label, elements=v)
 
     def parse_subsets(self, subsets):
         for label, v in enumerate(subsets):
@@ -241,3 +240,25 @@ class Partition:
                 P.append(len(ptn1_subset) / self.n_elements)
                 Q.append(len(ptn2_subset) / other.n_elements)
         return jensenshannon(P, Q, base=self.log_base)
+
+
+class PartitionCollection:
+
+    def __init__(self, log_base=2.0):
+        self.log_base = log_base
+        self._partitions = {}
+
+    def new_partition(
+        self,
+        label,
+        subsets,
+        metadata_d,
+    ):
+        kwargs["log_base"] = self.log_base
+        ptn = Partition(
+            label=label,
+            subsets=subsets,
+            metadata_d=metadata_d,
+        )
+        self._partitions.append(ptn)
+        return ptn

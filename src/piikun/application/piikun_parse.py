@@ -34,23 +34,25 @@ import os
 import pathlib
 import sys
 import argparse
-from piikun import console
+from piikun.console import console
+from piikun import parse
+from piikun import partitionmodel
 
 def main():
     parser = argparse.ArgumentParser(description=None)
-    input_options = parser.add_argument_group("Input Options")
-    input_options.add_argument(
-        "src_path",
+    source_options = parser.add_argument_group("Source Options")
+    source_options.add_argument(
+        "src_paths",
         action="store",
         metavar="FILE",
-        nargs="+",
-        help="Path to data source file.",
+        nargs="*",
+        help="Path to data source file(s); if not specified, defaults to standard input.",
     )
-    input_options.add_argument(
+    source_options.add_argument(
         "-f",
         "--format",
         action="store",
-        dest="data_format",
+        dest="source_format",
         default=None,
         choices=[
             "delineate",
@@ -59,16 +61,16 @@ def main():
             "json-list",
             "spart-xml",
         ],
-        help="Format of species delimitation data: [default='delineate'].",
+        help="Format of source species delimitation model data: [default='delineate'].",
     )
-    input_options.add_argument(
+    source_options.add_argument(
         "--limit-partitions",
         action="store",
         default=None,
         type=int,
         help="Limit data to this number of partitions.",
     )
-    output_options =parser.add_argument_group("Output Options")
+    output_options = parser.add_argument_group("Output Options")
     output_options.add_argument(
         "-o",
         "--output-title",
@@ -83,7 +85,26 @@ def main():
         default=os.curdir,
         help="Directory for output files [default='%(default)s'].",
     )
+    # run_options = parser.add_argument_group("Run Options")
+    # parser.add_argument(
+    #         "--verbosity",
+    #         action="store",
+    #         default=3,
+    #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
+
+    partitions = partitionmodel.PartitionCollection()
+    parser = parse.Parser(source_format=args.source_format)
+    if not args.src_paths:
+        console.log("(Reading from standard input)")
+        for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
+            pass
+    else:
+        src_data = None
+        src_paths = args.src_paths
+        for src_idx, src_path in enumerate(src_paths):
+            for pidx, ptn in enumerate(parser.read_path(src_path)):
+                pass
 
 if __name__ == '__main__':
     main()
