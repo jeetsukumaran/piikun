@@ -36,7 +36,7 @@ setup(
     entry_points={
         "console_scripts": [
             # "name-of-executable = module.with:function_to_execute"
-            "piikun-read = piikun.application.piikun_read:main",
+            "piikun-parse = piikun.application.piikun_parse:main",
             # "piikun-analyze = piikun.application.piikun_analyze:main",
             # "piikun-plot-metrics = piikun.application.piikun_plot_metrics:main",
             # "piikun-visualize = piikun.application.piikun_visualize:main",

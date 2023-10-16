@@ -30,4 +30,60 @@
 ##
 ##############################################################################
 
+import os
+import pathlib
+import sys
+import argparse
+from piikun import console
 
+def main():
+    parser = argparse.ArgumentParser(description=None)
+    input_options = parser.add_argument_group("Input Options")
+    input_options.add_argument(
+        "src_path",
+        action="store",
+        metavar="FILE",
+        nargs="+",
+        help="Path to data source file.",
+    )
+    input_options.add_argument(
+        "-f",
+        "--format",
+        action="store",
+        dest="data_format",
+        default=None,
+        choices=[
+            "delineate",
+            # "bpp-a10",
+            "bpp-a11",
+            "json-list",
+            "spart-xml",
+        ],
+        help="Format of species delimitation data: [default='delineate'].",
+    )
+    input_options.add_argument(
+        "--limit-partitions",
+        action="store",
+        default=None,
+        type=int,
+        help="Limit data to this number of partitions.",
+    )
+    output_options =parser.add_argument_group("Output Options")
+    output_options.add_argument(
+        "-o",
+        "--output-title",
+        action="store",
+        default=None,
+        help="Prefix for output filenames.",
+    )
+    output_options.add_argument(
+        "-O",
+        "--output-directory",
+        action="store",
+        default=os.curdir,
+        help="Directory for output files [default='%(default)s'].",
+    )
+    args = parser.parse_args()
+
+if __name__ == '__main__':
+    main()
