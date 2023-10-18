@@ -104,6 +104,15 @@ def get_logger(
     console_fmt = "%(message)s"
     date_fmt = "[%Y-%m-%d %H:%M:%S]"
     logger = logging.getLogger("root")
+    package_console_theme = Theme({
+        "info": "dim cyan",
+        "warning": "magenta",
+        "danger": "bold red",
+    })
+    stderr_console = Console(
+        theme=package_console_theme,
+        stderr=True,
+    )
     handler = RichHandler(
         level=logging_level,
         show_time=show_time,
@@ -111,6 +120,7 @@ def get_logger(
         show_level=show_level,
         show_path=show_path,
         markup=markup,
+        console=stderr_console,
     )
     handler.setFormatter(
         logging.Formatter(
@@ -132,12 +142,6 @@ def terminate_error(
     sys.exit(exit_code)
 
 
-package_console_theme = Theme({
-    "info": "dim cyan",
-    "warning": "magenta",
-    "danger": "bold red",
-})
-console = Console(theme=package_console_theme)
 logger = get_logger()
 
 
