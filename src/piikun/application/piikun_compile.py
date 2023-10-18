@@ -34,7 +34,7 @@ import os
 import pathlib
 import sys
 import argparse
-from piikun.console import console
+from piikun.console import console, logger
 from piikun import parse
 from piikun import partitionmodel
 
@@ -72,6 +72,13 @@ def main():
     )
     output_options = parser.add_argument_group("Output Options")
     output_options.add_argument(
+        "--merge",
+        action=argparse.BooleanOptionalAction,
+        dest="is_merge_output",
+        default=True,
+        help="Merge partitions into single output file ('merge') or otherwise keep separate ('--no-merge') [default='merge'].",
+    )
+    output_options.add_argument(
         "-o",
         "--output-title",
         action="store",
@@ -93,15 +100,17 @@ def main():
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
 
-    partitions = partitionmodel.PartitionCollection()
+    logger.info("Starting: piikun-compile")
     parser = parse.Parser(source_format=args.source_format)
     if not args.src_paths:
-        console.log("(Reading from standard input)")
+        partitions = partitionmodel.PartitionCollection()
+        logger.info("(Reading from standard input)")
         for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
             pass
     else:
         src_data = None
         src_paths = args.src_paths
+        partitions = partitionmodel.PartitionCollection()
         for src_idx, src_path in enumerate(src_paths):
             for pidx, ptn in enumerate(parser.read_path(src_path)):
                 pass
