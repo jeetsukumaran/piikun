@@ -116,7 +116,7 @@ def main():
     parser = parse.Parser(
         source_format=args.source_format,
     )
-    def _store_partitions(partitions, source_path=None, subtitle="partitions"):
+    def _store_partitions(partitions, subtitle="partitions"):
         if runtime_client.output_title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
             logger.info(f"Storing partitions: '{out.name}'")
@@ -147,8 +147,8 @@ def main():
             for pidx, ptn in enumerate(parser.read_path(src_path)):
                 pass
             if not args.is_merge_output:
-                # runtime_client.output_title = runtime_client.compose_output_title_from_source_path(src_path)
-                _store_partitions(partitions=partitions, source_path=src_path)
+                runtime_client.output_title = pathlib.Path(src_path).stem
+                _store_partitions(partitions=partitions)
 
 if __name__ == '__main__':
     main()
