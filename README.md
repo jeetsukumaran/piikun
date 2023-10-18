@@ -287,10 +287,9 @@ The ``-comparisons`` file includes the variance of information distance statisti
     "analysis": "Multiple DELINEATE run on dataset A303",
     "status": "Pilot study",
     "URL": "https://foo.org",
-    "date": "2023-01-01T04:00"
+    "date": "2023-01-01T04:00",
     "partitions": {
         "Model1": {
-            "support": 1.8E-2,
             "clusters": [
                 ["Deme1", "Deme2", "Deme3"]
             ]

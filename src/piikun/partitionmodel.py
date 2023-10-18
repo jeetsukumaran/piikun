@@ -151,6 +151,7 @@ class Partition:
         if key is not None:
             d["label"] = key
         d["subsets"] = [sorted(subset._elements) for subset in self._subsets]
+        d["metadata"] = self.metadata_d
         return d
 
     def new_subset(self, elements):
@@ -294,13 +295,12 @@ class PartitionCollection:
         self._partitions[key] = ptn
         return ptn
 
-    def store_source_data(
+    def export_source_data(
         self,
-        out,
     ):
         # exported = { "partitions": [ ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() ] }
         # exported = { "partitions": { key:ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() } }
         exported = { "partitions": { key:ptn.compose_source_data_d() for key, ptn in self._partitions.items() } }
-        out.write(json.dumps(exported))
+        return exported
 
 
