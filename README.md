@@ -44,18 +44,18 @@ A typical `piikun` analysis consists of:
 - **Visualizing** the resuts.
 
 
-### ``piikun-parse``: Extracting the Partition Data from the Species Delimitation Model Sources
+### ``piikun-compile``: Extracting the Partition Data from the Species Delimitation Model Sources
 
-``piikun-parse`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
-``piikun-parse`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
+``piikun-compile`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
+``piikun-compile`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
 
 -   "``delineate``": [DELINEATE](https://github.com/jsukumaran/delineate) results
 
     This specifies the primary ``.json`` results files produces by DELINEATE as sources.
 
     ```bash
-    $ piikun-parse -f delineate delineate-results.json
-    $ piikun-parse --format delineate delineate-results.json
+    $ piikun-compile -f delineate delineate-results.json
+    $ piikun-compile --format delineate delineate-results.json
     ```
 
 -   "``bpp-a11``: BPP (A11 mode) format
@@ -63,8 +63,8 @@ A typical `piikun` analysis consists of:
     This specifies the output log files from BPP as sources.
 
     ```bash
-    $ piikun-parse -f bpp-a11 output.txt
-    $ piikun-parse --format bpp-a11 output.txt
+    $ piikun-compile -f bpp-a11 output.txt
+    $ piikun-compile --format bpp-a11 output.txt
     ```
 
 -   "``spart-xml``": SPART-XML
@@ -72,8 +72,8 @@ A typical `piikun` analysis consists of:
     This specifies the "SPART"-format XML as sources.
 
     ```bash
-    $ piikun-parse -f spart-xml data.xml
-    $ piikun-parse --format spart-xml data.xml
+    $ piikun-compile -f spart-xml data.xml
+    $ piikun-compile --format spart-xml data.xml
     ```
 
 - "``json-dict``": Generic JSON dictionary
@@ -81,8 +81,8 @@ A typical `piikun` analysis consists of:
     This specifies the sources will be dictionaries in JSON format, with a specific set of keys/elements (see below for details).
 
     ```bash
-    $ piikun-parse -f json-dict data.json
-    $ piikun-parse --format json-dict data.json
+    $ piikun-compile -f json-dict data.json
+    $ piikun-compile --format json-dict data.json
     ```
 
 - "``json-list``": Generic JSON list (of lists)
@@ -90,8 +90,8 @@ A typical `piikun` analysis consists of:
     This specifies the sources will be lists of lists in JSON format (see below for details).
 
     ```bash
-    $ piikun-parse -f json-dict data.json
-    $ piikun-parse --format json-dict data.json
+    $ piikun-compile -f json-dict data.json
+    $ piikun-compile --format json-dict data.json
     ```
 
 The output file names and paths can be specified by using the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options.
@@ -100,7 +100,7 @@ Additional information can be added using the "``--set-property``" flag.
 For example, the following adds information regarding the source that can be referenced in visualizations and analysis downstream:
 
 ```bash
-$ piikun-parse \
+$ piikun-compile \
     -f delineate delineate-results.json \
     --set-property n_genes:143 \
     --set-property hypothesis:geographical \
@@ -108,20 +108,20 @@ $ piikun-parse \
 
 See ``--help`` for details on this and other options.
 
-### ``piikun-concat``: Collating and Combining Multiple Sources
+### Collating and Combining Multiple Sources
 
-The data files produced by ``piikun-parse`` can be analyzed by ``piikun-evaluate`` individually directly.
-To analyze data from multiple sources you can use ``piikun-concat`` to merge these sources into a single data source, while ensuring that the species delimitation or partition labels or identifiers are unique across the entire domain.
+The data files produced by ``piikun-compule`` can be analyzed by ``piikun-evaluate`` individually directly.
+To analyze data from multiple source formats you will use ``piikun-compile`` on each source *type* separately, generating a ``pikun`` partition JSON data file, for each one, and then run ``piikun-compile`` on all of these results to generate a single dataset.
 
 ```bash
 # Produces: ``delineate1-results.partitions.json``, ``delineate2-results.partitions.json``
-$ piikun-parse -f delineate delineate1-results.json delineate2-results.json
+$ piikun-compile -f delineate delineate1-results.json delineate2-results.json
 
 # Produces: ``bpp1.out.partitions.json``, ``bpp2.out.partitions.json``
-$ piikun-parse -f bpp-a11 bpp1.out.txt bpp2.out.txt
+$ piikun-compile -f bpp-a11 bpp1.out.txt bpp2.out.txt
 
 # Produces unified dataset for analysis: "``concatd-data.partitions.json``"
-$ piikun-concat \
+$ piikun-compile \
     delineate1-results.partitions.json \
     delineate2-results.partitions.json \
     bpp1.out.partitions.json \
@@ -129,21 +129,20 @@ $ piikun-concat \
     -o concatd-data
 ```
 
-
 See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
 
 
 ### ``piikun-evaluate``: Calculate Statistics and Distances
 
 This command carries out the main calculations of this package.
-It takes as its input the ``.partitions.json`` data file produced by ``piikun-parse`` or ``piikun-concat``.
+It takes as its input the ``.partitions.json`` data file produced by ``piikun-compile`` or ``piikun-concat``.
 
 ```bash
 # Produces: ``delineate1-results.partitions.json``, ``delineate2-results.partitions.json``
-$ piikun-parse -f delineate delineate1-results.json delineate2-results.json
+$ piikun-compile -f delineate delineate1-results.json delineate2-results.json
 
 # Produces: ``bpp1.out.partitions.json``, ``bpp2.out.partitions.json``
-$ piikun-parse -f bpp-a11 bpp1.out.txt bpp2.out.txt
+$ piikun-compile -f bpp-a11 bpp1.out.txt bpp2.out.txt
 
 # Independent/separate comparative analysis of species
 # delimitation models from multiple sources
@@ -228,8 +227,7 @@ The ``-comparisons`` file includes the variance of information distance statisti
 
 | Command              | Input                       | Output                                |
 |----------------------|-----------------------------|---------------------------------------|
-| ``piikun-parse``     | (Various)                   | ``<title>-partitions.json``           |
-| ``piikun-concat``    | ``<title>-partitions.json`` | ``<title>-partitions.json``           |
+| ``piikun-compile``   | (Various)                   | ``<title>-partitions.json``           |
 | ``piikun-evaluate``  | ``<title>-partitions.json`` | ``<title>-partitions-profiles.json``  |
 |                      |                             | ``<title>-partitions-distances.json`` |
 | ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>-<visualization-name>.html`` |

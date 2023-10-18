@@ -82,7 +82,7 @@ class Partition:
     def __init__(
         self,
         *,
-        label=None,
+        # label=None,
         # partition_d=None,
         subsets=None,
         log_base=2,
@@ -91,33 +91,33 @@ class Partition:
         self.log_base = log_base
         self.log_fn = lambda x: math.log(x, self.log_base)
         # self.log_fn = lambda x: math.log(x)
-        self.label = label
+        # self.label = label
         self._index = Partition._n_instances
         Partition._n_instances += 1
         self._subsets = []
-        self._label_subset_map = {}
+        # self._label_subset_map = {}
         self._elements = set()
         self.metadata_d = {}
         if metadata_d:
             self.metadata_d.update(metadata_d)
         # if partition_d is not None:
         #     self.parse_subsets(partition_d.values())
-        elif subsets is not None:
+        if subsets is not None:
             self.parse_subsets(subsets)
 
-    @property
-    def label(self):
-        if not hasattr(self, "_label") or self._label is None:
-            self._label = str(self._index)
-        return self._label
+    # @property
+    # def label(self):
+    #     if not hasattr(self, "_label") or self._label is None:
+    #         self._label = str(self._index)
+    #     return self._label
 
-    @label.setter
-    def label(self, value):
-        self._label = value
+    # @label.setter
+    # def label(self, value):
+    #     self._label = value
 
-    @label.deleter
-    def label(self):
-        del self._label
+    # @label.deleter
+    # def label(self):
+    #     del self._label
 
     @property
     def n_elements(
@@ -134,14 +134,33 @@ class Partition:
     def __hash__(self):
         return id(self)
 
-    def new_subset(self, label, elements):
+    # @property
+    # def source_data_d(self):
+    #     if (
+    #         not hasattr(self, "_source_data_d")
+    #         or self._source_data_d is None
+    #     ):
+    #         d = {}
+    #         d["label"] = self.label
+    #         d["subsets"] = list(self._subsets)
+    #         self._source_data_d = d
+    #     return self._source_data_d
+
+    def compose_source_data_d(self, key=None):
+        d = {}
+        if key is not None:
+            d["label"] = key
+        d["subsets"] = [sorted(subset._elements) for subset in self._subsets]
+        return d
+
+    def new_subset(self, elements):
         for element in elements:
             assert element not in self._elements
             self._elements.add(element)
         s = PartitionSubset(
             elements=elements,
         )
-        self._label_subset_map[label] = s
+        # self._label_subset_map[label] = s
         self._subsets.append(s)
         return s
 
@@ -151,7 +170,7 @@ class Partition:
 
     def parse_subsets(self, subsets):
         for label, v in enumerate(subsets):
-            self.new_subset(label=label, elements=v)
+            self.new_subset(elements=v)
 
     def entropy(self, method="vi"):
         if method == "vi":
@@ -261,12 +280,12 @@ class PartitionCollection:
 
     def new_partition(
         self,
-        label,
+        # label,
         subsets,
         metadata_d,
     ):
         ptn = Partition(
-            label=label,
+            # label=label,
             subsets=subsets,
             metadata_d=metadata_d,
             log_base=self.log_base,
@@ -274,3 +293,12 @@ class PartitionCollection:
         key = self.compose_partition_label(ptn)
         self._partitions[key] = ptn
         return ptn
+
+    def store_source_data(
+        self,
+        out,
+    ):
+        exported = { "partitions": [ ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() ] }
+        out.write(json.dumps(exported))
+
+

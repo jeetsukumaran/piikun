@@ -112,6 +112,7 @@ def main():
         logger.info("(Reading from standard input)")
         for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
             pass
+        partitions.store_source_data(sys.stdout)
     else:
         src_data = None
         src_paths = args.src_paths

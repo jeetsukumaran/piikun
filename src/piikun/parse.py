@@ -62,7 +62,7 @@ def parse_delineate(
             "support": src_partition.get("unconstrained_probability", 0),
         }
         kwargs = {
-            "label": spart_idx + 1,
+            # "label": spart_idx + 1,
             "metadata_d": metadata_d,
             "subsets": subsets,
         }
