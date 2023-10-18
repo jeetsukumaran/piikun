@@ -32,17 +32,15 @@
 
 import json
 from piikun import runtime
+from piikun import parsebpp
 from . import partitionmodel
 
 def parse_piikun_json(
+    source_stream,
     partition_factory,
-    *,
-    source_stream=None,
-    source_data=None,
 ):
     runtime.logger.info("Parsing 'pikkun-json' format")
-    if not source_data:
-        source_data = source_stream.read()
+    source_data = source_stream.read()
     data_d = json.loads(source_data)
     partition_ds = data_d["partitions"]
     runtime.logger.info(f"{len(partition_ds)} partitions in source")
@@ -59,14 +57,11 @@ def parse_piikun_json(
         yield partition
 
 def parse_delineate(
+    source_stream,
     partition_factory,
-    *,
-    source_stream=None,
-    source_data=None,
 ):
     runtime.logger.info("Parsing 'delineate' format")
-    if not source_data:
-        source_data = source_stream.read()
+    source_data = source_stream.read()
     delineate_results = json.loads(source_data)
     src_partitions = delineate_results["partitions"]
     runtime.logger.info(f"{len(src_partitions)} partitions in source")
@@ -108,11 +103,103 @@ def parse_delineate(
         partition = partition_factory(**kwargs)
         yield partition
 
+def parse_bpp_a11(
+    source_stream,
+    partition_factory,
+):
+    current_section = "pre"
+    lineage_labels = []
+    partition_info = []
+    line = None
+    line_idx = 0
+    n_partitions_expected = None
+    for line_idx, line in enumerate(source_stream):
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("(A) List of best models"):
+            assert current_section == "pre"
+            current_section = "(A)"
+        # elif line.startswith("(B) "):
+        elif (m := parsebpp.a11_section_b.match(line)):
+            assert current_section == "(A)"
+            current_section = "(B)"
+            n_partitions_expected = int(m[1])
+        elif line.startswith("(C"):
+            current_section = "post"
+        if current_section == "pre":
+            pass
+        elif current_section == "(A)":
+            if line.startswith("(A)"):
+                continue
+            elif not lineage_labels:
+                m = parsebpp.a11_treemodel_entry.match(line)
+                if not m:
+                    runtime.logger.log_warning(f"Expecting species tree model data: line {line_idx}: '{line}'")
+                else:
+                    lineage_labels = [label for label in parsebpp.strip_tree_tokens.split(m[5]) if label]
+                    # print(lineage_labels)
+        elif current_section == "(B)":
+            if line.startswith("(B)"):
+                runtime.logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
+                runtime.logger.info(f"{n_partitions_expected} partitions expected")
+                continue
+            assert lineage_labels
+            assert n_partitions_expected
+            parts = line.strip().split()
+            frequency = float(parts[1])
+            num_subsets = int(parts[2])
+            species_subsets_str = " ".join(parts[3:]).strip("()")
+            species_subsets = []
+            current_subset = []
+            temp_lineage_label = ""
+            for char in species_subsets_str:
+                if char == ' ':
+                    if current_subset:
+                        species_subsets.append(current_subset)
+                        current_subset = []
+                else:
+                    temp_lineage_label += char
+                    if temp_lineage_label in lineage_labels:
+                        current_subset.append(temp_lineage_label)
+                        temp_lineage_label = ""
+            if current_subset:
+                species_subsets.append(current_subset)
+            assert len(species_subsets) == num_subsets
+            partition_d = {
+                "frequency": frequency,
+                "n_subsets": num_subsets,
+                "subsets": species_subsets
+            }
+            runtime.logger.info(f"Partition {len(partition_info)+1} of {n_partitions_expected}: {num_subsets} clusters, probability = {frequency}")
+            partition_info.append(partition_d)
+        elif current_section == "post":
+            pass
+        else:
+            runtime.logger.log_warning(f"Unhandled line: {line_idx}: '{line}'")
+    if not partition_info:
+        runtime.terminate_error("No species delimitation partitions parsed from source", exit_code=1)
+    assert len(partition_info) == n_partitions_expected
+    for ptn_idx, ptn_info in enumerate(partition_info):
+        runtime.logger.info(
+            f"Storing partition {ptn_idx+1} of {len(partition_info)}"
+        )
+        metadata_d = {
+            "support": ptn_info["frequency"],
+        }
+        kwargs = {
+            "metadata_d": metadata_d,
+        }
+        kwargs["subsets"] = ptn_info["subsets"]
+        partition = partition_factory(**kwargs)
+        yield partition
+
 class Parser:
 
     format_parser_map = {
         "piikun": parse_piikun_json,
         "delineate": parse_delineate,
+        "bpp-a11": parse_bpp_a11,
     }
 
     def __init__(
@@ -166,6 +253,6 @@ class Parser:
         source,
     ):
         return self.parse_fn(
+            partition_factory=self.partition_factory,
             source_stream=source,
-            partition_factory=self.partition_factory
         )
