@@ -124,7 +124,7 @@ def main():
         # if runtime_client.output_title and runtime_client.output_title != "-":
         if runtime_client.output_title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
-            logger.info(f"Storing partitions: '{out.name}'")
+            logger.info(f"Storing {len(partitions)} partitions: '{out.name}'")
         else:
             out = sys.stdout
             logger.info("(Writing to standard output)")
@@ -151,11 +151,14 @@ def main():
             if not partitions or not args.is_merge_output:
                 partitions = partitionmodel.PartitionCollection()
                 parser.partition_factory = partitions.new_partition
+            start_len = len(partitions)
             for pidx, ptn in enumerate(parser.read_path(src_path)):
                 # -1 as we need to anticipate limit being reached in the next loop
                 if args.limit_partitions and (pidx >= args.limit_partitions-1):
                     logger.info(f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining")
                     break
+            end_len = len(partitions)
+            logger.info(f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)")
             if not args.is_merge_output:
                 runtime_client.output_title = pathlib.Path(src_path).stem
                 _store_partitions(partitions=partitions)
