@@ -107,9 +107,9 @@ def main():
         output_title = args.output_title.strip()
     elif args.src_paths:
         if len(args.src_paths) == 0:
-            output_title = pathlib.Path(args.src_paths[0]).stem
+            output_title = runtime.compose_output_title_from_source(args.src_paths[0])
         elif args.is_merge_output and len(args.src_paths) > 1:
-            output_title = pathlib.Path(args.src_paths[0]).stem + "+others"
+            output_title = runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
     runtime_client = runtime.RuntimeClient(
         output_title=output_title,
         output_directory=args.output_directory,
@@ -160,7 +160,7 @@ def main():
             end_len = len(partitions)
             logger.info(f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)")
             if not args.is_merge_output:
-                runtime_client.output_title = pathlib.Path(src_path).stem
+                runtime_client.output_title = compose_output_title_from_source(src_path)
                 _store_partitions(partitions=partitions)
         if args.is_merge_output:
             _store_partitions(partitions=partitions)

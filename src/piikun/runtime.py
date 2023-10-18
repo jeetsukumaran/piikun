@@ -8,6 +8,10 @@ from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
 
+
+def compose_output_title_from_source(source_path):
+    return pathlib.Path(source_path).stem.split("__partitions")[0]
+
 def get_logger(
     logging_level=logging.INFO,
     # Show a column for the time
