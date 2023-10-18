@@ -45,7 +45,7 @@ def parse_piikun_json(
         source_data = source_stream.read()
     data_d = json.loads(source_data)
     partition_ds = data_d["partitions"]
-    for ptn_idx, partition_d in enumerate(src_partitions):
+    for ptn_idx, (partition_key, partition_d) in enumerate(partition_ds.items()):
         partition = partition_factory(
             subsets=partition_d["subsets"],
             metadata_d=partition_d["metadata"],
@@ -85,15 +85,12 @@ def parse_delineate(
         runtime.logger.info(
             f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
         )
-        metadata_d = {
-            "constrained_probability": src_partition.get(
-                "constrained_probability", 0
-            ),
-            "unconstrained_probability": src_partition.get(
-                "unconstrained_probability", 0
-            ),
-            "support": src_partition.get("unconstrained_probability", 0),
-        }
+        metadata_d = {}
+        if label in src_partition:
+            metadata_d["label"] = src_partition["label"]
+        metadata_d["constrained_probability"] = src_partition.get("constrained_probability", 0)
+        metadata_d["constrained_probability"] = src_partition.get("unconstrained_probability", 0)
+        metadata_d["support"] = src_partition.get("support", 0)
         kwargs = {
             # "label": spart_idx + 1,
             "metadata_d": metadata_d,

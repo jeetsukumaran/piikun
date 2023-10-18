@@ -86,7 +86,7 @@ def main():
         "--output-title",
         action="store",
         default=None,
-        help="Prefix for output filenames.",
+        help="Prefix for output filenames (specify '-' for standard output).",
     )
     output_options.add_argument(
         "-O",
@@ -121,6 +121,7 @@ def main():
         source_format=args.source_format,
     )
     def _store_partitions(partitions, subtitle="partitions"):
+        # if runtime_client.output_title and runtime_client.output_title != "-":
         if runtime_client.output_title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
             logger.info(f"Storing partitions: '{out.name}'")

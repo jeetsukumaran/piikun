@@ -252,6 +252,8 @@ class RuntimeClient:
         mode="w",
         is_internally_disambiguate=True,
     ):
+        if self.output_title == "-":
+            return sys.stdout
         output_path = self.compose_output_path(subtitle=subtitle, ext=ext)
         if is_internally_disambiguate:
             disambigution_idx = 1
