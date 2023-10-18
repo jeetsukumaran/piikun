@@ -100,7 +100,7 @@ def main():
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
 
-    logger.info("Starting: piikun-compile")
+    logger.info("Starting: [b]piikun-compile[/b]")
     if not args.source_format:
         args.source_format = "delineate"
     parser = parse.Parser(
@@ -108,6 +108,7 @@ def main():
     )
     if not args.src_paths:
         partitions = partitionmodel.PartitionCollection()
+        parser.partition_factory = partitions.new_partition
         logger.info("(Reading from standard input)")
         for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
             pass

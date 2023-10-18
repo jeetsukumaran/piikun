@@ -61,10 +61,10 @@ def parse_delineate(
         }
         partition_data = src_partition["species_leafsets"]
         if not isinstance(partition_data, dict):
-            # legacy format!
+            # delineate legacy format!
             kwargs["subsets"] = partition_data
         else:
-            kwargs["partition_d"] = partition_data
+            kwargs["subsets"] = partition_data.values()
         partition = partition_factory(**kwargs)
         yield partition
 

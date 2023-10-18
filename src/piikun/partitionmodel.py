@@ -83,7 +83,7 @@ class Partition:
         self,
         *,
         label=None,
-        partition_d=None,
+        # partition_d=None,
         subsets=None,
         log_base=2,
         metadata_d=None,
@@ -100,8 +100,8 @@ class Partition:
         self.metadata_d = {}
         if metadata_d:
             self.metadata_d.update(metadata_d)
-        if partition_d is not None:
-            self.parse_subsets(partition_d.values())
+        # if partition_d is not None:
+        #     self.parse_subsets(partition_d.values())
         elif subsets is not None:
             self.parse_subsets(subsets)
 
@@ -248,17 +248,29 @@ class PartitionCollection:
         self.log_base = log_base
         self._partitions = {}
 
+    def compose_partition_label(self, ptn, idx=None):
+        if idx is None:
+            idx = len(self._partitions) + 1
+        disambigution_idx = 0
+        label = f"{idx}"
+        key = label
+        while key in self._partitions:
+            disambigution_idx += 1
+            key = f"{label}_{disambigution_idx:04d}"
+        return key
+
     def new_partition(
         self,
         label,
         subsets,
         metadata_d,
     ):
-        kwargs["log_base"] = self.log_base
         ptn = Partition(
             label=label,
             subsets=subsets,
             metadata_d=metadata_d,
+            log_base=self.log_base,
         )
-        self._partitions.append(ptn)
+        key = self.compose_partition_label(ptn)
+        self._partitions[key] = ptn
         return ptn
