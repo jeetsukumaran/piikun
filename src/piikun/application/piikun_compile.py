@@ -62,6 +62,7 @@ def main():
             "bpp-a11",
             "json-list",
             "spart-xml",
+            "piikun-json",
         ],
         help="Format of source species delimitation model data: [default='delineate'].",
     )

@@ -34,6 +34,24 @@ import json
 from piikun import runtime
 from . import partitionmodel
 
+def parse_piikun_json(
+    partition_factory,
+    *,
+    source_stream=None,
+    source_data=None,
+):
+    runtime.logger.info("Parsing 'pikkun-json' format")
+    if not source_data:
+        source_data = source_stream.read()
+    data_d = json.loads(source_data)
+    partition_ds = data_d["partitions"]
+    for ptn_idx, partition_d in enumerate(src_partitions):
+        partition = partition_factory(
+            subsets=partition_d["subsets"],
+            metadata_d=partition_d["metadata"],
+        )
+        yield partition
+
 def parse_delineate(
     partition_factory,
     *,
@@ -76,7 +94,8 @@ def parse_delineate(
 class Parser:
 
     format_parser_map = {
-        "delineate": parse_delineate
+        "piikun-json": parse_piikun_json,
+        "delineate": parse_delineate,
     }
 
     def __init__(
