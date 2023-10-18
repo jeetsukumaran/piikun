@@ -298,7 +298,9 @@ class PartitionCollection:
         self,
         out,
     ):
-        exported = { "partitions": [ ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() ] }
+        # exported = { "partitions": [ ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() ] }
+        # exported = { "partitions": { key:ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() } }
+        exported = { "partitions": { key:ptn.compose_source_data_d() for key, ptn in self._partitions.items() } }
         out.write(json.dumps(exported))
 
 
