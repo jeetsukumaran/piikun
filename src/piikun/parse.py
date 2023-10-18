@@ -50,7 +50,7 @@ def parse_delineate(
         else:
             subsets = partition_data.values()
         runtime.logger.info(
-            f"Partition {spart_idx+1:>5d} of {len(src_partitions)}: {len(subsets)} subsets"
+            f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
         )
         metadata_d = {
             "constrained_probability": src_partition.get(

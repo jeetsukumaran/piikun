@@ -188,21 +188,23 @@ class RuntimeClient:
             f"Initializing system runtime context at: {datetime.datetime.now()}"
         )
         self.opened_output_handles = {}
+        self.output_title = output_title
+        self.output_directory = output_directory
 
     @property
     def output_title(self):
         if (
             not hasattr(self, "_output_title")
-            or self._output_title is None
+            or (not self._output_title)
         ):
-            self._output_title = ""
+            self._output_title = "piikun"
         return self._output_title
     @output_title.setter
     def output_title(self, value):
         if value:
             self._output_title = value.strip()
         else:
-            self._output_title = ""
+            self._output_title = None
     @output_title.deleter
     def output_title(self):
         del self._output_title
@@ -224,7 +226,7 @@ class RuntimeClient:
         del self._output_directory
 
     def compose_output_name(self, subtitle=None, ext=None,):
-        s = []
+        s = [self.output_title]
         try:
             subtitle = subtitle.strip()
         except AttributeError:

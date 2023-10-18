@@ -119,8 +119,10 @@ def main():
     def _store_partitions(partitions, subtitle="partitions"):
         if args.output_title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
+            logger.info(f"Storing partitions: '{out.name}'")
         elif not args.src_paths:
             out = sys.stdout
+            logger.info("(Writing to standard output)")
         partition_source_data = partitions.export_source_data()
         out.write(json.dumps(partition_source_data))
         out.write("\n")
