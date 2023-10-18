@@ -133,7 +133,9 @@ def main():
         parser.partition_factory = partitions.new_partition
         logger.info("(Reading from standard input)")
         for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
-            pass
+            if args.limit_partitions and len(partitions) > args.limit_partitions:
+                logger.info(f"Partition count limit reached ({args.limit_partitions}): skipping remaining")
+                break
         _store_partitions(partitions)
     else:
         src_data = None

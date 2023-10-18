@@ -79,7 +79,11 @@ class Parser:
         "delineate": parse_delineate
     }
 
-    def __init__(self, source_format, partition_factory=None):
+    def __init__(
+        self,
+        source_format,
+        partition_factory=None,
+    ):
         self.source_format = source_format
         self.partition_factory = partition_factory
 

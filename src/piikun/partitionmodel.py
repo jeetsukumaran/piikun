@@ -268,6 +268,10 @@ class PartitionCollection:
         self.log_base = log_base
         self._partitions = {}
 
+
+    def __len__(self):
+        return len(self._partitions)
+
     def compose_partition_label(self, ptn, idx=None):
         if idx is None:
             idx = len(self._partitions) + 1
