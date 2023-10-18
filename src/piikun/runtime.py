@@ -3,6 +3,7 @@
 import sys
 import logging
 import datetime
+import pathlib
 from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
@@ -213,7 +214,7 @@ class RuntimeClient:
             not hasattr(self, "_output_directory")
             or self._output_directory is None
         ):
-            self._output_directory = pathlib.Path(args.output_directory)
+            self._output_directory = pathlib.Path.cwd()
         return self._output_directory
     @output_directory.setter
     def output_directory(self, value):
@@ -244,7 +245,7 @@ class RuntimeClient:
             subtitle=subtitle,
             ext=ext,
         )
-        output_path = pathlib.Pathlib(args.output_directory) / output_name
+        output_path = pathlib.Path(self.output_directory) / output_name
         return output_path
 
     def open_output(
@@ -262,4 +263,5 @@ class RuntimeClient:
                 output_path = self.compose_output_path(subtitle=f"{subtitle}-{disambigution_idx}", ext=ext)
         output_handle = open(output_path, mode)
         self.opened_output_handles[output_path] = output_handle
+        return output_handle
 
