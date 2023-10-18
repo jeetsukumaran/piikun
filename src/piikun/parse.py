@@ -45,10 +45,16 @@ def parse_piikun_json(
         source_data = source_stream.read()
     data_d = json.loads(source_data)
     partition_ds = data_d["partitions"]
+    runtime.logger.info(f"{len(partition_ds)} partitions in source")
     for ptn_idx, (partition_key, partition_d) in enumerate(partition_ds.items()):
+        subsets = partition_d["subsets"]
+        metadata_d = partition_d["metadata"]
+        runtime.logger.info(
+            f"Partition {ptn_idx+1:>5d} of {len(partition_ds)} ({len(subsets)} subsets)"
+        )
         partition = partition_factory(
-            subsets=partition_d["subsets"],
-            metadata_d=partition_d["metadata"],
+            subsets=subsets,
+            metadata_d=metadata_d,
         )
         yield partition
 
@@ -66,7 +72,7 @@ def parse_delineate(
     runtime.logger.info(f"{len(src_partitions)} partitions in source")
     for spart_idx, src_partition in enumerate(src_partitions):
         try:
-            partition_data = src_partition["sapecies_leafsets"]
+            partition_data = src_partition["species_leafsets"]
         except TypeError as e:
             runtime.terminate_error(
                 message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
@@ -86,11 +92,14 @@ def parse_delineate(
             f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
         )
         metadata_d = {}
-        if label in src_partition:
-            metadata_d["label"] = src_partition["label"]
-        metadata_d["constrained_probability"] = src_partition.get("constrained_probability", 0)
-        metadata_d["constrained_probability"] = src_partition.get("unconstrained_probability", 0)
-        metadata_d["support"] = src_partition.get("support", 0)
+        exclude_keys = set([
+            "species_leafsets",
+        ])
+        for k, v in src_partition.items():
+            if k not in exclude_keys:
+                metadata_d[k] = v
+        if "constrained_probability" in metadata_d:
+            metadata_d["support"] = metadata_d["unconstrained_probability"]
         kwargs = {
             # "label": spart_idx + 1,
             "metadata_d": metadata_d,
