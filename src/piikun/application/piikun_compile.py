@@ -108,7 +108,7 @@ def main():
     elif args.src_paths:
         if len(args.src_paths) == 0:
             output_title = pathlib.Path(args.src_paths[0]).stem
-        elif args.is_merge_output:
+        elif args.is_merge_output and len(args.src_paths) > 1:
             output_title = pathlib.Path(args.src_paths[0]).stem + "+others"
     runtime_client = runtime.RuntimeClient(
         output_title=output_title,
