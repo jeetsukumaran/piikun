@@ -140,6 +140,7 @@ def main():
         src_paths = args.src_paths
         partitions = None
         for src_idx, src_path in enumerate(src_paths):
+            logger.info(f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'")
             if not partitions or not args.is_merge_output:
                 partitions = partitionmodel.PartitionCollection()
                 parser.partition_factory = partitions.new_partition
