@@ -65,7 +65,18 @@ def parse_delineate(
     src_partitions = delineate_results["partitions"]
     runtime.logger.info(f"{len(src_partitions)} partitions in source")
     for spart_idx, src_partition in enumerate(src_partitions):
-        partition_data = src_partition["species_leafsets"]
+        try:
+            partition_data = src_partition["sapecies_leafsets"]
+        except TypeError as e:
+            runtime.terminate_error(
+                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
+                exit_code=1,
+            )
+        except KeyError as e:
+            runtime.terminate_error(
+                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: key 'species_leafsets' not found",
+                exit_code=1,
+            )
         if not isinstance(partition_data, dict):
             # delineate legacy format!
             subsets = partition_data
@@ -94,7 +105,7 @@ def parse_delineate(
 class Parser:
 
     format_parser_map = {
-        "piikun-json": parse_piikun_json,
+        "piikun": parse_piikun_json,
         "delineate": parse_delineate,
     }
 
