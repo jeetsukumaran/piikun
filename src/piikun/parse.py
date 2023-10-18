@@ -84,7 +84,6 @@ class Parser:
             not hasattr(self, "_parse_fn")
             or self._parse_fn is None
         ):
-            print(self.source_format)
             try:
                 self._parse_fn = self.format_parser_map[self.source_format]
             except KeyError:
