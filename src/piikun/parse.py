@@ -43,8 +43,14 @@ def parse_delineate(
     src_partitions = delineate_results["partitions"]
     runtime.logger.info(f"{len(src_partitions)} partitions in source")
     for spart_idx, src_partition in enumerate(src_partitions):
+        partition_data = src_partition["species_leafsets"]
+        if not isinstance(partition_data, dict):
+            # delineate legacy format!
+            subsets = partition_data
+        else:
+            subsets = partition_data.values()
         runtime.logger.info(
-            f"Storing partition {spart_idx+1} of {len(src_partitions)}"
+            f"Partition {spart_idx+1:>5d} of {len(src_partitions)}: {len(subsets)} subsets"
         )
         metadata_d = {
             "constrained_probability": src_partition.get(
@@ -58,13 +64,8 @@ def parse_delineate(
         kwargs = {
             "label": spart_idx + 1,
             "metadata_d": metadata_d,
+            "subsets": subsets,
         }
-        partition_data = src_partition["species_leafsets"]
-        if not isinstance(partition_data, dict):
-            # delineate legacy format!
-            kwargs["subsets"] = partition_data
-        else:
-            kwargs["subsets"] = partition_data.values()
         partition = partition_factory(**kwargs)
         yield partition
 
