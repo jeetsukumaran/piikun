@@ -34,8 +34,10 @@ import os
 import pathlib
 import sys
 import argparse
-from piikun.runtime import console, logger
+import json
+from piikun.runtime import logger
 from piikun import parse
+from piikun import runtime
 from piikun import partitionmodel
 
 def main():
@@ -99,21 +101,38 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
-
+    if args.output_title:
+        args.output_title = args.output_title.strip()
+    if not args.output_title and args.src_paths:
+        args.output_title = pathlib.Path(src_paths[0]).stem
+    runtime_client = runtime.RuntimeClient(
+        output_title=args.output_title,
+        output_directory=args.output_directory,
+    )
     logger.info("Starting: [b]piikun-compile[/b]")
     if not args.source_format:
         args.source_format = "delineate"
     parser = parse.Parser(
         source_format=args.source_format,
     )
+    seen_paths = set()
+    def _store_partitions(partitions, subtitle="partitions"):
+        if args.output_title:
+            out = runtime_client.open_output(subtitle=subtitle, ext="json")
+        elif not args.src_paths:
+            out = sys.stdout
+        partition_source_data = partitions.export_source_data()
+        out.write(json.dumps(partition_source_data))
+        out.write("\n")
+        out.close()
+
     if not args.src_paths:
         partitions = partitionmodel.PartitionCollection()
         parser.partition_factory = partitions.new_partition
         logger.info("(Reading from standard input)")
         for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
             pass
-        data = partitions.export_source_data()
-        console.print(data)
+        _store_partitions(partitions)
     else:
         src_data = None
         src_paths = args.src_paths

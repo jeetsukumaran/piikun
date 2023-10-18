@@ -271,7 +271,7 @@ class PartitionCollection:
     def compose_partition_label(self, ptn, idx=None):
         if idx is None:
             idx = len(self._partitions) + 1
-        disambigution_idx = 0
+        disambigution_idx = 1
         label = f"{idx}"
         key = label
         while key in self._partitions:

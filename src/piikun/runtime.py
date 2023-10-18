@@ -2,6 +2,7 @@
 
 import sys
 import logging
+import datetime
 from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
@@ -138,3 +139,123 @@ package_console_theme = Theme({
 })
 console = Console(theme=package_console_theme)
 logger = get_logger()
+
+
+class RuntimeClient:
+    @staticmethod
+    def ensure_random_seed(random_seed=None):
+        if random_seed is None:
+            rtmp = random.Random()
+            random_seed = rtmp.getrandbits(32)
+        return random_seed
+
+    @staticmethod
+    def get_rng(random_seed=None):
+        random_seed = RuntimeClient.ensure_random_seed(random_seed)
+        rng = random.Random(random_seed)
+        rng._random_seed = random_seed
+        return rng
+
+    @property
+    def logger(self):
+        if (
+            not hasattr(self, "_logger")
+            or self._logger is None
+        ):
+            self._logger = logger
+        return self._logger
+
+    @logger.setter
+    def logger(self, value):
+        self._logger = value
+
+    def __init__(
+        self,
+        random_seed=None,
+        logger=None,
+        output_directory=None,
+        output_title=None,
+        output_configuration=None,
+    ):
+        self.logger = logger
+            # from yakherd import Logger
+        self.logger.info(
+            f"Initializing system runtime context at: {datetime.datetime.now()}"
+        )
+        self.opened_output_handles = {}
+
+    @property
+    def output_title(self):
+        if (
+            not hasattr(self, "_output_title")
+            or self._output_title is None
+        ):
+            self._output_title = ""
+        return self._output_title
+    @output_title.setter
+    def output_title(self, value):
+        if value:
+            self._output_title = value.strip()
+        else:
+            self._output_title = ""
+    @output_title.deleter
+    def output_title(self):
+        del self._output_title
+
+
+    @property
+    def output_directory(self):
+        if (
+            not hasattr(self, "_output_directory")
+            or self._output_directory is None
+        ):
+            self._output_directory = pathlib.Path(args.output_directory)
+        return self._output_directory
+    @output_directory.setter
+    def output_directory(self, value):
+        self._output_directory = value
+    @output_directory.deleter
+    def output_directory(self):
+        del self._output_directory
+
+    def compose_output_name(self, subtitle=None, ext=None,):
+        s = []
+        try:
+            subtitle = subtitle.strip()
+        except AttributeError:
+            subtitle = ""
+        if subtitle:
+            s.append("-")
+            s.append(subtitle)
+        if ext:
+            ext = ext.strip()
+            if not ext.startswith(".") and not s[-1].endswith("."):
+                s.append(".")
+            s.append(ext)
+        output_name = "".join(s)
+        return output_name
+
+    def compose_output_path(self, subtitle=None, ext=None,):
+        output_name = self.compose_output_name(
+            subtitle=subtitle,
+            ext=ext,
+        )
+        output_path = pathlib.Pathlib(args.output_directory) / output_name
+        return output_path
+
+    def open_output(
+        self,
+        subtitle=None,
+        ext=None,
+        mode="w",
+        is_internally_disambiguate=True,
+    ):
+        output_path = self.compose_output_path(subtitle=subtitle, ext=ext)
+        if is_internally_disambiguate:
+            disambigution_idx = 1
+            while output_path in self.opened_output_handles:
+                disambigution_idx += 1
+                output_path = self.compose_output_path(subtitle=f"{subtitle}-{disambigution_idx}", ext=ext)
+        output_handle = open(output_path, mode)
+        self.opened_output_handles[output_path] = output_handle
+
