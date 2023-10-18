@@ -35,11 +35,15 @@ from piikun import runtime
 from . import partitionmodel
 
 def parse_delineate(
-    source_data,
     partition_factory,
+    *,
+    source_stream=None,
+    source_data=None,
 ):
     runtime.logger.info("Parsing 'delineate' format")
-    delineate_results = json.load(source_data)
+    if not source_data:
+        source_data = source_stream.read()
+    delineate_results = json.loads(source_data)
     src_partitions = delineate_results["partitions"]
     runtime.logger.info(f"{len(src_partitions)} partitions in source")
     for spart_idx, src_partition in enumerate(src_partitions):
@@ -114,13 +118,14 @@ class Parser:
         self,
         source,
     ):
-        pass
+        source_stream = open(source)
+        return self.read_stream(source_stream)
 
     def read_stream(
         self,
         source,
     ):
         return self.parse_fn(
-            source_data=source,
+            source_stream=source,
             partition_factory=self.partition_factory
         )

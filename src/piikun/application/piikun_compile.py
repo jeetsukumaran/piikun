@@ -103,8 +103,6 @@ def main():
     args = parser.parse_args()
     if args.output_title:
         args.output_title = args.output_title.strip()
-    if not args.output_title and args.src_paths:
-        args.output_title = pathlib.Path(src_paths[0]).stem
     runtime_client = runtime.RuntimeClient(
         output_title=args.output_title,
         output_directory=args.output_directory,
@@ -117,7 +115,12 @@ def main():
     )
     seen_paths = set()
     def _store_partitions(partitions, subtitle="partitions"):
+        title = None
         if args.output_title:
+            title = args.output_title
+        elif args.src_paths:
+            title = runtime_client.compose_output_title_from_source_path(args.src_paths[0])
+        if title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
             logger.info(f"Storing partitions: '{out.name}'")
         elif not args.src_paths:
@@ -138,10 +141,16 @@ def main():
     else:
         src_data = None
         src_paths = args.src_paths
-        partitions = partitionmodel.PartitionCollection()
+        partitions = None
         for src_idx, src_path in enumerate(src_paths):
+            if not partitions or not args.is_merge_output:
+                partitions = partitionmodel.PartitionCollection()
+                parser.partition_factory = partitions.new_partition
             for pidx, ptn in enumerate(parser.read_path(src_path)):
                 pass
+            if not args.is_merge_output:
+                runtime_client.output_title = runtime_client.compose_output_title_from_source_path(src_path)
+                _store_partitions(partitions)
 
 if __name__ == '__main__':
     main()

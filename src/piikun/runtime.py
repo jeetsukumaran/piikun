@@ -147,6 +147,11 @@ logger = get_logger()
 
 
 class RuntimeClient:
+
+    @staticmethod
+    def compose_output_title_from_source_path(self, source_path):
+        return pathlib.Path(source_path).stem
+
     @staticmethod
     def ensure_random_seed(random_seed=None):
         if random_seed is None:
