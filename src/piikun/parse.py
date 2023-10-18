@@ -36,14 +36,14 @@ from . import partitionmodel
 
 def parse_delineate(
     source_data,
-    partion_factory,
+    partition_factory,
 ):
-    logger.info("Parsing 'delineate' format")
+    runtime.logger.info("Parsing 'delineate' format")
     delineate_results = json.load(source_data)
     src_partitions = delineate_results["partitions"]
-    logger.info(f"{len(src_partitions)} partitions in source")
+    runtime.logger.info(f"{len(src_partitions)} partitions in source")
     for spart_idx, src_partition in enumerate(src_partitions):
-        logger.info(
+        runtime.logger.info(
             f"Storing partition {spart_idx+1} of {len(src_partitions)}"
         )
         metadata_d = {
@@ -84,12 +84,12 @@ class Parser:
             not hasattr(self, "_parse_fn")
             or self._parse_fn is None
         ):
+            print(self.source_format)
             try:
                 self._parse_fn = self.format_parser_map[self.source_format]
             except KeyError:
-                runtime.logger.error(f"Unrecognized source format: '{self.source_format}'\nSupported formats: {list(self.format_parser_map.keys())}")
-                runtime.terminate(
-                    message="Aborting due to error",
+                runtime.terminate_error(
+                    message=f"Unrecognized source format: '{self.source_format}'\nSupported formats: {list(self.format_parser_map.keys())}",
                     exit_code=1,
                 )
         return self._parse_fn
@@ -100,7 +100,11 @@ class Parser:
             not hasattr(self, "_partition_factory")
             or self._partition_factory is None
         ):
-            runtime.logger.error(f"Partition factory not defined")
+            # runtime.logger.error(f"Partition factory not defined")
+            runtime.terminate_error(
+                message="Partition factory not defined",
+                exit_code=1,
+            )
         return self._partition_factory
     @partition_factory.setter
     def partition_factory(self, value):
@@ -116,4 +120,7 @@ class Parser:
         self,
         source,
     ):
-        return self.parse_fn(source_data=source, source_format=self.source_format)
+        return self.parse_fn(
+            source_data=source,
+            partition_factory=self.partition_factory
+        )

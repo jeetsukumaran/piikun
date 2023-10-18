@@ -101,6 +101,8 @@ def main():
     args = parser.parse_args()
 
     logger.info("Starting: piikun-compile")
+    if not args.source_format:
+        args.source_format = "delineate"
     parser = parse.Parser(
         source_format=args.source_format,
     )

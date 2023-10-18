@@ -122,17 +122,12 @@ def get_logger(
     return logger
 
 
-def terminate(
+def terminate_error(
     message,
     exit_code,
     ):
     if message:
-        # if exit_code:
-        #     fn = logger.error
-        # else:
-        #     fn = logger.info
-        fn = logger.info
-        fn(f"Terminating run: {message}")
+        logger.error(f"Terminating run: {message}")
     sys.exit(exit_code)
 
 
