@@ -147,7 +147,10 @@ def main():
                 partitions = partitionmodel.PartitionCollection()
                 parser.partition_factory = partitions.new_partition
             for pidx, ptn in enumerate(parser.read_path(src_path)):
-                pass
+                # -1 as we need to anticipate limit being reached in the next loop
+                if args.limit_partitions and (pidx >= args.limit_partitions-1):
+                    logger.info(f"Partition count limit reached ({args.limit_partitions}): skipping remaining")
+                    break
             if not args.is_merge_output:
                 runtime_client.output_title = pathlib.Path(src_path).stem
                 _store_partitions(partitions=partitions)
