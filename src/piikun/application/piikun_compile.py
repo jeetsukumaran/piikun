@@ -105,7 +105,10 @@ def main():
     if args.output_title:
         output_title = args.output_title.strip()
     elif args.src_paths:
-        output_title = pathlib.Path(args.src_paths[0]).stem
+        if len(args.src_paths) == 0:
+            output_title = pathlib.Path(args.src_paths[0]).stem
+        elif args.is_merge_output:
+            output_title = pathlib.Path(args.src_paths[0]).stem + "+others"
     runtime_client = runtime.RuntimeClient(
         output_title=output_title,
         output_directory=args.output_directory,
@@ -154,6 +157,8 @@ def main():
             if not args.is_merge_output:
                 runtime_client.output_title = pathlib.Path(src_path).stem
                 _store_partitions(partitions=partitions)
+        if args.is_merge_output:
+            _store_partitions(partitions=partitions)
 
 if __name__ == '__main__':
     main()

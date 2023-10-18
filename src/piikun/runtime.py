@@ -149,10 +149,6 @@ logger = get_logger()
 class RuntimeClient:
 
     @staticmethod
-    def compose_output_title_from_source_path(source_path):
-        return pathlib.Path(source_path).stem
-
-    @staticmethod
     def ensure_random_seed(random_seed=None):
         if random_seed is None:
             rtmp = random.Random()
@@ -233,7 +229,7 @@ class RuntimeClient:
             s.append(self.output_title)
         if subtitle:
             s.append(subtitle.strip())
-        output_name = "-".join(s)
+        output_name = "__".join(s)
         if ext:
             ext = ext.strip()
             if not ext.startswith(".") and not output_name.endswith("."):
