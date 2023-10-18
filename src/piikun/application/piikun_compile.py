@@ -101,10 +101,13 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
+    output_title = None
     if args.output_title:
-        args.output_title = args.output_title.strip()
+        output_title = args.output_title.strip()
+    elif args.src_paths:
+        output_title = pathlib.Path(args.src_paths[0]).stem
     runtime_client = runtime.RuntimeClient(
-        output_title=args.output_title,
+        output_title=output_title,
         output_directory=args.output_directory,
     )
     logger.info("Starting: [b]piikun-compile[/b]")
@@ -113,17 +116,11 @@ def main():
     parser = parse.Parser(
         source_format=args.source_format,
     )
-    seen_paths = set()
-    def _store_partitions(partitions, subtitle="partitions"):
-        title = None
-        if args.output_title:
-            title = args.output_title
-        elif args.src_paths:
-            title = runtime_client.compose_output_title_from_source_path(args.src_paths[0])
-        if title:
+    def _store_partitions(partitions, source_path=None, subtitle="partitions"):
+        if runtime_client.output_title:
             out = runtime_client.open_output(subtitle=subtitle, ext="json")
             logger.info(f"Storing partitions: '{out.name}'")
-        elif not args.src_paths:
+        else:
             out = sys.stdout
             logger.info("(Writing to standard output)")
         partition_source_data = partitions.export_source_data()
@@ -149,8 +146,8 @@ def main():
             for pidx, ptn in enumerate(parser.read_path(src_path)):
                 pass
             if not args.is_merge_output:
-                runtime_client.output_title = runtime_client.compose_output_title_from_source_path(src_path)
-                _store_partitions(partitions)
+                # runtime_client.output_title = runtime_client.compose_output_title_from_source_path(src_path)
+                _store_partitions(partitions=partitions, source_path=src_path)
 
 if __name__ == '__main__':
     main()

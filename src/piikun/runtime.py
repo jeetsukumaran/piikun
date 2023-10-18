@@ -149,7 +149,7 @@ logger = get_logger()
 class RuntimeClient:
 
     @staticmethod
-    def compose_output_title_from_source_path(self, source_path):
+    def compose_output_title_from_source_path(source_path):
         return pathlib.Path(source_path).stem
 
     @staticmethod
@@ -202,7 +202,7 @@ class RuntimeClient:
             not hasattr(self, "_output_title")
             or (not self._output_title)
         ):
-            self._output_title = "piikun"
+            self._output_title = None
         return self._output_title
     @output_title.setter
     def output_title(self, value):
@@ -210,9 +210,6 @@ class RuntimeClient:
             self._output_title = value.strip()
         else:
             self._output_title = None
-    @output_title.deleter
-    def output_title(self):
-        del self._output_title
 
 
     @property
@@ -231,20 +228,17 @@ class RuntimeClient:
         del self._output_directory
 
     def compose_output_name(self, subtitle=None, ext=None,):
-        s = [self.output_title]
-        try:
-            subtitle = subtitle.strip()
-        except AttributeError:
-            subtitle = ""
+        s = []
+        if self.output_title:
+            s.append(self.output_title)
         if subtitle:
-            s.append("-")
-            s.append(subtitle)
+            s.append(subtitle.strip())
+        output_name = "-".join(s)
         if ext:
             ext = ext.strip()
-            if not ext.startswith(".") and not s[-1].endswith("."):
-                s.append(".")
-            s.append(ext)
-        output_name = "".join(s)
+            if not ext.startswith(".") and not output_name.endswith("."):
+                output_name += "."
+            output_name += ext
         return output_name
 
     def compose_output_path(self, subtitle=None, ext=None,):
