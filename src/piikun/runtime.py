@@ -1,4 +1,6 @@
 
+
+import sys
 import logging
 from rich.console import Console
 from rich.theme import Theme
@@ -118,6 +120,21 @@ def get_logger(
     logger.setLevel(logging_level)
     logger.addHandler(handler)
     return logger
+
+
+def terminate(
+    message,
+    exit_code,
+    ):
+    if message:
+        # if exit_code:
+        #     fn = logger.error
+        # else:
+        #     fn = logger.info
+        fn = logger.info
+        fn(f"Terminating run: {message}")
+    sys.exit(exit_code)
+
 
 package_console_theme = Theme({
     "info": "dim cyan",

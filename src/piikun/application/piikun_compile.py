@@ -34,7 +34,7 @@ import os
 import pathlib
 import sys
 import argparse
-from piikun.console import console, logger
+from piikun.runtime import console, logger
 from piikun import parse
 from piikun import partitionmodel
 
@@ -101,7 +101,9 @@ def main():
     args = parser.parse_args()
 
     logger.info("Starting: piikun-compile")
-    parser = parse.Parser(source_format=args.source_format)
+    parser = parse.Parser(
+        source_format=args.source_format,
+    )
     if not args.src_paths:
         partitions = partitionmodel.PartitionCollection()
         logger.info("(Reading from standard input)")

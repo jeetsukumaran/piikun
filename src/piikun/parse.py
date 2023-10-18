@@ -30,22 +30,90 @@
 ##
 ##############################################################################
 
+import json
+from piikun import runtime
 from . import partitionmodel
+
+def parse_delineate(
+    source_data,
+    partion_factory,
+):
+    logger.info("Parsing 'delineate' format")
+    delineate_results = json.load(source_data)
+    src_partitions = delineate_results["partitions"]
+    logger.info(f"{len(src_partitions)} partitions in source")
+    for spart_idx, src_partition in enumerate(src_partitions):
+        logger.info(
+            f"Storing partition {spart_idx+1} of {len(src_partitions)}"
+        )
+        metadata_d = {
+            "constrained_probability": src_partition.get(
+                "constrained_probability", 0
+            ),
+            "unconstrained_probability": src_partition.get(
+                "unconstrained_probability", 0
+            ),
+            "support": src_partition.get("unconstrained_probability", 0),
+        }
+        kwargs = {
+            "label": spart_idx + 1,
+            "metadata_d": metadata_d,
+        }
+        partition_data = src_partition["species_leafsets"]
+        if not isinstance(partition_data, dict):
+            # legacy format!
+            kwargs["subsets"] = partition_data
+        else:
+            kwargs["partition_d"] = partition_data
+        partition = partition_factory(**kwargs)
+        yield partition
 
 class Parser:
 
-    def __init__(self, source_format=None):
+    format_parser_map = {
+        "delineate": parse_delineate
+    }
+
+    def __init__(self, source_format, partition_factory=None):
         self.source_format = source_format
+        self.partition_factory = partition_factory
+
+    @property
+    def parse_fn(self):
+        if (
+            not hasattr(self, "_parse_fn")
+            or self._parse_fn is None
+        ):
+            try:
+                self._parse_fn = self.format_parser_map[self.source_format]
+            except KeyError:
+                runtime.logger.error(f"Unrecognized source format: '{self.source_format}'\nSupported formats: {list(self.format_parser_map.keys())}")
+                runtime.terminate(
+                    message="Aborting due to error",
+                    exit_code=1,
+                )
+        return self._parse_fn
+
+    @property
+    def partition_factory(self):
+        if (
+            not hasattr(self, "_partition_factory")
+            or self._partition_factory is None
+        ):
+            runtime.logger.error(f"Partition factory not defined")
+        return self._partition_factory
+    @partition_factory.setter
+    def partition_factory(self, value):
+        self._partition_factory = value
 
     def read_path(
         self,
-        src,
+        source,
     ):
         pass
 
     def read_stream(
         self,
-        src,
+        source,
     ):
-        for i in range(10):
-            yield i
+        return self.parse_fn(source_data=source, source_format=self.source_format)
