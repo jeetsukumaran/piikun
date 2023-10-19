@@ -106,7 +106,7 @@ def main():
     if args.output_title:
         output_title = args.output_title.strip()
     elif args.src_paths:
-        if len(args.src_paths) == 0:
+        if len(args.src_paths) == 1:
             output_title = runtime.compose_output_title_from_source(args.src_paths[0])
         elif args.is_merge_output and len(args.src_paths) > 1:
             output_title = runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
