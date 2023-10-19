@@ -29,22 +29,27 @@ $ python3 -m pip install --user --upgrade git+git://github.com/jeetsukumaran/pii
 
 ## Usage
 
-A typical `piikun` analysis consists of:
+Following the generation, definition or conceptualization of the species delimitation partitions (see below), a typical analyses would consist of:
 
-- **Generating** the source or sources species delimitation models to be analyzed.
-  This can be the results of a DELINEATE, BPP, or some other species delimitation analysis.
-  Or it can be a manual based on arrangements described in literature, speculatively, etc.
-
-- **Defining** the partition definitions and associated information from the species delimitation model sources.
-
-- **Combining** partition definitions from one or more sources into an input dataset.
+- **Compiling** the partition definitions and associated information from the species delimitation model analyses results.
 
 - **Analyzing** the partition data to calculate the various measures of information for each partition and associated distances between each distinct pair of partitions.
 
-- **Visualizing** the resuts.
+- **Visualizing** the results.
 
+### Generating the Partitions
 
-### ``piikun-compile``: Extracting the Partition Data from the Species Delimitation Model Sources
+A typical `piikun` analysis starts *after* generating or otherwise conceptualizing the source or sources species delimitation models to be analyzed.
+This can be the results of one or more DELINEATE, BPP, or some other species delimitation analyses run on the a dataset that, while needing to be invariant in terms of lineage/population concepts, may vary based on the statistical datak
+So, for example, one may imagine a data set consisting 40 samples that we are organizing into higher level units (e.g., a sample of individuals into demes in a BPP A11 analysis, or a sample of putative demes into species units in a BPP A10 or DELINEATE analysis).
+We may use various different kinds of data to represent these lineages in these analysis and other related ones.
+We might run multiple different BPP analyses using different markers, or we may be comparing our work on one set of markers to another that used a different set (or ran under different constraints).
+
+We can compare the species delimitation results across all these analyses because the basic concepts being organized into deme or species "blocks" or "subsets" are consistent across all of them.
+This is why we can also include and compare the results from, not just across different genetic datasets of the same samples, but also across analyses that integrate morphological data, or take into account arrangements described in literature, speculatively, etc.
+As long as the the "elements" of the subsets of the partitions map to the same concept, the resulting partitions can be compared, regardless of method of conceptualization or identification.
+
+### Compiling the Partitions: Extracting the Partition Data from the Species Delimitation Model Sources
 
 ``piikun-compile`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
 ``piikun-compile`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
@@ -120,13 +125,13 @@ $ piikun-compile -f delineate delineate1-results.json delineate2-results.json
 # Produces: ``bpp1.out.partitions.json``, ``bpp2.out.partitions.json``
 $ piikun-compile -f bpp-a11 bpp1.out.txt bpp2.out.txt
 
-# Produces unified dataset for analysis: "``concatd-data.partitions.json``"
+# Produces unified dataset for analysis: "``concated-data.partitions.json``"
 $ piikun-compile \
     delineate1-results.partitions.json \
     delineate2-results.partitions.json \
     bpp1.out.partitions.json \
     bpp2.out.partitions.json \
-    -o concatd-data
+    -o concated-data
 ```
 
 See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
@@ -135,7 +140,7 @@ See ``--help`` for details on this and other options, such as setting the output
 ### ``piikun-evaluate``: Calculate Statistics and Distances
 
 This command carries out the main calculations of this package.
-It takes as its input the ``.partitions.json`` data file produced by ``piikun-compile`` or ``piikun-concat``.
+It takes as its input the ``.partitions.json`` data file produced by ``piikun-compile``.
 
 ```bash
 # Produces: ``delineate1-results.partitions.json``, ``delineate2-results.partitions.json``
@@ -155,17 +160,17 @@ $ piikun-evaluate bpp2.out.partitions.json
 # from multiple sources
 
 # Combine species delimitation models from multiple sources
-# into single data file: ``concatd-data.partitions.json``
-$ piikun-concat \
+# into single data file: ``concated-data.partitions.json``
+$ piikun-compile \
     delineate1-results.partitions.json \
     delineate2-results.partitions.json \
     bpp1.out.partitions.json \
     bpp2.out.partitions.json \
-    -o concatd-data
+    -o concated-data
 
 # Joint/single comparative analysis of species
 # delimitation models from multiple sources
-$ piikun-evaluate concatd-data.partitions.json
+$ piikun-evaluate concated-data.partitions.json
 
 
 ```

@@ -60,7 +60,7 @@ def main():
             "delineate",
             # "bpp-a10",
             "bpp-a11",
-            "json-list",
+            "json-lists",
             "spart-xml",
             "piikun",
         ],

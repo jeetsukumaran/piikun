@@ -202,15 +202,15 @@ def parse_json_generic_lists(
     runtime.logger.info("Parsing 'json-lists' format")
     source_data = source_stream.read()
     data_d = json.loads(source_data)
-    runtime.logger.info(f"{len(partition_ds)} partitions in source")
-    src_data = json.loads(src_data)
-    for ptn_idx, ptn in enumerate(src_data):
+    runtime.logger.info(f"{len(data_d)} partitions in source")
+    source_data = json.loads(source_data)
+    for ptn_idx, ptn in enumerate(source_data):
         runtime.logger.info(
-            f"Partition {ptn_idx+1:>5d} of {len(src_data)} ({len(ptn)} subsets)"
+            f"Partition {ptn_idx+1:>5d} of {len(data_d)} ({len(ptn)} subsets)"
         )
-        partition = self.new_partition(
-            label=ptn_idx + 1,
+        partition = partition_factory(
             subsets=ptn,
+            metadata_d={},
         )
         yield partition
 
