@@ -31,6 +31,7 @@
 ##############################################################################
 
 import json
+import xml.etree.ElementTree as ET
 from piikun import runtime
 from piikun import parsebpp
 from . import partitionmodel
@@ -194,12 +195,66 @@ def parse_bpp_a11(
         partition = partition_factory(**kwargs)
         yield partition
 
+def parse_json_generic_lists(
+    source_stream,
+    partition_factory,
+):
+    runtime.logger.info("Parsing 'json-lists' format")
+    source_data = source_stream.read()
+    data_d = json.loads(source_data)
+    runtime.logger.info(f"{len(partition_ds)} partitions in source")
+    src_data = json.loads(src_data)
+    for ptn_idx, ptn in enumerate(src_data):
+        runtime.logger.info(
+            f"Partition {ptn_idx+1:>5d} of {len(src_data)} ({len(ptn)} subsets)"
+        )
+        partition = self.new_partition(
+            label=ptn_idx + 1,
+            subsets=ptn,
+        )
+        yield partition
+
+def parse_spart_xml(
+    source_stream,
+    partition_factory,
+):
+    runtime.logger.info("Parsing 'spart-xml' format")
+    source_data = source_stream.read()
+    root = ET.fromstring(source_data)
+    sparts = root.findall(".//spartition")
+    runtime.logger.info(f"{len(sparts)} partitions in source")
+    for spart_idx, spartition_element in enumerate(sparts):
+        subsets = []
+        spart_subsets = spartition_element.findall(".//subset")
+        runtime.logger.info(
+            f"Partition {spart_idx+1:>5d} of {len(sparts)} ({len(spart_subsets)} subsets)"
+        )
+        for subset_idx, subset_element in enumerate(spart_subsets):
+            subset = []
+            for individual_element in subset_element.findall(".//individual"):
+                subset.append(individual_element.get("ref"))
+            subsets.append(subset)
+        metadata_d = {}
+        for key in [
+            "label",
+            "spartitionScore",
+        ]:
+            if (d := spartition_element.attrib.get(key, None)):
+                metadata_d[key]  = d
+        partition = partition_factory(
+            subsets=subsets,
+            metadata_d=metadata_d,
+        )
+        yield partition
+
 class Parser:
 
     format_parser_map = {
         "piikun": parse_piikun_json,
         "delineate": parse_delineate,
         "bpp-a11": parse_bpp_a11,
+        "json-lists": parse_json_generic_lists,
+        "spart-xml": parse_spart_xml,
     }
 
     def __init__(
