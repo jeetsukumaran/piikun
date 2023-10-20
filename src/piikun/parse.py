@@ -80,6 +80,7 @@ def parse_delineate(
     with progress_reporter:
         for spart_idx, src_partition in enumerate(src_partitions):
             progress_reporter.update(task1, advance=1)
+            progress_reporter.refresh() # for Jupyter notebooks
             time.sleep(0.05)
             try:
                 partition_data = src_partition["species_leafsets"]
@@ -98,12 +99,9 @@ def parse_delineate(
                 subsets = partition_data
             else:
                 subsets = partition_data.values()
-            progress_reporter.console.print(
+            runtime_client.logger.info(
                 f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
             )
-            # runtime.logger.info(
-            #     f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
-            # )
             metadata_d = {}
             exclude_keys = set([
                 "species_leafsets",

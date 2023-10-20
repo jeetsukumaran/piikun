@@ -148,6 +148,7 @@ def main():
         source_format=args.source_format,
         runtime_client=rc,
     )
+    assert parser.runtime_client is rc
 
     if not args.src_paths:
         partitions = partitionmodel.PartitionCollection()
