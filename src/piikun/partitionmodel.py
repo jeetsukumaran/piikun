@@ -308,4 +308,7 @@ class PartitionCollection:
         exported = { "partitions": { key:ptn.compose_source_data_d() for key, ptn in self._partitions.items() } }
         return exported
 
+    def validate(self, logger):
+        pass
+
 

@@ -8,7 +8,6 @@ from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
 
-
 def compose_output_title_from_source(source_path):
     return pathlib.Path(source_path).stem.split("__partitions")[0]
 
@@ -46,6 +45,7 @@ def get_logger(
     locals_max_string=80,
     ## If ``log_time`` is enabled, either string for strftime or callable that formats the time, by default "[%x %X] ".
     # log_time_format="[%Y-%m-%d %H:%M:%S]"
+    console=None,
 ):
     # console_fmt = "%(asctime)s.%(msecs)03d|%(levelname)s|%(pathname)s:%(lineno)d|%(message)s"
     # date_fmt = "[%Y-%m-%d %H:%M:%S]"
@@ -54,15 +54,8 @@ def get_logger(
     console_fmt = "%(message)s"
     date_fmt = "[%Y-%m-%d %H:%M:%S]"
     logger = logging.getLogger("root")
-    package_console_theme = Theme({
-        "info": "dim cyan",
-        "warning": "magenta",
-        "danger": "bold red",
-    })
-    stderr_console = Console(
-        theme=package_console_theme,
-        stderr=True,
-    )
+    if not console:
+        console = Console(stderr=True)
     handler = RichHandler(
         level=logging_level,
         show_time=show_time,
@@ -70,7 +63,7 @@ def get_logger(
         show_level=show_level,
         show_path=show_path,
         markup=markup,
-        console=stderr_console,
+        console=console,
     )
     handler.setFormatter(
         logging.Formatter(
@@ -92,37 +85,26 @@ def terminate_error(
     sys.exit(exit_code)
 
 
-logger = get_logger()
-
-
 class RuntimeClient:
 
-    @staticmethod
-    def ensure_random_seed(random_seed=None):
-        if random_seed is None:
-            rtmp = random.Random()
-            random_seed = rtmp.getrandbits(32)
-        return random_seed
+    _stderr_console = Console(
+        stderr=True,
+    )
+    _logger = None
 
-    @staticmethod
-    def get_rng(random_seed=None):
-        random_seed = RuntimeClient.ensure_random_seed(random_seed)
-        rng = random.Random(random_seed)
-        rng._random_seed = random_seed
-        return rng
+    # @staticmethod
+    # def ensure_random_seed(random_seed=None):
+    #     if random_seed is None:
+    #         rtmp = random.Random()
+    #         random_seed = rtmp.getrandbits(32)
+    #     return random_seed
 
-    @property
-    def logger(self):
-        if (
-            not hasattr(self, "_logger")
-            or self._logger is None
-        ):
-            self._logger = logger
-        return self._logger
-
-    @logger.setter
-    def logger(self, value):
-        self._logger = value
+    # @staticmethod
+    # def get_rng(random_seed=None):
+    #     random_seed = RuntimeClient.ensure_random_seed(random_seed)
+    #     rng = random.Random(random_seed)
+    #     rng._random_seed = random_seed
+    #     return rng
 
     def __init__(
         self,
@@ -135,11 +117,32 @@ class RuntimeClient:
         self.logger = logger
             # from yakherd import Logger
         self.logger.info(
-            f"Initializing system runtime context at: {datetime.datetime.now()}"
+            f"Runtime context at {datetime.datetime.now()}"
         )
         self.opened_output_handles = {}
         self.output_title = output_title
         self.output_directory = output_directory
+
+    @property
+    def console(self):
+        if (
+            not hasattr(self, "_console")
+            or self._console is None
+        ):
+            self._console = RuntimeClient._stderr_console
+        return self._console
+    @console.setter
+    def console(self, value):
+        self._console = value
+
+    @property
+    def logger(self):
+        if RuntimeClient._logger is None:
+            RuntimeClient._logger = get_logger(console=self.console)
+        return RuntimeClient._logger
+    @logger.setter
+    def logger(self, value):
+        self._logger = value
 
     @property
     def output_title(self):
