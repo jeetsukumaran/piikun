@@ -1,5 +1,6 @@
 
 
+import time
 import sys
 import logging
 import datetime
@@ -76,15 +77,6 @@ def get_logger(
     return logger
 
 
-def terminate_error(
-    message,
-    exit_code,
-    ):
-    if message:
-        logger.error(f"Terminating run: {message}")
-    sys.exit(exit_code)
-
-
 class RuntimeClient:
 
     _stderr_console = Console(
@@ -117,7 +109,7 @@ class RuntimeClient:
         self.logger = logger
             # from yakherd import Logger
         self.logger.info(
-            f"Runtime context at {datetime.datetime.now()}"
+            f"Runtime context {id(self)} initialized at {datetime.datetime.now()}"
         )
         self.opened_output_handles = {}
         self.output_title = output_title
@@ -143,6 +135,15 @@ class RuntimeClient:
     @logger.setter
     def logger(self, value):
         self._logger = value
+
+    def terminate_error(
+        self,
+        message,
+        exit_code,
+        ):
+        if message:
+            self.logger.error(f"Terminating run: {message}")
+        sys.exit(exit_code)
 
     @property
     def output_title(self):
@@ -215,4 +216,8 @@ class RuntimeClient:
         output_handle = open(output_path, mode)
         self.opened_output_handles[output_path] = output_handle
         return output_handle
+
+    def sleep(self, *args, **kwargs):
+        # to avoid importing time everywhere when debugging
+        time.sleep(*args, **kwargs)
 

@@ -32,7 +32,6 @@
 
 import json
 import xml.etree.ElementTree as ET
-from rich import progress
 from piikun import runtime
 from piikun import parsebpp
 from . import partitionmodel
@@ -61,63 +60,46 @@ def parse_piikun_json(
 def parse_delineate(
     source_stream,
     partition_factory,
-    runtime_client,
+    # runtime_client,
 ):
-    import time
-    progress_reporter = progress.Progress(
-        progress.SpinnerColumn(),
-        progress.TextColumn("[progress.description]{task.description}"),
-        progress.BarColumn(),
-        progress.MofNCompleteColumn(),
-        progress.TimeRemainingColumn(),
-        transient=True,
-        console=runtime_client.console,
-    )
+    # import time
     source_data = source_stream.read()
     delineate_results = json.loads(source_data)
     src_partitions = delineate_results["partitions"]
-    task1 = progress_reporter.add_task("Parsing 'delineate' format", len(src_partitions))
-    with progress_reporter:
-        for spart_idx, src_partition in enumerate(src_partitions):
-            progress_reporter.update(task1, advance=1)
-            progress_reporter.refresh() # for Jupyter notebooks
-            time.sleep(0.05)
-            try:
-                partition_data = src_partition["species_leafsets"]
-            except TypeError as e:
-                runtime.terminate_error(
-                    message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
-                    exit_code=1,
-                )
-            except KeyError as e:
-                runtime.terminate_error(
-                    message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: key 'species_leafsets' not found",
-                    exit_code=1,
-                )
-            if not isinstance(partition_data, dict):
-                # delineate legacy format!
-                subsets = partition_data
-            else:
-                subsets = partition_data.values()
-            runtime_client.logger.info(
-                f"Partition {spart_idx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
+    for spart_idx, src_partition in enumerate(src_partitions):
+        try:
+            partition_data = src_partition["species_leafsets"]
+        except TypeError as e:
+            runtime.terminate_error(
+                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
+                exit_code=1,
             )
-            metadata_d = {}
-            exclude_keys = set([
-                "species_leafsets",
-            ])
-            for k, v in src_partition.items():
-                if k not in exclude_keys:
-                    metadata_d[k] = v
-            if "constrained_probability" in metadata_d:
-                metadata_d["support"] = metadata_d["unconstrained_probability"]
-            kwargs = {
-                # "label": spart_idx + 1,
-                "metadata_d": metadata_d,
-                "subsets": subsets,
-            }
-            partition = partition_factory(**kwargs)
-            yield partition
+        except KeyError as e:
+            runtime.terminate_error(
+                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: key 'species_leafsets' not found",
+                exit_code=1,
+            )
+        if not isinstance(partition_data, dict):
+            # delineate legacy format!
+            subsets = partition_data
+        else:
+            subsets = partition_data.values()
+        metadata_d = {}
+        exclude_keys = set([
+            "species_leafsets",
+        ])
+        for k, v in src_partition.items():
+            if k not in exclude_keys:
+                metadata_d[k] = v
+        if "constrained_probability" in metadata_d:
+            metadata_d["support"] = metadata_d["unconstrained_probability"]
+        kwargs = {
+            # "label": spart_idx + 1,
+            "metadata_d": metadata_d,
+            "subsets": subsets,
+        }
+        partition = partition_factory(**kwargs)
+        yield partition
 
 def parse_bpp_a11(
     source_stream,
@@ -276,11 +258,9 @@ class Parser:
         self,
         source_format,
         partition_factory=None,
-        runtime_client=None,
     ):
         self.source_format = source_format
         self.partition_factory = partition_factory
-        self.runtime_client = runtime_client or runtime.RuntimeClient()
 
     @property
     def parse_fn(self):
@@ -327,5 +307,4 @@ class Parser:
         return self.parse_fn(
             partition_factory=self.partition_factory,
             source_stream=source,
-            runtime_client=self.runtime_client,
         )

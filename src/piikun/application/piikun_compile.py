@@ -39,6 +39,7 @@ from piikun import runtime
 from piikun import parse
 from piikun import partitionmodel
 
+
 def _store_partitions(
     partitions,
     rc,
@@ -50,7 +51,7 @@ def _store_partitions(
         partitions.validate(logger=rc.logger)
     if rc.output_title:
         out = rc.open_output(subtitle=subtitle, ext="json")
-        rc.logger.info(f"Storing {len(partitions)} partitions: '{out.name}'")
+        rc.logger.info(f" Storing {len(partitions)} partitions: '{out.name}'")
     else:
         out = sys.stdout
         rc.logger.info("(Writing to standard output)")
@@ -136,63 +137,62 @@ def main():
         if len(args.src_paths) == 1:
             output_title = runtime.compose_output_title_from_source(args.src_paths[0])
         elif args.is_merge_output and len(args.src_paths) > 1:
-            output_title = runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
+            output_title = (
+                runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
+            )
     rc = runtime.RuntimeClient(
         output_title=output_title,
         output_directory=args.output_directory,
     )
     rc.logger.info("Starting: [b]piikun-compile[/b]")
+    if not args.src_paths:
+        rc.terminate_error("Standard input piping is under development", exit_code=1)
     if not args.source_format:
         args.source_format = "delineate"
+    src_paths = args.src_paths
     parser = parse.Parser(
         source_format=args.source_format,
-        runtime_client=rc,
     )
-    assert parser.runtime_client is rc
+    rc.logger.info(f"{len(src_paths)} sources to parse")
+    partitions = None
 
-    if not args.src_paths:
-        partitions = partitionmodel.PartitionCollection()
-        parser.partition_factory = partitions.new_partition
-        rc.logger.info("(Reading from standard input)")
-        for pidx, ptn in enumerate(parser.read_stream(sys.stdin)):
-            if args.limit_partitions and len(partitions) > args.limit_partitions:
-                rc.logger.info(f"Partition count limit reached ({args.limit_partitions}): skipping remaining")
-                break
-        _store_partitions(
-            partitions=partitions,
-            rc=rc,
-            is_validate=args.is_validate,
+    for src_idx, src_path in enumerate(src_paths):
+        rc.logger.info(
+            f"Reading source {src_idx+1} of {len(src_paths)}:\n  '{src_path}'"
         )
-    else:
-        src_data = None
-        src_paths = args.src_paths
-        partitions = None
-        for src_idx, src_path in enumerate(src_paths):
-            rc.logger.info(f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'")
-            if not partitions or not args.is_merge_output:
-                partitions = partitionmodel.PartitionCollection()
-                parser.partition_factory = partitions.new_partition
-            start_len = len(partitions)
-            for pidx, ptn in enumerate(parser.read_path(src_path)):
-                # -1 as we need to anticipate limit being reached in the next loop
-                if args.limit_partitions and (pidx >= args.limit_partitions-1):
-                    rc.logger.info(f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining")
-                    break
-            end_len = len(partitions)
-            rc.logger.info(f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)")
-            if not args.is_merge_output:
-                rc.output_title = compose_output_title_from_source(src_path)
-                _store_partitions(
-                    partitions=partitions,
-                    rc=rc,
-                    is_validate=args.is_validate,
+        if not partitions or not args.is_merge_output:
+            partitions = partitionmodel.PartitionCollection()
+            parser.partition_factory = partitions.new_partition
+        start_len = len(partitions)
+        for pidx, ptn in enumerate(parser.read_path(src_path)):
+            rc.logger.info(
+                # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
+                f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
+            )
+            # -1 as we need to anticipate limit being reached in the next loop
+            if args.limit_partitions and (pidx >= args.limit_partitions - 1):
+                rc.logger.info(
+                    f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining"
                 )
-        if args.is_merge_output:
+                break
+        end_len = len(partitions)
+        rc.logger.info(
+            f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)"
+        )
+        if not args.is_merge_output:
+            rc.output_title = compose_output_title_from_source(src_path)
             _store_partitions(
                 partitions=partitions,
                 rc=rc,
                 is_validate=args.is_validate,
             )
+    if args.is_merge_output:
+        _store_partitions(
+            partitions=partitions,
+            rc=rc,
+            is_validate=args.is_validate,
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
