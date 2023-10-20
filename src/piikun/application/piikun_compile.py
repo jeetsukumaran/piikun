@@ -44,11 +44,7 @@ def _store_partitions(
     partitions,
     rc,
     subtitle="partitions",
-    is_validate=True,
 ):
-    # if rc.output_title and rc.output_title != "-":
-    if is_validate:
-        partitions.validate(logger=rc.logger)
     if rc.output_title:
         out = rc.open_output(subtitle=subtitle, ext="json")
         rc.logger.info(f" Storing {len(partitions)} partitions: '{out.name}'")
@@ -169,6 +165,9 @@ def main():
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
+            # if rc.output_title and rc.output_title != "-":
+            if args.is_validate:
+                partitions.validate(logger=rc.logger)
             # -1 as we need to anticipate limit being reached in the next loop
             if args.limit_partitions and (pidx >= args.limit_partitions - 1):
                 rc.logger.info(
@@ -184,13 +183,11 @@ def main():
             _store_partitions(
                 partitions=partitions,
                 rc=rc,
-                is_validate=args.is_validate,
             )
     if args.is_merge_output:
         _store_partitions(
             partitions=partitions,
             rc=rc,
-            is_validate=args.is_validate,
         )
 
 
