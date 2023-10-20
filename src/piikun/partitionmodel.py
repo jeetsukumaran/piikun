@@ -187,12 +187,14 @@ class Partition:
 
     @functools.cache
     def vi_mutual_information(self, other):
+        """
+        Following: Meila 2007.
+        """
+
         vi_mi = 0.0
         assert self._elements == other._elements
         for ptn1_idx, ptn1_subset in enumerate(self._subsets):
             for ptn2_idx, ptn2_subset in enumerate(other._subsets):
-                # Meilă, Marina. 2007. Comparing clusterings—an information based distance. Journal of Multivariate Analysis. 98 (5): 873-895.
-                # Section 3: Variance of Information
                 intersection = ptn1_subset.intersection(ptn2_subset)
                 vi_joint_prob = len(intersection) / self.n_elements
                 if vi_joint_prob:
@@ -267,7 +269,6 @@ class PartitionCollection:
     def __init__(self, log_base=2.0):
         self.log_base = log_base
         self._partitions = {}
-
 
     def __len__(self):
         return len(self._partitions)

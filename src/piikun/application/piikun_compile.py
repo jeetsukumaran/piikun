@@ -35,9 +35,27 @@ import pathlib
 import sys
 import argparse
 import json
+from piikun import runtime
 from piikun.runtime import logger
 from piikun import parse
-from piikun import runtime
+
+def _store_partitions(
+    partitions,
+    runtime_client,
+    subtitle="partitions",
+):
+    # if runtime_client.output_title and runtime_client.output_title != "-":
+    if runtime_client.output_title:
+        out = runtime_client.open_output(subtitle=subtitle, ext="json")
+        logger.info(f"Storing {len(partitions)} partitions: '{out.name}'")
+    else:
+        out = sys.stdout
+        logger.info("(Writing to standard output)")
+    partition_source_data = partitions.export_source_data()
+    out.write(json.dumps(partition_source_data))
+    out.write("\n")
+    out.close()
+
 from piikun import partitionmodel
 
 def main():
@@ -82,6 +100,13 @@ def main():
         help="Merge partitions into single output file ('merge') or otherwise keep separate ('--no-merge') [default='merge'].",
     )
     output_options.add_argument(
+        "--validate",
+        action=argparse.BooleanOptionalAction,
+        dest="is_validate",
+        default=True,
+        help="Check each partition definition ensuring that every lineage is represented exactly once.",
+    )
+    output_options.add_argument(
         "-o",
         "--output-title",
         action="store",
@@ -120,18 +145,6 @@ def main():
     parser = parse.Parser(
         source_format=args.source_format,
     )
-    def _store_partitions(partitions, subtitle="partitions"):
-        # if runtime_client.output_title and runtime_client.output_title != "-":
-        if runtime_client.output_title:
-            out = runtime_client.open_output(subtitle=subtitle, ext="json")
-            logger.info(f"Storing {len(partitions)} partitions: '{out.name}'")
-        else:
-            out = sys.stdout
-            logger.info("(Writing to standard output)")
-        partition_source_data = partitions.export_source_data()
-        out.write(json.dumps(partition_source_data))
-        out.write("\n")
-        out.close()
 
     if not args.src_paths:
         partitions = partitionmodel.PartitionCollection()
@@ -141,7 +154,10 @@ def main():
             if args.limit_partitions and len(partitions) > args.limit_partitions:
                 logger.info(f"Partition count limit reached ({args.limit_partitions}): skipping remaining")
                 break
-        _store_partitions(partitions)
+        _store_partitions(
+            partitions=partitions,
+            runtime_client=runtime_client,
+        )
     else:
         src_data = None
         src_paths = args.src_paths
@@ -161,9 +177,15 @@ def main():
             logger.info(f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)")
             if not args.is_merge_output:
                 runtime_client.output_title = compose_output_title_from_source(src_path)
-                _store_partitions(partitions=partitions)
+                _store_partitions(
+                    partitions=partitions,
+                    runtime_client=runtime_client,
+                )
         if args.is_merge_output:
-            _store_partitions(partitions=partitions)
+            _store_partitions(
+                partitions=partitions,
+                runtime_client=runtime_client,
+            )
 
 if __name__ == '__main__':
     main()
