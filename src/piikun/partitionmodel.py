@@ -35,6 +35,8 @@ import json
 import math
 import functools
 import collections
+import pathlib
+from piikun import parse
 
 # https://stackoverflow.com/a/30134039
 def iterate_partitions(collection):
@@ -326,6 +328,43 @@ class PartitionCollection:
                 all_elements = ptn_elements
             else:
                 assert all_elements == ptn_elements
+
+    def read(
+        self,
+        source_path,
+        source_format,
+        rc=None,
+        limit_partitions=None,
+    ):
+        parser = parse.Parser(
+            source_format=source_format,
+        )
+        parser.partition_factory = self.new_partition
+        start_len = len(self)
+        for pidx, ptn in enumerate(parser.read_path(source_path)):
+            rc and rc.logger.info(
+                # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
+                f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
+            )
+            # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
+            ptn.metadata_d["origin"] = {}
+            ptn.metadata_d["origin"]["source_path"] = str(pathlib.Path(source_path).absolute())
+            ptn.metadata_d["origin"]["source_size"] = ptn._origin_size
+            ptn.metadata_d["origin"]["source_offset"] = ptn._origin_offset
+            # ptn.metadata_d["origin"]["source_read"] = src_idx + 1
+            # if rc.output_title and rc.output_title != "-":
+            # if args.is_validate:
+            #     partitions.validate(logger=rc.logger)
+            # -1 as we need to anticipate limit being reached in the next loop
+            if limit_partitions and (pidx >= limit_partitions - 1):
+                rc and rc.logger.info(
+                    f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining"
+                )
+                break
+        end_len = len(self)
+        rc and rc.logger.info(
+            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(partitions)} read in total)"
+        )
 
 
 

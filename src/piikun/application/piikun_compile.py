@@ -36,7 +36,6 @@ import sys
 import argparse
 import json
 from piikun import runtime
-from piikun import parse
 from piikun import partitionmodel
 
 def main():
@@ -125,47 +124,25 @@ def main():
     if not args.source_format:
         args.source_format = "delineate"
     src_paths = args.src_paths
-    parser = parse.Parser(
-        source_format=args.source_format,
-    )
+    # parser = parse.Parser(
+    #     source_format=args.source_format,
+    # )
     rc.logger.info(f"{len(src_paths)} sources to parse")
     partitions = None
-
     for src_idx, src_path in enumerate(src_paths):
         # rc.console.rule()
         rc.logger.info(
             f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'"
         )
-        if not partitions or not args.is_merge_output:
-            partitions = partitionmodel.PartitionCollection()
-            parser.partition_factory = partitions.new_partition
-        start_len = len(partitions)
-        for pidx, ptn in enumerate(parser.read_path(src_path)):
-            rc.logger.info(
-                # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
-                f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
-            )
-            # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
-            ptn.metadata_d["origin"] = {}
-            ptn.metadata_d["origin"]["source_path"] = str(pathlib.Path(src_path).absolute())
-            ptn.metadata_d["origin"]["source_size"] = ptn._origin_size
-            ptn.metadata_d["origin"]["source_offset"] = ptn._origin_offset
-            # ptn.metadata_d["origin"]["source_read"] = src_idx + 1
-            # if rc.output_title and rc.output_title != "-":
-            # if args.is_validate:
-            #     partitions.validate(logger=rc.logger)
-            # -1 as we need to anticipate limit being reached in the next loop
-            if args.limit_partitions and (pidx >= args.limit_partitions - 1):
-                rc.logger.info(
-                    f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining"
-                )
-                break
-        end_len = len(partitions)
-        rc.logger.info(
-            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(partitions)} read in total)"
-        )
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title_from_source(src_path)
+        if not partitions or not args.is_merge_output:
+            partitions = partitionmodel.PartitionCollection()
+        partitions.read(
+            source_path=src_path,
+            source_format=args.source_format,
+            limit_partitions=args.limit_partitions,
+        )
         if not args.is_merge_output or src_idx == len(src_paths)-1:
             # rc.console.rule()
             if args.is_validate:

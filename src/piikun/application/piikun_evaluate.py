@@ -98,5 +98,7 @@ def main():
     if not args.src_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
 
+    partitions = partitionmodel.PartitionCollection()
+
 if __name__ == "__main__":
     main()
