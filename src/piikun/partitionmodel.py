@@ -345,7 +345,8 @@ class PartitionCollection:
         for pidx, ptn in enumerate(parser.read_path(source_path)):
             rc and rc.logger.info(
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
-                f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
+                # f"Partition {pidx+1:>5d} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
+                f"Partition {ptn._origin_offset+1} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
             # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
             ptn.metadata_d["origin"] = {}

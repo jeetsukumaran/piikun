@@ -80,8 +80,8 @@ def create_full_profile_distance_df(
         progress.MofNCompleteColumn(),
         progress.BarColumn(),
         progress.TaskProgressColumn(),
-        progress.TimeRemainingColumn(),
         progress.TimeElapsedColumn(),
+        progress.TimeRemainingColumn(),
         # progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
         transient=True,
     ) as progress_bar:
@@ -156,8 +156,8 @@ def compare_partitions(
         progress.MofNCompleteColumn(),
         progress.BarColumn(),
         progress.TaskProgressColumn(),
-        progress.TimeRemainingColumn(),
         progress.TimeElapsedColumn(),
+        progress.TimeRemainingColumn(),
         transient=True,
     ) as progress_bar:
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
