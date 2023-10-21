@@ -131,14 +131,7 @@ def compare_partitions(
         ext="tsv",
     )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-    with progress.Progress(
-        progress.TextColumn("[progress.description]{task.description}"),
-        progress.BarColumn(),
-        progress.TaskProgressColumn(),
-        progress.MofNCompleteColumn(),
-        progress.TimeRemainingColumn(),
-        console=rc.console,
-    ) as progress_bar:
+    with runtime.get_progress_bar() as progress_bar:
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps)
         for pkey1, ptn1 in partitions._partitions.items():
             profile_d = {
@@ -178,19 +171,19 @@ def compare_partitions(
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
                 partition_oneway_distances.write_d(comparison_d)
-        partition_profile_store.close()
-        partition_oneway_distances.close()
-        partition_twoway_distances = rc.open_output_datastore(
-            subtitle="distances",
-            ext="tsv",
-        )
-        create_full_profile_distance_df(
-            profiles_path=partition_profile_store.path,
-            distances_path=partition_oneway_distances.path,
-            merged_path=partition_twoway_distances.path,
-            rc=rc,
-        )
-        partition_twoway_distances.close()
+    partition_profile_store.close()
+    partition_oneway_distances.close()
+    partition_twoway_distances = rc.open_output_datastore(
+        subtitle="distances",
+        ext="tsv",
+    )
+    create_full_profile_distance_df(
+        profiles_path=partition_profile_store.path,
+        distances_path=partition_oneway_distances.path,
+        merged_path=partition_twoway_distances.path,
+        rc=rc,
+    )
+    partition_twoway_distances.close()
 
 # print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
 # if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
