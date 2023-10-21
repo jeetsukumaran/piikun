@@ -43,25 +43,25 @@ def main():
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
-        "src_paths",
+        "source_paths",
         action="store",
         metavar="FILE",
-        nargs="*",
-        help="Path to data source file(s); if not specified, defaults to standard input.",
+        nargs="+",
+        help="Path to data source file(s).",
     )
     source_options.add_argument(
         "-f",
         "--format",
         action="store",
         dest="source_format",
-        default=None,
+        default="piikun",
         choices=[
+            "piikun",
             "delineate",
             # "bpp-a10",
             "bpp-a11",
             "json-lists",
             "spart-xml",
-            "piikun",
         ],
         help="Format of source species delimitation model data: [default='delineate'].",
     )
@@ -101,46 +101,39 @@ def main():
         default=os.curdir,
         help="Directory for output files [default='%(default)s'].",
     )
-    # run_options = parser.add_argument_group("Run Options")
-    # parser.add_argument(
-    #         "--verbosity",
-    #         action="store",
-    #         default=3,
-    #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
+
     rc.logger.info("Starting: [b]piikun-compile[/b]")
-    rc.output_directory = args.output_directory
-    if not args.src_paths:
+
+    if not args.source_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
-    if not args.source_format:
-        args.source_format = "delineate"
-    src_paths = args.src_paths
-    # parser = parse.Parser(
-    #     source_format=args.source_format,
-    # )
-    rc.logger.info(f"{len(src_paths)} sources to parse")
-    partitions = None
+    source_paths = args.source_paths
+    rc.logger.info(f"{len(source_paths)} sources to parse")
+
+    rc.output_directory = args.output_directory
     rc.compose_output_title(
         output_title=args.output_title,
-        source_paths=src_paths,
+        source_paths=source_paths,
         is_merge_output=args.is_merge_output,
     )
-    for src_idx, src_path in enumerate(src_paths):
+
+    partitions = None
+    for src_idx, source_path in enumerate(source_paths):
         # rc.console.rule()
         rc.logger.info(
-            f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'"
+            f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
         )
         if not args.is_merge_output:
-            rc.output_title = runtime.compose_output_title(source_paths=[src_path])
+            rc.output_title = runtime.compose_output_title(source_paths=[source_path])
         if not partitions or not args.is_merge_output:
             partitions = partitionmodel.PartitionCollection()
         partitions.read(
-            source_path=src_path,
+            source_path=source_path,
             source_format=args.source_format,
             limit_partitions=args.limit_partitions,
             rc=rc,
         )
-        if not args.is_merge_output or src_idx == len(src_paths)-1:
+        if not args.is_merge_output or src_idx == len(source_paths)-1:
             # rc.console.rule()
             if args.is_validate:
                 partitions.validate(rc=rc)
@@ -154,13 +147,6 @@ def main():
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
-            # rc.console.rule()
-    # if args.is_merge_output:
-    #     _store_partitions(
-    #         partitions=partitions,
-    #         rc=rc,
-    #     )
-
 
 if __name__ == "__main__":
     main()

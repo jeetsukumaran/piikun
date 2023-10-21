@@ -41,17 +41,12 @@ def parse_piikun_json(
     source_stream,
     partition_factory,
 ):
-    runtime.logger.info("Parsing 'pikkun-json' format")
     source_data = source_stream.read()
     data_d = json.loads(source_data)
     partition_ds = data_d["partitions"]
-    runtime.logger.info(f"{len(partition_ds)} partitions in source")
     for ptn_idx, (partition_key, partition_d) in enumerate(partition_ds.items()):
         subsets = partition_d["subsets"]
         metadata_d = partition_d["metadata"]
-        runtime.logger.info(
-            f"Partition {ptn_idx+1:>5d} of {len(partition_ds)} ({len(subsets)} subsets)"
-        )
         partition = partition_factory(
             subsets=subsets,
             metadata_d=metadata_d,

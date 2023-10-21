@@ -44,11 +44,27 @@ def main():
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
-        "src_paths",
+        "source_paths",
         action="store",
         metavar="SOURCE-FILE",
         nargs="+",
-        help="Path to data source file. if not specified, defaults to standard input.",
+        help="Path to data source file.",
+    )
+    source_options.add_argument(
+        "-f",
+        "--format",
+        action="store",
+        dest="source_format",
+        default="piikun",
+        choices=[
+            "piikun",
+            "delineate",
+            # "bpp-a10",
+            "bpp-a11",
+            "json-lists",
+            "spart-xml",
+        ],
+        help="Format of source species delimitation model data: [default='delineate'].",
     )
     source_options.add_argument(
         "--limit-partitions",
@@ -86,19 +102,25 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
+
     rc.logger.info("Starting: [b]piikun-evaluate[/b]")
-    rc.output_directory = args.output_directory
-    if args.output_title:
-        rc.output_title = args.output_title.strip()
-    elif args.src_paths:
-        if len(args.src_paths) == 1:
-            rc.output_title = runtime.compose_output_title_from_source(args.src_paths[0])
-        else:
-            rc.terminate_error(f"Multiple sources are not supported at this time", 1)
-    if not args.src_paths:
+
+    if not args.source_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
 
+    rc.output_directory = args.output_directory
+    rc.compose_output_title(
+        output_title=args.output_title,
+        source_paths=args.source_paths,
+    )
     partitions = partitionmodel.PartitionCollection()
+    for sidx, source_path in enumerate(args.source_paths):
+        partitions.read(
+            source_path=source_path,
+            source_format=args.source_format,
+            limit_partitions=args.limit_partitions,
+            rc=rc,
+        )
 
 if __name__ == "__main__":
     main()
