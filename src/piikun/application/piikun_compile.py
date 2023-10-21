@@ -147,6 +147,8 @@ def main():
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
+            ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
+            ptn.metadata_d["source_idx"] = src_idx + 1
             # if rc.output_title and rc.output_title != "-":
             if args.is_validate:
                 partitions.validate(logger=rc.logger)
@@ -163,6 +165,8 @@ def main():
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title_from_source(src_path)
         if not args.is_merge_output or src_idx == len(src_paths)-1:
+            if args.is_validate:
+                partitions.validate(logger=rc.logger)
             if rc.output_title:
                 out = rc.open_output(subtitle="partitions", ext="json")
                 rc.logger.info(f"Writing {len(partitions)} partitions to file: '{out.name}'")
