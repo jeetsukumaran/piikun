@@ -156,8 +156,8 @@ def main():
             ptn.metadata_d["origin"]["source_index"] = ptn._origin_d["source_index"]
             ptn.metadata_d["origin"]["read_index"] = src_idx + 1
             # if rc.output_title and rc.output_title != "-":
-            if args.is_validate:
-                partitions.validate(logger=rc.logger)
+            # if args.is_validate:
+            #     partitions.validate(logger=rc.logger)
             # -1 as we need to anticipate limit being reached in the next loop
             if args.limit_partitions and (pidx >= args.limit_partitions - 1):
                 rc.logger.info(

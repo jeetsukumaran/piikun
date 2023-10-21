@@ -306,7 +306,26 @@ class PartitionCollection:
         exported = { "partitions": { key:ptn.compose_definition_d() for key, ptn in self._partitions.items() } }
         return exported
 
-    def validate(self, logger):
-        pass
+    def validate(
+        self,
+        logger,
+    ):
+        """
+        Ensure every partition is: jointly-comprehensive and mutually-exclusive
+        with respect to the whole set.
+        """
+        all_elements = None
+        for ptn_key, ptn in self._partitions.items():
+            ptn_elements = set()
+            for subset_idx, subset in enumerate(ptn._subsets):
+                for element_idx, element in enumerate(subset._elements):
+                    assert element not in ptn_elements
+                    ptn_elements.add(element)
+            if all_elements is None:
+                logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
+                all_elements = ptn_elements
+            else:
+                assert all_elements == ptn_elements
+
 
 
