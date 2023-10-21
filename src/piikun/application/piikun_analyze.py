@@ -389,250 +389,250 @@ class PartitionCoordinator(utility.RuntimeClient):
         )
         self.partition_twoway_distances.close()
 
-    def analyze_partitions_x(
-        self, is_assume_symmetry=True, is_include_self_comparisons=True
-    ):
-        n_partitions = len(self.partitions)
-        n_expected_cmps = (
-            n_partitions * (n_partitions - 1)
-            if is_assume_symmetry
-            else math.comb(n_partitions, 2)
-        )
-        if is_include_self_comparisons:
-            n_expected_cmps += n_partitions
-        progress_step = max(1, int(n_expected_cmps * self.log_frequency))
-        n_comparisons = 0
+    # def analyze_partitions_x(
+    #     self, is_assume_symmetry=True, is_include_self_comparisons=True
+    # ):
+    #     n_partitions = len(self.partitions)
+    #     n_expected_cmps = (
+    #         n_partitions * (n_partitions - 1)
+    #         if is_assume_symmetry
+    #         else math.comb(n_partitions, 2)
+    #     )
+    #     if is_include_self_comparisons:
+    #         n_expected_cmps += n_partitions
+    #     progress_step = max(1, int(n_expected_cmps * self.log_frequency))
+    #     n_comparisons = 0
 
-        self.logger.log_info(
-            f"{n_partitions} partitions: {n_expected_cmps} expected distinct comparisons"
-        )
+    #     self.logger.log_info(
+    #         f"{n_partitions} partitions: {n_expected_cmps} expected distinct comparisons"
+    #     )
 
-        metadata_keys = (
-            list(self.partitions[0].metadata_d.keys())
-            if self.partitions[0].metadata_d
-            else []
-        )
+    #     metadata_keys = (
+    #         list(self.partitions[0].metadata_d.keys())
+    #         if self.partitions[0].metadata_d
+    #         else []
+    #     )
 
-        for pidx1, ptn1 in enumerate(self.partitions):
-            vi_entropy1 = ptn1.vi_entropy()
+    #     for pidx1, ptn1 in enumerate(self.partitions):
+    #         vi_entropy1 = ptn1.vi_entropy()
 
-            # Directly write to file
-            # self.partition_profile_store.write_d(
-            #     pidx1, ptn1.label, ptn1.n_elements, ptn1.n_subsets, vi_entropy1, *(ptn1.metadata_d.get(k, "NaN") for k in metadata_keys)
-            # )
+    #         # Directly write to file
+    #         # self.partition_profile_store.write_d(
+    #         #     pidx1, ptn1.label, ptn1.n_elements, ptn1.n_subsets, vi_entropy1, *(ptn1.metadata_d.get(k, "NaN") for k in metadata_keys)
+    #         # )
 
-            print(
-                "Memory usage: {} MB".format(
-                    resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
-                )
-            )
+    #         print(
+    #             "Memory usage: {} MB".format(
+    #                 resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+    #             )
+    #         )
 
-            for pidx2, ptn2 in enumerate(
-                self.partitions
-                if is_assume_symmetry
-                else combinations(self.partitions, 2)
-            ):
-                if not is_include_self_comparisons and ptn1 == ptn2:
-                    continue
+    #         for pidx2, ptn2 in enumerate(
+    #             self.partitions
+    #             if is_assume_symmetry
+    #             else combinations(self.partitions, 2)
+    #         ):
+    #             if not is_include_self_comparisons and ptn1 == ptn2:
+    #                 continue
 
-                n_comparisons += 1
+    #             n_comparisons += 1
 
-                if n_comparisons % progress_step == 0:
-                    self.logger.log_info(
-                        f"[ {int(n_comparisons * 100 / n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-                    )
+    #             if n_comparisons % progress_step == 0:
+    #                 self.logger.log_info(
+    #                     f"[ {int(n_comparisons * 100 / n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+    #                 )
 
-                vi_entropy2 = ptn2.vi_entropy()
+    #             vi_entropy2 = ptn2.vi_entropy()
 
-                pairs = (
-                    [(ptn1, ptn2), (ptn2, ptn1)]
-                    if is_assume_symmetry and ptn1 != ptn2
-                    else [(ptn1, ptn2)]
-                )
+    #             pairs = (
+    #                 [(ptn1, ptn2), (ptn2, ptn1)]
+    #                 if is_assume_symmetry and ptn1 != ptn2
+    #                 else [(ptn1, ptn2)]
+    #             )
 
-                for ptn_a, ptn_b in pairs:
-                    vi_mi = ptn_a.vi_mutual_information(ptn_b)
-                    vi_joint_entropy = ptn_a.vi_joint_entropy(ptn_b)
-                    vi_distance = ptn_a.vi_distance(ptn_b)
-                    vi_normalized_kraskov = ptn_a.vi_normalized_kraskov(ptn_b)
+    #             for ptn_a, ptn_b in pairs:
+    #                 vi_mi = ptn_a.vi_mutual_information(ptn_b)
+    #                 vi_joint_entropy = ptn_a.vi_joint_entropy(ptn_b)
+    #                 vi_distance = ptn_a.vi_distance(ptn_b)
+    #                 vi_normalized_kraskov = ptn_a.vi_normalized_kraskov(ptn_b)
 
-                    # Directly write to file
-                    # self.partition_oneway_distances.write_d(
-                    #     ptn_a.label, ptn_b.label, ptn_a.n_elements, ptn_b.n_elements, ptn_a.n_subsets, ptn_b.n_subsets,
-                    #     vi_entropy1, vi_entropy2, vi_mi, vi_joint_entropy, vi_distance, vi_normalized_kraskov,
-                    #     *(ptn_a.metadata_d.get(k, "NaN") for k in metadata_keys), *(ptn_b.metadata_d.get(k, "NaN") for k in metadata_keys)
-                    # )
-        self.partition_profile_store.close()
-        self.partition_oneway_distances.close()
+    #                 # Directly write to file
+    #                 # self.partition_oneway_distances.write_d(
+    #                 #     ptn_a.label, ptn_b.label, ptn_a.n_elements, ptn_b.n_elements, ptn_a.n_subsets, ptn_b.n_subsets,
+    #                 #     vi_entropy1, vi_entropy2, vi_mi, vi_joint_entropy, vi_distance, vi_normalized_kraskov,
+    #                 #     *(ptn_a.metadata_d.get(k, "NaN") for k in metadata_keys), *(ptn_b.metadata_d.get(k, "NaN") for k in metadata_keys)
+    #                 # )
+    #     self.partition_profile_store.close()
+    #     self.partition_oneway_distances.close()
 
-    def analyze_partitions_beta(
-        self, is_assume_symmetry=True, is_include_self_comparisons=True
-    ):
-        n_partitions = len(self.partitions)
-        n_expected_cmps = (
-            n_partitions * (n_partitions - 1)
-            if is_assume_symmetry
-            else math.comb(n_partitions, 2)
-        )
-        if is_include_self_comparisons:
-            n_expected_cmps += n_partitions
-        progress_step = max(1, int(n_expected_cmps * self.log_frequency))
-        n_comparisons = 0
-        self.logger.log_info(
-            f"{n_partitions} partitions: {n_expected_cmps} expected distinct comparisons"
-        )
-        metadata_keys = (
-            list(self.partitions[0].metadata_d.keys())
-            if self.partitions[0].metadata_d
-            else []
-        )
-        for pidx1, ptn1 in enumerate(self.partitions):
-            vi_entropy1 = ptn1.vi_entropy()
-            profile_d = {
-                "partition_id": pidx1,
-                "label": ptn1.label,
-                "n_elements": ptn1.n_elements,
-                "n_subsets": ptn1.n_subsets,
-                "vi_entropy": vi_entropy1,
-            }
-            if ptn1.metadata_d:
-                profile_d.update(ptn1.metadata_d)
-            # ## writes the dictionary out as a tab-delimited string to a file handle
-            self.partition_profile_store.write_d(profile_d)
-            print(
-                "Memory usage: {} MB".format(
-                    resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
-                )
-            )
-            for pidx2, ptn2 in enumerate(
-                self.partitions
-                if is_assume_symmetry
-                else combinations(self.partitions, 2)
-            ):
-                if not is_include_self_comparisons and ptn1 == ptn2:
-                    continue
-                n_comparisons += 1
-                if n_comparisons % progress_step == 0:
-                    self.logger.log_info(
-                        f"[ {int(n_comparisons * 100 / n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-                    )
-                vi_entropy2 = ptn2.vi_entropy()
-                # dists_d = {
-                #     "vi_mi": ptn1.vi_mutual_information(ptn2),
-                #     "vi_joint_entropy": ptn1.vi_joint_entropy(ptn2),
-                #     "vi_distance": ptn1.vi_distance(ptn2),
-                #     "vi_normalized_kraskov": ptn1.vi_normalized_kraskov(ptn2),
-                # }
+    # def analyze_partitions_beta(
+    #     self, is_assume_symmetry=True, is_include_self_comparisons=True
+    # ):
+    #     n_partitions = len(self.partitions)
+    #     n_expected_cmps = (
+    #         n_partitions * (n_partitions - 1)
+    #         if is_assume_symmetry
+    #         else math.comb(n_partitions, 2)
+    #     )
+    #     if is_include_self_comparisons:
+    #         n_expected_cmps += n_partitions
+    #     progress_step = max(1, int(n_expected_cmps * self.log_frequency))
+    #     n_comparisons = 0
+    #     self.logger.log_info(
+    #         f"{n_partitions} partitions: {n_expected_cmps} expected distinct comparisons"
+    #     )
+    #     metadata_keys = (
+    #         list(self.partitions[0].metadata_d.keys())
+    #         if self.partitions[0].metadata_d
+    #         else []
+    #     )
+    #     for pidx1, ptn1 in enumerate(self.partitions):
+    #         vi_entropy1 = ptn1.vi_entropy()
+    #         profile_d = {
+    #             "partition_id": pidx1,
+    #             "label": ptn1.label,
+    #             "n_elements": ptn1.n_elements,
+    #             "n_subsets": ptn1.n_subsets,
+    #             "vi_entropy": vi_entropy1,
+    #         }
+    #         if ptn1.metadata_d:
+    #             profile_d.update(ptn1.metadata_d)
+    #         # ## writes the dictionary out as a tab-delimited string to a file handle
+    #         self.partition_profile_store.write_d(profile_d)
+    #         print(
+    #             "Memory usage: {} MB".format(
+    #                 resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+    #             )
+    #         )
+    #         for pidx2, ptn2 in enumerate(
+    #             self.partitions
+    #             if is_assume_symmetry
+    #             else combinations(self.partitions, 2)
+    #         ):
+    #             if not is_include_self_comparisons and ptn1 == ptn2:
+    #                 continue
+    #             n_comparisons += 1
+    #             if n_comparisons % progress_step == 0:
+    #                 self.logger.log_info(
+    #                     f"[ {int(n_comparisons * 100 / n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+    #                 )
+    #             vi_entropy2 = ptn2.vi_entropy()
+    #             # dists_d = {
+    #             #     "vi_mi": ptn1.vi_mutual_information(ptn2),
+    #             #     "vi_joint_entropy": ptn1.vi_joint_entropy(ptn2),
+    #             #     "vi_distance": ptn1.vi_distance(ptn2),
+    #             #     "vi_normalized_kraskov": ptn1.vi_normalized_kraskov(ptn2),
+    #             # }
 
-                pairs = (
-                    [(ptn1, ptn2), (ptn2, ptn1)]
-                    if is_assume_symmetry and ptn1 != ptn2
-                    else [(ptn1, ptn2)]
-                )
-                for ptn_a, ptn_b in pairs:
-                    pass
-                    # comparison_d = {
-                    #     "ptn1": ptn_a.label,
-                    #     "ptn2": ptn_b.label,
-                    #     "ptn1_n_elements": ptn_a.n_elements,
-                    #     "ptn2_n_elements": ptn_b.n_elements,
-                    #     "ptn1_n_subsets": ptn_a.n_subsets,
-                    #     "ptn2_n_subsets": ptn_b.n_subsets,
-                    #     "ptn1_vi_entropy": vi_entropy1,
-                    #     "ptn2_vi_entropy": vi_entropy2,
-                    # }
-                    # for k in metadata_keys:
-                    #     comparison_d[f"ptn1_{k}"] = ptn_a.metadata_d.get(k, "NaN")
-                    #     comparison_d[f"ptn2_{k}"] = ptn_b.metadata_d.get(k, "NaN")
-                    # comparison_d.update(dists_d)
-                    # ## writes the dictionary out as a tab-delimited string to a file handle
-                    # self.partition_oneway_distances.write_d(comparison_d)
-        self.partition_profile_store.close()
-        self.partition_oneway_distances.close()
+    #             pairs = (
+    #                 [(ptn1, ptn2), (ptn2, ptn1)]
+    #                 if is_assume_symmetry and ptn1 != ptn2
+    #                 else [(ptn1, ptn2)]
+    #             )
+    #             for ptn_a, ptn_b in pairs:
+    #                 pass
+    #                 # comparison_d = {
+    #                 #     "ptn1": ptn_a.label,
+    #                 #     "ptn2": ptn_b.label,
+    #                 #     "ptn1_n_elements": ptn_a.n_elements,
+    #                 #     "ptn2_n_elements": ptn_b.n_elements,
+    #                 #     "ptn1_n_subsets": ptn_a.n_subsets,
+    #                 #     "ptn2_n_subsets": ptn_b.n_subsets,
+    #                 #     "ptn1_vi_entropy": vi_entropy1,
+    #                 #     "ptn2_vi_entropy": vi_entropy2,
+    #                 # }
+    #                 # for k in metadata_keys:
+    #                 #     comparison_d[f"ptn1_{k}"] = ptn_a.metadata_d.get(k, "NaN")
+    #                 #     comparison_d[f"ptn2_{k}"] = ptn_b.metadata_d.get(k, "NaN")
+    #                 # comparison_d.update(dists_d)
+    #                 # ## writes the dictionary out as a tab-delimited string to a file handle
+    #                 # self.partition_oneway_distances.write_d(comparison_d)
+    #     self.partition_profile_store.close()
+    #     self.partition_oneway_distances.close()
 
-    def analyze_partitions_alpha(
-        self,
-        is_assume_symmetry=True,
-        is_include_self_comparisons=True,
-    ):
-        if is_assume_symmetry:
-            n_expected_cmps = len(self.partitions) * (len(self.partitions) - 1)
-        else:
-            n_expected_cmps = math.comb(len(self.partitions), 2)
-        if is_include_self_comparisons:
-            n_expected_cmps += len(self.partitions)
-        progress_step = int(n_expected_cmps * self.log_frequency)
-        if progress_step < 1:
-            progress_step = 1
-        n_comparisons = 0
-        # comparisons = []
-        seen_compares = set()
-        self.logger.log_info(
-            f"{len(self.partitions)} partitions: {n_expected_cmps} expected distinct comparisons"
-        )
-        metadata_keys = None
-        for pidx1, ptn1 in enumerate(self.partitions):
-            profile_d = {
-                "partition_id": pidx1,
-                "label": ptn1.label,
-                "n_elements": ptn1.n_elements,
-                "n_subsets": ptn1.n_subsets,
-                "vi_entropy": ptn1.vi_entropy(),
-            }
-            if ptn1.metadata_d:
-                profile_d.update(ptn1.metadata_d)
-                if not metadata_keys:
-                    metadata_keys = list(ptn1.metadata_d.keys())
-            self.partition_profile_store.write_d(profile_d)
-            for pidx2, ptn2 in enumerate(self.partitions):
-                if not is_include_self_comparisons and ptn1 == ptn2:
-                    continue
-                cmp_key = frozenset([ptn1, ptn2])
-                if not is_assume_symmetry and cmp_key in seen_compares:
-                    continue
-                seen_compares.add(cmp_key)
-                n_comparisons += 1
-                if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
-                    self.logger.log_info(
-                        f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-                    )
+    # def analyze_partitions_alpha(
+    #     self,
+    #     is_assume_symmetry=True,
+    #     is_include_self_comparisons=True,
+    # ):
+    #     if is_assume_symmetry:
+    #         n_expected_cmps = len(self.partitions) * (len(self.partitions) - 1)
+    #     else:
+    #         n_expected_cmps = math.comb(len(self.partitions), 2)
+    #     if is_include_self_comparisons:
+    #         n_expected_cmps += len(self.partitions)
+    #     progress_step = int(n_expected_cmps * self.log_frequency)
+    #     if progress_step < 1:
+    #         progress_step = 1
+    #     n_comparisons = 0
+    #     # comparisons = []
+    #     seen_compares = set()
+    #     self.logger.log_info(
+    #         f"{len(self.partitions)} partitions: {n_expected_cmps} expected distinct comparisons"
+    #     )
+    #     metadata_keys = None
+    #     for pidx1, ptn1 in enumerate(self.partitions):
+    #         profile_d = {
+    #             "partition_id": pidx1,
+    #             "label": ptn1.label,
+    #             "n_elements": ptn1.n_elements,
+    #             "n_subsets": ptn1.n_subsets,
+    #             "vi_entropy": ptn1.vi_entropy(),
+    #         }
+    #         if ptn1.metadata_d:
+    #             profile_d.update(ptn1.metadata_d)
+    #             if not metadata_keys:
+    #                 metadata_keys = list(ptn1.metadata_d.keys())
+    #         self.partition_profile_store.write_d(profile_d)
+    #         for pidx2, ptn2 in enumerate(self.partitions):
+    #             if not is_include_self_comparisons and ptn1 == ptn2:
+    #                 continue
+    #             cmp_key = frozenset([ptn1, ptn2])
+    #             if not is_assume_symmetry and cmp_key in seen_compares:
+    #                 continue
+    #             seen_compares.add(cmp_key)
+    #             n_comparisons += 1
+    #             if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
+    #                 self.logger.log_info(
+    #                     f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+    #                 )
 
-                dists_d = {}
-                for value_fieldname, value_fn in (
-                    ("vi_mi", ptn1.vi_mutual_information),
-                    ("vi_joint_entropy", ptn1.vi_joint_entropy),
-                    ("vi_distance", ptn1.vi_distance),
-                    ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
-                ):
-                    dists_d[value_fieldname] = value_fn(ptn2)
+    #             dists_d = {}
+    #             for value_fieldname, value_fn in (
+    #                 ("vi_mi", ptn1.vi_mutual_information),
+    #                 ("vi_joint_entropy", ptn1.vi_joint_entropy),
+    #                 ("vi_distance", ptn1.vi_distance),
+    #                 ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
+    #             ):
+    #                 dists_d[value_fieldname] = value_fn(ptn2)
 
-                if is_assume_symmetry and ptn1 != ptn2:
-                    pairs = (
-                        (ptn1, ptn2),
-                        (ptn2, ptn1),
-                    )
-                else:
-                    pairs = ((ptn1, ptn2),)
-                for ptn_pair in pairs:
-                    comparison_d = {
-                        "ptn1": ptn_pair[0].label,
-                        "ptn2": ptn_pair[1].label,
-                    }
-                    for k in [
-                        "n_elements",
-                        "n_subsets",
-                    ]:
-                        comparison_d[f"ptn1_{k}"] = getattr(ptn_pair[0], k, "NaN")
-                        comparison_d[f"ptn2_{k}"] = getattr(ptn_pair[1], k, "NaN")
-                    for k in metadata_keys:
-                        comparison_d[f"ptn1_{k}"] = ptn_pair[0].metadata_d[k]
-                        comparison_d[f"ptn2_{k}"] = ptn_pair[1].metadata_d[k]
-                    comparison_d["ptn1_vi_entropy"] = ptn_pair[0].vi_entropy()
-                    comparison_d["ptn2_vi_entropy"] = ptn_pair[1].vi_entropy()
-                    comparison_d.update(dists_d)
-                    self.partition_oneway_distances.write_d(comparison_d)
-        self.partition_profile_store.close()
-        self.partition_oneway_distances.close()
+    #             if is_assume_symmetry and ptn1 != ptn2:
+    #                 pairs = (
+    #                     (ptn1, ptn2),
+    #                     (ptn2, ptn1),
+    #                 )
+    #             else:
+    #                 pairs = ((ptn1, ptn2),)
+    #             for ptn_pair in pairs:
+    #                 comparison_d = {
+    #                     "ptn1": ptn_pair[0].label,
+    #                     "ptn2": ptn_pair[1].label,
+    #                 }
+    #                 for k in [
+    #                     "n_elements",
+    #                     "n_subsets",
+    #                 ]:
+    #                     comparison_d[f"ptn1_{k}"] = getattr(ptn_pair[0], k, "NaN")
+    #                     comparison_d[f"ptn2_{k}"] = getattr(ptn_pair[1], k, "NaN")
+    #                 for k in metadata_keys:
+    #                     comparison_d[f"ptn1_{k}"] = ptn_pair[0].metadata_d[k]
+    #                     comparison_d[f"ptn2_{k}"] = ptn_pair[1].metadata_d[k]
+    #                 comparison_d["ptn1_vi_entropy"] = ptn_pair[0].vi_entropy()
+    #                 comparison_d["ptn2_vi_entropy"] = ptn_pair[1].vi_entropy()
+    #                 comparison_d.update(dists_d)
+    #                 self.partition_oneway_distances.write_d(comparison_d)
+    #     self.partition_profile_store.close()
+    #     self.partition_oneway_distances.close()
 
 
 def main(args=None):

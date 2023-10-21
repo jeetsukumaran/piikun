@@ -35,9 +35,82 @@ import pathlib
 import sys
 import argparse
 import json
+import pandas as pd
 from rich import progress
 from piikun import runtime
 from piikun import partitionmodel
+
+def create_full_profile_distance_df(
+    profiles_df=None,
+    distances_df=None,
+    export_profile_columns=None,
+    export_distance_columns=None,
+    profiles_path=None,
+    distances_path=None,
+    merged_path=None,
+    delimiter="\t",
+    rc=None,
+):
+    if not profiles_df:
+        assert profiles_path
+        profiles_df = pd.read_csv(profiles_path, delimiter=delimiter,)
+    if not distances_df:
+        assert distances_path
+        distances_df = pd.read_csv(distances_path, delimiter=delimiter,)
+    if export_profile_columns:
+        profile_columns = list(export_profile_columns)
+    else:
+        profile_columns = [column for column in profiles_df if column not in set([
+            "partition_id",
+            "label",
+        ])]
+    if export_distance_columns:
+        distance_columns = list(export_distance_columns)
+    else:
+        distances_columns = [
+            "vi_distance",
+            "vi_normalized_kraskov",
+        ]
+    partition_keys = list(profiles_df["partition_id"])
+    new_dataset = []
+    for pkd_idx, pk1 in enumerate(partition_keys):
+        if logger:
+            logger.log_info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
+        seen_comparisons = set()
+        # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
+        # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
+        # pk1_ptns_df = pd.concat([pk1_ptn1_df, pk1_ptn2_df])
+        for pk2 in partition_keys:
+            key = (pk1, pk2)
+            if key in seen_comparisons:
+                continue
+            # print(f"---- {key}: PK1 = {pk1}, PK2 = {pk2} ")
+            seen_comparisons.add(key)
+            condition = ((distances_df["ptn1"] == pk1) & (distances_df["ptn2"] == pk2)) | ((distances_df["ptn1"] == pk2) & (distances_df["ptn2"] == pk1))
+            dists_sdf = distances_df[condition]
+            if len(dists_sdf) == 0 and pk1 != pk2:
+                raise ValueError(f"Missing non-self comparison: {pk1}, {pk2}")
+            elif len(dists_sdf) == 1:
+                row_d = {}
+                for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
+                    row_d[f"ptn{ptn_idx}"] = ptn_key
+                for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
+                    for column in profile_columns:
+                        values = profiles_df[ profiles_df["label"] == ptn_key ][ column ].values.tolist()
+                        assert len(values) == 1
+                        row_d[f"ptn{ptn_idx}_{column}"] = values[0]
+                for dist_column in distances_columns:
+                    dists = dists_sdf[dist_column].values.tolist()
+                    assert len(dists) == 1
+                    row_d[dist_column] = dists[0]
+                new_dataset.append(row_d)
+            else:
+                raise NotImplementedError()
+    df = pd.DataFrame.from_records(new_dataset)
+    if merged_path:
+        df.to_csv(merged_path, sep=delimiter)
+    return df
+
 
 def compare_partitions(
     rc,
@@ -50,17 +123,33 @@ def compare_partitions(
         n_expected_cmps = int(len(partitions) * len(partitions) / 2)
     n_comparisons = 0
     seen_compares = set()
-    progress_bar = progress.Progress(
-        # console=rc.console,
+    partition_profile_store = rc.open_output_datastore(
+        subtitle="profile",
+        ext="tsv",
     )
-    task1 = progress_bar.add_task("Comparing partitions ...", total=n_expected_cmps)
     partition_oneway_distances = rc.open_output_datastore(
         subtitle="1d",
         ext="tsv",
     )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-    with progress_bar:
+    with progress.Progress(
+        progress.TextColumn("[progress.description]{task.description}"),
+        progress.BarColumn(),
+        progress.TaskProgressColumn(),
+        progress.TimeRemainingColumn(),
+        console=rc.console,
+    ) as progress_bar:
+        task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps)
         for pkey1, ptn1 in partitions._partitions.items():
+            profile_d = {
+                "partition_id": pkey1,
+                "n_elements": ptn1.n_elements,
+                "n_subsets": ptn1.n_subsets,
+                "vi_entropy": ptn1.vi_entropy(),
+            }
+            if ptn1.metadata_d:
+                profile_d.update(ptn1.metadata_d)
+            partition_profile_store.write_d(profile_d)
             ptn1_metadata = {}
             for k, v in ptn1.metadata_d.items():
                 ptn1_metadata[f"ptn1_{k}"] = v
@@ -68,10 +157,10 @@ def compare_partitions(
                 cmp_key = frozenset([pkey1, pkey2])
                 if not is_mirror and cmp_key in seen_compares:
                     continue
+                progress_bar.update(task1, advance=1)
+                progress_bar.refresh()
                 seen_compares.add(cmp_key)
                 n_comparisons += 1
-                progress_bar.update(task1)
-                progress_bar.refresh()
                 comparison_d = {
                     "ptn1": pkey1,
                     "ptn2": pkey2,
@@ -89,15 +178,19 @@ def compare_partitions(
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
                 partition_oneway_distances.write_d(comparison_d)
-        self.partition_profile_store.close()
+        partition_profile_store.close()
         partition_oneway_distances.close()
-        utility.create_full_profile_distance_df(
-            profiles_path=self.partition_profile_store.path,
-            distances_path=self.partition_oneway_distances.path,
-            merged_path=self.partition_twoway_distances.path,
-            logger=self.logger,
+        partition_twoway_distances = rc.open_output_datastore(
+            subtitle="distances",
+            ext="tsv",
         )
-        self.partition_twoway_distances.close()
+        # create_full_profile_distance_df(
+        #     profiles_path=partition_profile_store.path,
+        #     distances_path=partition_oneway_distances.path,
+        #     merged_path=partition_twoway_distances.path,
+        #     rc=rc,
+        # )
+        partition_twoway_distances.close()
 
 # print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
 # if n_comparisons == 0 or (n_comparisons % progress_step) == 0:

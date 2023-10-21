@@ -359,7 +359,7 @@ class PartitionCollection:
             # -1 as we need to anticipate limit being reached in the next loop
             if limit_partitions and (pidx >= limit_partitions - 1):
                 rc and rc.logger.info(
-                    f"Number of partitions read is at limit ({args.limit_partitions}): skipping remaining"
+                    f"Number of partitions read is at limit ({limit_partitions}): skipping remaining"
                 )
                 break
         end_len = len(self)
