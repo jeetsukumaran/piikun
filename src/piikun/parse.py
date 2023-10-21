@@ -177,8 +177,10 @@ def parse_bpp_a11(
             #         lineage_labels = [label for label in parsebpp.patterns["strip_tree_tokens"].split(m[5]) if label]
             #         # print(lineage_labels)
         elif current_section == "(B)":
+            if len(lineage_labels) != n_lineages_expected:
+                runtime.RuntimeClient._logger.error(f"{n_lineages_expected} lineages expected but {len(lineage_labels)} lineages identified: {lineage_labels}")
             if line.startswith("(B)"):
-                runtime.RuntimeClient._logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
+                runtime.RuntimeClient._logger.info(f"{len(lineage_labels)} lineages identified: {lineage_labels}")
                 # runtime.logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
                 # runtime.logger.info(f"{n_partitions_expected} partitions expected")
                 continue
