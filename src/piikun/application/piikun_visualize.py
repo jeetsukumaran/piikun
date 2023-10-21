@@ -267,6 +267,8 @@ class PlotGenerator:
             post_plot_fn(fig)
         if self.is_save_plot:
             for format_type in self.output_formats:
+                if format_type == "html" and plot_system == "matplotlib":
+                    continue
                 if format_type.startswith("."):
                     ext = format_type
                 else:
@@ -279,15 +281,23 @@ class PlotGenerator:
                     else:
                         fig.write_image(output_filepath)
                 elif plot_system == "matplotlib":
-                    if format_type != "html":
+                    if format_type == "html":
+                        pass
+                    else:
                         plt.savefig(
                             output_filepath,
                             format=format_type,
                         )
+                else:
+                    raise ValueError(plot_system)
 
         if self.is_show_plot:
-            fig.show()
-
+            if plot_system == "plotly":
+                fig.show()
+            elif plot_system == "matplotlib":
+                plt.show()
+            else:
+                raise ValueError(plot_system)
 
 def main(args=None):
     visualization_types = {
