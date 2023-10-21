@@ -336,7 +336,7 @@ class PartitionCollection:
         limit_partitions=None,
         rc=None,
     ):
-        rc and rc.logger.info(f"Reading source: {source_path}")
+        rc and rc.logger.info(f"Reading source: '{source_path}'")
         parser = parse.Parser(
             source_format=source_format,
         )

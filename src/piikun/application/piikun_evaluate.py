@@ -82,7 +82,7 @@ def create_full_profile_distance_df(
         # progress.TaskProgressColumn(),
         progress.TimeRemainingColumn(),
         # progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
-        # transient=True,
+        transient=True,
     ) as progress_bar:
         n_expected_cmps = len(partition_keys) * len(partition_keys)
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
@@ -125,6 +125,7 @@ def create_full_profile_distance_df(
                     raise NotImplementedError()
     df = pd.DataFrame.from_records(new_dataset)
     if merged_path:
+        rc.logger.info(f"Exported distances to: '{merged_path}'")
         df.to_csv(merged_path, sep=delimiter)
     return df
 
@@ -134,7 +135,7 @@ def compare_partitions(
     partitions,
 ):
     partitions.validate(rc=rc)
-    n_expected_cmps = int(len(partitions) * len(partitions) / 2)
+    n_expected_cmps = int(len(partitions) * len(partitions) / 2) + int(len(partitions)/2)
     n_comparisons = 0
     seen_compares = set()
     partition_profile_store = rc.open_output_datastore(
@@ -148,14 +149,14 @@ def compare_partitions(
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
     # with runtime.get_progress_bar(text="Memory usage: {task.fields[memory_usage]}") as progress_bar:
     with progress.Progress(
+        progress.TextColumn("({task.fields[memory_usage]} MB)"),
         progress.SpinnerColumn(),
-        progress.TextColumn("Comparing:"),
+        progress.TextColumn("Comparison:"),
         progress.MofNCompleteColumn(),
         progress.BarColumn(),
-        # progress.TaskProgressColumn(),
+        progress.TaskProgressColumn(),
         progress.TimeRemainingColumn(),
-        progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
-        # transient=True,
+        transient=True,
     ) as progress_bar:
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
         for pkey1, ptn1 in partitions._partitions.items():
