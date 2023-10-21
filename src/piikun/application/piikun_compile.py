@@ -40,6 +40,7 @@ from piikun import parse
 from piikun import partitionmodel
 
 def main():
+    rc = runtime.RuntimeClient()
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
@@ -108,21 +109,17 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
-    output_title = None
+    rc.logger.info("Starting: [b]piikun-compile[/b]")
+    rc.output_directory = args.output_directory
     if args.output_title:
-        output_title = args.output_title.strip()
+        rc.output_title = args.output_title.strip()
     elif args.src_paths:
         if len(args.src_paths) == 1:
-            output_title = runtime.compose_output_title_from_source(args.src_paths[0])
+            rc.output_title = runtime.compose_output_title_from_source(args.src_paths[0])
         elif args.is_merge_output and len(args.src_paths) > 1:
             output_title = (
                 runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
             )
-    rc = runtime.RuntimeClient(
-        output_title=output_title,
-        output_directory=args.output_directory,
-    )
-    rc.logger.info("Starting: [b]piikun-compile[/b]")
     if not args.src_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
     if not args.source_format:

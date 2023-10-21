@@ -86,7 +86,7 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
-
+    rc.logger.info("Starting: [b]piikun-evaluate[/b]")
     rc.output_directory = args.output_directory
     if args.output_title:
         rc.output_title = args.output_title.strip()
@@ -95,7 +95,6 @@ def main():
             rc.output_title = runtime.compose_output_title_from_source(args.src_paths[0])
         else:
             rc.terminate_error(f"Multiple sources are not supported at this time", 1)
-    rc.logger.info("Starting: [b]piikun-evaluate[/b]")
     if not args.src_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
 
