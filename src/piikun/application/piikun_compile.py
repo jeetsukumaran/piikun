@@ -110,15 +110,6 @@ def main():
     args = parser.parse_args()
     rc.logger.info("Starting: [b]piikun-compile[/b]")
     rc.output_directory = args.output_directory
-    if args.output_title:
-        rc.output_title = args.output_title.strip()
-    elif args.src_paths:
-        if len(args.src_paths) == 1:
-            rc.output_title = runtime.compose_output_title_from_source(args.src_paths[0])
-        elif args.is_merge_output and len(args.src_paths) > 1:
-            output_title = (
-                runtime.compose_output_title_from_source(args.src_paths[0]) + "+others"
-            )
     if not args.src_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)
     if not args.source_format:
@@ -129,13 +120,18 @@ def main():
     # )
     rc.logger.info(f"{len(src_paths)} sources to parse")
     partitions = None
+    rc.compose_output_title(
+        output_title=args.output_title,
+        source_paths=src_paths,
+        is_merge_output=args.is_merge_output,
+    )
     for src_idx, src_path in enumerate(src_paths):
         # rc.console.rule()
         rc.logger.info(
             f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'"
         )
         if not args.is_merge_output:
-            rc.output_title = runtime.compose_output_title_from_source(src_path)
+            rc.output_title = runtime.compose_output_title(source_paths=[src_path])
         if not partitions or not args.is_merge_output:
             partitions = partitionmodel.PartitionCollection()
         partitions.read(

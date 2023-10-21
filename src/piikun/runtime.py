@@ -10,9 +10,6 @@ from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
 
-def compose_output_title_from_source(source_path):
-    return pathlib.Path(source_path).stem.split("__partitions")[0]
-
 def get_logger(
     logging_level=logging.INFO,
     # Show a column for the time
@@ -222,3 +219,29 @@ class RuntimeClient:
         # to avoid importing time everywhere when debugging
         time.sleep(*args, **kwargs)
 
+    def compose_output_title(
+        self,
+        output_title=None,
+        source_paths=None,
+        is_merge_output=None,
+        title_from_source_stem_fn=None,
+        title_from_source_path_fn=None,
+        default_output_title=None,
+    ):
+        if output_title:
+            output_title = output_title.strip()
+        elif not source_paths:
+            output_title = default_output_title
+        else:
+            if not title_from_source_stem_fn:
+                title_from_source_stem_fn = lambda x: x
+            if not title_from_source_path_fn:
+                title_from_source_path_fn = lambda path: title_from_source_stem_fn(pathlib.Path(path).stem)
+            if len(source_paths) == 1:
+                output_title = title_from_source_path_fn(source_paths[0])
+            elif is_merge_output and len(source_paths) > 1:
+                 output_title = (
+                    title_from_source_path_fn(source_paths[0]) + "+others"
+                )
+        self.output_title = output_title
+        return self.output_title
