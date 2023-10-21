@@ -142,11 +142,12 @@ def main():
             source_path=src_path,
             source_format=args.source_format,
             limit_partitions=args.limit_partitions,
+            rc=rc,
         )
         if not args.is_merge_output or src_idx == len(src_paths)-1:
             # rc.console.rule()
             if args.is_validate:
-                partitions.validate()
+                partitions.validate(rc=rc)
             if rc.output_title:
                 out = rc.open_output(subtitle="partitions", ext="json")
                 rc.logger.info(f"Writing {len(partitions)} partitions to file: '{out.name}'")

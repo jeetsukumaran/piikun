@@ -363,7 +363,7 @@ class PartitionCollection:
                 break
         end_len = len(self)
         rc and rc.logger.info(
-            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(partitions)} read in total)"
+            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(self)} read in total)"
         )
 
 
