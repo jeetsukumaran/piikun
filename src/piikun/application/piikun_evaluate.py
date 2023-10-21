@@ -36,6 +36,7 @@ import sys
 import argparse
 import json
 import pandas as pd
+import resource
 from rich import progress
 from piikun import runtime
 from piikun import partitionmodel
@@ -73,38 +74,55 @@ def create_full_profile_distance_df(
         ]
     partition_keys = list(profiles_df["partition_id"])
     new_dataset = []
-    for pkd_idx, pk1 in enumerate(partition_keys):
-        rc and rc.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
-        seen_comparisons = set()
-        # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
-        # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
-        # pk1_ptns_df = pd.concat([pk1_ptn1_df, pk1_ptn2_df])
-        for pk2 in partition_keys:
-            key = (pk1, pk2)
-            if key in seen_comparisons:
-                continue
-            # print(f"---- {key}: PK1 = {pk1}, PK2 = {pk2} ")
-            seen_comparisons.add(key)
-            condition = ((distances_df["ptn1"] == pk1) & (distances_df["ptn2"] == pk2)) | ((distances_df["ptn1"] == pk2) & (distances_df["ptn2"] == pk1))
-            dists_sdf = distances_df[condition]
-            if len(dists_sdf) == 0 and pk1 != pk2:
-                raise ValueError(f"Missing non-self comparison: {pk1}, {pk2}")
-            elif len(dists_sdf) == 1:
-                row_d = {}
-                for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
-                    row_d[f"ptn{ptn_idx}"] = ptn_key
-                for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
-                    for column in profile_columns:
-                        values = profiles_df[ profiles_df["partition_id"] == ptn_key ][ column ].values.tolist()
-                        assert len(values) == 1
-                        row_d[f"ptn{ptn_idx}_{column}"] = values[0]
-                for dist_column in distances_columns:
-                    dists = dists_sdf[dist_column].values.tolist()
-                    assert len(dists) == 1
-                    row_d[dist_column] = dists[0]
-                new_dataset.append(row_d)
-            else:
-                raise NotImplementedError()
+    with progress.Progress(
+        progress.SpinnerColumn(),
+        progress.TextColumn("Exporting:"),
+        progress.MofNCompleteColumn(),
+        progress.BarColumn(),
+        # progress.TaskProgressColumn(),
+        progress.TimeRemainingColumn(),
+        # progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
+        # transient=True,
+    ) as progress_bar:
+        n_expected_cmps = len(partition_keys) * len(partition_keys)
+        task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
+        for pkd_idx, pk1 in enumerate(partition_keys):
+            # rc and rc.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
+            seen_comparisons = set()
+            # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
+            # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
+            # pk1_ptns_df = pd.concat([pk1_ptn1_df, pk1_ptn2_df])
+            for pk2 in partition_keys:
+                key = (pk1, pk2)
+                if key in seen_comparisons:
+                    continue
+                # print(f"---- {key}: PK1 = {pk1}, PK2 = {pk2} ")
+                seen_comparisons.add(key)
+                # message_kwargs = {}
+                # message_kwargs["memory_usage"] = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
+                # progress_bar.update(task1, advance=1, **message_kwargs)
+                progress_bar.update(task1, advance=1)
+                progress_bar.refresh()
+                condition = ((distances_df["ptn1"] == pk1) & (distances_df["ptn2"] == pk2)) | ((distances_df["ptn1"] == pk2) & (distances_df["ptn2"] == pk1))
+                dists_sdf = distances_df[condition]
+                if len(dists_sdf) == 0 and pk1 != pk2:
+                    raise ValueError(f"Missing non-self comparison: {pk1}, {pk2}")
+                elif len(dists_sdf) == 1:
+                    row_d = {}
+                    for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
+                        row_d[f"ptn{ptn_idx}"] = ptn_key
+                    for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
+                        for column in profile_columns:
+                            values = profiles_df[ profiles_df["partition_id"] == ptn_key ][ column ].values.tolist()
+                            assert len(values) == 1
+                            row_d[f"ptn{ptn_idx}_{column}"] = values[0]
+                    for dist_column in distances_columns:
+                        dists = dists_sdf[dist_column].values.tolist()
+                        assert len(dists) == 1
+                        row_d[dist_column] = dists[0]
+                    new_dataset.append(row_d)
+                else:
+                    raise NotImplementedError()
     df = pd.DataFrame.from_records(new_dataset)
     if merged_path:
         df.to_csv(merged_path, sep=delimiter)
@@ -114,12 +132,9 @@ def create_full_profile_distance_df(
 def compare_partitions(
     rc,
     partitions,
-    is_mirror=False,
 ):
-    if is_mirror:
-        n_expected_cmps = len(partitions) * len(partitions)
-    else:
-        n_expected_cmps = int(len(partitions) * len(partitions) / 2)
+    partitions.validate(rc=rc)
+    n_expected_cmps = int(len(partitions) * len(partitions) / 2)
     n_comparisons = 0
     seen_compares = set()
     partition_profile_store = rc.open_output_datastore(
@@ -131,8 +146,18 @@ def compare_partitions(
         ext="tsv",
     )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-    with runtime.get_progress_bar() as progress_bar:
-        task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps)
+    # with runtime.get_progress_bar(text="Memory usage: {task.fields[memory_usage]}") as progress_bar:
+    with progress.Progress(
+        progress.SpinnerColumn(),
+        progress.TextColumn("Comparing:"),
+        progress.MofNCompleteColumn(),
+        progress.BarColumn(),
+        # progress.TaskProgressColumn(),
+        progress.TimeRemainingColumn(),
+        progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
+        # transient=True,
+    ) as progress_bar:
+        task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
         for pkey1, ptn1 in partitions._partitions.items():
             profile_d = {
                 "partition_id": pkey1,
@@ -148,9 +173,11 @@ def compare_partitions(
                 ptn1_metadata[f"ptn1_{k}"] = v
             for pkey2, ptn2 in partitions._partitions.items():
                 cmp_key = frozenset([pkey1, pkey2])
-                if not is_mirror and cmp_key in seen_compares:
+                if cmp_key in seen_compares:
                     continue
-                progress_bar.update(task1, advance=1)
+                message_kwargs = {}
+                message_kwargs["memory_usage"] = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
+                progress_bar.update(task1, advance=1, **message_kwargs)
                 progress_bar.refresh()
                 seen_compares.add(cmp_key)
                 n_comparisons += 1
@@ -171,6 +198,7 @@ def compare_partitions(
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
                 partition_oneway_distances.write_d(comparison_d)
+    rc.logger.info("Comparison completed")
     partition_profile_store.close()
     partition_oneway_distances.close()
     partition_twoway_distances = rc.open_output_datastore(
@@ -276,7 +304,6 @@ def main():
     compare_partitions(
         partitions=partitions,
         rc=rc,
-        is_mirror=False,
     )
 
 if __name__ == "__main__":

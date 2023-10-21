@@ -12,15 +12,6 @@ from rich.theme import Theme
 from rich.logging import RichHandler
 
 
-def get_progress_bar(text="Processing"):
-    return progress.Progress(
-        progress.TextColumn(text),
-        progress.BarColumn(),
-        progress.TaskProgressColumn(),
-        progress.MofNCompleteColumn(),
-        progress.TimeRemainingColumn(),
-        transient=True,
-    )
 
 def get_logger(
     logging_level=logging.INFO,
