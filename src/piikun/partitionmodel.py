@@ -310,7 +310,7 @@ class PartitionCollection:
 
     def validate(
         self,
-        logger,
+        rc=None,
     ):
         """
         Ensure every partition is: jointly-comprehensive and mutually-exclusive
@@ -324,7 +324,7 @@ class PartitionCollection:
                     assert element not in ptn_elements
                     ptn_elements.add(element)
             if all_elements is None:
-                logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
+                rc and rc.logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
                 all_elements = ptn_elements
             else:
                 assert all_elements == ptn_elements
