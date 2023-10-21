@@ -39,24 +39,6 @@ from piikun import runtime
 from piikun import parse
 from piikun import partitionmodel
 
-
-def _store_partitions(
-    partitions,
-    rc,
-    subtitle="partitions",
-):
-    if rc.output_title:
-        out = rc.open_output(subtitle=subtitle, ext="json")
-        rc.logger.info(f" Storing {len(partitions)} partitions: '{out.name}'")
-    else:
-        out = sys.stdout
-        rc.logger.info("(Writing to standard output)")
-    partition_source_data = partitions.export_source_data()
-    out.write(json.dumps(partition_source_data))
-    out.write("\n")
-    out.close()
-
-
 def main():
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
@@ -154,7 +136,7 @@ def main():
 
     for src_idx, src_path in enumerate(src_paths):
         rc.logger.info(
-            f"Reading source {src_idx+1} of {len(src_paths)}:\n  '{src_path}'"
+            f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'"
         )
         if not partitions or not args.is_merge_output:
             partitions = partitionmodel.PartitionCollection()
@@ -179,16 +161,23 @@ def main():
             f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)"
         )
         if not args.is_merge_output:
-            rc.output_title = compose_output_title_from_source(src_path)
-            _store_partitions(
-                partitions=partitions,
-                rc=rc,
-            )
-    if args.is_merge_output:
-        _store_partitions(
-            partitions=partitions,
-            rc=rc,
-        )
+            rc.output_title = runtime.compose_output_title_from_source(src_path)
+        if not args.is_merge_output or src_idx == len(src_paths)-1:
+            if rc.output_title:
+                out = rc.open_output(subtitle="partitions", ext="json")
+                rc.logger.info(f"Writing {len(partitions)} partitions to file: '{out.name}'")
+            else:
+                out = sys.stdout
+                rc.logger.info("(Writing to standard output)")
+            partition_source_data = partitions.export_source_data()
+            out.write(json.dumps(partition_source_data))
+            out.write("\n")
+            out.close()
+    # if args.is_merge_output:
+    #     _store_partitions(
+    #         partitions=partitions,
+    #         rc=rc,
+    #     )
 
 
 if __name__ == "__main__":
