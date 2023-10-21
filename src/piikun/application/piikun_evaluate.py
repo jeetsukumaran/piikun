@@ -79,7 +79,7 @@ def create_full_profile_distance_df(
         progress.TextColumn("Exporting:"),
         progress.MofNCompleteColumn(),
         progress.BarColumn(),
-        # progress.TaskProgressColumn(),
+        progress.TaskProgressColumn(),
         progress.TimeRemainingColumn(),
         # progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
         transient=True,
