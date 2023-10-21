@@ -135,6 +135,7 @@ def main():
     partitions = None
 
     for src_idx, src_path in enumerate(src_paths):
+        # rc.console.rule()
         rc.logger.info(
             f"Reading source {src_idx+1} of {len(src_paths)}: '{src_path}'"
         )
@@ -167,10 +168,10 @@ def main():
         rc.logger.info(
             f"Reading completed: {end_len - start_len} of {ptn._origin_d['source_size']} partitions read from source ({len(partitions)} read in total)"
         )
-        rc.console.rule()
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title_from_source(src_path)
         if not args.is_merge_output or src_idx == len(src_paths)-1:
+            # rc.console.rule()
             if args.is_validate:
                 partitions.validate(logger=rc.logger)
             if rc.output_title:
@@ -183,7 +184,7 @@ def main():
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
-            rc.console.rule()
+            # rc.console.rule()
     # if args.is_merge_output:
     #     _store_partitions(
     #         partitions=partitions,
