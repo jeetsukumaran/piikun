@@ -38,18 +38,15 @@ import json
 import math
 import functools
 
-from piikun import utility
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
-
-
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
-import pandas as pd
-import numpy as np
-import plotly.graph_objects as go
+from piikun import plot
+from piikun import utility
+
 
 def visualize_support_cdf(
     distance_df,
@@ -261,6 +258,7 @@ class PlotGenerator:
         plot_fn,
         plot_kwargs=None,
         post_plot_fn=None,
+        plot_system="plotly",
     ):
         if plot_kwargs is None:
             plot_kwargs = {}
@@ -275,10 +273,18 @@ class PlotGenerator:
                     ext = f".{format_type}"
                 output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
                 _log_info(f"- Saving to: '{output_filepath}'")
-                if format_type == "html":
-                    fig.write_html(output_filepath)
-                else:
-                    fig.write_image(output_filepath)
+                if plot_system == "plotly":
+                    if format_type == "html":
+                        fig.write_html(output_filepath)
+                    else:
+                        fig.write_image(output_filepath)
+                elif plot_system == "matplotlib":
+                    if format_type != "html":
+                        plt.savefig(
+                            output_filepath,
+                            format=format_type,
+                        )
+
         if self.is_show_plot:
             fig.show()
 
@@ -289,6 +295,10 @@ def main(args=None):
         #     "plot_fn": visualize_scatter,
         # }
         "distance-vs-support-quantiles": {
+            "plot_fn": plot.visualize_distances_on_quantized_support_space,
+            "plot_system": "matplotlib",
+        },
+        "distance-vs-support-regions": {
             "plot_fn": visualize_distances_on_regionalized_support_space,
         },
         "cumulative-support": {
@@ -402,6 +412,7 @@ def main(args=None):
             plot_name = visualization_name,
             plot_fn = visualization_d["plot_fn"],
             plot_kwargs = plot_kwargs,
+            plot_system = visualization_d.get("plot_system", "plotly")
         )
 
 
