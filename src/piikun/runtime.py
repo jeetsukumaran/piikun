@@ -215,6 +215,18 @@ class RuntimeClient:
         self.opened_output_handles[output_path] = output_handle
         return output_handle
 
+    def open_output_datastore(
+        self,
+        *args,
+        **kwargs
+    ):
+        output_handle = self.open_output(**kwargs)
+        data_store = DataStore(
+            file_handle=output_handle,
+            config_d=kwargs.get("datastore_config_d", None),
+        )
+        return data_store
+
     def sleep(self, *args, **kwargs):
         # to avoid importing time everywhere when debugging
         time.sleep(*args, **kwargs)
@@ -245,3 +257,42 @@ class RuntimeClient:
                 )
         self.output_title = output_title
         return self.output_title
+
+
+class DataStore:
+    def __init__(self, file_handle, config_d):
+        self.file_handle = file_handle
+        self.is_preamble_written = False
+        self.configure(config_d)
+
+    def configure(self, config_d=None):
+        if not config_d:
+            config_d = {}
+        self.delimiter = config_d.get("delimiter", "\t")
+        self.is_write_preamble = config_d.get("is_write_header", True)
+
+    @property
+    def path(self):
+        if not hasattr(self, "_path") or self._path is None:
+            self._path = pathlib.Path(self.file_handle.name)
+        return self._path
+
+    def write_preamble(self, preamble):
+        self.file_handle.write(preamble)
+        self.file_handle.write("\n")
+        self.is_preamble_written = True
+
+    def write_v(self, data_v):
+        data_str = self.delimiter.join(f"{v}" for v in data_v)
+        self.file_handle.write(data_str)
+        self.file_handle.write("\n")
+
+    def write_d(self, data_d):
+        if not self.is_preamble_written and self.is_write_preamble:
+            header = self.delimiter.join(f"{k}" for k in data_d.keys())
+            self.write_preamble(preamble=header)
+        self.write_v(data_d.values())
+
+    def close(self):
+        self.file_handle.close()
+

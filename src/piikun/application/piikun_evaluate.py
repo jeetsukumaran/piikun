@@ -54,31 +54,21 @@ def compare_partitions(
         # console=rc.console,
     )
     task1 = progress_bar.add_task("Comparing partitions ...", total=n_expected_cmps)
+    partition_oneway_distances = rc.open_output_datastore(
+        subtitle="1d",
+        ext="tsv",
+    )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
     with progress_bar:
         for pkey1, ptn1 in partitions._partitions.items():
-            # profile_d = {
-            #     "ptn_id": pkey1,
-            #     "n_elements": ptn1.n_elements,
-            #     "n_subsets": ptn1.n_subsets,
-            #     "vi_entropy": ptn1.vi_entropy(),
-            # }
-            # if ptn1.metadata_d:
-            #     profile_d.update(ptn1.metadata_d)
-            # self.partition_profile_store.write_d(profile_d)
             ptn1_metadata = {}
             for k, v in ptn1.metadata_d.items():
                 ptn1_metadata[f"ptn1_{k}"] = v
-            # print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
             for pkey2, ptn2 in partitions._partitions.items():
                 cmp_key = frozenset([pkey1, pkey2])
                 if not is_mirror and cmp_key in seen_compares:
                     continue
                 seen_compares.add(cmp_key)
-                # if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
-                #     self.logger.log_info(
-                #         f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
-                #     )
                 n_comparisons += 1
                 progress_bar.update(task1)
                 progress_bar.refresh()
@@ -98,9 +88,9 @@ def compare_partitions(
                     ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
-                self.partition_oneway_distances.write_d(comparison_d)
+                partition_oneway_distances.write_d(comparison_d)
         self.partition_profile_store.close()
-        self.partition_oneway_distances.close()
+        partition_oneway_distances.close()
         utility.create_full_profile_distance_df(
             profiles_path=self.partition_profile_store.path,
             distances_path=self.partition_oneway_distances.path,
@@ -109,6 +99,11 @@ def compare_partitions(
         )
         self.partition_twoway_distances.close()
 
+# print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
+# if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
+#     self.logger.log_info(
+#         f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+#     )
 def main():
     rc = runtime.RuntimeClient()
     parser = argparse.ArgumentParser(description=None)
