@@ -74,8 +74,7 @@ def create_full_profile_distance_df(
     partition_keys = list(profiles_df["partition_id"])
     new_dataset = []
     for pkd_idx, pk1 in enumerate(partition_keys):
-        if logger:
-            logger.log_info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
+        rc and rc.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
         seen_comparisons = set()
         # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
         # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
@@ -96,7 +95,7 @@ def create_full_profile_distance_df(
                     row_d[f"ptn{ptn_idx}"] = ptn_key
                 for ptn_idx, ptn_key in zip((1,2), (pk1, pk2)):
                     for column in profile_columns:
-                        values = profiles_df[ profiles_df["label"] == ptn_key ][ column ].values.tolist()
+                        values = profiles_df[ profiles_df["partition_id"] == ptn_key ][ column ].values.tolist()
                         assert len(values) == 1
                         row_d[f"ptn{ptn_idx}_{column}"] = values[0]
                 for dist_column in distances_columns:
@@ -136,6 +135,7 @@ def compare_partitions(
         progress.TextColumn("[progress.description]{task.description}"),
         progress.BarColumn(),
         progress.TaskProgressColumn(),
+        progress.MofNCompleteColumn(),
         progress.TimeRemainingColumn(),
         console=rc.console,
     ) as progress_bar:
@@ -184,12 +184,12 @@ def compare_partitions(
             subtitle="distances",
             ext="tsv",
         )
-        # create_full_profile_distance_df(
-        #     profiles_path=partition_profile_store.path,
-        #     distances_path=partition_oneway_distances.path,
-        #     merged_path=partition_twoway_distances.path,
-        #     rc=rc,
-        # )
+        create_full_profile_distance_df(
+            profiles_path=partition_profile_store.path,
+            distances_path=partition_oneway_distances.path,
+            merged_path=partition_twoway_distances.path,
+            rc=rc,
+        )
         partition_twoway_distances.close()
 
 # print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
