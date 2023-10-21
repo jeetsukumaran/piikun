@@ -196,15 +196,10 @@ def parse_json_generic_lists(
     source_stream,
     partition_factory,
 ):
-    runtime.logger.info("Parsing 'json-lists' format")
     source_data = source_stream.read()
     data_d = json.loads(source_data)
-    runtime.logger.info(f"{len(data_d)} partitions in source")
     source_data = json.loads(source_data)
     for ptn_idx, ptn in enumerate(source_data):
-        runtime.logger.info(
-            f"Partition {ptn_idx+1:>5d} of {len(data_d)} ({len(ptn)} subsets)"
-        )
         partition = partition_factory(
             subsets=ptn,
             metadata_d={},
@@ -217,17 +212,12 @@ def parse_spart_xml(
     source_stream,
     partition_factory,
 ):
-    runtime.logger.info("Parsing 'spart-xml' format")
     source_data = source_stream.read()
     root = ET.fromstring(source_data)
     sparts = root.findall(".//spartition")
-    runtime.logger.info(f"{len(sparts)} partitions in source")
     for ptn_idx, spartition_element in enumerate(sparts):
         subsets = []
         spart_subsets = spartition_element.findall(".//subset")
-        runtime.logger.info(
-            f"Partition {ptn_idx+1:>5d} of {len(sparts)} ({len(spart_subsets)} subsets)"
-        )
         for subset_idx, subset_element in enumerate(spart_subsets):
             subset = []
             for individual_element in subset_element.findall(".//individual"):

@@ -120,9 +120,9 @@ def main():
     partitions = None
     for src_idx, source_path in enumerate(source_paths):
         # rc.console.rule()
-        rc.logger.info(
-            f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
-        )
+        # rc.logger.info(
+        #     f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
+        # )
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title(source_paths=[source_path])
         if not partitions or not args.is_merge_output:
