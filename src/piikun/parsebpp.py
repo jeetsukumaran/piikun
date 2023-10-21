@@ -3,12 +3,18 @@
 
 import re
 
-a11_section_b = re.compile(r"\(B\)\s*(\d+) species delimitations .*$", re.MULTILINE)
+patterns = {
+    "alignment_ntax_nchar": re.compile("^\s*(\d+)\s*(\d+)\s*$", re.MULTILINE),
+    "alignment_sequence": re.compile("^\^(\S+).*$", re.MULTILINE),
+    "a11_section_b": re.compile(r"\(B\)\s*(\d+) species delimitations .*$", re.MULTILINE),
+    "spd_pattern_end": re.compile(r"\(C\)\s*", re.MULTILINE),
+    "a11_treemodel_entry": re.compile(r"^(\d+) ([0-9.]+) ([0-9.]+) (\d+) (.*;).*$"),
+    "strip_tree_tokens": re.compile(r"[\(\),\s;]+"),
+}
 # a11_section_b = re.compile("^\(B\).*$")
-spd_pattern_end = re.compile(r"\(C\)\s*", re.MULTILINE)
-a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.])\s+([1-9.])\s+(\d)\s+(.*;)\s+(.*)$")
-a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.]+)\s+([0-9.]+)\s+(\d+)\s+(.*;)\s+(.*)$")
-strip_tree_tokens = re.compile(r"[\(\),\s;]+")
+# a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.])\s+([1-9.])\s+(\d)\s+(.*;)\s+(.*)$")
+# a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.]+)\s+([0-9.]+)\s+(\d+)\s+(.*;)\s+(.*)$")
+
 
 def check_for_overlapping_labels(labels):
     for i, label1 in enumerate(labels):

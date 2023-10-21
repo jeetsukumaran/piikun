@@ -110,16 +110,22 @@ def parse_bpp_a11(
     partition_info = []
     line = None
     line_idx = 0
+    n_lineages_expected = None
+    n_lineages_expected_set_on_line = None
     n_partitions_expected = None
-    for line_idx, line in enumerate(source_stream):
+    for line_offset, line in enumerate(source_stream):
+        line_idx = line_offset + 1
         line = line.strip()
         if not line:
             continue
-        if line.startswith("(A) List of best models"):
-            assert current_section == "pre"
+        if line.startswith("COMPRESSED ALIGNMENTS") and not line.startswith("COMPRESSED ALIGNMENTS AFTER"):
+            assert current_section == "pre", current_section
+            current_section = "alignments"
+        elif line.startswith("(A) List of best models"):
+            assert current_section == "alignments"
             current_section = "(A)"
         # elif line.startswith("(B) "):
-        elif (m := parsebpp.a11_section_b.match(line)):
+        elif (m := parsebpp.patterns["a11_section_b"].match(line)):
             assert current_section == "(A)"
             current_section = "(B)"
             n_partitions_expected = int(m[1])
@@ -127,19 +133,52 @@ def parse_bpp_a11(
             current_section = "post"
         if current_section == "pre":
             pass
-        elif current_section == "(A)":
-            if line.startswith("(A)"):
+        elif current_section == "alignments":
+            if lineage_labels and n_lineages_expected and len(lineage_labels) == n_lineages_expected:
                 continue
-            elif not lineage_labels:
-                m = parsebpp.a11_treemodel_entry.match(line)
-                if not m:
-                    runtime.RuntimeClient._logger.warn(f"Expecting species tree model data: line {line_idx}: '{line}'")
-                    # runtime.Runtime._logger.log_warning(f"Expecting species tree model data: line {line_idx}: '{line}'")
-                else:
-                    lineage_labels = [label for label in parsebpp.strip_tree_tokens.split(m[5]) if label]
-                    # print(lineage_labels)
+            if line.startswith("COMPRESSED ALIGNMENTS"):
+                continue
+            m = parsebpp.patterns["alignment_ntax_nchar"].match(line)
+            if m:
+                if n_lineages_expected:
+                    runtime.RuntimeClient._logger.error(f"Unexpected alignment label and character description (already set to {n_lineages_expected} on {n_lineages_expected_set_on_line}): line {line_idx}: '{line}'")
+                    assert not n_lineages_expected
+                    continue
+                n_lineages_expected = int(m[1])
+                n_lineages_expected_set_on_line = line_idx
+                continue
+            if not n_lineages_expected:
+                # runtime.RuntimeClient._logger.warn(f"Expected alignment label and character description: line {line_idx}: '{line}'")
+                runtime.RuntimeClient._logger.error(f"Missing alignment label and character description: line {line_idx}: '{line}'")
+                assert not n_lineages_expected
+            m = parsebpp.patterns["alignment_sequence"].match(line)
+            if not m:
+                runtime.RuntimeClient._logger.error(f"Expected sequence data: line {line_idx}: '{line}'")
+                assert m
+            if len(lineage_labels) == n_lineages_expected:
+                runtime.RuntimeClient._logger.error(f"Unexpected sequence definition ({n_lineages_expected} labels already parsed): line {line_idx}: '{line}'")
+                assert m
+            if m:
+                lineage_labels.append(m[1])
+                continue
+            else:
+                runtime.RuntimeClient._logger.error(f"Unable to parse sequence: line {line_idx}: '{line}'")
+                assert m
+        elif current_section == "(A)":
+            continue
+            # if line.startswith("(A)"):
+            #     continue
+            # elif not lineage_labels:
+            #     m = parsebpp.patterns["a11_treemodel_entry"].match(line)
+            #     if not m:
+            #         runtime.RuntimeClient._logger.warn(f"Expecting species tree model data: line {line_idx}: '{line}'")
+            #         # runtime.Runtime._logger.log_warning(f"Expecting species tree model data: line {line_idx}: '{line}'")
+            #     else:
+            #         lineage_labels = [label for label in parsebpp.patterns["strip_tree_tokens"].split(m[5]) if label]
+            #         # print(lineage_labels)
         elif current_section == "(B)":
             if line.startswith("(B)"):
+                runtime.RuntimeClient._logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
                 # runtime.logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
                 # runtime.logger.info(f"{n_partitions_expected} partitions expected")
                 continue
@@ -164,7 +203,6 @@ def parse_bpp_a11(
                         temp_lineage_label = ""
             if current_subset:
                 species_subsets.append(current_subset)
-            assert len(species_subsets) == num_subsets
             partition_d = {
                 "frequency": frequency,
                 "n_subsets": num_subsets,
