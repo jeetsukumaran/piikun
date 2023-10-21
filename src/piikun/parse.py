@@ -56,6 +56,8 @@ def parse_piikun_json(
             subsets=subsets,
             metadata_d=metadata_d,
         )
+        partition._origin_size = len(partition_ds)
+        partition._origin_offset = ptn_idx
         yield partition
 
 def parse_delineate(
@@ -67,17 +69,17 @@ def parse_delineate(
     source_data = source_stream.read()
     delineate_results = json.loads(source_data)
     src_partitions = delineate_results["partitions"]
-    for spart_idx, src_partition in enumerate(src_partitions):
+    for ptn_idx, src_partition in enumerate(src_partitions):
         try:
             partition_data = src_partition["species_leafsets"]
         except TypeError as e:
             runtime.terminate_error(
-                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
+                message=f"Invalid 'delineate' format:\nPartition {ptn_idx+1}: partitions dictionary 'species_leafsets' element is not a list",
                 exit_code=1,
             )
         except KeyError as e:
             runtime.terminate_error(
-                message=f"Invalid 'delineate' format:\nPartition {spart_idx+1}: key 'species_leafsets' not found",
+                message=f"Invalid 'delineate' format:\nPartition {ptn_idx+1}: key 'species_leafsets' not found",
                 exit_code=1,
             )
         if not isinstance(partition_data, dict):
@@ -95,19 +97,13 @@ def parse_delineate(
         if "constrained_probability" in metadata_d:
             metadata_d["support"] = metadata_d["unconstrained_probability"]
         kwargs = {
-            # "label": spart_idx + 1,
+            # "label": ptn_idx + 1,
             "metadata_d": metadata_d,
             "subsets": subsets,
         }
         partition = partition_factory(**kwargs)
-        partition._origin_d = {}
-        partition._origin_d = {
-            "source_name": source_stream.name,
-            "source_path": str(pathlib.Path(source_stream.name).absolute()),
-            "source_format": "delineate",
-            "source_size": len(src_partitions),
-            "source_index": spart_idx + 1,
-        }
+        partition._origin_size = len(src_partitions)
+        partition._origin_offset = ptn_idx
         yield partition
 
 def parse_bpp_a11(
@@ -199,6 +195,8 @@ def parse_bpp_a11(
         }
         kwargs["subsets"] = ptn_info["subsets"]
         partition = partition_factory(**kwargs)
+        partition._origin_size = len(partition_info)
+        partition._origin_offset = ptn_idx
         yield partition
 
 def parse_json_generic_lists(
@@ -218,6 +216,8 @@ def parse_json_generic_lists(
             subsets=ptn,
             metadata_d={},
         )
+        partition._origin_size = len(source_data)
+        partition._origin_offset = ptn_idx
         yield partition
 
 def parse_spart_xml(
@@ -229,11 +229,11 @@ def parse_spart_xml(
     root = ET.fromstring(source_data)
     sparts = root.findall(".//spartition")
     runtime.logger.info(f"{len(sparts)} partitions in source")
-    for spart_idx, spartition_element in enumerate(sparts):
+    for ptn_idx, spartition_element in enumerate(sparts):
         subsets = []
         spart_subsets = spartition_element.findall(".//subset")
         runtime.logger.info(
-            f"Partition {spart_idx+1:>5d} of {len(sparts)} ({len(spart_subsets)} subsets)"
+            f"Partition {ptn_idx+1:>5d} of {len(sparts)} ({len(spart_subsets)} subsets)"
         )
         for subset_idx, subset_element in enumerate(spart_subsets):
             subset = []
@@ -251,6 +251,8 @@ def parse_spart_xml(
             subsets=subsets,
             metadata_d=metadata_d,
         )
+        partition._origin_size = len(sparts)
+        partition._origin_offset = ptn_idx
         yield partition
 
 class Parser:

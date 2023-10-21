@@ -150,11 +150,10 @@ def main():
             )
             # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
             ptn.metadata_d["origin"] = {}
-            ptn.metadata_d["origin"]["source_path"] = ptn._origin_d["source_path"]
-            ptn.metadata_d["origin"]["source_format"] = ptn._origin_d["source_format"]
-            ptn.metadata_d["origin"]["source_size"] = ptn._origin_d["source_size"]
-            ptn.metadata_d["origin"]["source_index"] = ptn._origin_d["source_index"]
-            ptn.metadata_d["origin"]["read_index"] = src_idx + 1
+            ptn.metadata_d["origin"]["source_path"] = str(pathlib.Path(src_path).absolute())
+            ptn.metadata_d["origin"]["source_size"] = ptn._origin_size
+            ptn.metadata_d["origin"]["source_offset"] = ptn._origin_offset
+            # ptn.metadata_d["origin"]["source_read"] = src_idx + 1
             # if rc.output_title and rc.output_title != "-":
             # if args.is_validate:
             #     partitions.validate(logger=rc.logger)
@@ -166,7 +165,7 @@ def main():
                 break
         end_len = len(partitions)
         rc.logger.info(
-            f"Reading completed: {end_len - start_len} of {ptn._origin_d['source_size']} partitions read from source ({len(partitions)} read in total)"
+            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(partitions)} read in total)"
         )
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title_from_source(src_path)
