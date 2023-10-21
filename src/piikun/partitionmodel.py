@@ -333,9 +333,10 @@ class PartitionCollection:
         self,
         source_path,
         source_format,
-        rc=None,
         limit_partitions=None,
+        rc=None,
     ):
+        rc and rc.logger.info(f"Reading source: {source_path}")
         parser = parse.Parser(
             source_format=source_format,
         )
@@ -365,6 +366,7 @@ class PartitionCollection:
         rc and rc.logger.info(
             f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(self)} read in total)"
         )
+
 
 
 

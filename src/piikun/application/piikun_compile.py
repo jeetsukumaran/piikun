@@ -63,7 +63,7 @@ def main():
             "json-lists",
             "spart-xml",
         ],
-        help="Format of source species delimitation model data: [default='delineate'].",
+        help="Format of source species delimitation model data [default='%(default)s'].",
     )
     source_options.add_argument(
         "--limit-partitions",

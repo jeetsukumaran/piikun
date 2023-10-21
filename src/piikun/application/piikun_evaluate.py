@@ -35,9 +35,79 @@ import pathlib
 import sys
 import argparse
 import json
+from rich import progress
 from piikun import runtime
-from piikun import parse
 from piikun import partitionmodel
+
+def compare_partitions(
+    rc,
+    partitions,
+    is_mirror=False,
+):
+    if is_mirror:
+        n_expected_cmps = len(partitions) * len(partitions)
+    else:
+        n_expected_cmps = int(len(partitions) * len(partitions) / 2)
+    n_comparisons = 0
+    seen_compares = set()
+    progress_bar = progress.Progress(
+        # console=rc.console,
+    )
+    task1 = progress_bar.add_task("Comparing partitions ...", total=n_expected_cmps)
+    # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+    with progress_bar:
+        for pkey1, ptn1 in partitions._partitions.items():
+            # profile_d = {
+            #     "ptn_id": pkey1,
+            #     "n_elements": ptn1.n_elements,
+            #     "n_subsets": ptn1.n_subsets,
+            #     "vi_entropy": ptn1.vi_entropy(),
+            # }
+            # if ptn1.metadata_d:
+            #     profile_d.update(ptn1.metadata_d)
+            # self.partition_profile_store.write_d(profile_d)
+            ptn1_metadata = {}
+            for k, v in ptn1.metadata_d.items():
+                ptn1_metadata[f"ptn1_{k}"] = v
+            # print("Memory usage: {} MB".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
+            for pkey2, ptn2 in partitions._partitions.items():
+                cmp_key = frozenset([pkey1, pkey2])
+                if not is_mirror and cmp_key in seen_compares:
+                    continue
+                seen_compares.add(cmp_key)
+                # if n_comparisons == 0 or (n_comparisons % progress_step) == 0:
+                #     self.logger.log_info(
+                #         f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
+                #     )
+                n_comparisons += 1
+                progress_bar.update(task1)
+                progress_bar.refresh()
+                comparison_d = {
+                    "ptn1": pkey1,
+                    "ptn2": pkey2,
+                }
+                comparison_d.update(ptn1_metadata)
+                for k, v in ptn2.metadata_d.items():
+                    comparison_d[f"ptn2_{k}"] = v
+                comparison_d["vi_entropy_ptn1"] = ptn1.vi_entropy()
+                comparison_d["vi_entropy_ptn2"] = ptn2.vi_entropy()
+                for value_fieldname, value_fn in (
+                    ("vi_mi", ptn1.vi_mutual_information),
+                    ("vi_joint_entropy", ptn1.vi_joint_entropy),
+                    ("vi_distance", ptn1.vi_distance),
+                    ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
+                ):
+                    comparison_d[value_fieldname] = value_fn(ptn2)
+                self.partition_oneway_distances.write_d(comparison_d)
+        self.partition_profile_store.close()
+        self.partition_oneway_distances.close()
+        utility.create_full_profile_distance_df(
+            profiles_path=self.partition_profile_store.path,
+            distances_path=self.partition_oneway_distances.path,
+            merged_path=self.partition_twoway_distances.path,
+            logger=self.logger,
+        )
+        self.partition_twoway_distances.close()
 
 def main():
     rc = runtime.RuntimeClient()
@@ -50,22 +120,22 @@ def main():
         nargs="+",
         help="Path to data source file.",
     )
-    source_options.add_argument(
-        "-f",
-        "--format",
-        action="store",
-        dest="source_format",
-        default="piikun",
-        choices=[
-            "piikun",
-            "delineate",
-            # "bpp-a10",
-            "bpp-a11",
-            "json-lists",
-            "spart-xml",
-        ],
-        help="Format of source species delimitation model data: [default='delineate'].",
-    )
+    # source_options.add_argument(
+    #     "-f",
+    #     "--format",
+    #     action="store",
+    #     dest="source_format",
+    #     default="piikun",
+    #     choices=[
+    #         "piikun",
+    #         "delineate",
+    #         # "bpp-a10",
+    #         "bpp-a11",
+    #         "json-lists",
+    #         "spart-xml",
+    #     ],
+    #     help="Format of source species delimitation model data [default='%(default)s'].",
+    # )
     source_options.add_argument(
         "--limit-partitions",
         action="store",
@@ -102,6 +172,7 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
+    args.source_format = "piikun"
 
     rc.logger.info("Starting: [b]piikun-evaluate[/b]")
 
@@ -121,6 +192,11 @@ def main():
             limit_partitions=args.limit_partitions,
             rc=rc,
         )
+    compare_partitions(
+        partitions=partitions,
+        rc=rc,
+        is_mirror=False,
+    )
 
 if __name__ == "__main__":
     main()
