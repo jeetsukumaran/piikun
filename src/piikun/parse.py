@@ -30,6 +30,7 @@
 ##
 ##############################################################################
 
+import pathlib
 import json
 import xml.etree.ElementTree as ET
 from piikun import runtime
@@ -99,6 +100,14 @@ def parse_delineate(
             "subsets": subsets,
         }
         partition = partition_factory(**kwargs)
+        partition._origin_d = {}
+        partition._origin_d = {
+            "source_name": source_stream.name,
+            "source_path": str(pathlib.Path(source_stream.name).absolute()),
+            "source_format": "delineate",
+            "source_size": len(src_partitions),
+            "source_index": spart_idx + 1,
+        }
         yield partition
 
 def parse_bpp_a11(

@@ -147,8 +147,13 @@ def main():
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 f"Partition {pidx+1:>5d}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
-            ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
-            ptn.metadata_d["source_idx"] = src_idx + 1
+            # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
+            ptn.metadata_d["origin"] = {}
+            ptn.metadata_d["origin"]["source_path"] = ptn._origin_d["source_path"]
+            ptn.metadata_d["origin"]["source_format"] = ptn._origin_d["source_format"]
+            ptn.metadata_d["origin"]["source_size"] = ptn._origin_d["source_size"]
+            ptn.metadata_d["origin"]["source_index"] = ptn._origin_d["source_index"]
+            ptn.metadata_d["origin"]["read_index"] = src_idx + 1
             # if rc.output_title and rc.output_title != "-":
             if args.is_validate:
                 partitions.validate(logger=rc.logger)
@@ -160,8 +165,9 @@ def main():
                 break
         end_len = len(partitions)
         rc.logger.info(
-            f"{end_len - start_len} partitions read from source ({len(partitions)} read in total)"
+            f"Reading completed: {end_len - start_len} of {ptn._origin_d['source_size']} partitions read from source ({len(partitions)} read in total)"
         )
+        rc.console.rule()
         if not args.is_merge_output:
             rc.output_title = runtime.compose_output_title_from_source(src_path)
         if not args.is_merge_output or src_idx == len(src_paths)-1:
@@ -173,10 +179,11 @@ def main():
             else:
                 out = sys.stdout
                 rc.logger.info("(Writing to standard output)")
-            partition_source_data = partitions.export_source_data()
-            out.write(json.dumps(partition_source_data))
+            partition_definition_d = partitions.export_definition_d()
+            out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
+            rc.console.rule()
     # if args.is_merge_output:
     #     _store_partitions(
     #         partitions=partitions,

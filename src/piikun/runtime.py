@@ -5,6 +5,7 @@ import sys
 import logging
 import datetime
 import pathlib
+from rich.rule import Rule
 from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler

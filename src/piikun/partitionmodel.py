@@ -137,16 +137,16 @@ class Partition:
     # @property
     # def source_data_d(self):
     #     if (
-    #         not hasattr(self, "_source_data_d")
-    #         or self._source_data_d is None
+    #         not hasattr(self, "_definition_d")
+    #         or self._definition_d is None
     #     ):
     #         d = {}
     #         d["label"] = self.label
     #         d["subsets"] = list(self._subsets)
-    #         self._source_data_d = d
-    #     return self._source_data_d
+    #         self._definition_d = d
+    #     return self._definition_d
 
-    def compose_source_data_d(self, key=None):
+    def compose_definition_d(self, key=None):
         d = {}
         if key is not None:
             d["label"] = key
@@ -300,12 +300,10 @@ class PartitionCollection:
         self._partitions[key] = ptn
         return ptn
 
-    def export_source_data(
+    def export_definition_d(
         self,
     ):
-        # exported = { "partitions": [ ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() ] }
-        # exported = { "partitions": { key:ptn.compose_source_data_d(key=key) for key, ptn in self._partitions.items() } }
-        exported = { "partitions": { key:ptn.compose_source_data_d() for key, ptn in self._partitions.items() } }
+        exported = { "partitions": { key:ptn.compose_definition_d() for key, ptn in self._partitions.items() } }
         return exported
 
     def validate(self, logger):
