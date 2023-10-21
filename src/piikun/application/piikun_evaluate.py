@@ -293,6 +293,7 @@ def main():
     rc.compose_output_title(
         output_title=args.output_title,
         source_paths=args.source_paths,
+        title_from_source_stem_fn=lambda x: x.split("__")[0]
     )
     partitions = partitionmodel.PartitionCollection()
     for sidx, source_path in enumerate(args.source_paths):
