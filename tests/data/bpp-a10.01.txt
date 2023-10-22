@@ -1,0 +1,328 @@
+Analysis started at: Sun Oct 22 00:47:18 2023
+Using BPP version: 4.1.4
+Command: bpp --cfile bpprun_00001.input.bpp.ctl 
+
+COMPRESSED ALIGNMENTS
+
+24 25 P
+S1_i1^S1_i1     ccggucgcua gaccguagau agcgg
+S1_i2^S1_i2     ccggucgcua gaccguagau agcca
+S1_i3^S1_i3     ccggucgcua gaccguagau aagga
+S1_i4^S1_i4     ccggucgcua gaccguaacg gggga
+S4_i1^S4_i1     ccggucgcua gaccguggau aagga
+S4_i2^S4_i2     ccggucgcua gaccguagau agcgg
+S4_i3^S4_i3     ccggucgcua gcugcgagau gggga
+S4_i4^S4_i4     ccggucgcua uaccguagau agcga
+S3_i1^S3_i1     ccggucgcuu gaccccagau gggga
+S3_i2^S3_i2     ccggucgcua gaccguagau agcga
+S3_i3^S3_i3     ccggucgcga gcugcgagau gggga
+S3_i4^S3_i4     ccggucgcua gaccguagau aagga
+S6_i1^S6_i1     ccggucgcuu gaccccagau gggga
+S6_i2^S6_i2     ccggucguua gaccguagag gggga
+S6_i3^S6_i3     ccggucccua gaccguagau agcga
+S6_i4^S6_i4     ccgguugcuu gaccccagau gggga
+S5_i1^S5_i1     ccggacucua gaccguagau agcga
+S5_i2^S5_i2     ccgaucgcua gaccguagcg gggga
+S5_i3^S5_i3     ccggucgcuu gaccccagau gggga
+S5_i4^S5_i4     cccgucgcua gcugcgagau gggga
+S2_i1^S2_i1     ccggucgcua gauacgagau gggga
+S2_i2^S2_i2     caggucgcua gaccguagau agcga
+S2_i3^S2_i3     ccggucgcua gauacgagau gggga
+S2_i4^S2_i4     ccggucgcua gaccguagau agcga
+936 2 1 1 1 1 1 1 1 5 2 1 3 1 18 1 2 1 1 4 10 3 1 1 1
+
+24 19 P
+S1_i1^S1_i1     aagcaaguca ucagccgcc
+S1_i2^S1_i2     aagcaaguca ucagcccuu
+S1_i3^S1_i3     aagcaaguca ucagaaguu
+S1_i4^S1_i4     aagcaaguca ucgaccgcc
+S4_i1^S4_i1     aagcaaguca ucagccgcc
+S4_i2^S4_i2     aagcaaguca ucaaccgcc
+S4_i3^S4_i3     aagcaaguca ucagaaguu
+S4_i4^S4_i4     aagcaaguca guagcggcu
+S3_i1^S3_i1     aagcaaguca ucagaaguu
+S3_i2^S3_i2     aagcaaguca ucagaaguu
+S3_i3^S3_i3     aagcaaguca ucagaaguu
+S3_i4^S3_i4     aagcaaguuc uuagcggcu
+S6_i1^S6_i1     aagcaaggca ucagccgcc
+S6_i2^S6_i2     aagcaauuca ucagccgcu
+S6_i3^S6_i3     aagcucguca uuagcggcu
+S6_i4^S6_i4     aaguaaguca uuagcggcu
+S5_i1^S5_i1     aagcaagucc uuagcggcu
+S5_i2^S5_i2     aagcaaguca ucagcccuu
+S5_i3^S5_i3     aagcaagucc uuagcggcu
+S5_i4^S5_i4     aaccaaguca uuagcggcu
+S2_i1^S2_i1     aagcaaguca ucagcccuu
+S2_i2^S2_i2     aagcaaguca ucgaccgcc
+S2_i3^S2_i3     aagcacguca uuagcggcu
+S2_i4^S2_i4     acgcaaguca ucagccgcc
+950 2 3 4 1 3 4 1 3 2 1 14 1 3 1 1 3 1 2
+
+24 33 P
+S1_i1^S1_i1     acgccacccg acgugggggc cgcauacaac cgu
+S1_i2^S1_i2     acgccacccg acgugggggc cgcaggaucu gca
+S1_i3^S1_i3     acgccacccg acguggggcg guauuacacu gac
+S1_i4^S1_i4     acgccacccg acguggcagc cgcuuacacu gac
+S4_i1^S4_i1     acgccacccg acguccgggc cgcuuacucu gac
+S4_i2^S4_i2     acgccacccg acgcgggggc cgcaugaucu gca
+S4_i3^S4_i3     acgccacccg acaugggggc cgauuacacu gac
+S4_i4^S4_i4     acgccacccg augugggggg guauuacacu gac
+S3_i1^S3_i1     acgccacccg ccgugggggc cgcauaaaac ggc
+S3_i2^S3_i2     acgccacccg acguccgggc cgcuuacucu gac
+S3_i3^S3_i3     acgccacccg ccgugggggc cgcauaaaac ggc
+S3_i4^S3_i4     acgccacccg acgugggggc cgcaggaucu gca
+S6_i1^S6_i1     acgccacccc acgugggggc guauuacacu gac
+S6_i2^S6_i2     acgccaccgg acgugggggg guauuacacu gac
+S6_i3^S6_i3     acgccacgcg acguggcagc cgcuuacacu gac
+S6_i4^S6_i4     acgccacccg acguccgggc cgcuuacucu gac
+S5_i1^S5_i1     acgccaaccg acguccgggc cgcuuacucu gac
+S5_i2^S5_i2     acgcuucccg acgugcgggc cgcuuacuca gac
+S5_i3^S5_i3     acgccacccg acguggcagc cgcuuacacu gac
+S5_i4^S5_i4     acgccacccg acgugggggg guauuacacu gac
+S2_i1^S2_i1     acgucacccg acgugcgggc cgcuuacuca gac
+S2_i2^S2_i2     acuccucccg acgugcgggc cgcuuacuca gac
+S2_i3^S2_i3     acgccacccg acgugggggc cgcaggaucu gca
+S2_i4^S2_i4     aggccacccg acgugggagc cucuuacacu gac
+876 3 1 2 3 1 1 1 1 1 1 1 6 1 2 3 7 2 2 1 2 1 2 11 4 45 1 1 11 1 3 1 1
+
+24 28 P
+S1_i1^S1_i1     gugcguccgg ucgguaacua uugaggcc
+S1_i2^S1_i2     gugcguccgg ucgguaacua uaugacgu
+S1_i3^S1_i3     gugcguccgg ucgguaaccu gugagggu
+S1_i4^S1_i4     gugcguccgg ucgguaagua uuugacgu
+S4_i1^S4_i1     gugcguccgg ucgucuucua gugagggu
+S4_i2^S4_i2     gugcguccgg ucgucuucua gugagggu
+S4_i3^S4_i3     gugcguccgg ucuguuucua gugagggu
+S4_i4^S4_i4     gugcguccgg ucgguaacuu gugagggu
+S3_i1^S3_i1     gugcguccgg ucgguaacua uuugacgu
+S3_i2^S3_i2     gugcguccgg uugguaacua uaugacgu
+S3_i3^S3_i3     gugcgucccu acugcaucua uugaaagu
+S3_i4^S3_i4     gugcguuagg ucgguaacua gugagggu
+S6_i1^S6_i1     gugcgcccgg ucgguaacuu gugagggu
+S6_i2^S6_i2     gugcguccgg ucgguaaccu gugagggu
+S6_i3^S6_i3     gugcguccgg ucgguaacua uuugacgu
+S6_i4^S6_i4     guguuuccgg acugcaucua uugaaagu
+S5_i1^S5_i1     gugcguccgg ucgguaacua uuugacgu
+S5_i2^S5_i2     gugcguccgg ucgguaacua uuggggcu
+S5_i3^S5_i3     gugcguccgg ucgguaacuu gugagggu
+S5_i4^S5_i4     guacguccgu acugcaucua uugaaagu
+S2_i1^S2_i1     gcgcuuccgg acugcaucua uugaaagu
+S2_i2^S2_i2     gugcgucagg ucgguaacua gugagggu
+S2_i3^S2_i3     gugcguccgg ucgguaacuu gugagggu
+S2_i4^S2_i4     guacguccgu acugcaucua uugaaagu
+903 3 1 3 9 1 1 6 2 7 22 4 1 1 1 3 1 3 2 3 2 2 6 1 4 1 4 3
+
+24 18 P
+S1_i1^S1_i1     ggcuccuucu cucguauc
+S1_i2^S1_i2     ggcuccuucu cucguaga
+S1_i3^S1_i3     ggcuccuucu cucugcua
+S1_i4^S1_i4     ggcuccuucu cugguauc
+S4_i1^S4_i1     ggcuccuucu ggcgucua
+S4_i2^S4_i2     ggcuccuuca cgcgucua
+S4_i3^S4_i3     ggcuccuugu cugguauc
+S4_i4^S4_i4     ggcuccuccu cgcgucua
+S3_i1^S3_i1     ggcuccuucu cucguauc
+S3_i2^S3_i2     ggcuccuucu cucggcua
+S3_i3^S3_i3     ggcuccuucu cucguauc
+S3_i4^S3_i4     ggcucccucu cgcgucua
+S6_i1^S6_i1     ggcuccuucu cucguaga
+S6_i2^S6_i2     ggcucguucu cucguaua
+S6_i3^S6_i3     ggcuccuucu cucguaga
+S6_i4^S6_i4     ggcuccuucu cgcgucua
+S5_i1^S5_i1     ggcuccuucu cucggcua
+S5_i2^S5_i2     ggcuucuucu cucgucua
+S5_i3^S5_i3     ggcuucuucu cucgucua
+S5_i4^S5_i4     ggcgccuucu cucguaua
+S2_i1^S2_i1     ggcuccuucu cucugcua
+S2_i2^S2_i2     ggauccuucu cucguaua
+S2_i3^S2_i3     gacuccuucu cucguaua
+S2_i4^S2_i4     ggcuccuucu cucugcua
+959 1 7 7 2 3 1 1 4 1 1 1 1 1 3 1 5 1
+
+24 18 P
+S1_i1^S1_i1     gcagucggag gugauugg
+S1_i2^S1_i2     gcagucggag gugauaaa
+S1_i3^S1_i3     gcagucggag gugaaugg
+S1_i4^S1_i4     gcagucggag gugcuaaa
+S4_i1^S4_i1     gcagucggag guuaaugg
+S4_i2^S4_i2     gcagucggag gcgauuaa
+S4_i3^S4_i3     gcagucggag augauaaa
+S4_i4^S4_i4     gcagucggau gugauaaa
+S3_i1^S3_i1     gcagucgugg gugauugg
+S3_i2^S3_i2     gcagucggag gugauugg
+S3_i3^S3_i3     gcagucggag gugcuaaa
+S3_i4^S3_i4     gcagucggag gugauaaa
+S6_i1^S6_i1     gcagucggag gugcuaaa
+S6_i2^S6_i2     gcagucggag augauaaa
+S6_i3^S6_i3     gcagucagag gugauugg
+S6_i4^S6_i4     gcaguaggag gugauaaa
+S5_i1^S5_i1     gcagucggag gugauugg
+S5_i2^S5_i2     gcagccggag gugauugg
+S5_i3^S5_i3     gcagucggag augauaaa
+S5_i4^S5_i4     gcagucggag gugcuaaa
+S2_i1^S2_i1     gcagucgggg gugauugg
+S2_i2^S2_i2     gcacucggag gugauugg
+S2_i3^S2_i3     gucgucggag gugauugc
+S2_i4^S2_i4     gccgucggag gugauugc
+941 1 3 2 3 1 1 1 1 1 2 6 1 2 1 3 29 1
+
+24 26 P
+S1_i1^S1_i1     cgcggggggu uaguuucucg auuugu
+S1_i2^S1_i2     cgcggggggu uaguuucucg auugac
+S1_i3^S1_i3     cgcggggggu uaguuucucg ucauac
+S1_i4^S1_i4     cgcggggggu uaguuggcgc auauac
+S4_i1^S4_i1     cgcggggggu uaguaucucg auuugu
+S4_i2^S4_i2     cgcggggggu uaaguugcgc auauac
+S4_i3^S4_i3     cgcggggggu ugguuuccgc auauac
+S4_i4^S4_i4     cgcggggggu aaguuucugc auauac
+S3_i1^S3_i1     cgcggggggg uaguuuccgc auauac
+S3_i2^S3_i2     cgcggggggu uaguuggcgc auauac
+S3_i3^S3_i3     cgcggggguu uaguuugcgc auauac
+S3_i4^S3_i4     cgcggggggu uaaguugcgc auauac
+S6_i1^S6_i1     cgcgggacgu uaguuucucc auauac
+S6_i2^S6_i2     cgcggagggu uaguuugcgc auauac
+S6_i3^S6_i3     cgcggggggu uaguuucucg auuugu
+S6_i4^S6_i4     cgcggggggg uaguuuccgc auauac
+S5_i1^S5_i1     cgcguggggu uaguuucucg auuugc
+S5_i2^S5_i2     cgcggagggu uaguuugcgc auauac
+S5_i3^S5_i3     cgcagggcgu uagauucucc auauac
+S5_i4^S5_i4     cgcggggggg uaguuuccgc auauac
+S2_i1^S2_i1     cgcggggggu uaguuggcgc auauac
+S2_i2^S2_i2     cguggggggu uaguuucucg acauac
+S2_i3^S2_i3     cgcggggggu uaguuucucg auugac
+S2_i4^S2_i4     cccagggcgu uagauucucc auauac
+935 1 1 3 6 1 5 2 2 1 3 3 2 1 1 1 1 2 3 7 2 4 1 10 1 1
+
+24 16 P
+S1_i1^S1_i1     cacagaaccg gaagau
+S1_i2^S1_i2     cacagaaccg gaaguc
+S1_i3^S1_i3     cacagaaccg gaagau
+S1_i4^S1_i4     cacagaaccg gaacau
+S4_i1^S4_i1     cacagaaccg gaagac
+S4_i2^S4_i2     cacagaaccg gacgau
+S4_i3^S4_i3     cacagaaccg gcagac
+S4_i4^S4_i4     cacagaaccg gaagac
+S3_i1^S3_i1     cacagaacca uaagac
+S3_i2^S3_i2     cacagaaugg uaagac
+S3_i3^S3_i3     cacagaaccg gaagac
+S3_i4^S3_i4     cacagagcgg uaagac
+S6_i1^S6_i1     cacagaaccg gaagac
+S6_i2^S6_i2     cacagcaccg gaagau
+S6_i3^S6_i3     cacgcaaccg gaagac
+S6_i4^S6_i4     caaagaaccg gaagac
+S5_i1^S5_i1     cacagaaccg gaagau
+S5_i2^S5_i2     cacagaaccg gaagac
+S5_i3^S5_i3     cacagaaccg gacgau
+S5_i4^S5_i4     cacagaaccg gaaguc
+S2_i1^S2_i1     cacagaacca uaagac
+S2_i2^S2_i2     cgcacaaccg gaagac
+S2_i3^S2_i3     cacagcaccg gaagau
+S2_i4^S2_i4     cacagaaccg gaagac
+969 2 1 1 1 2 1 7 2 4 4 2 1 1 1 1
+
+24 19 P
+S1_i1^S1_i1     uccacaaccg gguauccau
+S1_i2^S1_i2     uccacaaccg gguaauuuc
+S1_i3^S1_i3     uccacaaccg gguauccau
+S1_i4^S1_i4     uccacaaccg ggguucuuc
+S4_i1^S4_i1     uccacaaccg gcuauccuc
+S4_i2^S4_i2     uccacaaccg uguauccac
+S4_i3^S4_i3     uccacaaccu gguuucuuc
+S4_i4^S4_i4     uccacaaccg gguauccac
+S3_i1^S3_i1     uccacaaccg gguauccac
+S3_i2^S3_i2     uccacaagug gguauccac
+S3_i3^S3_i3     uccacaaccg gguauccac
+S3_i4^S3_i4     uccacauccg gguauccac
+S6_i1^S6_i1     uccacauccg gguauccac
+S6_i2^S6_i2     uccaguacug gguauccac
+S6_i3^S6_i3     uccacaaccg gcuauccuc
+S6_i4^S6_i4     uccacaaccg gguaauuuc
+S5_i1^S5_i1     uccacuacug gguauccac
+S5_i2^S5_i2     uccacaaccu gguuucuuc
+S5_i3^S5_i3     uccccaaccg gguauccac
+S5_i4^S5_i4     ucaacaacug gguauccac
+S2_i1^S2_i1     uccacaaccg gguauccau
+S2_i2^S2_i2     uccacaaccg gguauuuuc
+S2_i3^S2_i3     uccacaaccg gguauccau
+S2_i4^S2_i4     uacacaaccg gguuucuuc
+936 2 1 3 1 3 1 2 3 2 1 9 3 4 2 11 6 3 7
+
+24 21 P
+S1_i1^S1_i1     ggcgauacua gagaaauccg g
+S1_i2^S1_i2     ggcgauacua gagaugcaaa a
+S1_i3^S1_i3     ggcgauacua gaucaaucca a
+S1_i4^S1_i4     ggcgauacua cugaaauaaa a
+S4_i1^S4_i1     ggcgauacua gagaaacaaa a
+S4_i2^S4_i2     ggcgauacua gagaaaucaa a
+S4_i3^S4_i3     ggcgauacuc gagaaacaaa a
+S4_i4^S4_i4     ggcgauacua gugaaauaaa a
+S3_i1^S3_i1     ggcgauacua gagaagcaaa a
+S3_i2^S3_i2     ggcgauacua gugaaauaaa a
+S3_i3^S3_i3     ggcgauacua gagaagcaaa a
+S3_i4^S3_i4     ggcgauacua gagaaaucaa a
+S6_i1^S6_i1     ggcgauauca gaggaaucaa a
+S6_i2^S6_i2     ggcgauccua gagaaacaaa a
+S6_i3^S6_i3     ggcgcaacca gagaaaucaa a
+S6_i4^S6_i4     ggcgauacua gagaaacaaa a
+S5_i1^S5_i1     ggcgauacua gagaaauccg a
+S5_i2^S5_i2     ggcgauacca gagaaaucaa a
+S5_i3^S5_i3     ggcuauacua gagaaaucaa a
+S5_i4^S5_i4     ggcgaaacca gagaaaucaa a
+S2_i1^S2_i1     ggagaaacca gagaaaucaa a
+S2_i2^S2_i2     ggcgaaacca gagaaaucaa a
+S2_i3^S2_i3     ggcgauacua gugaaauaaa a
+S2_i4^S2_i4     gucgauacua gugaaauaaa a
+950 1 1 3 1 1 1 1 2 2 1 4 1 1 2 2 10 8 3 4 1
+
+
+Per-locus sequences in data and 'species&tree' tag:
+C.File | Data |                Status                | Population
+-------+------+--------------------------------------+-----------
+     4 |    4 | [OK]                                 | S1.sub1   
+     4 |    4 | [OK]                                 | S4.sub1   
+     4 |    4 | [OK]                                 | S3.sub1   
+     4 |    4 | [OK]                                 | S6.sub1   
+     4 |    4 | [OK]                                 | S5.sub1   
+     4 |    4 | [OK]                                 | S2.sub1   
+
+
+Current Pjump:      0.52847  0.05548  0.00000  0.49850  0.94200
+Current finetune:   3.00000  0.00300  0.00200  0.00002  0.00500
+New finetune:       6.43948  0.00051  0.00002  0.00004  0.10741
+
+
+Current Pjump:      0.52968  0.15461  0.00000  0.53947  0.23100
+Current finetune:   6.43948  0.00051  0.00002  0.00004  0.10741
+New finetune:      13.87509  0.00025  0.00000  0.00009  0.08004
+
+
+Current Pjump:      0.53028  0.18271  0.00000  0.60990  0.33200
+Current finetune:  13.87509  0.00025  0.00000  0.00009  0.08004
+New finetune:      29.95361  0.00014  0.00000  0.00024  0.09025
+
+
+Current Pjump:      0.52915  0.19689  0.00000  0.53018  0.29200
+Current finetune:  29.95361  0.00014  0.00000  0.00024  0.09025
+New finetune:      64.43377  0.00009  0.00000  0.00052  0.08747
+
+Summarizing the species-delimitation sample in file bpprun_00001.results.mcmc.txt
+
+Number of species-delimitation models = 6
+
+     model    prior    posterior
+   1 00000   0.166667   0.000000
+   2 10000   0.166667   0.217000
+   3 11000   0.166667   0.210000
+   4 11100   0.166667   0.176000
+   5 11110   0.166667   0.187000
+   6 11111   0.166667   0.210000
+
+Order of ancestral nodes:
+  S1.sub1S4.sub1S3.sub1S6.sub1S5.sub1S2.sub1
+  S1.sub1S4.sub1S3.sub1S6.sub1S5.sub1
+  S4.sub1S3.sub1S6.sub1S5.sub1
+  S3.sub1S6.sub1S5.sub1
+  S6.sub1S5.sub1
+
+Guide tree with posterior probability for presence of nodes:
+((S1.sub1, (S4.sub1, (S3.sub1, (S6.sub1, S5.sub1)#0.210000)#0.397000)#0.573000)#0.783000, S2.sub1)#1.000000;;

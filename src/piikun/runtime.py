@@ -83,7 +83,7 @@ class RuntimeClient:
     _stderr_console = Console(
         stderr=True,
     )
-    _logger = None
+    _logger = get_logger(console=_stderr_console)
 
     # @staticmethod
     # def ensure_random_seed(random_seed=None):
@@ -130,9 +130,12 @@ class RuntimeClient:
 
     @property
     def logger(self):
-        if RuntimeClient._logger is None:
-            RuntimeClient._logger = get_logger(console=self.console)
-        return RuntimeClient._logger
+        if (
+            not hasattr(self, "_logger")
+            or (not self._logger)
+        ):
+            self._logger = get_logger(console=self.console)
+        return self._logger
     @logger.setter
     def logger(self, value):
         self._logger = value
