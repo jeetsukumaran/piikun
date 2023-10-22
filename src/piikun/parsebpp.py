@@ -248,10 +248,11 @@ def parse_bpp_a11(
             if not n_expected_lineages:
                 _format_error(format_type="bpp", message=f"Number of expected lineages not set before parsing alignment: line {line_idx}: '{line_text}'")
                 # continue
-            m = patterns["a11-section-b"].match(line_text)
+            m = patterns["alignment-end"].match(line_text)
             if m:
-                current_section = "a11-section-b"
-                n_partitions_expected = int(m[1])
+                current_section = "post-alignments1"
+                continue
+            if not line_text:
                 continue
             m = patterns["alignment-row"].match(line_text)
             if m:
@@ -260,10 +261,19 @@ def parse_bpp_a11(
                     # continue
                 lineage_labels.append(m[2])
                 continue
-            m = patterns["alignment-end"].match(line_text)
             _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
             # continue
             continue
+        elif current_section == "post-alignments1":
+            assert n_expected_lineages
+            if len(lineage_labels) != n_expected_lineages:
+                _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
+                # continue
+            m = patterns["a11-section-b"].match(line_text)
+            if m:
+                current_section = "a11-section-b"
+                n_partitions_expected = int(m[1])
+                continue
         elif current_section == "a11-section-b":
             assert n_expected_lineages
             if len(lineage_labels) != n_expected_lineages:
