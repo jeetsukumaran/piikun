@@ -101,6 +101,19 @@ def parse_delineate(
         partition._origin_offset = ptn_idx
         yield partition
 
+def _format_error(format_type, message):
+    import sys
+    runtime.RuntimeClient._logger.error(f"Invalid '{format_type}' format: {message}")
+    sys.exit(1)
+    # runtime.terminate_error(f"Invalid format: {message}")
+
+def parse_bpp_a10(
+    source_stream,
+    partition_factory,
+):
+    source_data = source_stream.read()
+    guide_tree_str = parsebpp.extract_bpp_output_posterior_guide_tree_string(source_data)
+
 def parse_bpp_a11(
     source_stream,
     partition_factory,
@@ -141,29 +154,23 @@ def parse_bpp_a11(
             m = parsebpp.patterns["alignment_ntax_nchar"].match(line)
             if m:
                 if n_lineages_expected:
-                    runtime.RuntimeClient._logger.error(f"Unexpected alignment label and character description (already set to {n_lineages_expected} on {n_lineages_expected_set_on_line}): line {line_idx}: '{line}'")
-                    assert not n_lineages_expected
-                    continue
+                    _format_error(format_type="bpp-a11", message=f"Unexpected alignment label and character description (already set to {n_lineages_expected} on {n_lineages_expected_set_on_line}): line {line_idx}: '{line}'")
                 n_lineages_expected = int(m[1])
                 n_lineages_expected_set_on_line = line_idx
                 continue
             if not n_lineages_expected:
                 # runtime.RuntimeClient._logger.warn(f"Expected alignment label and character description: line {line_idx}: '{line}'")
-                runtime.RuntimeClient._logger.error(f"Missing alignment label and character description: line {line_idx}: '{line}'")
-                assert not n_lineages_expected
+                _format_error(format_type="bpp-a11", message=f"Missing alignment label and character description: line {line_idx}: '{line}'")
             m = parsebpp.patterns["alignment_sequence"].match(line)
             if not m:
-                runtime.RuntimeClient._logger.error(f"Expected sequence data: line {line_idx}: '{line}'")
-                assert m
+                _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line}'")
             if len(lineage_labels) == n_lineages_expected:
-                runtime.RuntimeClient._logger.error(f"Unexpected sequence definition ({n_lineages_expected} labels already parsed): line {line_idx}: '{line}'")
-                assert m
+                _format_error(format_type="bpp-a11", message=f"Unexpected sequence definition ({n_lineages_expected} labels already parsed): line {line_idx}: '{line}'")
             if m:
                 lineage_labels.append(m[1])
                 continue
             else:
-                runtime.RuntimeClient._logger.error(f"Unable to parse sequence: line {line_idx}: '{line}'")
-                assert m
+                _format_error(format_type="bpp-a11", message=f"Unable to parse sequence: line {line_idx}: '{line}'")
         elif current_section == "(A)":
             continue
             # if line.startswith("(A)"):
@@ -178,11 +185,9 @@ def parse_bpp_a11(
             #         # print(lineage_labels)
         elif current_section == "(B)":
             if len(lineage_labels) != n_lineages_expected:
-                runtime.RuntimeClient._logger.error(f"{n_lineages_expected} lineages expected but {len(lineage_labels)} lineages identified: {lineage_labels}")
+                _format_error(format_type="bpp-a11", message=f"{n_lineages_expected} lineages expected but {len(lineage_labels)} lineages identified: {lineage_labels}")
             if line.startswith("(B)"):
                 runtime.RuntimeClient._logger.info(f"{len(lineage_labels)} lineages identified: {lineage_labels}")
-                # runtime.logger.info(f"{len(lineage_labels)} Lineages identified: {lineage_labels}")
-                # runtime.logger.info(f"{n_partitions_expected} partitions expected")
                 continue
             assert lineage_labels
             assert n_partitions_expected
@@ -283,6 +288,7 @@ class Parser:
     format_parser_map = {
         "piikun": parse_piikun_json,
         "delineate": parse_delineate,
+        "bpp-a10": parse_bpp_a10,
         "bpp-a11": parse_bpp_a11,
         "json-lists": parse_json_generic_lists,
         "spart-xml": parse_spart_xml,

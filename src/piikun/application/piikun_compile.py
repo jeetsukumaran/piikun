@@ -58,7 +58,7 @@ def main():
         choices=[
             "piikun",
             "delineate",
-            # "bpp-a10",
+            "bpp-a10",
             "bpp-a11",
             "json-lists",
             "spart-xml",

@@ -135,14 +135,14 @@ def parse_bpp_ctl(control_filepath):
 
 def extract_bpp_output_posterior_guide_tree_string(source_text):
     # pretty dumb logic for now: just locates the last non-blank line
-    # works with: bp&p Version 3.1, April 2015, in "11" mode, i.e. infer tree and species delimitaiton
+    # works with: bp&p Version 3.1, April 2015, in "10" mode, i.e. infer species delimitation with guide tree.
     lines = source_text.split("\n")
+    result = None
     for idx, line in enumerate(lines[-1::-1]):
         if line:
+            result = line
             break
-    if not line:
-        raise dendropy.DataParseError
-    return line
+    return result
 
 
 # read_bpp_a11(
