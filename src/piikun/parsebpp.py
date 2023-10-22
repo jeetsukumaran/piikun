@@ -286,6 +286,7 @@ def parse_bpp_a11(
                     _format_error(format_type="bpp-a11", message=f"Expecting {n_subsets} species subsets but only found {len(species_subsets)} ({species_subsets}): line: {line_idx}: '{line_text}'")
                 # print(f"{n_subsets}: {species_subsets_str}: {len(species_subsets)}: {species_subsets}")
                 partition_info.append({
+                    "count": int(m[1]),
                     "frequency": float(m[2]),
                     "n_subsets": int(m[3]),
                     "subsets": species_subsets,
@@ -320,6 +321,8 @@ def parse_bpp_a11(
     assert len(partition_info) == n_partitions_expected
     for ptn_idx, ptn_info in enumerate(partition_info):
         metadata_d = {
+            "count": ptn_info["count"],
+            "frequency": ptn_info["frequency"],
             "support": ptn_info["frequency"],
         }
         kwargs = {

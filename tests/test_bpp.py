@@ -115,49 +115,49 @@ def test_bpp_a11():
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S4.sub1", "S5.sub1", "S6.sub1"]
                 ],
-                "metadata": {"support": 0.074},
+                "metadata": {"count": 74, "frequency": 0.074, "support": 0.074},
             },
             "2": {
                 "subsets": [
                     ["S1.sub1"],
                     ["S2.sub1", "S3.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.045},
+                "metadata": {"count": 45, "frequency": 0.045, "support": 0.045},
             },
             "3": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.035},
+                "metadata": {"count": 35, "frequency": 0.035, "support": 0.035},
             },
             "4": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                     ["S2.sub1"],
                 ],
-                "metadata": {"support": 0.035},
+                "metadata": {"count": 35, "frequency": 0.035, "support": 0.035},
             },
             "5": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S5.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.035},
+                "metadata": {"count": 35, "frequency": 0.035, "support": 0.035},
             },
             "6": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.034},
+                "metadata": {"count": 34, "frequency": 0.034, "support": 0.034},
             },
             "7": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.031},
+                "metadata": {"count": 31, "frequency": 0.031, "support": 0.031},
             },
             "8": {
                 "subsets": [
@@ -168,7 +168,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.019},
+                "metadata": {"count": 19, "frequency": 0.019, "support": 0.019},
             },
             "9": {
                 "subsets": [
@@ -176,7 +176,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.016},
+                "metadata": {"count": 16, "frequency": 0.016, "support": 0.016},
             },
             "10": {
                 "subsets": [
@@ -184,7 +184,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.013},
+                "metadata": {"count": 13, "frequency": 0.013, "support": 0.013},
             },
             "11": {
                 "subsets": [
@@ -192,7 +192,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.012},
+                "metadata": {"count": 12, "frequency": 0.012, "support": 0.012},
             },
             "12": {
                 "subsets": [
@@ -200,14 +200,14 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.011},
+                "metadata": {"count": 11, "frequency": 0.011, "support": 0.011},
             },
             "13": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S5.sub1"],
                     ["S2.sub1", "S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.011},
+                "metadata": {"count": 11, "frequency": 0.011, "support": 0.011},
             },
             "14": {
                 "subsets": [
@@ -216,7 +216,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.011},
+                "metadata": {"count": 11, "frequency": 0.011, "support": 0.011},
             },
             "15": {
                 "subsets": [
@@ -225,7 +225,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.01},
+                "metadata": {"count": 10, "frequency": 0.01, "support": 0.01},
             },
             "16": {
                 "subsets": [
@@ -233,7 +233,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.01},
+                "metadata": {"count": 10, "frequency": 0.01, "support": 0.01},
             },
             "17": {
                 "subsets": [
@@ -242,21 +242,21 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.01},
+                "metadata": {"count": 10, "frequency": 0.01, "support": 0.01},
             },
             "18": {
                 "subsets": [
                     ["S1.sub1", "S4.sub1"],
                     ["S2.sub1", "S3.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.009},
+                "metadata": {"count": 9, "frequency": 0.009, "support": 0.009},
             },
             "19": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S4.sub1", "S5.sub1"],
                     ["S2.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.009},
+                "metadata": {"count": 9, "frequency": 0.009, "support": 0.009},
             },
             "20": {
                 "subsets": [
@@ -264,7 +264,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1"],
                     ["S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "21": {
                 "subsets": [
@@ -274,7 +274,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "22": {
                 "subsets": [
@@ -283,7 +283,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "23": {
                 "subsets": [
@@ -291,7 +291,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "24": {
                 "subsets": [
@@ -299,7 +299,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "25": {
                 "subsets": [
@@ -307,21 +307,21 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "26": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "27": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S5.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "28": {
                 "subsets": [
@@ -330,14 +330,14 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "29": {
                 "subsets": [
                     ["S1.sub1", "S6.sub1"],
                     ["S2.sub1", "S3.sub1", "S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "30": {
                 "subsets": [
@@ -345,7 +345,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.008},
+                "metadata": {"count": 8, "frequency": 0.008, "support": 0.008},
             },
             "31": {
                 "subsets": [
@@ -355,7 +355,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "32": {
                 "subsets": [
@@ -365,7 +365,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "33": {
                 "subsets": [
@@ -374,14 +374,14 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "34": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1", "S6.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "35": {
                 "subsets": [
@@ -391,7 +391,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "36": {
                 "subsets": [
@@ -401,7 +401,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "37": {
                 "subsets": [
@@ -409,7 +409,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "38": {
                 "subsets": [
@@ -418,7 +418,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "39": {
                 "subsets": [
@@ -426,14 +426,14 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S5.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.007},
+                "metadata": {"count": 7, "frequency": 0.007, "support": 0.007},
             },
             "40": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S5.sub1", "S6.sub1"],
                     ["S2.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "41": {
                 "subsets": [
@@ -442,21 +442,21 @@ def test_bpp_a11():
                     ["S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "42": {
                 "subsets": [
                     ["S1.sub1", "S4.sub1", "S6.sub1"],
                     ["S2.sub1", "S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "43": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S3.sub1"],
                     ["S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "44": {
                 "subsets": [
@@ -465,7 +465,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "45": {
                 "subsets": [
@@ -475,7 +475,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "46": {
                 "subsets": [
@@ -484,7 +484,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "47": {
                 "subsets": [
@@ -493,14 +493,14 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "48": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S6.sub1"],
                     ["S3.sub1", "S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "49": {
                 "subsets": [
@@ -509,14 +509,14 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "50": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S4.sub1"],
                     ["S2.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "51": {
                 "subsets": [
@@ -526,7 +526,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "52": {
                 "subsets": [
@@ -535,7 +535,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "53": {
                 "subsets": [
@@ -543,7 +543,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "54": {
                 "subsets": [
@@ -552,14 +552,14 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "55": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1"],
                     ["S3.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "56": {
                 "subsets": [
@@ -569,7 +569,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.006},
+                "metadata": {"count": 6, "frequency": 0.006, "support": 0.006},
             },
             "57": {
                 "subsets": [
@@ -579,7 +579,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "58": {
                 "subsets": [
@@ -589,21 +589,21 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "59": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S5.sub1"],
                     ["S3.sub1", "S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "60": {
                 "subsets": [
                     ["S1.sub1", "S5.sub1"],
                     ["S2.sub1", "S3.sub1", "S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "61": {
                 "subsets": [
@@ -611,7 +611,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "62": {
                 "subsets": [
@@ -619,7 +619,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "63": {
                 "subsets": [
@@ -627,7 +627,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.005},
+                "metadata": {"count": 5, "frequency": 0.005, "support": 0.005},
             },
             "64": {
                 "subsets": [
@@ -635,7 +635,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "65": {
                 "subsets": [
@@ -644,7 +644,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "66": {
                 "subsets": [
@@ -652,7 +652,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1", "S6.sub1"],
                     ["S3.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "67": {
                 "subsets": [
@@ -662,14 +662,14 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "68": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S4.sub1"],
                     ["S3.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "69": {
                 "subsets": [
@@ -677,7 +677,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "70": {
                 "subsets": [
@@ -685,21 +685,21 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "71": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S4.sub1", "S6.sub1"],
                     ["S2.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "72": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S4.sub1", "S6.sub1"],
                     ["S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "73": {
                 "subsets": [
@@ -707,7 +707,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "74": {
                 "subsets": [
@@ -715,7 +715,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "75": {
                 "subsets": [
@@ -724,7 +724,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "76": {
                 "subsets": [
@@ -733,14 +733,14 @@ def test_bpp_a11():
                     ["S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "77": {
                 "subsets": [
                     ["S1.sub1", "S5.sub1", "S6.sub1"],
                     ["S2.sub1", "S3.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "78": {
                 "subsets": [
@@ -748,7 +748,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "79": {
                 "subsets": [
@@ -757,7 +757,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "80": {
                 "subsets": [
@@ -767,7 +767,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.004},
+                "metadata": {"count": 4, "frequency": 0.004, "support": 0.004},
             },
             "81": {
                 "subsets": [
@@ -777,7 +777,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "82": {
                 "subsets": [
@@ -786,7 +786,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "83": {
                 "subsets": [
@@ -794,7 +794,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S5.sub1"],
                     ["S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "84": {
                 "subsets": [
@@ -803,7 +803,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "85": {
                 "subsets": [
@@ -812,7 +812,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "86": {
                 "subsets": [
@@ -821,7 +821,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "87": {
                 "subsets": [
@@ -829,7 +829,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "88": {
                 "subsets": [
@@ -837,7 +837,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "89": {
                 "subsets": [
@@ -845,7 +845,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "90": {
                 "subsets": [
@@ -854,21 +854,21 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "91": {
                 "subsets": [
                     ["S1.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                     ["S2.sub1", "S3.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "92": {
                 "subsets": [
                     ["S1.sub1", "S4.sub1", "S5.sub1"],
                     ["S2.sub1", "S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "93": {
                 "subsets": [
@@ -877,7 +877,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "94": {
                 "subsets": [
@@ -885,7 +885,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S3.sub1", "S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "95": {
                 "subsets": [
@@ -894,7 +894,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "96": {
                 "subsets": [
@@ -902,7 +902,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "97": {
                 "subsets": [
@@ -910,7 +910,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "98": {
                 "subsets": [
@@ -918,7 +918,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "99": {
                 "subsets": [
@@ -926,7 +926,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "100": {
                 "subsets": [
@@ -936,7 +936,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "101": {
                 "subsets": [
@@ -945,7 +945,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "102": {
                 "subsets": [
@@ -953,7 +953,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "103": {
                 "subsets": [
@@ -962,14 +962,14 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "104": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1"],
                     ["S2.sub1", "S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "105": {
                 "subsets": [
@@ -977,7 +977,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S5.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "106": {
                 "subsets": [
@@ -985,7 +985,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S6.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "107": {
                 "subsets": [
@@ -994,7 +994,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "108": {
                 "subsets": [
@@ -1003,7 +1003,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "109": {
                 "subsets": [
@@ -1012,7 +1012,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "110": {
                 "subsets": [
@@ -1021,7 +1021,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "111": {
                 "subsets": [
@@ -1030,14 +1030,14 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "112": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S4.sub1", "S5.sub1"],
                     ["S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "113": {
                 "subsets": [
@@ -1046,7 +1046,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "114": {
                 "subsets": [
@@ -1054,7 +1054,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1"],
                     ["S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "115": {
                 "subsets": [
@@ -1063,7 +1063,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "116": {
                 "subsets": [
@@ -1072,7 +1072,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "117": {
                 "subsets": [
@@ -1080,7 +1080,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "118": {
                 "subsets": [
@@ -1089,7 +1089,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.003},
+                "metadata": {"count": 3, "frequency": 0.003, "support": 0.003},
             },
             "119": {
                 "subsets": [
@@ -1097,7 +1097,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "120": {
                 "subsets": [
@@ -1105,7 +1105,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "121": {
                 "subsets": [
@@ -1113,7 +1113,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "122": {
                 "subsets": [
@@ -1122,7 +1122,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "123": {
                 "subsets": [
@@ -1130,7 +1130,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "124": {
                 "subsets": [
@@ -1138,7 +1138,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "125": {
                 "subsets": [
@@ -1146,7 +1146,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1", "S6.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "126": {
                 "subsets": [
@@ -1154,7 +1154,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "127": {
                 "subsets": [
@@ -1162,7 +1162,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "128": {
                 "subsets": [
@@ -1171,7 +1171,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "129": {
                 "subsets": [
@@ -1180,7 +1180,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "130": {
                 "subsets": [
@@ -1189,7 +1189,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "131": {
                 "subsets": [
@@ -1198,7 +1198,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "132": {
                 "subsets": [
@@ -1206,7 +1206,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "133": {
                 "subsets": [
@@ -1215,14 +1215,14 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "134": {
                 "subsets": [
                     ["S1.sub1", "S3.sub1", "S6.sub1"],
                     ["S2.sub1", "S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "135": {
                 "subsets": [
@@ -1231,7 +1231,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "136": {
                 "subsets": [
@@ -1240,7 +1240,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "137": {
                 "subsets": [
@@ -1248,7 +1248,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "138": {
                 "subsets": [
@@ -1256,7 +1256,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "139": {
                 "subsets": [
@@ -1265,7 +1265,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "140": {
                 "subsets": [
@@ -1274,7 +1274,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "141": {
                 "subsets": [
@@ -1282,7 +1282,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S5.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "142": {
                 "subsets": [
@@ -1290,7 +1290,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "143": {
                 "subsets": [
@@ -1298,14 +1298,14 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "144": {
                 "subsets": [
                     ["S1.sub1", "S2.sub1", "S5.sub1", "S6.sub1"],
                     ["S3.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "145": {
                 "subsets": [
@@ -1314,7 +1314,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "146": {
                 "subsets": [
@@ -1322,7 +1322,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "147": {
                 "subsets": [
@@ -1330,7 +1330,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1"],
                     ["S3.sub1", "S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "148": {
                 "subsets": [
@@ -1338,7 +1338,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "149": {
                 "subsets": [
@@ -1346,7 +1346,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "150": {
                 "subsets": [
@@ -1356,7 +1356,7 @@ def test_bpp_a11():
                     ["S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "151": {
                 "subsets": [
@@ -1364,7 +1364,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "152": {
                 "subsets": [
@@ -1372,7 +1372,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.002},
+                "metadata": {"count": 2, "frequency": 0.002, "support": 0.002},
             },
             "153": {
                 "subsets": [
@@ -1380,7 +1380,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S5.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "154": {
                 "subsets": [
@@ -1389,7 +1389,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "155": {
                 "subsets": [
@@ -1398,7 +1398,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "156": {
                 "subsets": [
@@ -1407,7 +1407,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "157": {
                 "subsets": [
@@ -1415,7 +1415,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S6.sub1"],
                     ["S3.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "158": {
                 "subsets": [
@@ -1423,7 +1423,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "159": {
                 "subsets": [
@@ -1431,7 +1431,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "160": {
                 "subsets": [
@@ -1439,7 +1439,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S6.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "161": {
                 "subsets": [
@@ -1448,7 +1448,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "162": {
                 "subsets": [
@@ -1457,7 +1457,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "163": {
                 "subsets": [
@@ -1465,7 +1465,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1"],
                     ["S3.sub1", "S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "164": {
                 "subsets": [
@@ -1474,7 +1474,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "165": {
                 "subsets": [
@@ -1482,7 +1482,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S3.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "166": {
                 "subsets": [
@@ -1490,7 +1490,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "167": {
                 "subsets": [
@@ -1498,7 +1498,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "168": {
                 "subsets": [
@@ -1507,7 +1507,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "169": {
                 "subsets": [
@@ -1515,7 +1515,7 @@ def test_bpp_a11():
                     ["S2.sub1"],
                     ["S4.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "170": {
                 "subsets": [
@@ -1523,7 +1523,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S3.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "171": {
                 "subsets": [
@@ -1532,7 +1532,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S4.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "172": {
                 "subsets": [
@@ -1540,7 +1540,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "173": {
                 "subsets": [
@@ -1548,7 +1548,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "174": {
                 "subsets": [
@@ -1556,7 +1556,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S6.sub1"],
                     ["S4.sub1", "S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "175": {
                 "subsets": [
@@ -1564,7 +1564,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S5.sub1", "S6.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "176": {
                 "subsets": [
@@ -1573,7 +1573,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "177": {
                 "subsets": [
@@ -1582,7 +1582,7 @@ def test_bpp_a11():
                     ["S3.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "178": {
                 "subsets": [
@@ -1591,7 +1591,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S4.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "179": {
                 "subsets": [
@@ -1600,7 +1600,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S4.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "180": {
                 "subsets": [
@@ -1608,7 +1608,7 @@ def test_bpp_a11():
                     ["S2.sub1", "S3.sub1", "S4.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "181": {
                 "subsets": [
@@ -1616,7 +1616,7 @@ def test_bpp_a11():
                     ["S3.sub1", "S5.sub1"],
                     ["S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "182": {
                 "subsets": [
@@ -1624,7 +1624,7 @@ def test_bpp_a11():
                     ["S4.sub1"],
                     ["S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "183": {
                 "subsets": [
@@ -1632,7 +1632,7 @@ def test_bpp_a11():
                     ["S4.sub1", "S6.sub1"],
                     ["S5.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
             "184": {
                 "subsets": [
@@ -1640,10 +1640,11 @@ def test_bpp_a11():
                     ["S2.sub1", "S4.sub1"],
                     ["S3.sub1", "S5.sub1", "S6.sub1"],
                 ],
-                "metadata": {"support": 0.001},
+                "metadata": {"count": 1, "frequency": 0.001, "support": 0.001},
             },
         }
     }
+
     pc = partitionmodel.PartitionCollection()
     for ptn_idx, ptn in enumerate(
         parsebpp.parse_bpp_a11(
@@ -1653,7 +1654,7 @@ def test_bpp_a11():
     ):
         pass
     observed_results = pc.export_definition_d()
-    # print(observed_results)
+    print(observed_results)
     assert observed_results == expected_results
 
 
