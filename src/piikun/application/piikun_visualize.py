@@ -99,6 +99,8 @@ def visualize_distances_on_regionalized_support_space(
 
     distance_df = distance_df.copy()
     if is_log_scale:
+        distance_df["ptn1_support"] = distance_df["ptn1_support"].clip(lower=1e-9)
+        distance_df["ptn2_support"] = distance_df["ptn2_support"].clip(lower=1e-9)
         distance_df["ptn1_support"] = np.log2(distance_df["ptn1_support"])
         distance_df["ptn2_support"] = np.log2(distance_df["ptn2_support"])
 
