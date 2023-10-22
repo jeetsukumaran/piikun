@@ -26,9 +26,8 @@ patterns = {
 
 def _format_error(format_type, message):
     import sys
-    runtime.RuntimeClient._logger._runtime_handler.show_path = True
-    runtime.RuntimeClient._logger.error(f"Invalid '{format_type}' format: {message}")
-    sys.exit(1)
+    message = f"Invalid '{format_type}' format: {message}"
+    sys.exit(message)
 
 def check_for_overlapping_labels(labels):
     for i, label1 in enumerate(labels):

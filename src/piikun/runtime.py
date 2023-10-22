@@ -84,7 +84,7 @@ class RuntimeClient:
     _stderr_console = Console(
         stderr=True,
     )
-    _logger = get_logger(console=_stderr_console)
+    # _logger = get_logger(console=_stderr_console)
 
     # @staticmethod
     # def ensure_random_seed(random_seed=None):
