@@ -47,8 +47,9 @@ def parse_species_subsets(
                                    key=len,
                                    reverse=True,
                                 )
-    match_patterns_prioritizing_length = [ re.compile(f".*({label}).*") for label in lineage_labels_sorted_by_length ]
+    match_patterns_prioritizing_length = [ re.compile(f".*({re.escape(label)}).*") for label in lineage_labels_sorted_by_length ]
     for concatenated_label in concatenated_labels:
+        species_subset = []
         for mp in match_patterns_prioritizing_length:
             if not concatenated_label:
                 break
@@ -56,12 +57,13 @@ def parse_species_subsets(
             if not m:
                 continue
                 # _format_error(format_type="bpp-a11", message=f"Unable to match lineage with expression '{mp}': '{species_subsets_str}' => '{concatenated_label}")
-            species_subsets.append(m[1])
+            species_subset.append(m[1])
             new_label = mp.sub("", concatenated_label, 1)
             assert new_label != concatenated_label
             concatenated_label = new_label
         if concatenated_label:
             _format_error("bpp", f"Failed to resolve '{concatenated_label}' out of: {lineage_labels}")
+        species_subsets.append(species_subset)
     return species_subsets
 
 def parse_guide_tree_with_pp(
@@ -281,6 +283,7 @@ def parse_bpp_a11(
                 n_subsets = int(m[3])
                 if n_subsets != len(species_subsets):
                     _format_error(format_type="bpp-a11", message=f"Expecting {n_subsets} species subsets but only found {len(species_subsets)} ({species_subsets}): line: {line_idx}: '{line_text}'")
+                # print(f"{n_subsets}: {species_subsets_str}: {len(species_subsets)}: {species_subsets}")
                 partition_info.append({
                     "frequency": float(m[2]),
                     "n_subsets": int(m[3]),
