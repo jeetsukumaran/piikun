@@ -13,6 +13,7 @@ patterns = {
     "alignment-row": re.compile(r"^(.*?)?\^(\S+).*$"),
     "alignment-end": re.compile(r"^[0-9 ]+$"),
 
+    "a11-population-table-row": re.compile(r"^\s*(\d+)\|\s*(\d+)|.*\|\s*(\S+).*$"),
     "a11-section-b": re.compile(r"\(B\)\s*(\d+) species delimitations .*$"),
     # "a11-species-delimitation-desc": re.compile(r"^(\d+\)\s+([0-9.Ee\-]+)\s+(\d+)\s+\(.*)"),
     "a11-species-delimitation-desc": re.compile(r"^(\d+)\s+([0-9.Ee\-]+)\s+(\d+)\s+\((.*)\)"),
@@ -41,21 +42,22 @@ def parse_species_subsets(
     lineage_labels,
 ):
     species_subsets = []
-    current_subset = []
-    temp_lineage_label = ""
-    for cidx, char in enumerate(species_subsets_str):
-        if char == ' ':
-            if current_subset:
-                species_subsets.append(current_subset)
-                current_subset = []
-        else:
-            temp_lineage_label += char
-            if temp_lineage_label in lineage_labels:
-                current_subset.append(temp_lineage_label)
-                temp_lineage_label = ""
-    assert False
-    if current_subset:
-        species_subsets.append(current_subset)
+    concatenated_labels = species_subsets_str.split(" ")
+    lineage_labels_sorted_by_length = sorted(lineage_labels,
+                                   key=len,
+                                   reverse=True,
+                                )
+    match_patterns_prioritizing_length = [ re.compile(f".*({label}).*") for label in lineage_labels_sorted_by_length ]
+    for concatenated_label in concatenated_labels:
+        for mp in match_patterns_prioritizing_length:
+            if not concatenated_label:
+                break
+            m = mp.match(concatenated_label)
+            if not m:
+                continue
+                # _format_error(format_type="bpp-a11", message=f"Unable to match lineage with expression '{mp}': '{species_subsets_str}' => '{concatenated_label}")
+            species_subsets.append(m[1])
+            concatenated_label = mp.sub("", concatenated_label, 1)
     return species_subsets
 
 def parse_guide_tree_with_pp(
@@ -215,72 +217,41 @@ def parse_bpp_a11(
     n_expected_lineages = None
     n_expected_lineages_set_on_line = None
     n_partitions_expected = None
+    population_table_start_offset = None
     for line_offset, line in enumerate(source_stream):
         line_idx = line_offset + 1
         line_text = line.strip()
         if current_section == "pre":
-            if line_text.startswith("COMPRESSED ALIGNMENTS"):
-                current_section = "alignments1"
+            if population_table_start_offset and population_table_start_offset == line_offset:
+                current_section = "population-table-row"
                 continue
-            if line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
-                current_section = "post-alignments1"
+            elif line_text.startswith("Per-locus sequences in data "):
+                population_table_start_offset = line_offset + 3
                 continue
+            continue # sink until triggered by population table row
+        elif current_section == "population-table-row":
+            m = patterns["a11-population-table-row"].match(line_text)
+            if not m:
+                if not lineage_labels:
+                    _format_error(format_type="bpp-a11", message=f"No lineages identified after parsing all populations: line {line_idx}: '{line_text}'")
+                current_section = "post-population-identification"
+                continue
+            lineage_label = m[3]
+            assert lineage_label
+            lineage_labels.append(m[3])
             continue
-        elif current_section == "alignments1":
-            # if lineage_labels and n_expected_lineages and len(lineage_labels) == n_expected_lineages:
-            #     continue
-            # if line.startswith("COMPRESSED ALIGNMENTS"):
-            #     continue
-            if not line_text:
-                continue
-            m = patterns["alignment-ntax-nchar"].match(line_text)
-            if m:
-                if n_expected_lineages:
-                    _format_error(format_type="bpp-a11", message=f"Unexpected alignment label and character description (already set to {n_expected_lineages} on {n_expected_lineages_set_on_line}): line {line_idx}: '{line_text}'")
-                n_expected_lineages = int(m[1])
-                n_expected_lineages_set_on_line = line_idx
-                current_section = "alignment-row"
-                continue
-            _format_error(format_type="bpp", message=f"Missing alignment label and character description: line {line_idx}: '{line_text}'")
-            # continue
-        elif current_section == "alignment-row":
-            # breakout pattern
-            if not n_expected_lineages:
-                _format_error(format_type="bpp", message=f"Number of expected lineages not set before parsing alignment: line {line_idx}: '{line_text}'")
-                # continue
-            m = patterns["alignment-end"].match(line_text)
-            if m:
-                current_section = "post-alignments1"
-                continue
-            if not line_text:
-                continue
-            m = patterns["alignment-row"].match(line_text)
-            if m:
-                if len(lineage_labels) == n_expected_lineages:
-                    _format_error(format_type="bpp-a11", message=f"Unexpected sequence definition ({n_expected_lineages} labels already parsed): line {line_idx}: '{line_text}'")
-                    # continue
-                lineage_labels.append(m[2])
-                continue
-            _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
-            # continue
-            continue
-        elif current_section == "post-alignments1":
-            assert n_expected_lineages
-            if len(lineage_labels) != n_expected_lineages:
-                _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
-                # continue
+        elif current_section == "post-population-identification":
             m = patterns["a11-section-b"].match(line_text)
             if m:
-                current_section = "a11-section-b"
                 n_partitions_expected = int(m[1])
+                current_section = "a11-section-b"
                 continue
-            # sink all till next section of interest
-            continue
+            continue # sink until triggered by (B)
         elif current_section == "a11-section-b":
-            assert n_expected_lineages
-            if len(lineage_labels) != n_expected_lineages:
-                _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
-                # continue
+            # assert n_expected_lineages
+            # if len(lineage_labels) != n_expected_lineages:
+            #     _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
+            #     # continue
             if not n_partitions_expected:
                 _format_error(format_type="bpp-a11", message=f"Number of expected models not set before parsing models: line {line_idx}: '{line_text}'")
                 # continue
@@ -295,9 +266,19 @@ def parse_bpp_a11(
                 continue
             m = patterns["a11-species-delimitation-desc"].match(line_text)
             if m:
-                frequency = float(m[2])
-                num_subsets = int(m[3])
                 species_subsets_str = m[4]
+                species_subsets = parse_species_subsets(
+                    species_subsets_str=species_subsets_str,
+                    lineage_labels=lineage_labels,
+                )
+                if not species_subsets:
+                    _format_error(format_type="bpp-a11", message=f"Unable to resolve species subsets: line: {line_idx}: '{line_text}'")
+                partition_info.append({
+                    "frequency": float(m[2]),
+                    "n_subsets": int(m[3]),
+                    "subsets": species_subsets,
+                    # "species_subsets_str": species_subsets_str,
+                })
                 continue
             _format_error(format_type="bpp-a11", message=f"Expecting species delimitation model description: line {line_idx}: '{line_text}'")
 
@@ -315,18 +296,8 @@ def parse_bpp_a11(
             #             current_subset.append(temp_lineage_label)
             #             temp_lineage_label = ""
 
-            species_subsets = parse_species_subsets(
-                species_subsets_str=species_subsets_str,
-                lineage_labels=lineage_labels,
-            )
 
-            partition_d = {
-                "frequency": frequency,
-                "n_subsets": num_subsets,
-                "subsets": species_subsets
-            }
-            # runtime.logger.info(f"Partition {len(partition_info)+1} of {n_partitions_expected}: {num_subsets} clusters, probability = {frequency}")
-            partition_info.append(partition_d)
+        # runtime.logger.info(f"Partition {len(partition_info)+1} of {n_partitions_expected}: {num_subsets} clusters, probability = {frequency}")
         elif current_section == "a11-section-c":
             break
         else:
@@ -349,3 +320,62 @@ def parse_bpp_a11(
         yield partition
 
 
+
+        # if current_section == "pre":
+        #     if line_text.startswith("COMPRESSED ALIGNMENTS"):
+        #         current_section = "alignments1"
+        #         continue
+        #     if line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
+        #         current_section = "post-alignments1"
+        #         continue
+        #     continue
+        # elif current_section == "alignments1":
+        #     # if lineage_labels and n_expected_lineages and len(lineage_labels) == n_expected_lineages:
+        #     #     continue
+        #     # if line.startswith("COMPRESSED ALIGNMENTS"):
+        #     #     continue
+        #     if not line_text:
+        #         continue
+        #     m = patterns["alignment-ntax-nchar"].match(line_text)
+        #     if m:
+        #         if n_expected_lineages:
+        #             _format_error(format_type="bpp-a11", message=f"Unexpected alignment label and character description (already set to {n_expected_lineages} on {n_expected_lineages_set_on_line}): line {line_idx}: '{line_text}'")
+        #         n_expected_lineages = int(m[1])
+        #         n_expected_lineages_set_on_line = line_idx
+        #         current_section = "alignment-row"
+        #         continue
+        #     _format_error(format_type="bpp", message=f"Missing alignment label and character description: line {line_idx}: '{line_text}'")
+        #     # continue
+        # elif current_section == "alignment-row":
+        #     # breakout pattern
+        #     if not n_expected_lineages:
+        #         _format_error(format_type="bpp", message=f"Number of expected lineages not set before parsing alignment: line {line_idx}: '{line_text}'")
+        #         # continue
+        #     m = patterns["alignment-end"].match(line_text)
+        #     if m:
+        #         current_section = "post-alignments1"
+        #         continue
+        #     if not line_text:
+        #         continue
+        #     m = patterns["alignment-row"].match(line_text)
+        #     if m:
+        #         if len(lineage_labels) == n_expected_lineages:
+        #             _format_error(format_type="bpp-a11", message=f"Unexpected sequence definition ({n_expected_lineages} labels already parsed): line {line_idx}: '{line_text}'")
+        #             # continue
+        #         lineage_labels.append(m[2])
+        #         continue
+        #     _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
+        #     # continue
+        #     continue
+        # elif current_section == "post-alignments1":
+        #     assert n_expected_lineages
+        #     if len(lineage_labels) != n_expected_lineages:
+        #         _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
+        #         # continue
+        #     m = patterns["a11-section-b"].match(line_text)
+        #     if m:
+        #         current_section = "a11-section-b"
+        #         n_partitions_expected = int(m[1])
+        #         continue
+        #     # sink all till next section of interest
+        #     continue

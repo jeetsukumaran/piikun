@@ -39,7 +39,7 @@ def test_bpp_a11():
     ):
         pass
     observed_results = pc.export_definition_d()
-    print(observed_results)
+    # print(observed_results)
     assert observed_results == expected_results
 
 if __name__ == "__main__":
