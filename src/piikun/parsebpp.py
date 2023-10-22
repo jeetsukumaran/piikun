@@ -57,7 +57,11 @@ def parse_species_subsets(
                 continue
                 # _format_error(format_type="bpp-a11", message=f"Unable to match lineage with expression '{mp}': '{species_subsets_str}' => '{concatenated_label}")
             species_subsets.append(m[1])
-            concatenated_label = mp.sub("", concatenated_label, 1)
+            new_label = mp.sub("", concatenated_label, 1)
+            assert new_label != concatenated_label
+            concatenated_label = new_label
+        if concatenated_label:
+            _format_error("bpp", f"Failed to resolve '{concatenated_label}' out of: {lineage_labels}")
     return species_subsets
 
 def parse_guide_tree_with_pp(
@@ -273,6 +277,9 @@ def parse_bpp_a11(
                 )
                 if not species_subsets:
                     _format_error(format_type="bpp-a11", message=f"Unable to resolve species subsets: line: {line_idx}: '{line_text}'")
+                n_subsets = int(m[3])
+                if n_subsets != len(species_subsets):
+                    _format_error(format_type="bpp-a11", message=f"Expecting {n_subsets} species subsets but only found {len(species_subsets)} ({species_subsets}): line: {line_idx}: '{line_text}'")
                 partition_info.append({
                     "frequency": float(m[2]),
                     "n_subsets": int(m[3]),
