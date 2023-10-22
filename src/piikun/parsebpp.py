@@ -8,6 +8,15 @@ patterns = {
     "a10-species-delimitation-models": re.compile(r"^Number of species-delimitation models = (\d+).*$"),
     "a10-species-delimitation-model-header": re.compile(r"^ *model +prior +posterior.*$"),
     "a10-species-delimitation-model-row": re.compile(r"^ *(\d+?) +([01]+) +([0-9Ee\-.]+) +([0-9Ee\-.]+).*$"),
+
+    "alignment-ntax-nchar": re.compile("^\s*(\d+)\s*(\d+)\s*.*$"),
+    "alignment_row": re.compile("^(.*?\^)?(\S+).*$"),
+
+    "a11-section-b": re.compile(r"\(B\)\s*(\d+) species delimitations .*$"),
+    "a11-section-c": re.compile(r"\(C\)\s*(\d+) delimited species .*$"),
+    # "spd_pattern_end": re.compile(r"\(C\)\s*", re.MULTILINE),
+    # "a11_treemodel_entry": re.compile(r"^(\d+) ([0-9.]+) ([0-9.]+) (\d+) (.*;).*$"),
+    # "strip_tree_tokens": re.compile(r"[\(\),\s;]+"),
 }
 
 def _format_error(format_type, message):
@@ -74,7 +83,6 @@ def parse_guide_tree_with_pp(
                 tree.bpp_ancestor_index_node_map[ancestral_node_label_id_map[nd.bpp_ancestor_label]] = nd
     return tree
 
-
 def parse_bpp_a10(
     source_stream,
     partition_factory,
@@ -95,9 +103,6 @@ def parse_bpp_a10(
         line_idx = line_offset + 1
         line_text = line.strip()
         if current_section == "pre":
-            assert current_section == "pre", current_section
-            # if line_text.startswith("COMPRESSED ALIGNMENTS") and not line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
-            #     current_section = "alignments"
             m = patterns["a10-species-delimitation-models"].match(line_text)
             if m:
                 current_section = "species-delimitation-models"
@@ -196,222 +201,126 @@ def parse_bpp_a10(
         partition._origin_offset = spdm_idx
         yield partition
 
-    # species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
-    # ancestral_node_subsets_map = {}
-    # for anc_idx, desc in enumerate(ancestral_node_label_id_map):
-    #     subsets = parse_species_subsets(
-    #         species_subsets_str=desc,
-    #         lineage_labels=species_labels,
-    #     )
-    #     ancestral_node_subsets_map[anc_idx] = subsets
-    # print(ancestral_node_subsets_map)
-    # assert len(ancestral_node_subsets_map) == len(ancestral_node_label_id_map)
-    # for desc, subsets in zip(ancestral_node_label_id_map, ancestral_node_subsets_map.values()):
-    #     print(f"{desc} --> {subsets}")
-    # print(species_delimitation_model_defs)
-
-# def find_terminal_population_clades(tree):
-#     """
-#     Takes a tree with nodes *annotated" to indicate whether or not they should
-#     be collapsed and identifies the set of 'terminal population clades'.
-
-#     'Terminal population clades' are substrees descending from nodes with no
-#     ancestors in a collapsed state AND either: (a) no child nodes [i.e., a
-#     leaf] or (b) no descendent nodes in a non-collapsed or open states.
-#     Nodes corresponding to terminal populations themselves are, by definition,
-#     need to in a collapsed state unless they are leaves.
-
-#     Returns a dictionary mapping terminal population nodes to leaf nodes descending
-#     from the terminal population nodes.
-#     """
-#     # ensure if parent is collapsed, all children are collapsed
-#     for gnd in tree.preorder_node_iter():
-#         if gnd.parent_node is not None and gnd.parent_node.annotations["is_collapsed"].value:
-#             gnd.annotations["is_collapsed"] = True
-#         else:
-#             gnd.annotations["is_collapsed"] = False
-#     # identify the lowest nodes (closest to the tips) that are open, and
-#     # add its children if the children are (a) leaves; or (b) themselves
-#     # are closed
-#     terminal_population_clades = {}
-#     lineage_population_clade_map = {}
-#     for nd in tree.postorder_node_iter():
-#         if nd.annotations["is_collapsed"].value:
-#             continue
-#         for child in nd.child_node_iter():
-#             if child.is_leaf():
-#                 terminal_population_clades[child] = set([child])
-#                 lineage_population_clade_map[child] = child
-#             elif child.annotations["is_collapsed"].value:
-#                 terminal_population_clades[child] = set([desc for desc in child.leaf_iter()])
-#                 for lnd in terminal_population_clades[child]:
-#                     lineage_population_clade_map[lnd] = child
-#     for nd in tree:
-#         if nd not in terminal_population_clades:
-#             nd.annotations["population_id"] = "0"
-#             continue
-#         if nd.is_leaf():
-#             nd.annotations["population_id"] = nd.taxon.label
-#         else:
-#             nd.annotations["population_id"] = "+".join(desc.taxon.label for desc in nd.leaf_iter())
-#         # print("{}: {}".format(nd.annotations["population"], len(terminal_population_clades[nd])))
-#     return terminal_population_clades, lineage_population_clade_map
-
-def find_terminal_population_clades(tree):
-    """
-    Takes a tree with nodes *annotated" to indicate whether or not they should
-    be collapsed and identifies the set of 'terminal population clades'.
-
-    'Terminal population clades' are substrees descending from nodes with no
-    ancestors in a collapsed state AND either: (a) no child nodes [i.e., a
-    leaf] or (b) no descendent nodes in a non-collapsed or open states.
-    Nodes corresponding to terminal populations themselves are, by definition,
-    need to in a collapsed state unless they are leaves.
-
-    Returns a dictionary mapping terminal population nodes to leaf nodes descending
-    from the terminal population nodes.
-    """
-    # ensure if parent is collapsed, all children are collapsed
-    for gnd in tree.preorder_node_iter():
-        if gnd.parent_node is not None and gnd.parent_node.annotations["is_collapsed"].value:
-            gnd.annotations["is_collapsed"] = True
-        else:
-            gnd.annotations["is_collapsed"] = False
-    # identify the lowest nodes (closest to the tips) that are open, and
-    # add its children if the children are (a) leaves; or (b) themselves
-    # are closed
-    terminal_population_clades = {}
-    lineage_population_clade_map = {}
-    for nd in tree.postorder_node_iter():
-        if nd.annotations["is_collapsed"].value:
+def parse_bpp_a11(
+    source_stream,
+    partition_factory,
+):
+    current_section = "pre"
+    lineage_labels = []
+    partition_info = []
+    line = None
+    line_idx = 0
+    n_expected_lineages = None
+    n_expected_lineages_set_on_line = None
+    n_partitions_expected = None
+    for line_offset, line in enumerate(source_stream):
+        line_idx = line_offset + 1
+        line_text = line.strip()
+        if current_section == "pre":
+            if line_text.startswith("COMPRESSED ALIGNMENTS"):
+                current_section = "alignments1"
+            elif line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
+                current_section = "post-alignments1"
             continue
-        for child in nd.child_node_iter():
-            if child.is_leaf():
-                terminal_population_clades[child] = set([child])
-                lineage_population_clade_map[child] = child
-            elif child.annotations["is_collapsed"].value:
-                terminal_population_clades[child] = set([desc for desc in child.leaf_iter()])
-                for lnd in terminal_population_clades[child]:
-                    lineage_population_clade_map[lnd] = child
-    for nd in tree:
-        if nd not in terminal_population_clades:
-            nd.annotations["population_id"] = "0"
+        elif current_section == "alignments":
+
+            # if lineage_labels and n_expected_lineages and len(lineage_labels) == n_expected_lineages:
+            #     continue
+            # if line.startswith("COMPRESSED ALIGNMENTS"):
+            #     continue
+            m = parsebpp.patterns["alignment-ntax-nchar"].match(line_text)
+            if m:
+                if n_expected_lineages:
+                    _format_error(format_type="bpp-a11", message=f"Unexpected alignment label and character description (already set to {n_expected_lineages} on {n_expected_lineages_set_on_line}): line {line_idx}: '{line_text}'")
+                n_expected_lineages = int(m[1])
+                n_expected_lineages_set_on_line = line_idx
+                current_section = "alignment-row"
+                continue
+            _format_error(format_type="bpp", message=f"Missing alignment label and character description: line {line_idx}: '{line_text}'")
+            # continue
+        elif current_section == "alignment-row":
+            if not n_expected_lineages:
+                _format_error(format_type="bpp", message=f"Number of expected lineages not set before parsing alignment: line {line_idx}: '{line_text}'")
+                # continue
+            m = patterns["alignment-row"].match(line_text)
+            if m:
+                if len(lineage_labels) == n_expected_lineages:
+                    _format_error(format_type="bpp-a11", message=f"Unexpected sequence definition ({n_expected_lineages} labels already parsed): line {line_idx}: '{line_text}'")
+                    # continue
+                lineage_labels.append(m[2])
+            m = patterns["a11-section-b"].match(line_text)
+            if m:
+                current_section = "a11-section-b"
+                n_partitions_expected = int(m[1])
+                continue
+            _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
+                # continue
             continue
-        if nd.is_leaf():
-            nd.annotations["population_id"] = nd.taxon.label
+        elif current_section == "a11-section-b":
+            assert n_expected_lineages
+            if len(lineage_labels) != n_expected_lineages:
+                _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
+                # continue
+            if not n_partitions_expected:
+                _format_error(format_type="bpp-a11", message=f"Number of expected models not set before parsing models: line {line_idx}: '{line_text}'")
+                # continue
+            # if not line_text:
+            #     current_section = "a11-section-c":
+            m = patterns["a11-section-c"].match(line_text)
+            if m:
+                current_section = "a11-section-c"
+                continue
+            if not line_text:
+                current_section = "a11-section-c"
+                continue
+            parts = line_text.strip().split()
+            frequency = float(parts[1])
+            num_subsets = int(parts[2])
+            species_subsets_str = " ".join(parts[3:]).strip("()")
+            # species_subsets = []
+            # current_subset = []
+            # temp_lineage_label = ""
+            # for char in species_subsets_str:
+            #     if char == ' ':
+            #         if current_subset:
+            #             species_subsets.append(current_subset)
+            #             current_subset = []
+            #     else:
+            #         temp_lineage_label += char
+            #         if temp_lineage_label in lineage_labels:
+            #             current_subset.append(temp_lineage_label)
+            #             temp_lineage_label = ""
+            species_subsets = parsebpp.parse_species_subsets(
+                species_subsets_str=species_subsets_str,
+                lineage_labels=lineage_labels,
+            )
+            partition_d = {
+                "frequency": frequency,
+                "n_subsets": num_subsets,
+                "subsets": species_subsets
+            }
+            # runtime.logger.info(f"Partition {len(partition_info)+1} of {n_partitions_expected}: {num_subsets} clusters, probability = {frequency}")
+            partition_info.append(partition_d)
+        elif current_section == "a11-section-c":
+            pass
+        elif current_section == "post":
+            pass
         else:
-            nd.annotations["population_id"] = "+".join(desc.taxon.label for desc in nd.leaf_iter())
-        # print("{}: {}".format(nd.annotations["population"], len(terminal_population_clades[nd])))
-    return terminal_population_clades, lineage_population_clade_map
+            runtime.RuntimeClient._logger.warn(f"Unhandled line: {line_idx}: '{line_text}'")
+    if not partition_info:
+        runtime.terminate_error("No species delimitation partitions parsed from source", exit_code=1)
+    assert len(partition_info) == n_partitions_expected
+    for ptn_idx, ptn_info in enumerate(partition_info):
+        metadata_d = {
+            "support": ptn_info["frequency"],
+        }
+        kwargs = {
+            "metadata_d": metadata_d,
+        }
+        kwargs["subsets"] = ptn_info["subsets"]
+        partition = partition_factory(**kwargs)
+        partition._origin_size = len(partition_info)
+        partition._origin_offset = ptn_idx
+        yield partition
 
-# def calculate_bpp_full_species_tree(
-#         src_tree_string,
-#         guide_tree,
-#         population_probability_threshold=0.95):
-#     import dendropy
-#     from dendropy.calculate import treecompare
-#     # Logic:
-#     # - Any internal node label is assumed to be a bpp annotation in the
-#     #   form of "#<float>" indicating the posterior probability of the node.
-#     # - If not found, assigned posterior probability of 0 if internal node or 1 if leaf.
-#     # - In post-order, collapse all nodes with less than threshold pp
-#     # - Revisit tree, assign taxon labels
-#     tree0 = dendropy.Tree.get(
-#             data=src_tree_string,
-#             schema="newick",
-#             rooting="force-rooted",
-#             suppress_external_node_taxa=False,
-#             suppress_internal_node_taxa=True,
-#             taxon_namespace=guide_tree.taxon_namespace,
-#             )
-#     tree0.encode_bipartitions()
-#     guide_tree.encode_bipartitions()
-#     try:
-#         diff = treecompare.symmetric_difference(tree0, guide_tree)
-#         assert diff == 0
-#     except AssertionError:
-#         print("[BPP tree]{}".format(tree0.as_string("newick")))
-#         print("[Guide tree]{}".format(guide_tree.as_string("newick")))
-#         print(f"RF = {diff}")
-#         raise
-#     for nd in tree0:
-#         edge_len = guide_tree.bipartition_edge_map[nd.edge.bipartition].length
-#         if edge_len is not None and nd.edge.length is not None:
-#             nd.edge.length = edge_len
-#         if nd.is_leaf():
-#             nd.pp = 1.0
-#             nd.label = nd.taxon.label
-#         elif nd.label:
-#             nd.pp = float(nd.label[1:])
-#             nd.label = None
-#         else:
-#             nd.pp = 0.0
-
-#     tree1 = dendropy.Tree(tree0)
-#     tree1.taxon_namespace = dendropy.TaxonNamespace()
-
-#     nodes_to_process = [tree1.seed_node]
-#     while nodes_to_process:
-#         nd = nodes_to_process.pop(0)
-#         if nd.is_leaf():
-#             pass
-#         elif nd.pp < population_probability_threshold:
-#             desc_tips = []
-#             for sub_nd in nd.leaf_iter():
-#                 desc_tips.append(sub_nd)
-#             # nd.set_child_nodes(new_children)
-#             len_to_add = 0.0
-#             subnode = desc_tips[0]
-#             while subnode is not nd:
-#                 if subnode.edge.length is not None:
-#                     len_to_add += subnode.edge.length
-#                 subnode = subnode.parent_node
-#             child_labels = [c.label for c in desc_tips]
-#             nd.label = "+".join(child_labels)
-#             if nd.edge.length is not None and len_to_add is not None:
-#                 nd.edge.length += len_to_add
-#             nd.child_labels = child_labels
-#             nd.clear_child_nodes()
-#             guide_tree_edge = guide_tree.bipartition_edge_map[nd.edge.bipartition]
-#             guide_tree_edge.head_node.is_collapsed = True
-#         else:
-#             for sub_nd in nd.child_node_iter():
-#                 nodes_to_process.append(sub_nd)
-#     collapsed_nodes = set()
-#     for gnd in guide_tree.postorder_node_iter():
-#         if getattr(gnd, "is_collapsed", False):
-#             len_to_add = 0.0
-#             desc_nd = gnd
-#             while True:
-#                 try:
-#                     desc_nd = desc_nd._child_nodes[0]
-#                     if desc_nd.edge.length is not None and len_to_add is not None:
-#                         len_to_add += desc_nd.edge.length
-#                 except IndexError:
-#                     break
-#             if gnd.edge.length is not None and len_to_add is not None:
-#                 gnd.edge.length += len_to_add
-#             for xnd in gnd.postorder_iter():
-#                 if xnd is gnd:
-#                     continue
-#                 xnd.edge.length = 1e-10
-#             gnd.annotations["is_collapsed"] = True
-#         else:
-#             gnd.annotations["is_collapsed"] = False
-#     for gnd in guide_tree.preorder_node_iter():
-#         if gnd.parent_node is not None and gnd.parent_node.annotations["is_collapsed"].value:
-#             gnd.annotations["is_collapsed"] = True
-#     for nd in tree1.leaf_node_iter():
-#         nd.taxon = tree1.taxon_namespace.require_taxon(label=nd.label)
-#         nd.label = None
-
-#     return guide_tree, tree1
-
-class BppParser:
-
-    def __init__(self):
-        pass
-
-    def parse_bpp_a10(self, source_stream, partition_factory):
-        pass
 

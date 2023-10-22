@@ -1,0 +1,1182 @@
+Analysis started at: Sun Oct 22 03:28:01 2023
+Using BPP version: 4.1.4
+Command: bpp --cfile bpprun_00001.a11.bpp.ctl 
+
+COMPRESSED ALIGNMENTS
+
+24 25 P
+S1_i1^S1_i1     ccggucgcua gaccguagau agcgg
+S1_i2^S1_i2     ccggucgcua gaccguagau agcca
+S1_i3^S1_i3     ccggucgcua gaccguagau aagga
+S1_i4^S1_i4     ccggucgcua gaccguaacg gggga
+S4_i1^S4_i1     ccggucgcua gaccguggau aagga
+S4_i2^S4_i2     ccggucgcua gaccguagau agcgg
+S4_i3^S4_i3     ccggucgcua gcugcgagau gggga
+S4_i4^S4_i4     ccggucgcua uaccguagau agcga
+S3_i1^S3_i1     ccggucgcuu gaccccagau gggga
+S3_i2^S3_i2     ccggucgcua gaccguagau agcga
+S3_i3^S3_i3     ccggucgcga gcugcgagau gggga
+S3_i4^S3_i4     ccggucgcua gaccguagau aagga
+S6_i1^S6_i1     ccggucgcuu gaccccagau gggga
+S6_i2^S6_i2     ccggucguua gaccguagag gggga
+S6_i3^S6_i3     ccggucccua gaccguagau agcga
+S6_i4^S6_i4     ccgguugcuu gaccccagau gggga
+S5_i1^S5_i1     ccggacucua gaccguagau agcga
+S5_i2^S5_i2     ccgaucgcua gaccguagcg gggga
+S5_i3^S5_i3     ccggucgcuu gaccccagau gggga
+S5_i4^S5_i4     cccgucgcua gcugcgagau gggga
+S2_i1^S2_i1     ccggucgcua gauacgagau gggga
+S2_i2^S2_i2     caggucgcua gaccguagau agcga
+S2_i3^S2_i3     ccggucgcua gauacgagau gggga
+S2_i4^S2_i4     ccggucgcua gaccguagau agcga
+936 2 1 1 1 1 1 1 1 5 2 1 3 1 18 1 2 1 1 4 10 3 1 1 1
+
+24 19 P
+S1_i1^S1_i1     aagcaaguca ucagccgcc
+S1_i2^S1_i2     aagcaaguca ucagcccuu
+S1_i3^S1_i3     aagcaaguca ucagaaguu
+S1_i4^S1_i4     aagcaaguca ucgaccgcc
+S4_i1^S4_i1     aagcaaguca ucagccgcc
+S4_i2^S4_i2     aagcaaguca ucaaccgcc
+S4_i3^S4_i3     aagcaaguca ucagaaguu
+S4_i4^S4_i4     aagcaaguca guagcggcu
+S3_i1^S3_i1     aagcaaguca ucagaaguu
+S3_i2^S3_i2     aagcaaguca ucagaaguu
+S3_i3^S3_i3     aagcaaguca ucagaaguu
+S3_i4^S3_i4     aagcaaguuc uuagcggcu
+S6_i1^S6_i1     aagcaaggca ucagccgcc
+S6_i2^S6_i2     aagcaauuca ucagccgcu
+S6_i3^S6_i3     aagcucguca uuagcggcu
+S6_i4^S6_i4     aaguaaguca uuagcggcu
+S5_i1^S5_i1     aagcaagucc uuagcggcu
+S5_i2^S5_i2     aagcaaguca ucagcccuu
+S5_i3^S5_i3     aagcaagucc uuagcggcu
+S5_i4^S5_i4     aaccaaguca uuagcggcu
+S2_i1^S2_i1     aagcaaguca ucagcccuu
+S2_i2^S2_i2     aagcaaguca ucgaccgcc
+S2_i3^S2_i3     aagcacguca uuagcggcu
+S2_i4^S2_i4     acgcaaguca ucagccgcc
+950 2 3 4 1 3 4 1 3 2 1 14 1 3 1 1 3 1 2
+
+24 33 P
+S1_i1^S1_i1     acgccacccg acgugggggc cgcauacaac cgu
+S1_i2^S1_i2     acgccacccg acgugggggc cgcaggaucu gca
+S1_i3^S1_i3     acgccacccg acguggggcg guauuacacu gac
+S1_i4^S1_i4     acgccacccg acguggcagc cgcuuacacu gac
+S4_i1^S4_i1     acgccacccg acguccgggc cgcuuacucu gac
+S4_i2^S4_i2     acgccacccg acgcgggggc cgcaugaucu gca
+S4_i3^S4_i3     acgccacccg acaugggggc cgauuacacu gac
+S4_i4^S4_i4     acgccacccg augugggggg guauuacacu gac
+S3_i1^S3_i1     acgccacccg ccgugggggc cgcauaaaac ggc
+S3_i2^S3_i2     acgccacccg acguccgggc cgcuuacucu gac
+S3_i3^S3_i3     acgccacccg ccgugggggc cgcauaaaac ggc
+S3_i4^S3_i4     acgccacccg acgugggggc cgcaggaucu gca
+S6_i1^S6_i1     acgccacccc acgugggggc guauuacacu gac
+S6_i2^S6_i2     acgccaccgg acgugggggg guauuacacu gac
+S6_i3^S6_i3     acgccacgcg acguggcagc cgcuuacacu gac
+S6_i4^S6_i4     acgccacccg acguccgggc cgcuuacucu gac
+S5_i1^S5_i1     acgccaaccg acguccgggc cgcuuacucu gac
+S5_i2^S5_i2     acgcuucccg acgugcgggc cgcuuacuca gac
+S5_i3^S5_i3     acgccacccg acguggcagc cgcuuacacu gac
+S5_i4^S5_i4     acgccacccg acgugggggg guauuacacu gac
+S2_i1^S2_i1     acgucacccg acgugcgggc cgcuuacuca gac
+S2_i2^S2_i2     acuccucccg acgugcgggc cgcuuacuca gac
+S2_i3^S2_i3     acgccacccg acgugggggc cgcaggaucu gca
+S2_i4^S2_i4     aggccacccg acgugggagc cucuuacacu gac
+876 3 1 2 3 1 1 1 1 1 1 1 6 1 2 3 7 2 2 1 2 1 2 11 4 45 1 1 11 1 3 1 1
+
+24 28 P
+S1_i1^S1_i1     gugcguccgg ucgguaacua uugaggcc
+S1_i2^S1_i2     gugcguccgg ucgguaacua uaugacgu
+S1_i3^S1_i3     gugcguccgg ucgguaaccu gugagggu
+S1_i4^S1_i4     gugcguccgg ucgguaagua uuugacgu
+S4_i1^S4_i1     gugcguccgg ucgucuucua gugagggu
+S4_i2^S4_i2     gugcguccgg ucgucuucua gugagggu
+S4_i3^S4_i3     gugcguccgg ucuguuucua gugagggu
+S4_i4^S4_i4     gugcguccgg ucgguaacuu gugagggu
+S3_i1^S3_i1     gugcguccgg ucgguaacua uuugacgu
+S3_i2^S3_i2     gugcguccgg uugguaacua uaugacgu
+S3_i3^S3_i3     gugcgucccu acugcaucua uugaaagu
+S3_i4^S3_i4     gugcguuagg ucgguaacua gugagggu
+S6_i1^S6_i1     gugcgcccgg ucgguaacuu gugagggu
+S6_i2^S6_i2     gugcguccgg ucgguaaccu gugagggu
+S6_i3^S6_i3     gugcguccgg ucgguaacua uuugacgu
+S6_i4^S6_i4     guguuuccgg acugcaucua uugaaagu
+S5_i1^S5_i1     gugcguccgg ucgguaacua uuugacgu
+S5_i2^S5_i2     gugcguccgg ucgguaacua uuggggcu
+S5_i3^S5_i3     gugcguccgg ucgguaacuu gugagggu
+S5_i4^S5_i4     guacguccgu acugcaucua uugaaagu
+S2_i1^S2_i1     gcgcuuccgg acugcaucua uugaaagu
+S2_i2^S2_i2     gugcgucagg ucgguaacua gugagggu
+S2_i3^S2_i3     gugcguccgg ucgguaacuu gugagggu
+S2_i4^S2_i4     guacguccgu acugcaucua uugaaagu
+903 3 1 3 9 1 1 6 2 7 22 4 1 1 1 3 1 3 2 3 2 2 6 1 4 1 4 3
+
+24 18 P
+S1_i1^S1_i1     ggcuccuucu cucguauc
+S1_i2^S1_i2     ggcuccuucu cucguaga
+S1_i3^S1_i3     ggcuccuucu cucugcua
+S1_i4^S1_i4     ggcuccuucu cugguauc
+S4_i1^S4_i1     ggcuccuucu ggcgucua
+S4_i2^S4_i2     ggcuccuuca cgcgucua
+S4_i3^S4_i3     ggcuccuugu cugguauc
+S4_i4^S4_i4     ggcuccuccu cgcgucua
+S3_i1^S3_i1     ggcuccuucu cucguauc
+S3_i2^S3_i2     ggcuccuucu cucggcua
+S3_i3^S3_i3     ggcuccuucu cucguauc
+S3_i4^S3_i4     ggcucccucu cgcgucua
+S6_i1^S6_i1     ggcuccuucu cucguaga
+S6_i2^S6_i2     ggcucguucu cucguaua
+S6_i3^S6_i3     ggcuccuucu cucguaga
+S6_i4^S6_i4     ggcuccuucu cgcgucua
+S5_i1^S5_i1     ggcuccuucu cucggcua
+S5_i2^S5_i2     ggcuucuucu cucgucua
+S5_i3^S5_i3     ggcuucuucu cucgucua
+S5_i4^S5_i4     ggcgccuucu cucguaua
+S2_i1^S2_i1     ggcuccuucu cucugcua
+S2_i2^S2_i2     ggauccuucu cucguaua
+S2_i3^S2_i3     gacuccuucu cucguaua
+S2_i4^S2_i4     ggcuccuucu cucugcua
+959 1 7 7 2 3 1 1 4 1 1 1 1 1 3 1 5 1
+
+24 18 P
+S1_i1^S1_i1     gcagucggag gugauugg
+S1_i2^S1_i2     gcagucggag gugauaaa
+S1_i3^S1_i3     gcagucggag gugaaugg
+S1_i4^S1_i4     gcagucggag gugcuaaa
+S4_i1^S4_i1     gcagucggag guuaaugg
+S4_i2^S4_i2     gcagucggag gcgauuaa
+S4_i3^S4_i3     gcagucggag augauaaa
+S4_i4^S4_i4     gcagucggau gugauaaa
+S3_i1^S3_i1     gcagucgugg gugauugg
+S3_i2^S3_i2     gcagucggag gugauugg
+S3_i3^S3_i3     gcagucggag gugcuaaa
+S3_i4^S3_i4     gcagucggag gugauaaa
+S6_i1^S6_i1     gcagucggag gugcuaaa
+S6_i2^S6_i2     gcagucggag augauaaa
+S6_i3^S6_i3     gcagucagag gugauugg
+S6_i4^S6_i4     gcaguaggag gugauaaa
+S5_i1^S5_i1     gcagucggag gugauugg
+S5_i2^S5_i2     gcagccggag gugauugg
+S5_i3^S5_i3     gcagucggag augauaaa
+S5_i4^S5_i4     gcagucggag gugcuaaa
+S2_i1^S2_i1     gcagucgggg gugauugg
+S2_i2^S2_i2     gcacucggag gugauugg
+S2_i3^S2_i3     gucgucggag gugauugc
+S2_i4^S2_i4     gccgucggag gugauugc
+941 1 3 2 3 1 1 1 1 1 2 6 1 2 1 3 29 1
+
+24 26 P
+S1_i1^S1_i1     cgcggggggu uaguuucucg auuugu
+S1_i2^S1_i2     cgcggggggu uaguuucucg auugac
+S1_i3^S1_i3     cgcggggggu uaguuucucg ucauac
+S1_i4^S1_i4     cgcggggggu uaguuggcgc auauac
+S4_i1^S4_i1     cgcggggggu uaguaucucg auuugu
+S4_i2^S4_i2     cgcggggggu uaaguugcgc auauac
+S4_i3^S4_i3     cgcggggggu ugguuuccgc auauac
+S4_i4^S4_i4     cgcggggggu aaguuucugc auauac
+S3_i1^S3_i1     cgcggggggg uaguuuccgc auauac
+S3_i2^S3_i2     cgcggggggu uaguuggcgc auauac
+S3_i3^S3_i3     cgcggggguu uaguuugcgc auauac
+S3_i4^S3_i4     cgcggggggu uaaguugcgc auauac
+S6_i1^S6_i1     cgcgggacgu uaguuucucc auauac
+S6_i2^S6_i2     cgcggagggu uaguuugcgc auauac
+S6_i3^S6_i3     cgcggggggu uaguuucucg auuugu
+S6_i4^S6_i4     cgcggggggg uaguuuccgc auauac
+S5_i1^S5_i1     cgcguggggu uaguuucucg auuugc
+S5_i2^S5_i2     cgcggagggu uaguuugcgc auauac
+S5_i3^S5_i3     cgcagggcgu uagauucucc auauac
+S5_i4^S5_i4     cgcggggggg uaguuuccgc auauac
+S2_i1^S2_i1     cgcggggggu uaguuggcgc auauac
+S2_i2^S2_i2     cguggggggu uaguuucucg acauac
+S2_i3^S2_i3     cgcggggggu uaguuucucg auugac
+S2_i4^S2_i4     cccagggcgu uagauucucc auauac
+935 1 1 3 6 1 5 2 2 1 3 3 2 1 1 1 1 2 3 7 2 4 1 10 1 1
+
+24 16 P
+S1_i1^S1_i1     cacagaaccg gaagau
+S1_i2^S1_i2     cacagaaccg gaaguc
+S1_i3^S1_i3     cacagaaccg gaagau
+S1_i4^S1_i4     cacagaaccg gaacau
+S4_i1^S4_i1     cacagaaccg gaagac
+S4_i2^S4_i2     cacagaaccg gacgau
+S4_i3^S4_i3     cacagaaccg gcagac
+S4_i4^S4_i4     cacagaaccg gaagac
+S3_i1^S3_i1     cacagaacca uaagac
+S3_i2^S3_i2     cacagaaugg uaagac
+S3_i3^S3_i3     cacagaaccg gaagac
+S3_i4^S3_i4     cacagagcgg uaagac
+S6_i1^S6_i1     cacagaaccg gaagac
+S6_i2^S6_i2     cacagcaccg gaagau
+S6_i3^S6_i3     cacgcaaccg gaagac
+S6_i4^S6_i4     caaagaaccg gaagac
+S5_i1^S5_i1     cacagaaccg gaagau
+S5_i2^S5_i2     cacagaaccg gaagac
+S5_i3^S5_i3     cacagaaccg gacgau
+S5_i4^S5_i4     cacagaaccg gaaguc
+S2_i1^S2_i1     cacagaacca uaagac
+S2_i2^S2_i2     cgcacaaccg gaagac
+S2_i3^S2_i3     cacagcaccg gaagau
+S2_i4^S2_i4     cacagaaccg gaagac
+969 2 1 1 1 2 1 7 2 4 4 2 1 1 1 1
+
+24 19 P
+S1_i1^S1_i1     uccacaaccg gguauccau
+S1_i2^S1_i2     uccacaaccg gguaauuuc
+S1_i3^S1_i3     uccacaaccg gguauccau
+S1_i4^S1_i4     uccacaaccg ggguucuuc
+S4_i1^S4_i1     uccacaaccg gcuauccuc
+S4_i2^S4_i2     uccacaaccg uguauccac
+S4_i3^S4_i3     uccacaaccu gguuucuuc
+S4_i4^S4_i4     uccacaaccg gguauccac
+S3_i1^S3_i1     uccacaaccg gguauccac
+S3_i2^S3_i2     uccacaagug gguauccac
+S3_i3^S3_i3     uccacaaccg gguauccac
+S3_i4^S3_i4     uccacauccg gguauccac
+S6_i1^S6_i1     uccacauccg gguauccac
+S6_i2^S6_i2     uccaguacug gguauccac
+S6_i3^S6_i3     uccacaaccg gcuauccuc
+S6_i4^S6_i4     uccacaaccg gguaauuuc
+S5_i1^S5_i1     uccacuacug gguauccac
+S5_i2^S5_i2     uccacaaccu gguuucuuc
+S5_i3^S5_i3     uccccaaccg gguauccac
+S5_i4^S5_i4     ucaacaacug gguauccac
+S2_i1^S2_i1     uccacaaccg gguauccau
+S2_i2^S2_i2     uccacaaccg gguauuuuc
+S2_i3^S2_i3     uccacaaccg gguauccau
+S2_i4^S2_i4     uacacaaccg gguuucuuc
+936 2 1 3 1 3 1 2 3 2 1 9 3 4 2 11 6 3 7
+
+24 21 P
+S1_i1^S1_i1     ggcgauacua gagaaauccg g
+S1_i2^S1_i2     ggcgauacua gagaugcaaa a
+S1_i3^S1_i3     ggcgauacua gaucaaucca a
+S1_i4^S1_i4     ggcgauacua cugaaauaaa a
+S4_i1^S4_i1     ggcgauacua gagaaacaaa a
+S4_i2^S4_i2     ggcgauacua gagaaaucaa a
+S4_i3^S4_i3     ggcgauacuc gagaaacaaa a
+S4_i4^S4_i4     ggcgauacua gugaaauaaa a
+S3_i1^S3_i1     ggcgauacua gagaagcaaa a
+S3_i2^S3_i2     ggcgauacua gugaaauaaa a
+S3_i3^S3_i3     ggcgauacua gagaagcaaa a
+S3_i4^S3_i4     ggcgauacua gagaaaucaa a
+S6_i1^S6_i1     ggcgauauca gaggaaucaa a
+S6_i2^S6_i2     ggcgauccua gagaaacaaa a
+S6_i3^S6_i3     ggcgcaacca gagaaaucaa a
+S6_i4^S6_i4     ggcgauacua gagaaacaaa a
+S5_i1^S5_i1     ggcgauacua gagaaauccg a
+S5_i2^S5_i2     ggcgauacca gagaaaucaa a
+S5_i3^S5_i3     ggcuauacua gagaaaucaa a
+S5_i4^S5_i4     ggcgaaacca gagaaaucaa a
+S2_i1^S2_i1     ggagaaacca gagaaaucaa a
+S2_i2^S2_i2     ggcgaaacca gagaaaucaa a
+S2_i3^S2_i3     ggcgauacua gugaaauaaa a
+S2_i4^S2_i4     gucgauacua gugaaauaaa a
+950 1 1 3 1 1 1 1 2 2 1 4 1 1 2 2 10 8 3 4 1
+
+
+Per-locus sequences in data and 'species&tree' tag:
+C.File | Data |                Status                | Population
+-------+------+--------------------------------------+-----------
+     4 |    4 | [OK]                                 | S1.sub1   
+     4 |    4 | [OK]                                 | S4.sub1   
+     4 |    4 | [OK]                                 | S3.sub1   
+     4 |    4 | [OK]                                 | S6.sub1   
+     4 |    4 | [OK]                                 | S5.sub1   
+     4 |    4 | [OK]                                 | S2.sub1   
+
+
+Current Pjump:      0.52998  0.05487  0.00000  0.59898  0.93400
+Current finetune:   3.00000  0.00300  0.00200  0.00002  0.00500
+New finetune:       6.47029  0.00051  0.00002  0.00005  0.09431
+
+
+Current Pjump:      0.53015  0.15521  0.00000  0.54555  0.25900
+Current finetune:   6.47029  0.00051  0.00002  0.00005  0.09431
+New finetune:      13.96234  0.00025  0.00000  0.00012  0.07976
+
+
+Current Pjump:      0.53157  0.18369  0.00000  0.50232  0.35600
+Current finetune:  13.96234  0.00025  0.00000  0.00012  0.07976
+New finetune:      30.26425  0.00014  0.00000  0.00024  0.09796
+
+
+Current Pjump:      0.53053  0.19693  0.00000  0.54427  0.26600
+Current finetune:  30.26425  0.00014  0.00000  0.00024  0.09796
+New finetune:      65.38665  0.00009  0.00000  0.00054  0.08536
+
+
+(A) List of best models (count postP #species SpeciesTree)
+29 0.029000 0.029000 5  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1;
+25 0.025000 0.054000 6  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1;
+19 0.019000 0.073000 2  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1);
+19 0.019000 0.092000 2  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1, S2.sub1);
+16 0.016000 0.108000 2  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1);
+16 0.016000 0.124000 2  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1);
+15 0.015000 0.139000 2  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1);
+14 0.014000 0.153000 2  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1);
+12 0.012000 0.165000 4  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1;
+10 0.010000 0.175000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1);
+10 0.010000 0.185000 3  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1);
+ 9 0.009000 0.194000 3  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1);
+ 9 0.009000 0.203000 3  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1);
+ 9 0.009000 0.212000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1);
+ 8 0.008000 0.220000 3  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1;
+ 8 0.008000 0.228000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1);
+ 7 0.007000 0.235000 3  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1);
+ 6 0.006000 0.241000 4  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1, S2.sub1);
+ 5 0.005000 0.246000 2  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  (S1.sub1S2.sub1S3.sub1S6.sub1, S4.sub1S5.sub1);
+ 5 0.005000 0.251000 2  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1, S2.sub1S6.sub1);
+ 5 0.005000 0.256000 2  (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1S6.sub1)  (S1.sub1S3.sub1S5.sub1, S2.sub1S4.sub1S6.sub1);
+ 5 0.005000 0.261000 3  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1, S2.sub1);
+ 5 0.005000 0.266000 4  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1);
+ 5 0.005000 0.271000 5  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1);
+ 4 0.004000 0.275000 2  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1S6.sub1);
+ 4 0.004000 0.279000 2  (S1.sub1S2.sub1S5.sub1 S3.sub1S4.sub1S6.sub1)  (S1.sub1S2.sub1S5.sub1, S3.sub1S4.sub1S6.sub1);
+ 4 0.004000 0.283000 2  (S1.sub1S3.sub1S4.sub1 S2.sub1S5.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1, S2.sub1S5.sub1S6.sub1);
+ 4 0.004000 0.287000 2  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1S4.sub1)  (S1.sub1S3.sub1S5.sub1S6.sub1, S2.sub1S4.sub1);
+ 4 0.004000 0.291000 2  (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1S5.sub1)  (S1.sub1S4.sub1S6.sub1, S2.sub1S3.sub1S5.sub1);
+ 4 0.004000 0.295000 4  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1);
+ 4 0.004000 0.299000 4  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1);
+ 4 0.004000 0.303000 5  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1);
+ 4 0.004000 0.307000 5  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1);
+ 4 0.004000 0.311000 5  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1, S2.sub1);
+ 3 0.003000 0.314000 2  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1, S5.sub1S6.sub1);
+ 3 0.003000 0.317000 2  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  (S1.sub1S2.sub1S6.sub1, S3.sub1S4.sub1S5.sub1);
+ 3 0.003000 0.320000 2  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1S6.sub1)  (S1.sub1S4.sub1, S2.sub1S3.sub1S5.sub1S6.sub1);
+ 3 0.003000 0.323000 3  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1S3.sub1), S4.sub1S5.sub1S6.sub1);
+ 3 0.003000 0.326000 3  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S2.sub1S4.sub1S5.sub1, S3.sub1), S6.sub1);
+ 3 0.003000 0.329000 3  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1S6.sub1, S5.sub1), S3.sub1);
+ 3 0.003000 0.332000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1));
+ 3 0.003000 0.335000 3  (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)  (S1.sub1, (S2.sub1S5.sub1S6.sub1, S3.sub1S4.sub1));
+ 3 0.003000 0.338000 3  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1, S5.sub1S6.sub1);
+ 3 0.003000 0.341000 3  (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1S6.sub1)  (S1.sub1S3.sub1S5.sub1, S2.sub1S4.sub1S6.sub1);
+ 3 0.003000 0.344000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S5.sub1), S2.sub1S3.sub1S4.sub1S6.sub1);
+ 3 0.003000 0.347000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1S5.sub1)  ((S1.sub1S4.sub1S6.sub1, S3.sub1S5.sub1), S2.sub1);
+ 3 0.003000 0.350000 4  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1);
+ 3 0.003000 0.353000 4  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1S6.sub1)  (S1.sub1S4.sub1, S2.sub1S3.sub1S5.sub1S6.sub1);
+ 3 0.003000 0.356000 5  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S4.sub1), S3.sub1);
+ 3 0.003000 0.359000 5  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1);
+ 3 0.003000 0.362000 5  (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1S6.sub1)  (S1.sub1S3.sub1S5.sub1, S2.sub1S4.sub1S6.sub1);
+ 3 0.003000 0.365000 5  (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1S5.sub1)  (S1.sub1S6.sub1, S2.sub1S3.sub1S4.sub1S5.sub1);
+ 3 0.003000 0.368000 6  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S2.sub1S4.sub1S6.sub1), S5.sub1), S3.sub1);
+ 3 0.003000 0.371000 6  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.373000 2  (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.375000 2  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1, S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.377000 2  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)  (S1.sub1S2.sub1S4.sub1S6.sub1, S3.sub1S5.sub1);
+ 2 0.002000 0.379000 2  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1S4.sub1)  (S1.sub1S5.sub1S6.sub1, S2.sub1S3.sub1S4.sub1);
+ 2 0.002000 0.381000 2  (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1S5.sub1)  (S1.sub1S6.sub1, S2.sub1S3.sub1S4.sub1S5.sub1);
+ 2 0.002000 0.383000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1), S6.sub1);
+ 2 0.002000 0.385000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S6.sub1), S5.sub1);
+ 2 0.002000 0.387000 3  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1S6.sub1), S2.sub1);
+ 2 0.002000 0.389000 3  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S4.sub1, S6.sub1), S5.sub1);
+ 2 0.002000 0.391000 3  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S6.sub1), S4.sub1);
+ 2 0.002000 0.393000 3  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S3.sub1S6.sub1, S4.sub1), S5.sub1);
+ 2 0.002000 0.395000 3  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1S6.sub1, S3.sub1), S5.sub1);
+ 2 0.002000 0.397000 3  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1S6.sub1, S4.sub1), S2.sub1);
+ 2 0.002000 0.399000 3  (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1)  ((S1.sub1S4.sub1, S3.sub1S5.sub1), S2.sub1S6.sub1);
+ 2 0.002000 0.401000 3  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1));
+ 2 0.002000 0.403000 3  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, (S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1));
+ 2 0.002000 0.405000 3  (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.407000 3  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, (S4.sub1, S6.sub1));
+ 2 0.002000 0.409000 3  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1S6.sub1);
+ 2 0.002000 0.411000 3  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  (S1.sub1S2.sub1S6.sub1, S3.sub1S4.sub1S5.sub1);
+ 2 0.002000 0.413000 3  (S1.sub1S3.sub1S4.sub1 S2.sub1S5.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1, S2.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.415000 3  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1S6.sub1)  (S1.sub1S4.sub1, S2.sub1S3.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.417000 3  (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1S6.sub1)  (S1.sub1S5.sub1, S2.sub1S3.sub1S4.sub1S6.sub1);
+ 2 0.002000 0.419000 3  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1)  (S1.sub1S5.sub1S6.sub1, (S2.sub1S3.sub1, S4.sub1));
+ 2 0.002000 0.421000 3  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1S4.sub1)  (S1.sub1S5.sub1S6.sub1, S2.sub1S3.sub1S4.sub1);
+ 2 0.002000 0.423000 3  (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1S5.sub1)  (S1.sub1S6.sub1, S2.sub1S3.sub1S4.sub1S5.sub1);
+ 2 0.002000 0.425000 4  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S2.sub1S4.sub1S6.sub1), S5.sub1), S3.sub1);
+ 2 0.002000 0.427000 4  (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  (((S1.sub1, S2.sub1S5.sub1), S4.sub1), S3.sub1S6.sub1);
+ 2 0.002000 0.429000 4  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S3.sub1, S4.sub1), S6.sub1), S5.sub1);
+ 2 0.002000 0.431000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1), S6.sub1);
+ 2 0.002000 0.433000 4  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S2.sub1S4.sub1S5.sub1, S3.sub1), S6.sub1);
+ 2 0.002000 0.435000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1, S3.sub1S6.sub1), S4.sub1);
+ 2 0.002000 0.437000 4  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1S5.sub1, S2.sub1), S6.sub1);
+ 2 0.002000 0.439000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)  ((S1.sub1S3.sub1S5.sub1, S4.sub1), (S2.sub1, S6.sub1));
+ 2 0.002000 0.441000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1S6.sub1)  ((S1.sub1S3.sub1S5.sub1, S4.sub1S6.sub1), S2.sub1);
+ 2 0.002000 0.443000 4  (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1 S5.sub1)  ((S1.sub1S3.sub1S6.sub1, S5.sub1), S2.sub1S4.sub1);
+ 2 0.002000 0.445000 4  (S1.sub1S5.sub1 S2.sub1S4.sub1 S3.sub1 S6.sub1)  ((S1.sub1S5.sub1, S2.sub1S4.sub1), (S3.sub1, S6.sub1));
+ 2 0.002000 0.447000 4  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1S3.sub1, S4.sub1S5.sub1S6.sub1));
+ 2 0.002000 0.449000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1, S5.sub1S6.sub1));
+ 2 0.002000 0.451000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1));
+ 2 0.002000 0.453000 4  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1, S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.455000 4  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1, S5.sub1S6.sub1);
+ 2 0.002000 0.457000 4  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, (S4.sub1, S6.sub1));
+ 2 0.002000 0.459000 4  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1, S3.sub1S6.sub1);
+ 2 0.002000 0.461000 4  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1, S2.sub1S6.sub1);
+ 2 0.002000 0.463000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)  (S1.sub1S3.sub1S5.sub1, ((S2.sub1, S6.sub1), S4.sub1));
+ 2 0.002000 0.465000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1S6.sub1 S4.sub1)  (S1.sub1S3.sub1S5.sub1, (S2.sub1S6.sub1, S4.sub1));
+ 2 0.002000 0.467000 4  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  (S1.sub1S3.sub1S5.sub1S6.sub1, (S2.sub1, S4.sub1));
+ 2 0.002000 0.469000 4  (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1S5.sub1)  (S1.sub1S3.sub1S6.sub1, S2.sub1S4.sub1S5.sub1);
+ 2 0.002000 0.471000 4  (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1)  (S1.sub1S4.sub1, (S2.sub1S5.sub1, S3.sub1S6.sub1));
+ 2 0.002000 0.473000 4  (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1S3.sub1)  (S1.sub1S4.sub1S5.sub1S6.sub1, S2.sub1S3.sub1);
+ 2 0.002000 0.475000 4  (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1S6.sub1)  (S1.sub1S5.sub1, S2.sub1S3.sub1S4.sub1S6.sub1);
+ 2 0.002000 0.477000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((((S1.sub1, S2.sub1), S3.sub1), S5.sub1S6.sub1), S4.sub1);
+ 2 0.002000 0.479000 5  (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1)  (((S1.sub1S6.sub1, S4.sub1), S3.sub1), S2.sub1S5.sub1);
+ 2 0.002000 0.481000 5  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1, S2.sub1S4.sub1S5.sub1S6.sub1), S3.sub1);
+ 2 0.002000 0.483000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1S6.sub1), S2.sub1);
+ 2 0.002000 0.485000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S6.sub1), S2.sub1S3.sub1S4.sub1S5.sub1);
+ 2 0.002000 0.487000 5  (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S5.sub1), (S3.sub1, S4.sub1));
+ 2 0.002000 0.489000 5  (S1.sub1S3.sub1 S2.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S3.sub1, S2.sub1S4.sub1), (S5.sub1, S6.sub1));
+ 2 0.002000 0.491000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1)  ((S1.sub1S4.sub1, S2.sub1), S3.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.493000 5  (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.495000 5  (S1.sub1S3.sub1 S2.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1S3.sub1, S2.sub1S4.sub1S5.sub1S6.sub1);
+ 2 0.002000 0.497000 5  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1, S2.sub1S6.sub1);
+ 2 0.002000 0.499000 5  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1S5.sub1)  (S1.sub1S3.sub1S4.sub1S6.sub1, S2.sub1S5.sub1);
+ 2 0.002000 0.501000 6  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1S4.sub1), S6.sub1), S5.sub1);
+ 2 0.002000 0.503000 6  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S2.sub1S5.sub1, S6.sub1), S3.sub1), S4.sub1);
+ 2 0.002000 0.505000 6  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1), S6.sub1);
+ 2 0.002000 0.507000 6  (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1)  ((S1.sub1S4.sub1S5.sub1S6.sub1, S3.sub1), S2.sub1);
+ 2 0.002000 0.509000 6  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1);
+ 1 0.001000 0.510000 2  (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1, S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.511000 2  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)  (S1.sub1S2.sub1S5.sub1S6.sub1, S3.sub1S4.sub1);
+ 1 0.001000 0.512000 2  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1S5.sub1)  (S1.sub1S3.sub1S4.sub1S6.sub1, S2.sub1S5.sub1);
+ 1 0.001000 0.513000 2  (S1.sub1S4.sub1S5.sub1 S2.sub1S3.sub1S6.sub1)  (S1.sub1S4.sub1S5.sub1, S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.514000 2  (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1S6.sub1)  (S1.sub1S5.sub1, S2.sub1S3.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.515000 3  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1), S3.sub1S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.516000 3  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S5.sub1), S4.sub1S6.sub1);
+ 1 0.001000 0.517000 3  (S1.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1S4.sub1), S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.518000 3  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1, S2.sub1S4.sub1S5.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.519000 3  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1, S3.sub1), S2.sub1S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.520000 3  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.521000 3  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  ((S1.sub1, S4.sub1S5.sub1), S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.522000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S5.sub1), S2.sub1S3.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.523000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  ((S1.sub1, S5.sub1S6.sub1), S2.sub1S3.sub1S4.sub1);
+ 1 0.001000 0.524000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S6.sub1), S2.sub1S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.525000 3  (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S2.sub1, S3.sub1S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.526000 3  (S1.sub1S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1S2.sub1, S4.sub1S5.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.527000 3  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1, S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.528000 3  (S1.sub1S2.sub1S3.sub1 S4.sub1S6.sub1 S5.sub1)  ((S1.sub1S2.sub1S3.sub1, S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.529000 3  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1S2.sub1S3.sub1, S5.sub1S6.sub1), S4.sub1);
+ 1 0.001000 0.530000 3  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1, S6.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.531000 3  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S4.sub1, S5.sub1), S6.sub1);
+ 1 0.001000 0.532000 3  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1), S6.sub1);
+ 1 0.001000 0.533000 3  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S3.sub1S6.sub1, S5.sub1), S4.sub1);
+ 1 0.001000 0.534000 3  (S1.sub1S2.sub1S4.sub1 S3.sub1S6.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1, S3.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.535000 3  (S1.sub1S2.sub1S4.sub1 S3.sub1S6.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1, S5.sub1), S3.sub1S6.sub1);
+ 1 0.001000 0.536000 3  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S2.sub1S4.sub1S5.sub1, S6.sub1), S3.sub1);
+ 1 0.001000 0.537000 3  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S3.sub1), S4.sub1);
+ 1 0.001000 0.538000 3  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S4.sub1), S3.sub1);
+ 1 0.001000 0.539000 3  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S3.sub1S4.sub1), S5.sub1);
+ 1 0.001000 0.540000 3  (S1.sub1S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)  ((S1.sub1S2.sub1S6.sub1, S3.sub1S5.sub1), S4.sub1);
+ 1 0.001000 0.541000 3  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S5.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.542000 3  (S1.sub1S3.sub1S4.sub1 S2.sub1S6.sub1 S5.sub1)  ((S1.sub1S3.sub1S4.sub1, S2.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.543000 3  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1S5.sub1, S2.sub1), S6.sub1);
+ 1 0.001000 0.544000 3  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1S5.sub1, S6.sub1), S2.sub1);
+ 1 0.001000 0.545000 3  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1S6.sub1)  ((S1.sub1S3.sub1S5.sub1, S2.sub1), S4.sub1S6.sub1);
+ 1 0.001000 0.546000 3  (S1.sub1S3.sub1S5.sub1 S2.sub1S6.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1, S4.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.547000 3  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1S6.sub1)  ((S1.sub1S3.sub1S5.sub1, S4.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.548000 3  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1S6.sub1, S2.sub1), S4.sub1);
+ 1 0.001000 0.549000 3  (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1 S5.sub1)  ((S1.sub1S3.sub1S6.sub1, S2.sub1S4.sub1), S5.sub1);
+ 1 0.001000 0.550000 3  (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1)  ((S1.sub1S4.sub1, S2.sub1), S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.551000 3  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, S2.sub1S3.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.552000 3  (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1)  ((S1.sub1S4.sub1S5.sub1S6.sub1, S3.sub1), S2.sub1);
+ 1 0.001000 0.553000 3  (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1 S5.sub1)  ((S1.sub1S4.sub1S6.sub1, S2.sub1S3.sub1), S5.sub1);
+ 1 0.001000 0.554000 3  (S1.sub1S4.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1)  ((S1.sub1S4.sub1S6.sub1, S3.sub1), S2.sub1S5.sub1);
+ 1 0.001000 0.555000 3  (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1 S6.sub1)  ((S1.sub1S5.sub1, S2.sub1S3.sub1S4.sub1), S6.sub1);
+ 1 0.001000 0.556000 3  (S1.sub1S5.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1)  ((S1.sub1S5.sub1, S3.sub1S4.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.557000 3  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S2.sub1S3.sub1), S4.sub1);
+ 1 0.001000 0.558000 3  (S1.sub1S5.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1)  ((S1.sub1S5.sub1S6.sub1, S3.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.559000 3  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S2.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.560000 3  (S1.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S2.sub1S3.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.561000 3  (S1.sub1S6.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1)  ((S1.sub1S6.sub1, S3.sub1), S2.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.562000 3  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1, S5.sub1S6.sub1));
+ 1 0.001000 0.563000 3  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)  (S1.sub1, (S2.sub1S4.sub1S5.sub1, S3.sub1S6.sub1));
+ 1 0.001000 0.564000 3  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1, (S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1));
+ 1 0.001000 0.565000 3  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  (S1.sub1, (S2.sub1S6.sub1, S3.sub1S4.sub1S5.sub1));
+ 1 0.001000 0.566000 3  (S1.sub1S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1, (S3.sub1S5.sub1S6.sub1, S4.sub1));
+ 1 0.001000 0.567000 3  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1, S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.568000 3  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1, (S5.sub1, S6.sub1));
+ 1 0.001000 0.569000 3  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (S1.sub1S2.sub1S3.sub1S6.sub1, (S4.sub1, S5.sub1));
+ 1 0.001000 0.570000 3  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  (S1.sub1S2.sub1S3.sub1S6.sub1, S4.sub1S5.sub1);
+ 1 0.001000 0.571000 3  (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1 S6.sub1)  (S1.sub1S2.sub1S4.sub1, (S3.sub1S5.sub1, S6.sub1));
+ 1 0.001000 0.572000 3  (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1, S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.573000 3  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1, (S3.sub1, S6.sub1));
+ 1 0.001000 0.574000 3  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1S5.sub1, S3.sub1S6.sub1);
+ 1 0.001000 0.575000 3  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  (S1.sub1S2.sub1S5.sub1S6.sub1, (S3.sub1, S4.sub1));
+ 1 0.001000 0.576000 3  (S1.sub1S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)  (S1.sub1S2.sub1S6.sub1, (S3.sub1S5.sub1, S4.sub1));
+ 1 0.001000 0.577000 3  (S1.sub1S3.sub1 S2.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S3.sub1, (S2.sub1S4.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.578000 3  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1, (S2.sub1, S6.sub1));
+ 1 0.001000 0.579000 3  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1 S5.sub1)  (S1.sub1S3.sub1S4.sub1S6.sub1, (S2.sub1, S5.sub1));
+ 1 0.001000 0.580000 3  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  (S1.sub1S3.sub1S5.sub1S6.sub1, (S2.sub1, S4.sub1));
+ 1 0.001000 0.581000 3  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1S4.sub1)  (S1.sub1S3.sub1S5.sub1S6.sub1, S2.sub1S4.sub1);
+ 1 0.001000 0.582000 3  (S1.sub1S3.sub1S6.sub1 S2.sub1S5.sub1 S4.sub1)  (S1.sub1S3.sub1S6.sub1, (S2.sub1S5.sub1, S4.sub1));
+ 1 0.001000 0.583000 3  (S1.sub1S4.sub1 S2.sub1S3.sub1S6.sub1 S5.sub1)  (S1.sub1S4.sub1, (S2.sub1S3.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.584000 3  (S1.sub1S4.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1S4.sub1, (S2.sub1S5.sub1S6.sub1, S3.sub1));
+ 1 0.001000 0.585000 3  (S1.sub1S4.sub1S5.sub1 S2.sub1S3.sub1S6.sub1)  (S1.sub1S4.sub1S5.sub1, S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.586000 3  (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1S3.sub1)  (S1.sub1S4.sub1S5.sub1S6.sub1, S2.sub1S3.sub1);
+ 1 0.001000 0.587000 3  (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1 S5.sub1)  (S1.sub1S4.sub1S6.sub1, (S2.sub1S3.sub1, S5.sub1));
+ 1 0.001000 0.588000 3  (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1S5.sub1)  (S1.sub1S4.sub1S6.sub1, S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.589000 3  (S1.sub1S5.sub1 S2.sub1S4.sub1 S3.sub1S6.sub1)  (S1.sub1S5.sub1, (S2.sub1S4.sub1, S3.sub1S6.sub1));
+ 1 0.001000 0.590000 4  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1), S6.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.591000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1S4.sub1), S5.sub1), S6.sub1);
+ 1 0.001000 0.592000 4  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1S3.sub1S6.sub1), S4.sub1), S5.sub1);
+ 1 0.001000 0.593000 4  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1S3.sub1S6.sub1), S5.sub1), S4.sub1);
+ 1 0.001000 0.594000 4  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S2.sub1S4.sub1S6.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.595000 4  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1S6.sub1)  (((S1.sub1, S2.sub1S5.sub1), S3.sub1), S4.sub1S6.sub1);
+ 1 0.001000 0.596000 4  (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  (((S1.sub1, S2.sub1S5.sub1), S3.sub1S6.sub1), S4.sub1);
+ 1 0.001000 0.597000 4  (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  (((S1.sub1, S2.sub1S5.sub1S6.sub1), S4.sub1), S3.sub1);
+ 1 0.001000 0.598000 4  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  (((S1.sub1, S3.sub1), S4.sub1S5.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.599000 4  (S1.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1S6.sub1)  (((S1.sub1, S3.sub1), S5.sub1S6.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.600000 4  (S1.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1 S6.sub1)  (((S1.sub1, S3.sub1S5.sub1), S2.sub1S4.sub1), S6.sub1);
+ 1 0.001000 0.601000 4  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (((S1.sub1, S4.sub1), S2.sub1), S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.602000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.603000 4  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S4.sub1), S2.sub1S3.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.604000 4  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (((S1.sub1, S4.sub1), S3.sub1S5.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.605000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1, S4.sub1), S6.sub1), S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.606000 4  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S6.sub1), S2.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.607000 4  (S1.sub1S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1S2.sub1, S4.sub1S6.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.608000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S4.sub1, S3.sub1), S5.sub1), S6.sub1);
+ 1 0.001000 0.609000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S4.sub1, S5.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.610000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S4.sub1, S5.sub1), S6.sub1), S3.sub1);
+ 1 0.001000 0.611000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S4.sub1, S6.sub1), S5.sub1), S3.sub1);
+ 1 0.001000 0.612000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S2.sub1S5.sub1, S4.sub1), S6.sub1), S3.sub1);
+ 1 0.001000 0.613000 4  (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  (((S1.sub1S2.sub1S6.sub1, S5.sub1), S4.sub1), S3.sub1);
+ 1 0.001000 0.614000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1S3.sub1, S2.sub1), S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.615000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1S6.sub1)  (((S1.sub1S3.sub1, S4.sub1), S2.sub1), S5.sub1S6.sub1);
+ 1 0.001000 0.616000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S5.sub1 S6.sub1)  (((S1.sub1S3.sub1, S4.sub1S5.sub1), S6.sub1), S2.sub1);
+ 1 0.001000 0.617000 4  (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1 S6.sub1)  (((S1.sub1S3.sub1S4.sub1, S6.sub1), S2.sub1), S5.sub1);
+ 1 0.001000 0.618000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)  (((S1.sub1S3.sub1S5.sub1, S6.sub1), S2.sub1), S4.sub1);
+ 1 0.001000 0.619000 4  (S1.sub1S3.sub1S6.sub1 S2.sub1 S4.sub1 S5.sub1)  (((S1.sub1S3.sub1S6.sub1, S4.sub1), S2.sub1), S5.sub1);
+ 1 0.001000 0.620000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1 S6.sub1)  (((S1.sub1S4.sub1, S2.sub1), S3.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.621000 4  (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1, S2.sub1S5.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.622000 4  (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1S4.sub1, S2.sub1S6.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.623000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1S6.sub1)  (((S1.sub1S4.sub1, S3.sub1), S5.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.624000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1S6.sub1 S5.sub1)  (((S1.sub1S4.sub1, S5.sub1), S3.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.625000 4  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1S5.sub1, S2.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.626000 4  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1S5.sub1, S3.sub1), S6.sub1), S2.sub1);
+ 1 0.001000 0.627000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  (((S1.sub1S4.sub1S6.sub1, S2.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.628000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  (((S1.sub1S4.sub1S6.sub1, S5.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.629000 4  (S1.sub1S5.sub1 S2.sub1 S3.sub1S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S3.sub1S4.sub1), S2.sub1), S6.sub1);
+ 1 0.001000 0.630000 4  (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S4.sub1), S6.sub1), S2.sub1S3.sub1);
+ 1 0.001000 0.631000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1)  (((S1.sub1S5.sub1S6.sub1, S3.sub1), S4.sub1), S2.sub1);
+ 1 0.001000 0.632000 4  (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1)  (((S1.sub1S6.sub1, S2.sub1S4.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.633000 4  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1)  (((S1.sub1S6.sub1, S4.sub1S5.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.634000 4  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1)  (((S1.sub1S6.sub1, S5.sub1), S2.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.635000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, (S2.sub1S3.sub1S5.sub1, S6.sub1)), S4.sub1);
+ 1 0.001000 0.636000 4  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1, (S2.sub1S4.sub1S5.sub1, S3.sub1)), S6.sub1);
+ 1 0.001000 0.637000 4  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  ((S1.sub1, (S3.sub1S4.sub1, S5.sub1)), S2.sub1S6.sub1);
+ 1 0.001000 0.638000 4  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1, (S4.sub1, S5.sub1S6.sub1)), S2.sub1S3.sub1);
+ 1 0.001000 0.639000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, (S4.sub1, S6.sub1)), S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.640000 4  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1), (S3.sub1, S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.641000 4  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1S3.sub1), S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.642000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1), (S5.sub1, S6.sub1));
+ 1 0.001000 0.643000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1, S2.sub1S3.sub1S5.sub1S6.sub1), S4.sub1);
+ 1 0.001000 0.644000 4  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  ((S1.sub1, S2.sub1S3.sub1S6.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.645000 4  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1, S2.sub1S4.sub1S5.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.646000 4  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.647000 4  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.648000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, S4.sub1), (S2.sub1S3.sub1S5.sub1, S6.sub1));
+ 1 0.001000 0.649000 4  (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1, S4.sub1), (S2.sub1S5.sub1S6.sub1, S3.sub1));
+ 1 0.001000 0.650000 4  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1S5.sub1)  ((S1.sub1, S4.sub1S5.sub1), (S2.sub1, S3.sub1S6.sub1));
+ 1 0.001000 0.651000 4  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S4.sub1S5.sub1S6.sub1), (S2.sub1, S3.sub1));
+ 1 0.001000 0.652000 4  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S4.sub1S5.sub1S6.sub1), S2.sub1S3.sub1);
+ 1 0.001000 0.653000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, S6.sub1), (S2.sub1S3.sub1S4.sub1, S5.sub1));
+ 1 0.001000 0.654000 4  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1S2.sub1, (S3.sub1, S4.sub1)), S5.sub1S6.sub1);
+ 1 0.001000 0.655000 4  (S1.sub1S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S2.sub1, (S4.sub1S5.sub1, S6.sub1)), S3.sub1);
+ 1 0.001000 0.656000 4  (S1.sub1S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1S2.sub1, S3.sub1S5.sub1S6.sub1), S4.sub1);
+ 1 0.001000 0.657000 4  (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S2.sub1, S6.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.658000 4  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1, (S4.sub1, S5.sub1)), S6.sub1);
+ 1 0.001000 0.659000 4  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1), S6.sub1);
+ 1 0.001000 0.660000 4  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S3.sub1S6.sub1, S4.sub1), S5.sub1);
+ 1 0.001000 0.661000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S4.sub1, (S3.sub1, S6.sub1)), S5.sub1);
+ 1 0.001000 0.662000 4  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1S6.sub1, S3.sub1), S5.sub1);
+ 1 0.001000 0.663000 4  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1S6.sub1, S5.sub1), S3.sub1);
+ 1 0.001000 0.664000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S5.sub1, S3.sub1), (S4.sub1, S6.sub1));
+ 1 0.001000 0.665000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S5.sub1, S4.sub1), (S3.sub1, S6.sub1));
+ 1 0.001000 0.666000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1S6.sub1)  ((S1.sub1S2.sub1S5.sub1, S4.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.667000 4  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S3.sub1), S4.sub1);
+ 1 0.001000 0.668000 4  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S4.sub1), S3.sub1);
+ 1 0.001000 0.669000 4  (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S3.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.670000 4  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S3.sub1S4.sub1), S5.sub1);
+ 1 0.001000 0.671000 4  (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  ((S1.sub1S2.sub1S6.sub1, S4.sub1S5.sub1), S3.sub1);
+ 1 0.001000 0.672000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  ((S1.sub1S3.sub1, (S2.sub1, S4.sub1S6.sub1)), S5.sub1);
+ 1 0.001000 0.673000 4  (S1.sub1S3.sub1 S2.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S3.sub1, (S2.sub1S5.sub1, S4.sub1)), S6.sub1);
+ 1 0.001000 0.674000 4  (S1.sub1S3.sub1 S2.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1S3.sub1, (S2.sub1S6.sub1, S4.sub1)), S5.sub1);
+ 1 0.001000 0.675000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1S3.sub1, S2.sub1), (S4.sub1, S5.sub1S6.sub1));
+ 1 0.001000 0.676000 4  (S1.sub1S3.sub1 S2.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1S3.sub1, S2.sub1S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.677000 4  (S1.sub1S3.sub1 S2.sub1S6.sub1 S4.sub1S5.sub1)  ((S1.sub1S3.sub1, S4.sub1S5.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.678000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  ((S1.sub1S3.sub1, S4.sub1S6.sub1), (S2.sub1, S5.sub1));
+ 1 0.001000 0.679000 4  (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1, (S2.sub1, S6.sub1)), S5.sub1);
+ 1 0.001000 0.680000 4  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1S5.sub1, S6.sub1), S2.sub1);
+ 1 0.001000 0.681000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1S6.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1, S4.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.682000 4  (S1.sub1S3.sub1S6.sub1 S2.sub1 S4.sub1 S5.sub1)  ((S1.sub1S3.sub1S6.sub1, S5.sub1), (S2.sub1, S4.sub1));
+ 1 0.001000 0.683000 4  (S1.sub1S4.sub1 S2.sub1S3.sub1 S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, (S2.sub1S3.sub1, S6.sub1)), S5.sub1);
+ 1 0.001000 0.684000 4  (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S4.sub1, S2.sub1S5.sub1), (S3.sub1, S6.sub1));
+ 1 0.001000 0.685000 4  (S1.sub1S4.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1S4.sub1, S2.sub1S5.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.686000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1)  ((S1.sub1S4.sub1, S3.sub1S5.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.687000 4  (S1.sub1S4.sub1 S2.sub1S3.sub1 S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, S6.sub1), (S2.sub1S3.sub1, S5.sub1));
+ 1 0.001000 0.688000 4  (S1.sub1S4.sub1S5.sub1 S2.sub1S6.sub1 S3.sub1)  ((S1.sub1S4.sub1S5.sub1, S3.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.689000 4  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  ((S1.sub1S4.sub1S5.sub1, S6.sub1), (S2.sub1, S3.sub1));
+ 1 0.001000 0.690000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  ((S1.sub1S4.sub1S6.sub1, (S2.sub1, S3.sub1)), S5.sub1);
+ 1 0.001000 0.691000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  ((S1.sub1S4.sub1S6.sub1, S3.sub1), (S2.sub1, S5.sub1));
+ 1 0.001000 0.692000 4  (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1S5.sub1, (S2.sub1S3.sub1, S4.sub1)), S6.sub1);
+ 1 0.001000 0.693000 4  (S1.sub1S5.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S5.sub1, (S2.sub1S6.sub1, S4.sub1)), S3.sub1);
+ 1 0.001000 0.694000 4  (S1.sub1S5.sub1 S2.sub1S4.sub1 S3.sub1S6.sub1)  ((S1.sub1S5.sub1, S3.sub1S6.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.695000 4  (S1.sub1S5.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1)  ((S1.sub1S5.sub1, S4.sub1), S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.696000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S2.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.697000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1)  ((S1.sub1S5.sub1S6.sub1, S3.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.698000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S3.sub1S4.sub1), S2.sub1);
+ 1 0.001000 0.699000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S4.sub1), (S2.sub1, S3.sub1));
+ 1 0.001000 0.700000 4  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S4.sub1), S2.sub1S3.sub1);
+ 1 0.001000 0.701000 4  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1)  ((S1.sub1S6.sub1, (S3.sub1S4.sub1, S5.sub1)), S2.sub1);
+ 1 0.001000 0.702000 4  (S1.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1)  ((S1.sub1S6.sub1, (S4.sub1, S5.sub1)), S2.sub1S3.sub1);
+ 1 0.001000 0.703000 4  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S2.sub1), (S3.sub1, S4.sub1S5.sub1));
+ 1 0.001000 0.704000 4  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S2.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.705000 4  (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1)  ((S1.sub1S6.sub1, S3.sub1S4.sub1), S2.sub1S5.sub1);
+ 1 0.001000 0.706000 4  (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1)  ((S1.sub1S6.sub1, S3.sub1S5.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.707000 4  (S1.sub1S6.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1)  ((S1.sub1S6.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.708000 4  (S1.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1)  ((S1.sub1S6.sub1, S5.sub1), (S2.sub1S3.sub1, S4.sub1));
+ 1 0.001000 0.709000 4  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1, ((S2.sub1, S3.sub1), S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.710000 4  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, ((S2.sub1, S4.sub1), S3.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.711000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S3.sub1S4.sub1, S5.sub1), S6.sub1));
+ 1 0.001000 0.712000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S3.sub1S4.sub1, S6.sub1), S5.sub1));
+ 1 0.001000 0.713000 4  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, (S2.sub1, (S3.sub1S5.sub1S6.sub1, S4.sub1)));
+ 1 0.001000 0.714000 4  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.715000 4  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  (S1.sub1, (S2.sub1S3.sub1, (S4.sub1S5.sub1, S6.sub1)));
+ 1 0.001000 0.716000 4  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1));
+ 1 0.001000 0.717000 4  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, (S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1));
+ 1 0.001000 0.718000 4  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  (S1.sub1, (S2.sub1S4.sub1S5.sub1, (S3.sub1, S6.sub1)));
+ 1 0.001000 0.719000 4  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1, ((S4.sub1, S5.sub1), S6.sub1));
+ 1 0.001000 0.720000 4  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1, (S4.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.721000 4  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1S6.sub1);
+ 1 0.001000 0.722000 4  (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1, S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.723000 4  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)  (S1.sub1S2.sub1S4.sub1S6.sub1, S3.sub1S5.sub1);
+ 1 0.001000 0.724000 4  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  (S1.sub1S2.sub1S5.sub1, (S3.sub1, (S4.sub1, S6.sub1)));
+ 1 0.001000 0.725000 4  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  (S1.sub1S2.sub1S5.sub1S6.sub1, (S3.sub1, S4.sub1));
+ 1 0.001000 0.726000 4  (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  (S1.sub1S2.sub1S6.sub1, S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.727000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  (S1.sub1S3.sub1, ((S2.sub1, S4.sub1S6.sub1), S5.sub1));
+ 1 0.001000 0.728000 4  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  (S1.sub1S3.sub1, (S2.sub1, (S4.sub1S6.sub1, S5.sub1)));
+ 1 0.001000 0.729000 4  (S1.sub1S3.sub1 S2.sub1S5.sub1 S4.sub1 S6.sub1)  (S1.sub1S3.sub1, (S2.sub1S5.sub1, (S4.sub1, S6.sub1)));
+ 1 0.001000 0.730000 4  (S1.sub1S3.sub1 S2.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1S3.sub1, S2.sub1S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.731000 4  (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1S6.sub1)  (S1.sub1S3.sub1S4.sub1, (S2.sub1, S5.sub1S6.sub1));
+ 1 0.001000 0.732000 4  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1S5.sub1)  (S1.sub1S3.sub1S4.sub1S6.sub1, S2.sub1S5.sub1);
+ 1 0.001000 0.733000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1S6.sub1)  (S1.sub1S3.sub1S5.sub1, (S2.sub1, S4.sub1S6.sub1));
+ 1 0.001000 0.734000 4  (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1 S6.sub1)  (S1.sub1S3.sub1S5.sub1, (S2.sub1S4.sub1, S6.sub1));
+ 1 0.001000 0.735000 4  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1S4.sub1)  (S1.sub1S3.sub1S5.sub1S6.sub1, S2.sub1S4.sub1);
+ 1 0.001000 0.736000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1S6.sub1)  (S1.sub1S4.sub1, ((S2.sub1, S5.sub1S6.sub1), S3.sub1));
+ 1 0.001000 0.737000 4  (S1.sub1S4.sub1 S2.sub1 S3.sub1S6.sub1 S5.sub1)  (S1.sub1S4.sub1, (S2.sub1, (S3.sub1S6.sub1, S5.sub1)));
+ 1 0.001000 0.738000 4  (S1.sub1S4.sub1 S2.sub1S3.sub1S6.sub1 S5.sub1)  (S1.sub1S4.sub1, (S2.sub1S3.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.739000 4  (S1.sub1S4.sub1S5.sub1 S2.sub1S3.sub1S6.sub1)  (S1.sub1S4.sub1S5.sub1, S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.740000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  (S1.sub1S4.sub1S6.sub1, ((S2.sub1, S5.sub1), S3.sub1));
+ 1 0.001000 0.741000 4  (S1.sub1S4.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1)  (S1.sub1S4.sub1S6.sub1, (S2.sub1S5.sub1, S3.sub1));
+ 1 0.001000 0.742000 4  (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1S6.sub1)  (S1.sub1S5.sub1, (S2.sub1S3.sub1, S4.sub1S6.sub1));
+ 1 0.001000 0.743000 4  (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1)  (S1.sub1S6.sub1, (S2.sub1S4.sub1, S3.sub1S5.sub1));
+ 1 0.001000 0.744000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  ((((S1.sub1, S2.sub1), S4.sub1S6.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.745000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  ((((S1.sub1, S3.sub1), S2.sub1), S5.sub1), S4.sub1S6.sub1);
+ 1 0.001000 0.746000 5  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((((S1.sub1, S5.sub1), S2.sub1), S4.sub1), S3.sub1S6.sub1);
+ 1 0.001000 0.747000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((((S1.sub1, S5.sub1), S6.sub1), S2.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.748000 5  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((((S1.sub1, S6.sub1), S3.sub1S5.sub1), S2.sub1), S4.sub1);
+ 1 0.001000 0.749000 5  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((((S1.sub1, S6.sub1), S4.sub1), S2.sub1), S3.sub1S5.sub1);
+ 1 0.001000 0.750000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((((S1.sub1S2.sub1, S3.sub1), S5.sub1), S4.sub1), S6.sub1);
+ 1 0.001000 0.751000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  ((((S1.sub1S4.sub1, S3.sub1), S6.sub1), S2.sub1), S5.sub1);
+ 1 0.001000 0.752000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  ((((S1.sub1S4.sub1, S5.sub1), S6.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.753000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  ((((S1.sub1S5.sub1, S4.sub1), S3.sub1), S2.sub1), S6.sub1);
+ 1 0.001000 0.754000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)  ((((S1.sub1S6.sub1, S3.sub1), S5.sub1), S2.sub1), S4.sub1);
+ 1 0.001000 0.755000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)  ((((S1.sub1S6.sub1, S5.sub1), S2.sub1), S4.sub1), S3.sub1);
+ 1 0.001000 0.756000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  (((S1.sub1, (S3.sub1, S5.sub1S6.sub1)), S4.sub1), S2.sub1);
+ 1 0.001000 0.757000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  (((S1.sub1, (S4.sub1, S5.sub1)), S3.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.758000 5  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1), (S3.sub1S6.sub1, S5.sub1)), S4.sub1);
+ 1 0.001000 0.759000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1), S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.760000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1S4.sub1), S6.sub1), S5.sub1);
+ 1 0.001000 0.761000 5  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S2.sub1S4.sub1S6.sub1), S5.sub1), S3.sub1);
+ 1 0.001000 0.762000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1 S6.sub1)  (((S1.sub1, S2.sub1S5.sub1), S6.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.763000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1S6.sub1), S3.sub1), (S4.sub1, S5.sub1));
+ 1 0.001000 0.764000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1S6.sub1), S5.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.765000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  (((S1.sub1, S3.sub1), (S2.sub1, S5.sub1S6.sub1)), S4.sub1);
+ 1 0.001000 0.766000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1 S5.sub1)  (((S1.sub1, S3.sub1S4.sub1S6.sub1), S2.sub1), S5.sub1);
+ 1 0.001000 0.767000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S4.sub1), S2.sub1S3.sub1), (S5.sub1, S6.sub1));
+ 1 0.001000 0.768000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)  (((S1.sub1, S4.sub1), S2.sub1S6.sub1), S3.sub1S5.sub1);
+ 1 0.001000 0.769000 5  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S5.sub1), S3.sub1), S2.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.770000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)  (((S1.sub1, S5.sub1S6.sub1), S2.sub1S3.sub1), S4.sub1);
+ 1 0.001000 0.771000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1, (S3.sub1, S4.sub1)), S6.sub1), S5.sub1);
+ 1 0.001000 0.772000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1, (S3.sub1, S5.sub1)), S6.sub1), S4.sub1);
+ 1 0.001000 0.773000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1S2.sub1, S3.sub1), S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.774000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1, S3.sub1), S6.sub1), (S4.sub1, S5.sub1));
+ 1 0.001000 0.775000 5  (S1.sub1S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1S2.sub1, S3.sub1S5.sub1), S4.sub1), S6.sub1);
+ 1 0.001000 0.776000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1, S4.sub1), S5.sub1), (S3.sub1, S6.sub1));
+ 1 0.001000 0.777000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1S2.sub1, S5.sub1), S4.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.778000 5  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1S2.sub1S4.sub1, S3.sub1), S6.sub1), S5.sub1);
+ 1 0.001000 0.779000 5  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S3.sub1, S2.sub1), S6.sub1), (S4.sub1, S5.sub1));
+ 1 0.001000 0.780000 5  (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1S3.sub1, S4.sub1S6.sub1), S5.sub1), S2.sub1);
+ 1 0.001000 0.781000 5  (S1.sub1S3.sub1 S2.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S3.sub1, S5.sub1), S6.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.782000 5  (S1.sub1S3.sub1 S2.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S3.sub1, S6.sub1), S2.sub1S4.sub1), S5.sub1);
+ 1 0.001000 0.783000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1S6.sub1 S5.sub1)  (((S1.sub1S4.sub1, S3.sub1S6.sub1), S2.sub1), S5.sub1);
+ 1 0.001000 0.784000 5  (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1S4.sub1, S5.sub1), S3.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.785000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1S6.sub1)  (((S1.sub1S4.sub1, S5.sub1S6.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.786000 5  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1S5.sub1, S2.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.787000 5  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1S5.sub1, S3.sub1), S2.sub1), S6.sub1);
+ 1 0.001000 0.788000 5  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)  (((S1.sub1S4.sub1S5.sub1, S6.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.789000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, (S3.sub1, S6.sub1)), S2.sub1), S4.sub1);
+ 1 0.001000 0.790000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S2.sub1), S4.sub1), (S3.sub1, S6.sub1));
+ 1 0.001000 0.791000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S3.sub1), (S2.sub1, S6.sub1)), S4.sub1);
+ 1 0.001000 0.792000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S4.sub1), S2.sub1), (S3.sub1, S6.sub1));
+ 1 0.001000 0.793000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S6.sub1), (S2.sub1, S4.sub1)), S3.sub1);
+ 1 0.001000 0.794000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, ((S2.sub1, S6.sub1), S5.sub1)), S3.sub1S4.sub1);
+ 1 0.001000 0.795000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, ((S2.sub1S3.sub1, S4.sub1), S6.sub1)), S5.sub1);
+ 1 0.001000 0.796000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, ((S2.sub1S3.sub1, S5.sub1), S6.sub1)), S4.sub1);
+ 1 0.001000 0.797000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, (S2.sub1, S3.sub1S4.sub1S6.sub1)), S5.sub1);
+ 1 0.001000 0.798000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1, (S2.sub1S3.sub1, S4.sub1)), S5.sub1S6.sub1);
+ 1 0.001000 0.799000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, (S2.sub1S3.sub1S4.sub1, S5.sub1)), S6.sub1);
+ 1 0.001000 0.800000 5  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1, (S2.sub1S3.sub1S6.sub1, S4.sub1)), S5.sub1);
+ 1 0.001000 0.801000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  ((S1.sub1, (S2.sub1S6.sub1, S4.sub1S5.sub1)), S3.sub1);
+ 1 0.001000 0.802000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  ((S1.sub1, (S3.sub1, S5.sub1)), (S2.sub1S6.sub1, S4.sub1));
+ 1 0.001000 0.803000 5  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1, (S3.sub1, S6.sub1)), S2.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.804000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)  ((S1.sub1, (S3.sub1S5.sub1, S4.sub1)), S2.sub1S6.sub1);
+ 1 0.001000 0.805000 5  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1, (S4.sub1, S5.sub1)), S2.sub1S3.sub1S6.sub1);
+ 1 0.001000 0.806000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, (S5.sub1, S6.sub1)), S2.sub1S3.sub1S4.sub1);
+ 1 0.001000 0.807000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S2.sub1), S3.sub1S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.808000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.809000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.810000 5  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  ((S1.sub1, S2.sub1S3.sub1S6.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.811000 5  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)  ((S1.sub1, S2.sub1S4.sub1S6.sub1), S3.sub1S5.sub1);
+ 1 0.001000 0.812000 5  (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)  ((S1.sub1, S2.sub1S5.sub1S6.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.813000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1, S3.sub1), (S2.sub1, (S4.sub1, S5.sub1S6.sub1)));
+ 1 0.001000 0.814000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.815000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S3.sub1S4.sub1S6.sub1), (S2.sub1, S5.sub1));
+ 1 0.001000 0.816000 5  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1, S3.sub1S6.sub1), (S2.sub1, (S4.sub1, S5.sub1)));
+ 1 0.001000 0.817000 5  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)  ((S1.sub1, S3.sub1S6.sub1), S2.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.818000 5  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, S4.sub1), ((S2.sub1, S6.sub1), S3.sub1S5.sub1));
+ 1 0.001000 0.819000 5  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1, S4.sub1), (S2.sub1S3.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.820000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  ((S1.sub1, S4.sub1), (S2.sub1S5.sub1, S3.sub1S6.sub1));
+ 1 0.001000 0.821000 5  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.822000 5  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S4.sub1S5.sub1S6.sub1), S2.sub1S3.sub1);
+ 1 0.001000 0.823000 5  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, S6.sub1), (S2.sub1S3.sub1S5.sub1, S4.sub1));
+ 1 0.001000 0.824000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1S2.sub1, (S3.sub1, S5.sub1S6.sub1)), S4.sub1);
+ 1 0.001000 0.825000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1, S4.sub1), (S3.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.826000 5  (S1.sub1S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1S2.sub1, S4.sub1), S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.827000 5  (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1, (S5.sub1, S6.sub1)), S4.sub1);
+ 1 0.001000 0.828000 5  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S4.sub1, S6.sub1), S5.sub1);
+ 1 0.001000 0.829000 5  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1), S6.sub1);
+ 1 0.001000 0.830000 5  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S6.sub1), S4.sub1);
+ 1 0.001000 0.831000 5  (S1.sub1S2.sub1S4.sub1 S3.sub1S6.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1, S5.sub1), S3.sub1S6.sub1);
+ 1 0.001000 0.832000 5  (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S2.sub1S4.sub1S5.sub1, S6.sub1), S3.sub1);
+ 1 0.001000 0.833000 5  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  ((S1.sub1S2.sub1S5.sub1S6.sub1, S3.sub1), S4.sub1);
+ 1 0.001000 0.834000 5  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1S3.sub1, (S4.sub1, S5.sub1S6.sub1)), S2.sub1);
+ 1 0.001000 0.835000 5  (S1.sub1S3.sub1 S2.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1S3.sub1, S2.sub1), S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.836000 5  (S1.sub1S3.sub1 S2.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S3.sub1, S2.sub1S5.sub1), (S4.sub1, S6.sub1));
+ 1 0.001000 0.837000 5  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1S3.sub1, S6.sub1), (S2.sub1, (S4.sub1, S5.sub1)));
+ 1 0.001000 0.838000 5  (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1S6.sub1)  ((S1.sub1S3.sub1S4.sub1, S2.sub1), S5.sub1S6.sub1);
+ 1 0.001000 0.839000 5  (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)  ((S1.sub1S3.sub1S4.sub1S5.sub1, S6.sub1), S2.sub1);
+ 1 0.001000 0.840000 5  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1 S5.sub1)  ((S1.sub1S3.sub1S4.sub1S6.sub1, S2.sub1), S5.sub1);
+ 1 0.001000 0.841000 5  (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1 S6.sub1)  ((S1.sub1S3.sub1S5.sub1, S2.sub1S4.sub1), S6.sub1);
+ 1 0.001000 0.842000 5  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1S6.sub1, S2.sub1), S4.sub1);
+ 1 0.001000 0.843000 5  (S1.sub1S3.sub1S6.sub1 S2.sub1S5.sub1 S4.sub1)  ((S1.sub1S3.sub1S6.sub1, S4.sub1), S2.sub1S5.sub1);
+ 1 0.001000 0.844000 5  (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1 S6.sub1)  ((S1.sub1S4.sub1, (S2.sub1S5.sub1, S3.sub1)), S6.sub1);
+ 1 0.001000 0.845000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, S2.sub1), (S3.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.846000 5  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, S6.sub1), S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.847000 5  (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1S6.sub1)  ((S1.sub1S4.sub1S5.sub1, S2.sub1), S3.sub1S6.sub1);
+ 1 0.001000 0.848000 5  (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)  ((S1.sub1S4.sub1S6.sub1, (S2.sub1, S3.sub1)), S5.sub1);
+ 1 0.001000 0.849000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1)  ((S1.sub1S5.sub1, S2.sub1), S3.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.850000 5  (S1.sub1S5.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1)  ((S1.sub1S5.sub1, S3.sub1), S2.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.851000 5  (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1)  ((S1.sub1S5.sub1S6.sub1, S2.sub1S3.sub1), S4.sub1);
+ 1 0.001000 0.852000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)  ((S1.sub1S6.sub1, (S3.sub1, S5.sub1)), (S2.sub1, S4.sub1));
+ 1 0.001000 0.853000 5  (S1.sub1S6.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1)  ((S1.sub1S6.sub1, S2.sub1S4.sub1S5.sub1), S3.sub1);
+ 1 0.001000 0.854000 5  (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1)  ((S1.sub1S6.sub1, S2.sub1S5.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.855000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S3.sub1), (S2.sub1, S4.sub1S5.sub1));
+ 1 0.001000 0.856000 5  (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1)  ((S1.sub1S6.sub1, S3.sub1), (S2.sub1S5.sub1, S4.sub1));
+ 1 0.001000 0.857000 5  (S1.sub1S6.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1)  ((S1.sub1S6.sub1, S3.sub1), S2.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.858000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1)  ((S1.sub1S6.sub1, S3.sub1S4.sub1S5.sub1), S2.sub1);
+ 1 0.001000 0.859000 5  (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1)  ((S1.sub1S6.sub1, S3.sub1S5.sub1), S2.sub1S4.sub1);
+ 1 0.001000 0.860000 5  (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1)  ((S1.sub1S6.sub1, S5.sub1), S2.sub1S3.sub1S4.sub1);
+ 1 0.001000 0.861000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  (S1.sub1, (((S2.sub1S6.sub1, S4.sub1), S5.sub1), S3.sub1));
+ 1 0.001000 0.862000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  (S1.sub1, ((S2.sub1, S3.sub1), (S4.sub1, S5.sub1S6.sub1)));
+ 1 0.001000 0.863000 5  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1, ((S2.sub1, S3.sub1), S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.864000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S3.sub1S4.sub1, S5.sub1), S6.sub1));
+ 1 0.001000 0.865000 5  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S3.sub1S5.sub1, S6.sub1), S4.sub1));
+ 1 0.001000 0.866000 5  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (S1.sub1, ((S2.sub1S3.sub1S6.sub1, S5.sub1), S4.sub1));
+ 1 0.001000 0.867000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S5.sub1, S3.sub1S4.sub1), S6.sub1));
+ 1 0.001000 0.868000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  (S1.sub1, ((S2.sub1S5.sub1, S4.sub1), S3.sub1S6.sub1));
+ 1 0.001000 0.869000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  (S1.sub1, ((S2.sub1S5.sub1, S6.sub1), (S3.sub1, S4.sub1)));
+ 1 0.001000 0.870000 5  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, (S2.sub1, (S3.sub1S5.sub1S6.sub1, S4.sub1)));
+ 1 0.001000 0.871000 5  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1S5.sub1)  (S1.sub1, (S2.sub1, (S3.sub1S6.sub1, S4.sub1S5.sub1)));
+ 1 0.001000 0.872000 5  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.873000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1S5.sub1, S6.sub1));
+ 1 0.001000 0.874000 5  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1, (S2.sub1S3.sub1S4.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.875000 5  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  (S1.sub1, (S2.sub1S4.sub1S5.sub1S6.sub1, S3.sub1));
+ 1 0.001000 0.876000 5  (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1 S6.sub1)  (S1.sub1, (S2.sub1S5.sub1, (S3.sub1S4.sub1, S6.sub1)));
+ 1 0.001000 0.877000 5  (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)  (S1.sub1, (S2.sub1S5.sub1S6.sub1, (S3.sub1, S4.sub1)));
+ 1 0.001000 0.878000 5  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  (S1.sub1, (S2.sub1S6.sub1, (S3.sub1, S4.sub1S5.sub1)));
+ 1 0.001000 0.879000 5  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1, (((S3.sub1, S4.sub1), S5.sub1), S6.sub1));
+ 1 0.001000 0.880000 5  (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S4.sub1, (S5.sub1, S6.sub1));
+ 1 0.001000 0.881000 5  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1S6.sub1);
+ 1 0.001000 0.882000 5  (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (S1.sub1S2.sub1S4.sub1, (S3.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.883000 5  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)  (S1.sub1S2.sub1S4.sub1S6.sub1, S3.sub1S5.sub1);
+ 1 0.001000 0.884000 5  (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1S6.sub1)  (S1.sub1S2.sub1S5.sub1, (S3.sub1, S4.sub1S6.sub1));
+ 1 0.001000 0.885000 5  (S1.sub1S2.sub1S5.sub1 S3.sub1S4.sub1S6.sub1)  (S1.sub1S2.sub1S5.sub1, S3.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.886000 5  (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)  (S1.sub1S2.sub1S6.sub1, (S3.sub1, S4.sub1S5.sub1));
+ 1 0.001000 0.887000 5  (S1.sub1S3.sub1 S2.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S3.sub1, (S2.sub1S4.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.888000 5  (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1 S6.sub1)  (S1.sub1S3.sub1S4.sub1, (S2.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.889000 5  (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1 S5.sub1)  (S1.sub1S3.sub1S4.sub1S6.sub1, (S2.sub1, S5.sub1));
+ 1 0.001000 0.890000 5  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)  (S1.sub1S3.sub1S5.sub1, ((S2.sub1, S4.sub1), S6.sub1));
+ 1 0.001000 0.891000 5  (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)  (S1.sub1S3.sub1S5.sub1, (S2.sub1, (S4.sub1, S6.sub1)));
+ 1 0.001000 0.892000 5  (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1 S5.sub1)  (S1.sub1S3.sub1S6.sub1, (S2.sub1S4.sub1, S5.sub1));
+ 1 0.001000 0.893000 5  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  (S1.sub1S4.sub1, ((S2.sub1, (S3.sub1, S5.sub1)), S6.sub1));
+ 1 0.001000 0.894000 5  (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1S6.sub1)  (S1.sub1S4.sub1, S2.sub1S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.895000 5  (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1S5.sub1)  (S1.sub1S4.sub1S6.sub1, S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.896000 5  (S1.sub1S5.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1)  (S1.sub1S5.sub1, ((S2.sub1, S3.sub1S6.sub1), S4.sub1));
+ 1 0.001000 0.897000 5  (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1 S6.sub1)  (S1.sub1S5.sub1, (S2.sub1S3.sub1, (S4.sub1, S6.sub1)));
+ 1 0.001000 0.898000 5  (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1S6.sub1)  (S1.sub1S5.sub1, (S2.sub1S3.sub1, S4.sub1S6.sub1));
+ 1 0.001000 0.899000 5  (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1)  (S1.sub1S6.sub1, (S2.sub1, S3.sub1S4.sub1S5.sub1));
+ 1 0.001000 0.900000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((((S1.sub1, S3.sub1), S4.sub1), S6.sub1), S5.sub1), S2.sub1);
+ 1 0.001000 0.901000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((((S1.sub1, S4.sub1), S3.sub1), S5.sub1), S2.sub1), S6.sub1);
+ 1 0.001000 0.902000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((((S1.sub1, S5.sub1), S4.sub1), S3.sub1), S6.sub1), S2.sub1);
+ 1 0.001000 0.903000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((((S1.sub1, S5.sub1), S6.sub1), S2.sub1), S4.sub1), S3.sub1);
+ 1 0.001000 0.904000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((((S1.sub1, (S3.sub1, S5.sub1)), S6.sub1), S2.sub1), S4.sub1);
+ 1 0.001000 0.905000 6  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((((S1.sub1, S2.sub1), S3.sub1S5.sub1), S6.sub1), S4.sub1);
+ 1 0.001000 0.906000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((((S1.sub1, S2.sub1S5.sub1), S3.sub1), S4.sub1), S6.sub1);
+ 1 0.001000 0.907000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((((S1.sub1, S3.sub1), S2.sub1), S6.sub1), S4.sub1S5.sub1);
+ 1 0.001000 0.908000 6  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  ((((S1.sub1, S3.sub1), S2.sub1S6.sub1), S4.sub1), S5.sub1);
+ 1 0.001000 0.909000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((((S1.sub1, S3.sub1), S5.sub1), (S2.sub1, S6.sub1)), S4.sub1);
+ 1 0.001000 0.910000 6  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((((S1.sub1, S3.sub1S6.sub1), S5.sub1), S4.sub1), S2.sub1);
+ 1 0.001000 0.911000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((((S1.sub1, S4.sub1), S3.sub1), S6.sub1), (S2.sub1, S5.sub1));
+ 1 0.001000 0.912000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  ((((S1.sub1, S4.sub1S6.sub1), S5.sub1), S3.sub1), S2.sub1);
+ 1 0.001000 0.913000 6  (S1.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  ((((S1.sub1, S5.sub1), S3.sub1), S2.sub1S4.sub1), S6.sub1);
+ 1 0.001000 0.914000 6  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((((S1.sub1, S5.sub1), S4.sub1), S3.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.915000 6  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  ((((S1.sub1S4.sub1, S5.sub1), S2.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.916000 6  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  ((((S1.sub1S5.sub1, S6.sub1), S4.sub1), S2.sub1), S3.sub1);
+ 1 0.001000 0.917000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1, (S2.sub1, S3.sub1)), S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.918000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1, (S2.sub1, S4.sub1S6.sub1)), S3.sub1), S5.sub1);
+ 1 0.001000 0.919000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1), ((S3.sub1, S5.sub1), S6.sub1)), S4.sub1);
+ 1 0.001000 0.920000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1), (S3.sub1, (S5.sub1, S6.sub1))), S4.sub1);
+ 1 0.001000 0.921000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1S6.sub1)  (((S1.sub1, S2.sub1), S5.sub1S6.sub1), S3.sub1S4.sub1);
+ 1 0.001000 0.922000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1), S6.sub1), S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.923000 6  (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1), S4.sub1), (S5.sub1, S6.sub1));
+ 1 0.001000 0.924000 6  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1), S4.sub1S5.sub1), S6.sub1);
+ 1 0.001000 0.925000 6  (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1, S2.sub1S3.sub1S5.sub1), S4.sub1), S6.sub1);
+ 1 0.001000 0.926000 6  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S2.sub1S3.sub1S6.sub1), S5.sub1), S4.sub1);
+ 1 0.001000 0.927000 6  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)  (((S1.sub1, S2.sub1S4.sub1S5.sub1), S3.sub1), S6.sub1);
+ 1 0.001000 0.928000 6  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  (((S1.sub1, S2.sub1S4.sub1S6.sub1), S3.sub1), S5.sub1);
+ 1 0.001000 0.929000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S3.sub1), (S2.sub1, (S4.sub1, S5.sub1))), S6.sub1);
+ 1 0.001000 0.930000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  (((S1.sub1, S3.sub1), (S2.sub1, S4.sub1S6.sub1)), S5.sub1);
+ 1 0.001000 0.931000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  (((S1.sub1, S3.sub1), S2.sub1), S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.932000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S3.sub1S4.sub1), (S2.sub1, S5.sub1)), S6.sub1);
+ 1 0.001000 0.933000 6  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1, S3.sub1S5.sub1), S4.sub1), (S2.sub1, S6.sub1));
+ 1 0.001000 0.934000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)  (((S1.sub1, S3.sub1S6.sub1), S2.sub1S5.sub1), S4.sub1);
+ 1 0.001000 0.935000 6  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  (((S1.sub1, S4.sub1), (S2.sub1, S3.sub1S5.sub1)), S6.sub1);
+ 1 0.001000 0.936000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S4.sub1), (S2.sub1, S5.sub1)), (S3.sub1, S6.sub1));
+ 1 0.001000 0.937000 6  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (((S1.sub1, S4.sub1), S2.sub1S3.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.938000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)  (((S1.sub1, S4.sub1S5.sub1), (S3.sub1, S6.sub1)), S2.sub1);
+ 1 0.001000 0.939000 6  (S1.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)  (((S1.sub1, S5.sub1), S3.sub1), (S2.sub1S4.sub1, S6.sub1));
+ 1 0.001000 0.940000 6  (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  (((S1.sub1S2.sub1, S5.sub1S6.sub1), S3.sub1), S4.sub1);
+ 1 0.001000 0.941000 6  (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1 S6.sub1)  (((S1.sub1S3.sub1, S4.sub1), S5.sub1), (S2.sub1, S6.sub1));
+ 1 0.001000 0.942000 6  (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)  (((S1.sub1S5.sub1, S2.sub1), S3.sub1), (S4.sub1, S6.sub1));
+ 1 0.001000 0.943000 6  (S1.sub1S5.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1)  (((S1.sub1S5.sub1, S3.sub1S6.sub1), S4.sub1), S2.sub1);
+ 1 0.001000 0.944000 6  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)  (((S1.sub1S6.sub1, (S2.sub1, S5.sub1)), S4.sub1), S3.sub1);
+ 1 0.001000 0.945000 6  (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)  (((S1.sub1S6.sub1, S4.sub1), (S3.sub1, S5.sub1)), S2.sub1);
+ 1 0.001000 0.946000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, (((S2.sub1, S4.sub1), S6.sub1), S5.sub1)), S3.sub1);
+ 1 0.001000 0.947000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, (((S2.sub1, S6.sub1), S3.sub1), S5.sub1)), S4.sub1);
+ 1 0.001000 0.948000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)  ((S1.sub1, ((S2.sub1, S4.sub1), S3.sub1)), S5.sub1S6.sub1);
+ 1 0.001000 0.949000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, ((S2.sub1, S4.sub1S5.sub1), S3.sub1)), S6.sub1);
+ 1 0.001000 0.950000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1, ((S2.sub1S5.sub1, S4.sub1), S6.sub1)), S3.sub1);
+ 1 0.001000 0.951000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, (S2.sub1, (S3.sub1, S4.sub1S6.sub1))), S5.sub1);
+ 1 0.001000 0.952000 6  (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1, (S2.sub1, (S4.sub1, S6.sub1))), S3.sub1S5.sub1);
+ 1 0.001000 0.953000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, (S2.sub1, S4.sub1)), ((S3.sub1, S5.sub1), S6.sub1));
+ 1 0.001000 0.954000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  ((S1.sub1, (S2.sub1, S4.sub1S5.sub1S6.sub1)), S3.sub1);
+ 1 0.001000 0.955000 6  (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1, (S2.sub1S4.sub1S6.sub1, S5.sub1)), S3.sub1);
+ 1 0.001000 0.956000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1, (S2.sub1S5.sub1, S6.sub1)), (S3.sub1, S4.sub1));
+ 1 0.001000 0.957000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, S2.sub1), ((S3.sub1, (S5.sub1, S6.sub1)), S4.sub1));
+ 1 0.001000 0.958000 6  (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1, S2.sub1S3.sub1S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.959000 6  (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)  ((S1.sub1, S2.sub1S4.sub1S5.sub1), S3.sub1S6.sub1);
+ 1 0.001000 0.960000 6  (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)  ((S1.sub1, S2.sub1S4.sub1S5.sub1S6.sub1), S3.sub1);
+ 1 0.001000 0.961000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)  ((S1.sub1, S2.sub1S5.sub1), ((S3.sub1, S4.sub1), S6.sub1));
+ 1 0.001000 0.962000 6  (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1S6.sub1)  ((S1.sub1, S2.sub1S5.sub1), S3.sub1S4.sub1S6.sub1);
+ 1 0.001000 0.963000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1 S6.sub1)  ((S1.sub1, S3.sub1S4.sub1), (S2.sub1, (S5.sub1, S6.sub1)));
+ 1 0.001000 0.964000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  ((S1.sub1, S3.sub1S4.sub1S5.sub1S6.sub1), S2.sub1);
+ 1 0.001000 0.965000 6  (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)  ((S1.sub1, S3.sub1S6.sub1), (S2.sub1, (S4.sub1, S5.sub1)));
+ 1 0.001000 0.966000 6  (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.967000 6  (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S4.sub1S5.sub1), (S2.sub1S3.sub1, S6.sub1));
+ 1 0.001000 0.968000 6  (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)  ((S1.sub1, S6.sub1), S2.sub1S3.sub1S4.sub1S5.sub1);
+ 1 0.001000 0.969000 6  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  ((S1.sub1S2.sub1S3.sub1S5.sub1, S4.sub1), S6.sub1);
+ 1 0.001000 0.970000 6  (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)  ((S1.sub1S2.sub1S4.sub1S6.sub1, S5.sub1), S3.sub1);
+ 1 0.001000 0.971000 6  (S1.sub1S3.sub1 S2.sub1S4.sub1S6.sub1 S5.sub1)  ((S1.sub1S3.sub1, S2.sub1S4.sub1S6.sub1), S5.sub1);
+ 1 0.001000 0.972000 6  (S1.sub1S3.sub1 S2.sub1S5.sub1S6.sub1 S4.sub1)  ((S1.sub1S3.sub1, S2.sub1S5.sub1S6.sub1), S4.sub1);
+ 1 0.001000 0.973000 6  (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)  ((S1.sub1S3.sub1S5.sub1S6.sub1, S4.sub1), S2.sub1);
+ 1 0.001000 0.974000 6  (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)  ((S1.sub1S4.sub1, (S5.sub1, S6.sub1)), (S2.sub1, S3.sub1));
+ 1 0.001000 0.975000 6  (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1)  ((S1.sub1S4.sub1, S3.sub1S5.sub1), S2.sub1S6.sub1);
+ 1 0.001000 0.976000 6  (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1)  ((S1.sub1S4.sub1, S3.sub1S6.sub1), S2.sub1S5.sub1);
+ 1 0.001000 0.977000 6  (S1.sub1S6.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1)  ((S1.sub1S6.sub1, S4.sub1), S2.sub1S3.sub1S5.sub1);
+ 1 0.001000 0.978000 6  (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1)  ((S1.sub1S6.sub1, S5.sub1), (S2.sub1S4.sub1, S3.sub1));
+ 1 0.001000 0.979000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((((S2.sub1, S3.sub1), S4.sub1), S6.sub1), S5.sub1));
+ 1 0.001000 0.980000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((((S2.sub1, S5.sub1), S4.sub1), S6.sub1), S3.sub1));
+ 1 0.001000 0.981000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, (((S2.sub1, S6.sub1), (S3.sub1, S4.sub1)), S5.sub1));
+ 1 0.001000 0.982000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)  (S1.sub1, ((S2.sub1, ((S3.sub1, S4.sub1), S6.sub1)), S5.sub1));
+ 1 0.001000 0.983000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1, ((S2.sub1, S3.sub1S4.sub1S6.sub1), S5.sub1));
+ 1 0.001000 0.984000 6  (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1, ((S2.sub1, S3.sub1S5.sub1S6.sub1), S4.sub1));
+ 1 0.001000 0.985000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1, ((S2.sub1, S4.sub1S5.sub1S6.sub1), S3.sub1));
+ 1 0.001000 0.986000 6  (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)  (S1.sub1, ((S2.sub1S6.sub1, S5.sub1), S3.sub1S4.sub1));
+ 1 0.001000 0.987000 6  (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1, (S3.sub1, S4.sub1S5.sub1S6.sub1)));
+ 1 0.001000 0.988000 6  (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)  (S1.sub1, (S2.sub1, S3.sub1S4.sub1S5.sub1S6.sub1));
+ 1 0.001000 0.989000 6  (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)  (S1.sub1, (S2.sub1S3.sub1S6.sub1, (S4.sub1, S5.sub1)));
+ 1 0.001000 0.990000 6  (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)  (S1.sub1, (S2.sub1S6.sub1, (S3.sub1, (S4.sub1, S5.sub1))));
+ 1 0.001000 0.991000 6  (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S3.sub1, S4.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.992000 6  (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1, (S4.sub1, S6.sub1));
+ 1 0.001000 0.993000 6  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)  (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1, S4.sub1);
+ 1 0.001000 0.994000 6  (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)  (S1.sub1S2.sub1S3.sub1S6.sub1, S4.sub1S5.sub1);
+ 1 0.001000 0.995000 6  (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)  (S1.sub1S2.sub1S4.sub1, S3.sub1S5.sub1S6.sub1);
+ 1 0.001000 0.996000 6  (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)  (S1.sub1S2.sub1S5.sub1S6.sub1, S3.sub1S4.sub1);
+ 1 0.001000 0.997000 6  (S1.sub1S3.sub1 S2.sub1S4.sub1S6.sub1 S5.sub1)  (S1.sub1S3.sub1, (S2.sub1S4.sub1S6.sub1, S5.sub1));
+ 1 0.001000 0.998000 6  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)  (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1, S2.sub1);
+ 1 0.001000 0.999000 6  (S1.sub1S6.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1)  (S1.sub1S6.sub1, ((S2.sub1, S3.sub1S5.sub1), S4.sub1));
+ 1 0.001000 1.000000 6  (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1S5.sub1)  (S1.sub1S6.sub1, S2.sub1S3.sub1S4.sub1S5.sub1);
+
+(B) 184 species delimitations & their posterior probabilities
+74 0.074000   1 (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)
+45 0.045000   2 (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1)
+35 0.035000   2 (S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)
+35 0.035000   2 (S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1 S2.sub1)
+35 0.035000   2 (S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)
+34 0.034000   2 (S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)
+31 0.031000   2 (S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)
+19 0.019000   6 (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)
+16 0.016000   3 (S1.sub1 S2.sub1S3.sub1S4.sub1S5.sub1 S6.sub1)
+13 0.013000   3 (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)
+12 0.012000   3 (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)
+11 0.011000   3 (S1.sub1 S2.sub1S3.sub1S4.sub1S6.sub1 S5.sub1)
+11 0.011000   2 (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1S6.sub1)
+11 0.011000   4 (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)
+10 0.010000   4 (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)
+10 0.010000   3 (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)
+10 0.010000   4 (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)
+ 9 0.009000   2 (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1S6.sub1)
+ 9 0.009000   2 (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1S6.sub1)
+ 8 0.008000   3 (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)
+ 8 0.008000   5 (S1.sub1S5.sub1 S2.sub1 S3.sub1 S4.sub1 S6.sub1)
+ 8 0.008000   4 (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1 S6.sub1)
+ 8 0.008000   3 (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)
+ 8 0.008000   3 (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1 S4.sub1)
+ 8 0.008000   3 (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1 S5.sub1)
+ 8 0.008000   2 (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)
+ 8 0.008000   2 (S1.sub1S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)
+ 8 0.008000   4 (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)
+ 8 0.008000   2 (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1S5.sub1)
+ 8 0.008000   3 (S1.sub1 S2.sub1S4.sub1S5.sub1S6.sub1 S3.sub1)
+ 7 0.007000   5 (S1.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)
+ 7 0.007000   5 (S1.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)
+ 7 0.007000   4 (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1 S6.sub1)
+ 7 0.007000   2 (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)
+ 7 0.007000   5 (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1 S6.sub1)
+ 7 0.007000   5 (S1.sub1 S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)
+ 7 0.007000   3 (S1.sub1S3.sub1S4.sub1S5.sub1 S2.sub1 S6.sub1)
+ 7 0.007000   4 (S1.sub1S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)
+ 7 0.007000   3 (S1.sub1 S2.sub1S3.sub1S5.sub1S6.sub1 S4.sub1)
+ 6 0.006000   2 (S1.sub1S3.sub1S5.sub1S6.sub1 S2.sub1S4.sub1)
+ 6 0.006000   4 (S1.sub1S3.sub1 S2.sub1 S4.sub1S6.sub1 S5.sub1)
+ 6 0.006000   2 (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1S5.sub1)
+ 6 0.006000   2 (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1S6.sub1)
+ 6 0.006000   4 (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)
+ 6 0.006000   5 (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1 S6.sub1)
+ 6 0.006000   4 (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)
+ 6 0.006000   4 (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1 S5.sub1)
+ 6 0.006000   2 (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)
+ 6 0.006000   4 (S1.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)
+ 6 0.006000   2 (S1.sub1S3.sub1S4.sub1 S2.sub1S5.sub1S6.sub1)
+ 6 0.006000   5 (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1 S5.sub1)
+ 6 0.006000   4 (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1 S6.sub1)
+ 6 0.006000   3 (S1.sub1S2.sub1S3.sub1S4.sub1 S5.sub1 S6.sub1)
+ 6 0.006000   4 (S1.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)
+ 6 0.006000   2 (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1S6.sub1)
+ 6 0.006000   5 (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)
+ 5 0.005000   5 (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1 S6.sub1)
+ 5 0.005000   5 (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1 S5.sub1)
+ 5 0.005000   2 (S1.sub1S2.sub1S5.sub1 S3.sub1S4.sub1S6.sub1)
+ 5 0.005000   2 (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1S6.sub1)
+ 5 0.005000   3 (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1)
+ 5 0.005000   3 (S1.sub1S2.sub1S3.sub1S6.sub1 S4.sub1 S5.sub1)
+ 5 0.005000   3 (S1.sub1S3.sub1S5.sub1 S2.sub1 S4.sub1S6.sub1)
+ 4 0.004000   3 (S1.sub1S3.sub1S5.sub1 S2.sub1S6.sub1 S4.sub1)
+ 4 0.004000   4 (S1.sub1S3.sub1 S2.sub1S4.sub1 S5.sub1 S6.sub1)
+ 4 0.004000   3 (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)
+ 4 0.004000   5 (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1 S6.sub1)
+ 4 0.004000   2 (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)
+ 4 0.004000   3 (S1.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1S6.sub1)
+ 4 0.004000   3 (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1)
+ 4 0.004000   2 (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1S5.sub1)
+ 4 0.004000   2 (S1.sub1S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)
+ 4 0.004000   3 (S1.sub1S3.sub1 S2.sub1S4.sub1S6.sub1 S5.sub1)
+ 4 0.004000   3 (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1 S5.sub1)
+ 4 0.004000   4 (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1 S6.sub1)
+ 4 0.004000   4 (S1.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)
+ 4 0.004000   2 (S1.sub1S5.sub1S6.sub1 S2.sub1S3.sub1S4.sub1)
+ 4 0.004000   3 (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1S6.sub1)
+ 4 0.004000   4 (S1.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1 S5.sub1)
+ 4 0.004000   5 (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1 S6.sub1)
+ 3 0.003000   5 (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1 S6.sub1)
+ 3 0.003000   4 (S1.sub1S4.sub1 S2.sub1 S3.sub1 S5.sub1S6.sub1)
+ 3 0.003000   3 (S1.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1 S6.sub1)
+ 3 0.003000   4 (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1 S6.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1 S4.sub1)
+ 3 0.003000   3 (S1.sub1S2.sub1S4.sub1 S3.sub1S6.sub1 S5.sub1)
+ 3 0.003000   3 (S1.sub1S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)
+ 3 0.003000   3 (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1)
+ 3 0.003000   4 (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1 S6.sub1)
+ 3 0.003000   2 (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1S3.sub1)
+ 3 0.003000   2 (S1.sub1S4.sub1S5.sub1 S2.sub1S3.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1 S5.sub1)
+ 3 0.003000   3 (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1S5.sub1)
+ 3 0.003000   4 (S1.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1)
+ 3 0.003000   3 (S1.sub1S3.sub1S4.sub1S6.sub1 S2.sub1 S5.sub1)
+ 3 0.003000   3 (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1)
+ 3 0.003000   3 (S1.sub1S2.sub1 S3.sub1S5.sub1S6.sub1 S4.sub1)
+ 3 0.003000   3 (S1.sub1S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)
+ 3 0.003000   5 (S1.sub1 S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)
+ 3 0.003000   4 (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1 S6.sub1)
+ 3 0.003000   3 (S1.sub1S4.sub1S6.sub1 S2.sub1 S3.sub1S5.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)
+ 3 0.003000   2 (S1.sub1S3.sub1 S2.sub1S4.sub1S5.sub1S6.sub1)
+ 3 0.003000   3 (S1.sub1S6.sub1 S2.sub1S4.sub1S5.sub1 S3.sub1)
+ 3 0.003000   3 (S1.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1S5.sub1)
+ 3 0.003000   4 (S1.sub1S3.sub1 S2.sub1S5.sub1 S4.sub1 S6.sub1)
+ 3 0.003000   4 (S1.sub1S3.sub1 S2.sub1 S4.sub1 S5.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1S2.sub1 S3.sub1 S4.sub1 S5.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1S2.sub1 S3.sub1 S4.sub1S6.sub1 S5.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)
+ 3 0.003000   2 (S1.sub1S2.sub1S4.sub1S5.sub1 S3.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1)
+ 3 0.003000   3 (S1.sub1S4.sub1 S2.sub1S5.sub1 S3.sub1S6.sub1)
+ 3 0.003000   4 (S1.sub1S4.sub1 S2.sub1 S3.sub1S6.sub1 S5.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1S6.sub1 S3.sub1S4.sub1 S5.sub1)
+ 3 0.003000   3 (S1.sub1S4.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1)
+ 3 0.003000   4 (S1.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1S5.sub1)
+ 2 0.002000   3 (S1.sub1S2.sub1 S3.sub1S4.sub1S5.sub1 S6.sub1)
+ 2 0.002000   3 (S1.sub1S3.sub1S5.sub1 S2.sub1S4.sub1 S6.sub1)
+ 2 0.002000   3 (S1.sub1S5.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1)
+ 2 0.002000   4 (S1.sub1S3.sub1S6.sub1 S2.sub1 S4.sub1 S5.sub1)
+ 2 0.002000   3 (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1)
+ 2 0.002000   3 (S1.sub1S4.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1)
+ 2 0.002000   3 (S1.sub1S4.sub1 S2.sub1S5.sub1S6.sub1 S3.sub1)
+ 2 0.002000   3 (S1.sub1S5.sub1 S2.sub1S3.sub1 S4.sub1S6.sub1)
+ 2 0.002000   3 (S1.sub1S2.sub1S5.sub1 S3.sub1S6.sub1 S4.sub1)
+ 2 0.002000   4 (S1.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1S5.sub1)
+ 2 0.002000   4 (S1.sub1S6.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1)
+ 2 0.002000   4 (S1.sub1S5.sub1S6.sub1 S2.sub1 S3.sub1 S4.sub1)
+ 2 0.002000   4 (S1.sub1 S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)
+ 2 0.002000   3 (S1.sub1S4.sub1 S2.sub1S3.sub1S5.sub1 S6.sub1)
+ 2 0.002000   4 (S1.sub1S4.sub1 S2.sub1S3.sub1 S5.sub1 S6.sub1)
+ 2 0.002000   2 (S1.sub1S3.sub1S6.sub1 S2.sub1S4.sub1S5.sub1)
+ 2 0.002000   4 (S1.sub1S5.sub1 S2.sub1 S3.sub1S6.sub1 S4.sub1)
+ 2 0.002000   4 (S1.sub1S4.sub1 S2.sub1S6.sub1 S3.sub1 S5.sub1)
+ 2 0.002000   3 (S1.sub1S5.sub1 S2.sub1S4.sub1 S3.sub1S6.sub1)
+ 2 0.002000   3 (S1.sub1S2.sub1S5.sub1 S3.sub1 S4.sub1S6.sub1)
+ 2 0.002000   4 (S1.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1 S5.sub1)
+ 2 0.002000   4 (S1.sub1S6.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1)
+ 2 0.002000   3 (S1.sub1S6.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1)
+ 2 0.002000   3 (S1.sub1S4.sub1 S2.sub1S3.sub1S6.sub1 S5.sub1)
+ 2 0.002000   3 (S1.sub1S5.sub1 S2.sub1 S3.sub1S4.sub1S6.sub1)
+ 2 0.002000   2 (S1.sub1S2.sub1S5.sub1S6.sub1 S3.sub1S4.sub1)
+ 2 0.002000   4 (S1.sub1S5.sub1 S2.sub1S4.sub1 S3.sub1 S6.sub1)
+ 2 0.002000   3 (S1.sub1S2.sub1S3.sub1 S4.sub1S5.sub1 S6.sub1)
+ 2 0.002000   3 (S1.sub1S6.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1)
+ 2 0.002000   3 (S1.sub1S2.sub1S6.sub1 S3.sub1S5.sub1 S4.sub1)
+ 2 0.002000   3 (S1.sub1S3.sub1S6.sub1 S2.sub1S5.sub1 S4.sub1)
+ 2 0.002000   5 (S1.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1 S6.sub1)
+ 2 0.002000   3 (S1.sub1S4.sub1S6.sub1 S2.sub1S3.sub1 S5.sub1)
+ 2 0.002000   3 (S1.sub1S3.sub1S4.sub1 S2.sub1 S5.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1 S2.sub1S3.sub1S5.sub1 S4.sub1S6.sub1)
+ 1 0.001000   4 (S1.sub1S4.sub1 S2.sub1 S3.sub1S5.sub1 S6.sub1)
+ 1 0.001000   4 (S1.sub1S2.sub1 S3.sub1S5.sub1 S4.sub1 S6.sub1)
+ 1 0.001000   4 (S1.sub1 S2.sub1 S3.sub1S4.sub1 S5.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1S5.sub1)
+ 1 0.001000   3 (S1.sub1S2.sub1 S3.sub1 S4.sub1S5.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1S6.sub1 S2.sub1S3.sub1 S4.sub1S5.sub1)
+ 1 0.001000   3 (S1.sub1S5.sub1 S2.sub1S4.sub1S6.sub1 S3.sub1)
+ 1 0.001000   4 (S1.sub1S5.sub1 S2.sub1S6.sub1 S3.sub1 S4.sub1)
+ 1 0.001000   4 (S1.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1 S6.sub1)
+ 1 0.001000   3 (S1.sub1 S2.sub1S5.sub1 S3.sub1S4.sub1S6.sub1)
+ 1 0.001000   4 (S1.sub1S2.sub1 S3.sub1 S4.sub1S5.sub1 S6.sub1)
+ 1 0.001000   3 (S1.sub1S4.sub1S5.sub1 S2.sub1 S3.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1S3.sub1S4.sub1 S2.sub1S6.sub1 S5.sub1)
+ 1 0.001000   3 (S1.sub1S3.sub1 S2.sub1S4.sub1S5.sub1 S6.sub1)
+ 1 0.001000   4 (S1.sub1S3.sub1 S2.sub1 S4.sub1S5.sub1 S6.sub1)
+ 1 0.001000   3 (S1.sub1S3.sub1 S2.sub1 S4.sub1S5.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1S4.sub1S5.sub1 S2.sub1S6.sub1 S3.sub1)
+ 1 0.001000   4 (S1.sub1 S2.sub1S5.sub1 S3.sub1 S4.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1S5.sub1 S2.sub1S3.sub1S4.sub1 S6.sub1)
+ 1 0.001000   3 (S1.sub1S5.sub1 S2.sub1S3.sub1S6.sub1 S4.sub1)
+ 1 0.001000   3 (S1.sub1S3.sub1 S2.sub1S6.sub1 S4.sub1S5.sub1)
+ 1 0.001000   3 (S1.sub1S3.sub1 S2.sub1S5.sub1S6.sub1 S4.sub1)
+ 1 0.001000   4 (S1.sub1S3.sub1 S2.sub1S6.sub1 S4.sub1 S5.sub1)
+ 1 0.001000   4 (S1.sub1 S2.sub1S4.sub1 S3.sub1 S5.sub1S6.sub1)
+ 1 0.001000   4 (S1.sub1S5.sub1 S2.sub1 S3.sub1S4.sub1 S6.sub1)
+ 1 0.001000   4 (S1.sub1S6.sub1 S2.sub1 S3.sub1S5.sub1 S4.sub1)
+ 1 0.001000   3 (S1.sub1S6.sub1 S2.sub1S3.sub1S4.sub1 S5.sub1)
+ 1 0.001000   3 (S1.sub1S2.sub1S4.sub1 S3.sub1S5.sub1 S6.sub1)
+ 1 0.001000   3 (S1.sub1S2.sub1S3.sub1 S4.sub1 S5.sub1S6.sub1)
+ 1 0.001000   3 (S1.sub1S2.sub1S3.sub1 S4.sub1S6.sub1 S5.sub1)
+ 1 0.001000   3 (S1.sub1 S2.sub1S4.sub1 S3.sub1S5.sub1S6.sub1)
+
+(C) 63 delimited species & their posterior probabilities
+296 0.296000 S1.sub1
+264 0.264000 S4.sub1
+250 0.250000 S6.sub1
+250 0.250000 S5.sub1
+249 0.249000 S3.sub1
+244 0.244000 S2.sub1
+ 74 0.074000 S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1
+ 45 0.045000 S2.sub1S3.sub1S4.sub1S5.sub1S6.sub1
+ 45 0.045000 S1.sub1S4.sub1
+ 42 0.042000 S1.sub1S6.sub1
+ 40 0.040000 S2.sub1S6.sub1
+ 39 0.039000 S2.sub1S3.sub1
+ 38 0.038000 S2.sub1S5.sub1
+ 36 0.036000 S5.sub1S6.sub1
+ 36 0.036000 S3.sub1S6.sub1
+ 36 0.036000 S4.sub1S6.sub1
+ 35 0.035000 S1.sub1S3.sub1S4.sub1S5.sub1S6.sub1
+ 35 0.035000 S1.sub1S2.sub1S3.sub1S4.sub1S6.sub1
+ 35 0.035000 S1.sub1S2.sub1S3.sub1S5.sub1S6.sub1
+ 34 0.034000 S1.sub1S2.sub1S4.sub1S5.sub1S6.sub1
+ 34 0.034000 S4.sub1S5.sub1
+ 32 0.032000 S1.sub1S3.sub1
+ 32 0.032000 S2.sub1S4.sub1
+ 31 0.031000 S1.sub1S5.sub1
+ 31 0.031000 S1.sub1S2.sub1S3.sub1S4.sub1S5.sub1
+ 30 0.030000 S3.sub1S5.sub1
+ 29 0.029000 S1.sub1S3.sub1S5.sub1
+ 27 0.027000 S2.sub1S4.sub1S6.sub1
+ 27 0.027000 S3.sub1S4.sub1
+ 27 0.027000 S1.sub1S2.sub1
+ 24 0.024000 S4.sub1S5.sub1S6.sub1
+ 24 0.024000 S2.sub1S3.sub1S4.sub1S5.sub1
+ 21 0.021000 S2.sub1S3.sub1S4.sub1
+ 20 0.020000 S1.sub1S2.sub1S3.sub1S5.sub1
+ 19 0.019000 S2.sub1S3.sub1S5.sub1
+ 19 0.019000 S1.sub1S4.sub1S6.sub1
+ 19 0.019000 S3.sub1S4.sub1S5.sub1S6.sub1
+ 19 0.019000 S2.sub1S3.sub1S6.sub1
+ 18 0.018000 S3.sub1S4.sub1S5.sub1
+ 18 0.018000 S3.sub1S5.sub1S6.sub1
+ 17 0.017000 S1.sub1S2.sub1S6.sub1
+ 16 0.016000 S2.sub1S3.sub1S4.sub1S6.sub1
+ 16 0.016000 S2.sub1S5.sub1S6.sub1
+ 16 0.016000 S1.sub1S3.sub1S4.sub1S5.sub1
+ 16 0.016000 S1.sub1S2.sub1S3.sub1
+ 16 0.016000 S2.sub1S3.sub1S5.sub1S6.sub1
+ 15 0.015000 S1.sub1S2.sub1S5.sub1
+ 15 0.015000 S1.sub1S5.sub1S6.sub1
+ 15 0.015000 S1.sub1S2.sub1S4.sub1
+ 14 0.014000 S1.sub1S2.sub1S3.sub1S4.sub1
+ 14 0.014000 S1.sub1S3.sub1S5.sub1S6.sub1
+ 13 0.013000 S2.sub1S4.sub1S5.sub1
+ 12 0.012000 S1.sub1S2.sub1S3.sub1S6.sub1
+ 12 0.012000 S1.sub1S2.sub1S5.sub1S6.sub1
+ 12 0.012000 S1.sub1S3.sub1S4.sub1
+ 12 0.012000 S1.sub1S2.sub1S4.sub1S6.sub1
+ 12 0.012000 S3.sub1S4.sub1S6.sub1
+ 11 0.011000 S1.sub1S2.sub1S4.sub1S5.sub1
+ 11 0.011000 S2.sub1S4.sub1S5.sub1S6.sub1
+ 11 0.011000 S1.sub1S4.sub1S5.sub1
+ 10 0.010000 S1.sub1S3.sub1S6.sub1
+  7 0.007000 S1.sub1S3.sub1S4.sub1S6.sub1
+  6 0.006000 S1.sub1S4.sub1S5.sub1S6.sub1
+
+(D) Posterior probability for # of species
+P[1] = 0.074000  prior[1] = 0.130435
+P[2] = 0.353000  prior[2] = 0.130435
+P[3] = 0.267000  prior[3] = 0.173913
+P[4] = 0.207000  prior[4] = 0.217391
+P[5] = 0.080000  prior[5] = 0.217391
+P[6] = 0.019000  prior[6] = 0.130435
