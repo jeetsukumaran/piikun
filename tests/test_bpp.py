@@ -15,7 +15,7 @@ from piikun import partitionmodel
 
 def test_bpp_a10():
     source_path = _pathmap.TESTS_DATA_DIR / "bpp-a10.01.txt"
-    expected_results = {'partitions': {'1': {'subsets': [['S1.sub1', 'S2.sub1', 'S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1']], 'metadata': {'support': 0.0, 'posterior_probability': 0.0, 'prior_probability': 0.166667}}, '2': {'subsets': [['S1.sub1', 'S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.217, 'posterior_probability': 0.217, 'prior_probability': 0.166667}}, '3': {'subsets': [['S1.sub1'], ['S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.21, 'posterior_probability': 0.21, 'prior_probability': 0.166667}}, '4': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.176, 'posterior_probability': 0.176, 'prior_probability': 0.166667}}, '5': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1'], ['S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.187, 'posterior_probability': 0.187, 'prior_probability': 0.166667}}, '6': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1'], ['S6.sub1'], ['S5.sub1'], ['S2.sub1']], 'metadata': {'support': 0.21, 'posterior_probability': 0.21, 'prior_probability': 0.166667}}}}
+    expected_results = {'partitions': {'1': {'subsets': [['S1.sub1', 'S2.sub1', 'S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1']], 'metadata': {'support': 0.0, 'prior_probability': 0.166667, 'posterior_probability': 0.0}}, '2': {'subsets': [['S1.sub1', 'S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.217, 'prior_probability': 0.166667, 'posterior_probability': 0.217}}, '3': {'subsets': [['S1.sub1'], ['S3.sub1', 'S4.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.21, 'prior_probability': 0.166667, 'posterior_probability': 0.21}}, '4': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1', 'S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.176, 'prior_probability': 0.166667, 'posterior_probability': 0.176}}, '5': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1'], ['S5.sub1', 'S6.sub1'], ['S2.sub1']], 'metadata': {'support': 0.187, 'prior_probability': 0.166667, 'posterior_probability': 0.187}}, '6': {'subsets': [['S1.sub1'], ['S4.sub1'], ['S3.sub1'], ['S6.sub1'], ['S5.sub1'], ['S2.sub1']], 'metadata': {'support': 0.21, 'prior_probability': 0.166667, 'posterior_probability': 0.21}}}}
     pc = partitionmodel.PartitionCollection()
     for ptn_idx, ptn in enumerate(
         parsebpp.parse_bpp_a10(
@@ -24,7 +24,9 @@ def test_bpp_a10():
         )
     ):
         pass
-    assert pc.export_definition_d() == expected_results
+    observed_results = pc.export_definition_d()
+    # print(observed_results)
+    assert observed_results == expected_results
 
 
 # def parse_bpp_a11_data(labels, src_data):

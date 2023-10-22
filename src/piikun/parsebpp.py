@@ -184,8 +184,8 @@ def parse_bpp_a10(
 
         metadata_d = {
             "support": float(model_def["posterior_probability"]),
-            "posterior_probability": float(model_def["posterior_probability"]),
             "prior_probability": float(model_def["prior_probability"]),
+            "posterior_probability": float(model_def["posterior_probability"]),
         }
         kwargs = {
             "metadata_d": metadata_d,
