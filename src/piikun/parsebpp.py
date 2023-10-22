@@ -149,17 +149,22 @@ def parse_bpp_a10(
         ancestral_node_label_id_map=ancestral_node_label_id_map,
     )
     species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
-    ancestral_node_subsets_map = {}
-    for anc_idx, desc in enumerate(ancestral_node_label_id_map):
-        subsets = parse_species_subsets(
-            species_subsets_str=desc,
-            lineage_labels=species_labels,
-        )
-        ancestral_node_subsets_map[anc_idx] = subsets
-    print(ancestral_node_subsets_map)
-    assert len(ancestral_node_subsets_map) == len(ancestral_node_label_id_map)
-    for desc, subsets in zip(ancestral_node_label_id_map, ancestral_node_subsets_map.values()):
-        print(f"{desc} --> {subsets}")
+    for spdm_idx, spdm_def in enumerate(species_delimitation_model_defs):
+        for anc_idx, anc_code in enumerate(spdm_def["model_code"]):
+            if anc_code == "0":
+                anc_nd = guide_tree.bpp_ancestor_index_node_map[anc_idx]
+                assert ancestral_node_label_id_map[anc_nd.bpp_ancestor_label] == anc_idx
+    # ancestral_node_subsets_map = {}
+    # for anc_idx, desc in enumerate(ancestral_node_label_id_map):
+    #     subsets = parse_species_subsets(
+    #         species_subsets_str=desc,
+    #         lineage_labels=species_labels,
+    #     )
+    #     ancestral_node_subsets_map[anc_idx] = subsets
+    # print(ancestral_node_subsets_map)
+    # assert len(ancestral_node_subsets_map) == len(ancestral_node_label_id_map)
+    # for desc, subsets in zip(ancestral_node_label_id_map, ancestral_node_subsets_map.values()):
+    #     print(f"{desc} --> {subsets}")
     # print(species_delimitation_model_defs)
 
 # def find_terminal_population_clades(tree):
