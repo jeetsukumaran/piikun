@@ -15,7 +15,7 @@ patterns = {
 
     "a11-section-b": re.compile(r"\(B\)\s*(\d+) species delimitations .*$"),
     # "a11-species-delimitation-desc": re.compile(r"^(\d+\)\s+([0-9.Ee\-]+)\s+(\d+)\s+\(.*)"),
-    "a11-species-delimitation-desc": re.compile(r"^(\d+)\s+([0-9.Ee\-]+)\s+(\d+)\s+\(.*\)"),
+    "a11-species-delimitation-desc": re.compile(r"^(\d+)\s+([0-9.Ee\-]+)\s+(\d+)\s+\((.*)\)"),
     # "a11-species-delimitation-desc": re.compile(r"^74 .*"),
     "a11-section-c": re.compile(r"\(C\)\s*(\d+) delimited species .*$"),
     # "spd_pattern_end": re.compile(r"\(C\)\s*", re.MULTILINE),
@@ -295,10 +295,9 @@ def parse_bpp_a11(
                 continue
             m = patterns["a11-species-delimitation-desc"].match(line_text)
             if m:
-                parts = line_text.strip().split()
-                frequency = float(parts[1])
-                num_subsets = int(parts[2])
-                species_subsets_str = " ".join(parts[3:]).strip("()")
+                frequency = float(m[2])
+                num_subsets = int(m[3])
+                species_subsets_str = m[4]
                 continue
             _format_error(format_type="bpp-a11", message=f"Expecting species delimitation model description: line {line_idx}: '{line_text}'")
 
