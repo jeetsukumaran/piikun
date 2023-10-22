@@ -47,23 +47,24 @@ def parse_species_subsets(
                                    key=len,
                                    reverse=True,
                                 )
-    match_patterns_prioritizing_length = [ re.compile(f".*({re.escape(label)}).*") for label in lineage_labels_sorted_by_length ]
+    match_patterns_prioritizing_length = [ re.compile(f"(.*)({re.escape(label)})(.*)") for label in lineage_labels_sorted_by_length ]
+    n_matches = 0
     for concatenated_label in concatenated_labels:
         species_subset = []
-        for mp in match_patterns_prioritizing_length:
+        for lineage_label, mp in zip(lineage_labels_sorted_by_length, match_patterns_prioritizing_length):
             if not concatenated_label:
                 break
-            m = mp.match(concatenated_label)
-            if not m:
-                continue
-                # _format_error(format_type="bpp-a11", message=f"Unable to match lineage with expression '{mp}': '{species_subsets_str}' => '{concatenated_label}")
-            species_subset.append(m[1])
-            new_label = mp.sub("", concatenated_label, 1)
-            assert new_label != concatenated_label
-            concatenated_label = new_label
+            if lineage_label in concatenated_label:
+                n_matches += 1
+                species_subset.append(lineage_label)
+                new_label = "".join(concatenated_label.split(lineage_label, maxsplit=1))
+                assert new_label != concatenated_label
+                concatenated_label = new_label
+            # _format_error(format_type="bpp-a11", message=f"Unable to match lineage with expression '{mp}': '{species_subsets_str}' => '{concatenated_label}")
+        species_subsets.append(species_subset)
         if concatenated_label:
             _format_error("bpp", f"Failed to resolve '{concatenated_label}' out of: {lineage_labels}")
-        species_subsets.append(species_subset)
+    assert n_matches == len(lineage_labels), f"'{species_subsets_str}': {concatenated_labels}: {species_subsets}: {species_subset}: {n_matches} != {len(lineage_labels)}"
     return species_subsets
 
 def parse_guide_tree_with_pp(
