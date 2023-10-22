@@ -33,30 +33,30 @@ def check_for_overlapping_labels(labels):
                 return True, (label1, label2)
     return False, None
 
-def parse_species_subsets(
-    species_subsets_str,
-    lineage_labels,
-):
-    species_subsets = []
-    current_subset = []
-    temp_lineage_label = ""
-    for cidx, char in enumerate(species_subsets_str):
-        if char == ' ':
-            if current_subset:
-                species_subsets.append(current_subset)
-                current_subset = []
-        else:
-            temp_lineage_label += char
-            if temp_lineage_label in lineage_labels:
-                current_subset.append(temp_lineage_label)
-                temp_lineage_label = ""
-            elif cidx == len(species_subsets_str) - 1:
-                print(char)
-                print(temp_lineage_label)
-                assert False
-    if current_subset:
-        species_subsets.append(current_subset)
-    return species_subsets
+# def parse_species_subsets(
+#     species_subsets_str,
+#     lineage_labels,
+# ):
+#     species_subsets = []
+#     current_subset = []
+#     temp_lineage_label = ""
+#     for cidx, char in enumerate(species_subsets_str):
+#         if char == ' ':
+#             if current_subset:
+#                 species_subsets.append(current_subset)
+#                 current_subset = []
+#         else:
+#             temp_lineage_label += char
+#             if temp_lineage_label in lineage_labels:
+#                 current_subset.append(temp_lineage_label)
+#                 temp_lineage_label = ""
+#             elif cidx == len(species_subsets_str) - 1:
+#                 print(char)
+#                 print(temp_lineage_label)
+#                 assert False
+#     if current_subset:
+#         species_subsets.append(current_subset)
+#     return species_subsets
 
 def parse_guide_tree_with_pp(
     tree_str,
@@ -297,23 +297,26 @@ def parse_bpp_a11(
             frequency = float(parts[1])
             num_subsets = int(parts[2])
             species_subsets_str = " ".join(parts[3:]).strip("()")
-            # species_subsets = []
-            # current_subset = []
-            # temp_lineage_label = ""
-            # for char in species_subsets_str:
-            #     if char == ' ':
-            #         if current_subset:
-            #             species_subsets.append(current_subset)
-            #             current_subset = []
-            #     else:
-            #         temp_lineage_label += char
-            #         if temp_lineage_label in lineage_labels:
-            #             current_subset.append(temp_lineage_label)
-            #             temp_lineage_label = ""
-            species_subsets = parsebpp.parse_species_subsets(
-                species_subsets_str=species_subsets_str,
-                lineage_labels=lineage_labels,
-            )
+
+            species_subsets = []
+            current_subset = []
+            temp_lineage_label = ""
+            for char in species_subsets_str:
+                if char == ' ':
+                    if current_subset:
+                        species_subsets.append(current_subset)
+                        current_subset = []
+                else:
+                    temp_lineage_label += char
+                    if temp_lineage_label in lineage_labels:
+                        current_subset.append(temp_lineage_label)
+                        temp_lineage_label = ""
+
+            # species_subsets = parse_species_subsets(
+            #     species_subsets_str=species_subsets_str,
+            #     lineage_labels=lineage_labels,
+            # )
+
             partition_d = {
                 "frequency": frequency,
                 "n_subsets": num_subsets,
