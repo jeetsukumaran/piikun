@@ -274,6 +274,8 @@ def parse_bpp_a11(
                 current_section = "a11-section-b"
                 n_partitions_expected = int(m[1])
                 continue
+            # sink all till next section of interest
+            continue
         elif current_section == "a11-section-b":
             assert n_expected_lineages
             if len(lineage_labels) != n_expected_lineages:
