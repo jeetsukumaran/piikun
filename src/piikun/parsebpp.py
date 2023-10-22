@@ -218,7 +218,7 @@ def parse_bpp_a11(
     partition_info = []
     line = None
     line_idx = 0
-    n_expected_lineages = None
+    n_expected_lineages = 0
     n_expected_lineages_set_on_line = None
     n_partitions_expected = None
     population_table_start_offset = None
@@ -226,7 +226,7 @@ def parse_bpp_a11(
         line_idx = line_offset + 1
         line_text = line.strip()
         if current_section == "pre":
-            if population_table_start_offset and population_table_start_offset == line_offset:
+            if population_table_start_offset and population_table_start_offset == line_offset+1:
                 current_section = "population-table-row"
                 continue
             elif line_text.startswith("Per-locus sequences in data "):
@@ -240,6 +240,7 @@ def parse_bpp_a11(
                     _format_error(format_type="bpp-a11", message=f"No lineages identified after parsing all populations: line {line_idx}: '{line_text}'")
                 current_section = "post-population-identification"
                 continue
+            n_expected_lineages += 1
             lineage_label = m[3]
             assert lineage_label
             lineage_labels.append(m[3])
@@ -252,10 +253,10 @@ def parse_bpp_a11(
                 continue
             continue # sink until triggered by (B)
         elif current_section == "a11-section-b":
-            # assert n_expected_lineages
-            # if len(lineage_labels) != n_expected_lineages:
-            #     _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
-            #     # continue
+            assert n_expected_lineages
+            if len(lineage_labels) != n_expected_lineages:
+                _format_error(format_type="bpp-a11", message=f"{n_expected_lineages} lineages expected but {len(lineage_labels)} lineages identified ({lineage_labels}): line {line_idx}: '{line_text}'")
+                # continue
             if not n_partitions_expected:
                 _format_error(format_type="bpp-a11", message=f"Number of expected models not set before parsing models: line {line_idx}: '{line_text}'")
                 # continue
