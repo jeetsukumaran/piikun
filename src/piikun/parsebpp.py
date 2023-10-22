@@ -117,8 +117,8 @@ def parse_bpp_a10(
             species_delimitation_model_defs.append({
                 "model_id": m[1],
                 "model_code": m[2],
-                "prior": str(m[3]),
-                "posterior": str(m[4]),
+                "prior_probability": str(m[3]),
+                "posterior_probability": str(m[4]),
             })
             continue
         elif current_section == "ancestral-node-definitions":
@@ -182,15 +182,20 @@ def parse_bpp_a10(
                 subsets.append(list(nd.leaf_node_labels))
                 continue
 
-        print("\n>>>>>")
-        print(model_def["model_code"])
-        print(subsets)
+        metadata_d = {
+            "support": model_def["posterior_probability"],
+            "posterior_probability": model_def["posterior_probability"],
+            "prior_probability": model_def["prior_probability"],
+        }
+        kwargs = {
+            "metadata_d": metadata_d,
+            "subsets": subsets,
+        }
+        partition = partition_factory(**kwargs)
+        partition._origin_size = len(species_delimitation_model_defs)
+        partition._origin_offset = spdm_idx
+        yield partition
 
-        print(">>>>>\n")
-
-
-    for k,v in ancestral_node_label_id_map.items():
-        print(f"{v}: {k}")
     # species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
     # ancestral_node_subsets_map = {}
     # for anc_idx, desc in enumerate(ancestral_node_label_id_map):

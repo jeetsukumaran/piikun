@@ -12,13 +12,18 @@ else:
 from piikun import parsebpp
 from piikun import partitionmodel
 
+
 def test_bpp_a10():
     source_path = _pathmap.TESTS_DATA_DIR / "bpp-a10.01.txt"
     pc = partitionmodel.PartitionCollection()
-    parsebpp.parse_bpp_a10(
-        source_stream=open(source_path),
-        partition_factory=pc.new_partition,
-    )
+    for ptn_idx, ptn in enumerate(
+        parsebpp.parse_bpp_a10(
+            source_stream=open(source_path),
+            partition_factory=pc.new_partition,
+        )
+    ):
+        print(ptn)
+
 
 # def parse_bpp_a11_data(labels, src_data):
 #     parsed_data = []
