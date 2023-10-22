@@ -219,11 +219,12 @@ def parse_bpp_a11(
         if current_section == "pre":
             if line_text.startswith("COMPRESSED ALIGNMENTS"):
                 current_section = "alignments1"
-            elif line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
+                continue
+            if line_text.startswith("COMPRESSED ALIGNMENTS AFTER"):
                 current_section = "post-alignments1"
+                continue
             continue
-        elif current_section == "alignments":
-
+        elif current_section == "alignments1":
             # if lineage_labels and n_expected_lineages and len(lineage_labels) == n_expected_lineages:
             #     continue
             # if line.startswith("COMPRESSED ALIGNMENTS"):
@@ -239,22 +240,24 @@ def parse_bpp_a11(
             _format_error(format_type="bpp", message=f"Missing alignment label and character description: line {line_idx}: '{line_text}'")
             # continue
         elif current_section == "alignment-row":
+            # breakout pattern
             if not n_expected_lineages:
                 _format_error(format_type="bpp", message=f"Number of expected lineages not set before parsing alignment: line {line_idx}: '{line_text}'")
                 # continue
+            m = patterns["a11-section-b"].match(line_text)
+            if m:
+                current_section = "a11-section-b"
+                n_partitions_expected = int(m[1])
+                continue
             m = patterns["alignment-row"].match(line_text)
             if m:
                 if len(lineage_labels) == n_expected_lineages:
                     _format_error(format_type="bpp-a11", message=f"Unexpected sequence definition ({n_expected_lineages} labels already parsed): line {line_idx}: '{line_text}'")
                     # continue
                 lineage_labels.append(m[2])
-            m = patterns["a11-section-b"].match(line_text)
-            if m:
-                current_section = "a11-section-b"
-                n_partitions_expected = int(m[1])
                 continue
             _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
-                # continue
+            # continue
             continue
         elif current_section == "a11-section-b":
             assert n_expected_lineages
@@ -302,11 +305,10 @@ def parse_bpp_a11(
             # runtime.logger.info(f"Partition {len(partition_info)+1} of {n_partitions_expected}: {num_subsets} clusters, probability = {frequency}")
             partition_info.append(partition_d)
         elif current_section == "a11-section-c":
-            pass
-        elif current_section == "post":
-            pass
+            break
         else:
-            runtime.RuntimeClient._logger.warn(f"Unhandled line: {line_idx}: '{line_text}'")
+            _format_error(format_type="bpp", message=f"Unhandled line: {line_idx}: '{line_text}'")
+            # continue
     if not partition_info:
         runtime.terminate_error("No species delimitation partitions parsed from source", exit_code=1)
     assert len(partition_info) == n_partitions_expected

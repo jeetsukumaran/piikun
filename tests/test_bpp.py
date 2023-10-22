@@ -42,6 +42,9 @@ def test_bpp_a11():
     # print(observed_results)
     assert observed_results == expected_results
 
+if __name__ == "__main__":
+    test_bpp_a11()
+
 
 # def parse_bpp_a11_data(labels, src_data):
 #     parsed_data = []
