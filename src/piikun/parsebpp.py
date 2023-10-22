@@ -61,13 +61,14 @@ def parse_guide_tree_with_pp(
     tree.bpp_ancestor_label_node_map = {}
     tree.bpp_ancestor_index_node_map = {}
     for nd in tree:
+        nd._is_collapsed = None
         if nd.label and nd.label.startswith("#"):
             nd.posterior_probability = float(nd.label[1:])
         if not nd.is_leaf():
-            leaf_node_labels = []
+            nd.leaf_node_labels = []
             for leaf_nd in nd.leaf_iter():
-                leaf_node_labels.append(leaf_nd.taxon.label)
-            nd.bpp_ancestor_label = "".join(leaf_node_labels)
+                nd.leaf_node_labels.append(leaf_nd.taxon.label)
+            nd.bpp_ancestor_label = "".join(nd.leaf_node_labels)
             tree.bpp_ancestor_label_node_map[nd.bpp_ancestor_label] = nd
             if ancestral_node_label_id_map:
                 tree.bpp_ancestor_index_node_map[ancestral_node_label_id_map[nd.bpp_ancestor_label]] = nd
@@ -143,17 +144,54 @@ def parse_bpp_a10(
             continue
     assert len(species_delimitation_model_defs) == n_expected_species_delimitation_models, f"{len(species_delimitation_model_defs)} != {n_expected_species_delimitation_models}"
     assert len(ancestral_node_label_id_map) == n_expected_ancestral_nodes
+
     assert guide_tree_str
     guide_tree = parse_guide_tree_with_pp(
         tree_str=guide_tree_str,
         ancestral_node_label_id_map=ancestral_node_label_id_map,
     )
-    species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
-    for spdm_idx, spdm_def in enumerate(species_delimitation_model_defs):
-        for anc_idx, anc_code in enumerate(spdm_def["model_code"]):
+    for anc_label, anc_nd in guide_tree.bpp_ancestor_label_node_map.items():
+        anc_idx = ancestral_node_label_id_map[anc_label]
+        assert guide_tree.bpp_ancestor_index_node_map[anc_idx] == anc_nd
+
+    for spdm_idx, model_def in enumerate(species_delimitation_model_defs):
+
+        # flag for open/closed
+        for anc_idx, anc_code in enumerate(model_def["model_code"]):
+            anc_nd = guide_tree.bpp_ancestor_index_node_map[anc_idx]
+            assert ancestral_node_label_id_map[anc_nd.bpp_ancestor_label] == anc_idx
             if anc_code == "0":
-                anc_nd = guide_tree.bpp_ancestor_index_node_map[anc_idx]
-                assert ancestral_node_label_id_map[anc_nd.bpp_ancestor_label] == anc_idx
+                anc_nd._is_collapsed = True
+            elif anc_code == "1":
+                anc_nd._is_collapsed = False
+            else:
+                raise ValueError(anc_code)
+
+        # collect subsets from closed parents
+        subsets = []
+        for nd in guide_tree:
+            if nd._parent_node and nd._parent_node._is_collapsed:
+                nd._is_collapsed = True
+                continue
+            if nd.is_leaf():
+                # leaf with uncollapsed parent: singleton subset
+                subsets.append([nd.taxon.label])
+                continue
+            if nd._is_collapsed:
+                # top-most collapsed internal node in this subtree
+                subsets.append(list(nd.leaf_node_labels))
+                continue
+
+        print("\n>>>>>")
+        print(model_def["model_code"])
+        print(subsets)
+
+        print(">>>>>\n")
+
+
+    for k,v in ancestral_node_label_id_map.items():
+        print(f"{v}: {k}")
+    # species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
     # ancestral_node_subsets_map = {}
     # for anc_idx, desc in enumerate(ancestral_node_label_id_map):
     #     subsets = parse_species_subsets(
