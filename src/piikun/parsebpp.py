@@ -9,8 +9,9 @@ patterns = {
     "a10-species-delimitation-model-header": re.compile(r"^ *model +prior +posterior.*$"),
     "a10-species-delimitation-model-row": re.compile(r"^ *(\d+?) +([01]+) +([0-9Ee\-.]+) +([0-9Ee\-.]+).*$"),
 
-    "alignment-ntax-nchar": re.compile("^\s*(\d+)\s*(\d+)\s*.*$"),
-    "alignment_row": re.compile("^(.*?\^)?(\S+).*$"),
+    "alignment-ntax-nchar": re.compile(r"^\s*(\d+)\s*(\d+)\s*.*$"),
+    "alignment-row": re.compile(r"^(.*?)?\^(\S+).*$"),
+    "alignment-end": re.compile(r"^[0-9 ]+$"),
 
     "a11-section-b": re.compile(r"\(B\)\s*(\d+) species delimitations .*$"),
     "a11-section-c": re.compile(r"\(C\)\s*(\d+) delimited species .*$"),
@@ -21,6 +22,7 @@ patterns = {
 
 def _format_error(format_type, message):
     import sys
+    runtime.RuntimeClient._logger._runtime_handler.show_path = True
     runtime.RuntimeClient._logger.error(f"Invalid '{format_type}' format: {message}")
     sys.exit(1)
 
@@ -229,7 +231,9 @@ def parse_bpp_a11(
             #     continue
             # if line.startswith("COMPRESSED ALIGNMENTS"):
             #     continue
-            m = parsebpp.patterns["alignment-ntax-nchar"].match(line_text)
+            if not line_text:
+                continue
+            m = patterns["alignment-ntax-nchar"].match(line_text)
             if m:
                 if n_expected_lineages:
                     _format_error(format_type="bpp-a11", message=f"Unexpected alignment label and character description (already set to {n_expected_lineages} on {n_expected_lineages_set_on_line}): line {line_idx}: '{line_text}'")
@@ -256,6 +260,7 @@ def parse_bpp_a11(
                     # continue
                 lineage_labels.append(m[2])
                 continue
+            m = patterns["alignment-end"].match(line_text)
             _format_error(format_type="bpp-a11", message=f"Expected sequence data: line {line_idx}: '{line_text}'")
             # continue
             continue

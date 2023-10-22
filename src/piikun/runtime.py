@@ -75,6 +75,7 @@ def get_logger(
     )
     logger.setLevel(logging_level)
     logger.addHandler(handler)
+    logger._runtime_handler = handler
     return logger
 
 
