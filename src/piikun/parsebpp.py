@@ -10,11 +10,141 @@ patterns = {
     "spd_pattern_end": re.compile(r"\(C\)\s*", re.MULTILINE),
     "a11_treemodel_entry": re.compile(r"^(\d+) ([0-9.]+) ([0-9.]+) (\d+) (.*;).*$"),
     "strip_tree_tokens": re.compile(r"[\(\),\s;]+"),
+    "a10-species-delimitation-models": re.compile(r"^Number of species-delimitation models = (\d+).*$"),
+    "a10-species-delimitation-model-row": re.compile(r"^ ?(\d+) +([01]+) +([0-9Ee\-.])+ +([0-9Ee\-.])"),
+    "a10-species-delimitation-model-header": re.compile(r"^ *model +prior +posterior.*$"),
+    "a10-species-delimitation-model-row": re.compile(r"^ *(\d+?) +([01]+) +([0-9Ee\-.]+) +([0-9Ee\-.]+).*$"),
 }
 # a11_section_b = re.compile("^\(B\).*$")
 # a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.])\s+([1-9.])\s+(\d)\s+(.*;)\s+(.*)$")
 # a11_treemodel_entry = re.compile(r"^\s*(\d+)\s+([0-9.]+)\s+([0-9.]+)\s+(\d+)\s+(.*;)\s+(.*)$")
 
+# def decompose_model_subset(model_subset_str: str, original_labels: list) -> list:
+#     """Decompose a model subset definition string into its constituent labels."""
+#     # Sort the original labels by length in descending order
+#     sorted_labels = sorted(original_labels, key=len, reverse=True)
+#     # Initialize an empty list to store the decomposed labels
+#     decomposed_labels = []
+#     # Iterate over the sorted labels to match and decompose the model subset string
+#     for label in sorted_labels:
+#         while label in model_subset_str:
+#             decomposed_labels.append(label)
+#             model_subset_str = model_subset_str.replace(label, '', 1)
+#     return decomposed_labels
+
+# def decompose_model_subset(model_subset_str: str, original_labels: list) -> list:
+#     """Decompose a model subset definition string into its constituent labels."""
+
+#     # Sort the original labels by length in descending order
+#     sorted_labels = sorted(original_labels, key=len, reverse=True)
+
+#     # Initialize an empty list to store the decomposed labels
+#     decomposed_labels = []
+
+#     # Iterate over the sorted labels to match and decompose the model subset string
+#     for label in sorted_labels:
+#         while label in model_subset_str:
+#             decomposed_labels.append(label)
+#             model_subset_str = model_subset_str.replace(label, '', 1)
+
+#     return decomposed_labels
+
+def parse_model_subset_str(model_subset_str: str, original_labels: list) -> list:
+    """Decompose a model subset definition string into its constituent labels."""
+
+    # Sort the original labels by length in descending order
+    sorted_labels = sorted(original_labels, key=len, reverse=True)
+
+    # Initialize an empty list to store the decomposed labels
+    decomposed_labels = []
+
+    # Iterate over the sorted labels to match and decompose the model subset string
+    for label in sorted_labels:
+        # print("----")
+        # print(label)
+        # print(model_subset_str)
+        # print(label in model_subset_str)
+        if label in model_subset_str:
+            decomposed_labels.append(label)
+            model_subset_str = model_subset_str.replace(label, '', 1)
+
+    return decomposed_labels
+
+def process_bpp_a10_results(file_contents: str) -> list:
+    """Process the BP&P A10 analysis results to extract and expand species delimitation models."""
+
+    # Split the file contents into lines
+    lines = file_contents.split("\n")
+
+    # Find the start and end of the "Order of ancestral nodes:" section
+    node_order_start = lines.index("Order of ancestral nodes:") + 1
+    newick_tree_start = next(i for i, line in enumerate(lines[node_order_start:], start=node_order_start) if line.startswith("("))
+
+    # Extract the labels of the leaves for each node
+    node_leaf_labels = lines[node_order_start:newick_tree_start]
+
+    # Define a helper function to expand the model encoding into subsets
+    def expand_model_encoding(encoding):
+        """Expand the model encoding into subsets based on the node leaf labels."""
+        subsets = []
+        idx = 0
+        while idx < len(encoding):
+            # If a '1' is found, it indicates the node splits the leaf set
+            if encoding[idx] == '1':
+                idx += 1
+                continue
+            # If a '0' is found, all of the leaves form a single subset
+            elif encoding[idx] == '0':
+                # subsets.append(list(node_leaf_labels[idx].strip().split()))
+                subsets.append(node_leaf_labels[idx].strip())
+                idx += 1
+            # If neither '1' nor '0', it's a leaf label
+            else:
+                # subsets.append([encoding[idx]])
+                subsets.append(encoding[idx])
+                idx += 1
+        return subsets
+
+    # Extract the table with posterior probabilities
+    posterior_table_start = lines.index('     model    prior    posterior') + 1
+
+    # Initialize an empty list to store the dictionaries
+    model_data = []
+
+    # Iterate over the lines starting from the identified start of the table
+    for line in lines[posterior_table_start:]:
+        # Break the loop if an empty line is encountered (assumed end of table)
+        if not line.strip():
+            break
+
+        # Split the line into its parts and extract the data
+        parts = line.split()
+        model = {
+            "model_id": int(parts[0]),
+            "model_encoding": parts[1],
+            "prior_probability": float(parts[2]),
+            "posterior_probability": float(parts[3]),
+            "model_subsets_str": expand_model_encoding(parts[1])
+        }
+        model_data.append(model)
+
+    return model_data
+
+def parse_guide_tree_with_pp(tree_str, rooting="force-rooted"):
+    import dendropy
+    tree = dendropy.Tree.get_from_string(
+        tree_str,
+        schema="newick",
+        rooting="force-rooted",
+    )
+    clade_roots = []
+    for nd in tree:
+        if nd.label:
+            nd.posterior_probability = float(nd.label[1:])
+            clade_roots.append(nd)
+    clade_roots = sorted(clade_roots, key=lambda x: x.posterior_probability, reverse=True)
+    tree.clade_roots = clade_roots
+    return tree
 
 def parse_species_subsets(
     species_subsets_str,
@@ -23,7 +153,7 @@ def parse_species_subsets(
     species_subsets = []
     current_subset = []
     temp_lineage_label = ""
-    for char in species_subsets_str:
+    for cidx, char in enumerate(species_subsets_str):
         if char == ' ':
             if current_subset:
                 species_subsets.append(current_subset)
@@ -33,6 +163,10 @@ def parse_species_subsets(
             if temp_lineage_label in lineage_labels:
                 current_subset.append(temp_lineage_label)
                 temp_lineage_label = ""
+            elif cidx == len(species_subsets_str) - 1:
+                print(char)
+                print(temp_lineage_label)
+                assert False
     if current_subset:
         species_subsets.append(current_subset)
     return species_subsets
@@ -303,16 +437,16 @@ def parse_bpp_ctl(control_filepath):
 
 #     return guide_tree, tree1
 
-# def extract_bpp_output_posterior_guide_tree_string(source_text):
-#     # pretty dumb logic for now: just locates the last non-blank line
-#     # works with: bp&p Version 3.1, April 2015, in "10" mode, i.e. infer species delimitation with guide tree.
-#     lines = source_text.split("\n")
-#     result = None
-#     for idx, line in enumerate(lines[-1::-1]):
-#         if line:
-#             result = line
-#             break
-#     return result
+def extract_bpp_output_posterior_guide_tree_string(source_text):
+    # pretty dumb logic for now: just locates the last non-blank line
+    # works with: bp&p Version 3.1, April 2015, in "10" mode, i.e. infer species delimitation with guide tree.
+    lines = source_text.split("\n")
+    result = None
+    for idx, line in enumerate(lines[-1::-1]):
+        if line:
+            result = line
+            break
+    return result
 
 
 # read_bpp_a11(

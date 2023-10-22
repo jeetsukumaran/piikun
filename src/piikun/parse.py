@@ -134,18 +134,15 @@ def parse_bpp_a10(
     source_stream,
     partition_factory,
 ):
-    import re
-    parsebpp.patterns["a10-species-delimitation-models"] = re.compile(r"^Number of species-delimitation models = (\d+).*$")
-    parsebpp.patterns["a10-species-delimitation-model-row"] = re.compile(r"^ ?(\d+) +([01]+) +([0-9Ee\-.])+ +([0-9Ee\-.])")
-    parsebpp.patterns["a10-species-delimitation-model-header"] = re.compile(r"^ *model +prior +posterior.*$")
-    parsebpp.patterns["a10-species-delimitation-model-row"] = re.compile(r"^ *(\d+?) +([01]+) +([0-9Ee\-.]+) +([0-9Ee\-.]+).*$")
 
     n_expected_lineages = None
     n_expected_species_delimitation_models = None
     n_expected_ancestral_nodes = None
+
+    guide_tree_str = None
     lineage_labels = []
     species_delimitation_model_defs = []
-    ancestral_nodes_labels = []
+    ancestral_node_labels = []
 
     current_section = "pre"
     is_done_processing_rows = None
@@ -225,22 +222,84 @@ def parse_bpp_a10(
                 continue
             n_expected_ancestral_nodes = len(species_delimitation_model_defs[0]["model_code"])
             ancestral_node_label = line_text.strip()
-            species_subsets = parsebpp.parse_species_subsets(
-                species_subsets_str=ancestral_node_label,
-                lineage_labels=lineage_labels,
-            )
-            print(">>>")
-            print(ancestral_node_label)
-            print("---")
-            print(species_subsets)
-            print("<<<")
-            ancestral_nodes_labels.append(ancestral_node_label)
+            ancestral_node_labels.append(ancestral_node_label)
+            continue
+        elif current_section == "post-ancestral-node-definitions":
+            if not line_text:
+                continue
+            if line_text.startswith("Guide tree with posterior probability"):
+                current_section = "guide-tree-pp"
+                continue
+            continue
+        elif current_section == "guide-tree-pp":
+            if not line_text:
+                current_section = "post-guide-tree-pp"
+                continue
+            guide_tree_str = line_text
+            continue
+            # species_subsets = parsebpp.parse_species_subsets(
+            #     species_subsets_str=ancestral_node_label,
+            #     lineage_labels=lineage_labels,
+            # )
+            # print(">>>")
+            # print(ancestral_node_label)
+            # print("---")
+            # print(species_subsets)
+            # print("<<<\n")
+            # ancestral_node_labels.append(ancestral_node_label)
     assert len(lineage_labels) == n_expected_lineages
     assert len(species_delimitation_model_defs) == n_expected_species_delimitation_models, f"{len(species_delimitation_model_defs)} != {n_expected_species_delimitation_models}"
-    assert len(ancestral_nodes_labels) == n_expected_ancestral_nodes
-    # print(lineage_labels)
+    assert len(ancestral_node_labels) == n_expected_ancestral_nodes
+    assert guide_tree_str
+    guide_tree = parsebpp.parse_guide_tree_with_pp(tree_str=guide_tree_str)
+    species_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
+    ancestral_node_subsets = []
+    for label in ancestral_node_labels:
+        subsets = parsebpp.parse_species_subsets(
+            species_subsets_str=label,
+            lineage_labels=species_labels,
+        )
+        print("\n>>>")
+        print(label)
+        print("----")
+        print(subsets)
+        print("<<<\n")
+        ancestral_node_subsets.append(subsets)
+    print(ancestral_node_subsets)
     # print(species_delimitation_model_defs)
 
+def parse_bpp_a10(
+    source_stream,
+    partition_factory,
+):
+    import dendropy
+    source_data = source_stream.read()
+    model_data = parsebpp.process_bpp_a10_results(source_data)
+    pp_tree_str = parsebpp.extract_bpp_output_posterior_guide_tree_string(source_data)
+    guide_tree = dendropy.Tree.get_from_string(pp_tree_str, schema="newick", rooting="force-rooted")
+    sp_labels = [taxon.label for taxon in guide_tree.taxon_namespace]
+    for model_def in model_data:
+        model_def["subsets"] = []
+        for model_subset_str in model_def["model_subsets_str"]:
+            model_subsets = parsebpp.parse_model_subset_str(
+                model_subset_str=model_subset_str,
+                original_labels=sp_labels,
+            )
+            model_def["subsets"].append(model_subsets)
+        metadata_d = {
+            "support": model_def["posterior_probability"],
+            "posterior_probability": model_def["posterior_probability"],
+            "prior_probability": model_def["prior_probability"],
+        }
+        kwargs = {
+            "metadata_d": metadata_d,
+            "subsets": model_def["subsets"],
+        }
+        print(model_def)
+        partition = partition_factory(**kwargs)
+        partition._origin_size = len(partition_info)
+        partition._origin_offset = ptn_idx
+        yield partition
 
 def parse_bpp_a11(
     source_stream,

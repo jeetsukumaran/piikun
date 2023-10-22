@@ -157,7 +157,14 @@ class Partition:
         return d
 
     def new_subset(self, elements):
+        print(">>>")
+        print(elements)
+        print(self._elements)
+        print("<<<")
+        print("")
         for element in elements:
+            if element in self._elements:
+                pass
             assert element not in self._elements
             self._elements.add(element)
         s = PartitionSubset(
