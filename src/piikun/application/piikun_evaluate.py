@@ -127,7 +127,7 @@ def create_full_profile_distance_df(
     df = pd.DataFrame.from_records(new_dataset)
     if merged_path:
         rc.logger.info(f"Exported distances to: '{merged_path}'")
-        df.to_csv(merged_path, sep=delimiter)
+        df.to_json(merged_path, orient="records")
     return df
 
 

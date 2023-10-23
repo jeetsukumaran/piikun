@@ -380,7 +380,7 @@ def main(args=None):
     )
     args = parent_parser.parse_args(args)
     src_paths = [i for sublist in args.src_path for i in sublist]
-    distance_df = utility.read_files_to_dataframe(filepaths=src_paths)
+    distance_df = utility.read_files_to_dataframe(filepaths=src_paths, format_type="json")
     output_format = []
     if args.output_format:
         for fspecs in args.output_format:
