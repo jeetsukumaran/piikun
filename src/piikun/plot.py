@@ -119,6 +119,8 @@ def visualize_distances_on_quantized_support_space(
         ]
     df = distance_df.copy()
     # df = df[ df["vi_distance"] > 1e-8 ]
+    if "ptn1_support" not in df.columns:
+        raise utility.UnavailableFieldException("ptn1_support")
     if is_log_scale:
         df["ptn1_support"] = np.log2(df["ptn1_support"])
         df["ptn2_support"] = np.log2(df["ptn2_support"])
