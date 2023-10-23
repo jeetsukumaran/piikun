@@ -81,7 +81,8 @@ def main():
             field_name, field_value = field_spec.split("=")
         except IndexError:
             sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
-        return {"field_name": field_value}
+        d = {field_name: field_value}
+        return d
 
     data_options.add_argument(
         "--add-metadata",
