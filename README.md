@@ -244,95 +244,10 @@ The ``-comparisons`` file includes the variance of information distance statisti
 ### Internal Data Formats
 
 
-#### ``json-dicts``: JSON Dictionaries
+#### ``piikun`` or ``json-dicts``
 
-##### Basic Example
 
-```json
-{
-    "partitions": {
-        "Model1": {
-            "clusters": [
-                ["Deme1", "Deme2", "Deme3"]
-            ]
-        },
-        "Model2": {
-            "clusters": [
-            ["Deme1"],
-            ["Deme2", "Deme3"]
-            ]
-        },
-        "Model3": {
-            "clusters": [
-            ["Deme2"],
-            ["Deme1", "Deme3"]
-            ]
-        },
-        "Model4": {
-            "clusters": [
-            ["Deme3"],
-            ["Deme1", "Deme2"]
-            ]
-        },
-        "Model5": {
-            "clusters": [
-            ["Deme1"],
-            ["Deme2"],
-            ["Deme2"]
-            ]
-        }
-    }
-}
-```
-
-##### Extended Example
-
-```json
-{
-    "analysis": "Multiple DELINEATE run on dataset A303",
-    "status": "Pilot study",
-    "URL": "https://foo.org",
-    "date": "2023-01-01T04:00",
-    "partitions": {
-        "Model1": {
-            "clusters": [
-                ["Deme1", "Deme2", "Deme3"]
-            ]
-        },
-        "Model2": {
-            "support": 1.2E-2,
-            "clusters": [
-            ["Deme1"],
-            ["Deme2", "Deme3"]
-            ]
-        },
-        "Model3": {
-            "support": 1.0E-4,
-            "clusters": [
-            ["Deme2"],
-            ["Deme1", "Deme3"]
-            ]
-        },
-        "Model4": {
-            "support": 2.0E-5,
-            "clusters": [
-            ["Deme3"],
-            ["Deme1", "Deme2"]
-            ]
-        },
-        "Model5": {
-            "support": 1.2E-5,
-            "clusters": [
-            ["Deme1"],
-            ["Deme2"],
-            ["Deme2"]
-            ]
-        }
-    }
-}
-```
-
-### ``json-lists``
+#### ``json-lists``
 
 ``` json
 [

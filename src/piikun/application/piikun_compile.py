@@ -38,6 +38,7 @@ import json
 from piikun import runtime
 from piikun import partitionmodel
 
+
 def main():
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
@@ -63,6 +64,26 @@ def main():
             "spart-xml",
         ],
         help="Format of source species delimitation model data [default='%(default)s'].",
+    )
+    data_options = parser.add_argument_group("Data Options")
+    def _datafield_type(field_spec):
+        try:
+            field_name, field_value = field_spec.split("=")
+        except IndexError:
+            sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
+    data_options.add_argument(
+        "--add-field",
+        action="append",
+        default=None,
+        nargs="+",
+        type=_datafield_type,
+        help=("Add a data field and value to the exported data using the syntax"
+              " '--add-field <field_name>=<field_value>', with multiple field/values"
+              " possible."
+              " For e.g., '--add-field n_genes=65 guide_tree=starbeast-20231023.04'."
+              " This can be useful in pipelines or analyses to track workflow "
+              " metadata or provenance."
+        )
     )
     source_options.add_argument(
         "--limit-partitions",
@@ -133,13 +154,15 @@ def main():
             limit_partitions=args.limit_partitions,
             rc=rc,
         )
-        if not args.is_merge_output or src_idx == len(source_paths)-1:
+        if not args.is_merge_output or src_idx == len(source_paths) - 1:
             # rc.console.rule()
             if args.is_validate:
                 partitions.validate(rc=rc)
             if rc.output_title:
                 out = rc.open_output(subtitle="partitions", ext="json")
-                rc.logger.info(f"Writing {len(partitions)} partitions to file: '{out.name}'")
+                rc.logger.info(
+                    f"Writing {len(partitions)} partitions to file: '{out.name}'"
+                )
             else:
                 out = sys.stdout
                 rc.logger.info("(Writing to standard output)")
@@ -147,6 +170,7 @@ def main():
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
+
 
 if __name__ == "__main__":
     main()
