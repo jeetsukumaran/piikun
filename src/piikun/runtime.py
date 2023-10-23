@@ -5,6 +5,7 @@ import sys
 import logging
 import datetime
 import pathlib
+import json
 from rich.rule import Rule
 from rich import progress
 from rich.console import Console
@@ -217,13 +218,13 @@ class RuntimeContext:
         )
         return data_store
 
-    def open_output_json_list_file(
+    def open_json_writer(
         self,
         *args,
         **kwargs
     ):
         output_handle = self.open_output(**kwargs)
-        data_store = JsonListFile(
+        data_store = JsonListWriter(
             file_handle=output_handle,
         )
         return data_store
@@ -259,13 +260,14 @@ class RuntimeContext:
         self.output_title = output_title
         return self.output_title
 
-class JsonListFile:
+class JsonListWriter:
     def __init__(
         self,
         file_handle,
     ):
-        self.filename = filename
-        self.file_handle = None
+        # self.filename = filename
+        self.file_handle = file_handle
+        self.first_item = True
 
     def __enter__(self):
         # self.file_handle = open(self.filename, 'w')
@@ -279,7 +281,7 @@ class JsonListFile:
 
     def write(self, item):
         if not self.first_item:
-            self.file_handle.write(',')
+            self.file_handle.write(',\n')
         else:
             self.first_item = False
         json.dump(item, self.file_handle)
