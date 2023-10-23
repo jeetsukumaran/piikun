@@ -65,25 +65,36 @@ def main():
         ],
         help="Format of source species delimitation model data [default='%(default)s'].",
     )
+
     data_options = parser.add_argument_group("Data Options")
+
+    data_options.add_argument(
+        "--store-source-path",
+        action=argparse.BooleanOptionalAction,
+        dest="is_store_source_path",
+        help="Store/do not add a field with the data filepath as value inthe exported data.",
+    )
+
     def _datafield_type(field_spec):
         try:
             field_name, field_value = field_spec.split("=")
         except IndexError:
             sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
+
     data_options.add_argument(
-        "--add-field",
+        "--add-data",
         action="append",
         default=None,
         nargs="+",
         type=_datafield_type,
-        help=("Add a data field and value to the exported data using the syntax"
-              " '--add-field <field_name>=<field_value>', with multiple field/values"
-              " possible."
-              " For e.g., '--add-field n_genes=65 guide_tree=starbeast-20231023.04'."
-              " This can be useful in pipelines or analyses to track workflow "
-              " metadata or provenance."
-        )
+        help=(
+            "Add data field/values to the exported data using the syntax"
+            " '<field_name>=<field_value>'. Multiple field/values"
+            " can be specified."
+            " For e.g., '--add-data n_genes=65 guide_tree=starbeast-20231023.04'."
+            " This can be useful in pipelines or analyses to track workflow "
+            " metadata or provenance."
+        ),
     )
     source_options.add_argument(
         "--limit-partitions",
@@ -154,6 +165,7 @@ def main():
             limit_partitions=args.limit_partitions,
             rc=rc,
         )
+        # partitions.update_metadata()
         if not args.is_merge_output or src_idx == len(source_paths) - 1:
             # rc.console.rule()
             if args.is_validate:
