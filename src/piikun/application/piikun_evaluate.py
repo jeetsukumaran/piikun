@@ -207,9 +207,8 @@ def compare_partitions(
     rc.logger.info("Comparison completed")
     partition_profile_store.close()
     partition_oneway_distances.close()
-    partition_twoway_distances = rc.open_output_datastore(
+    partition_twoway_distances = rc.open_json_list_writer(
         subtitle="distances",
-        ext="tsv",
     )
     create_full_profile_distance_df(
         profiles_path=partition_profile_store.path,
@@ -297,7 +296,8 @@ def main():
     rc.compose_output_title(
         output_title=args.output_title,
         source_paths=args.source_paths,
-        title_from_source_stem_fn=lambda x: x.split("__")[0]
+        title_from_source_stem_fn=lambda x: x.split("__")[0],
+        is_merge_output=True,
     )
     partitions = partitionmodel.PartitionCollection()
     for sidx, source_path in enumerate(args.source_paths):

@@ -239,7 +239,7 @@ class RuntimeContext:
         self,
         output_title=None,
         source_paths=None,
-        is_merge_output=None,
+        is_merge_output=True,
         title_from_source_stem_fn=None,
         title_from_source_path_fn=None,
         default_output_title=None,
@@ -253,10 +253,10 @@ class RuntimeContext:
                 title_from_source_stem_fn = lambda x: x
             if not title_from_source_path_fn:
                 title_from_source_path_fn = lambda path: title_from_source_stem_fn(pathlib.Path(path).stem)
-            if len(source_paths) == 1:
+            if not is_merge_output or len(source_paths) == 1:
                 output_title = title_from_source_path_fn(source_paths[0])
-            elif is_merge_output and len(source_paths) > 1:
-                 output_title = (
+            elif len(source_paths) > 1:
+                output_title = (
                     title_from_source_path_fn(source_paths[0]) + "+others"
                 )
         self.output_title = output_title

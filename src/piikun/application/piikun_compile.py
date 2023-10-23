@@ -166,7 +166,9 @@ def main():
         #     f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
         # )
         if not args.is_merge_output:
-            rc.output_title = runtime.compose_output_title(source_paths=[source_path])
+            rc.output_title = runtime.compose_output_title(
+                source_paths=[source_path],
+            )
         if not partitions or not args.is_merge_output:
             partitions = partitionmodel.PartitionCollection()
         partitions.read(
