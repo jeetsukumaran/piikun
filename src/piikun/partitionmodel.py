@@ -84,16 +84,12 @@ class Partition:
     def __init__(
         self,
         *,
-        # label=None,
-        # partition_d=None,
         subsets=None,
         log_base=2,
         metadata_d=None,
     ):
         self.log_base = log_base
         self.log_fn = lambda x: math.log(x, self.log_base)
-        # self.log_fn = lambda x: math.log(x)
-        # self.label = label
         self._index = Partition._n_instances
         Partition._n_instances += 1
         self._subsets = []
@@ -106,20 +102,6 @@ class Partition:
         #     self.parse_subsets(partition_d.values())
         if subsets is not None:
             self.parse_subsets(subsets)
-
-    # @property
-    # def label(self):
-    #     if not hasattr(self, "_label") or self._label is None:
-    #         self._label = str(self._index)
-    #     return self._label
-
-    # @label.setter
-    # def label(self, value):
-    #     self._label = value
-
-    # @label.deleter
-    # def label(self):
-    #     del self._label
 
     @property
     def n_elements(
@@ -135,18 +117,6 @@ class Partition:
 
     def __hash__(self):
         return id(self)
-
-    # @property
-    # def source_data_d(self):
-    #     if (
-    #         not hasattr(self, "_definition_d")
-    #         or self._definition_d is None
-    #     ):
-    #         d = {}
-    #         d["label"] = self.label
-    #         d["subsets"] = list(self._subsets)
-    #         self._definition_d = d
-    #     return self._definition_d
 
     def compose_definition_d(self, key=None):
         d = {}
@@ -259,6 +229,7 @@ class Partition:
         Returns the square root of the Jensen Shannon divergence(i.e., the Jensen-Shannon * distance*) using Meila's encoding
         """
         from scipy.spatial.distance import jensenshannon
+
         P = []
         Q = []
         for ptn1_idx, ptn1_subset in enumerate(self._subsets):
@@ -269,7 +240,6 @@ class Partition:
 
 
 class PartitionCollection:
-
     def __init__(self, log_base=2.0):
         self.log_base = log_base
         self._partitions = {}
@@ -304,10 +274,18 @@ class PartitionCollection:
         self._partitions[key] = ptn
         return ptn
 
+    def update_metadata(self, update_d):
+        for ptn in self._partitions:
+            ptn.metadata_d.update(update_d)
+
     def export_definition_d(
         self,
     ):
-        exported = { "partitions": { key:ptn.compose_definition_d() for key, ptn in self._partitions.items() } }
+        exported = {
+            "partitions": {
+                key: ptn.compose_definition_d() for key, ptn in self._partitions.items()
+            }
+        }
         return exported
 
     def validate(
@@ -326,16 +304,23 @@ class PartitionCollection:
                     assert element not in ptn_elements
                     ptn_elements.add(element)
             if all_elements is None:
-                rc and rc.logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
                 all_elements = ptn_elements
+                rc and rc.logger.info(
+                    f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}"
+                )
             else:
                 assert all_elements == ptn_elements
+        rc and rc.logger.info(
+            f"All partitions are mutually-exclusive and jointly comprehensive with respect to {len(ptn_elements)} elements."
+        )
 
     def read(
         self,
         source_path,
         source_format,
         limit_partitions=None,
+        is_store_source_path=True,
+        update_metadata=None,
         rc=None,
     ):
         rc and rc.logger.info(f"Reading source: '{source_path}'")
@@ -344,22 +329,20 @@ class PartitionCollection:
         )
         parser.partition_factory = self.new_partition
         start_len = len(self)
+        n_source_partitions = None
         for pidx, ptn in enumerate(parser.read_path(source_path)):
             rc and rc.logger.info(
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 # f"Partition {pidx+1:>5d} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
                 f"Partition {ptn._origin_offset+1} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
+            if not n_source_partitions:
+                n_source_partitions = ptn._origin_size
             # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
-            ptn.metadata_d["origin"] = {}
-            ptn.metadata_d["origin"]["source_path"] = str(pathlib.Path(source_path).absolute())
-            ptn.metadata_d["origin"]["source_size"] = ptn._origin_size
-            ptn.metadata_d["origin"]["source_offset"] = ptn._origin_offset
-            # ptn.metadata_d["origin"]["source_read"] = src_idx + 1
-            # if rc.output_title and rc.output_title != "-":
-            # if args.is_validate:
-            #     partitions.validate(logger=rc.logger)
-            # -1 as we need to anticipate limit being reached in the next loop
+            if is_store_source_path:
+                ptn.metadata_d["source"] = str(pathlib.Path(source_path).absolute())
+            if update_metadata:
+                ptn.metadata_d.update(update_metadata)
             if limit_partitions and (pidx >= limit_partitions - 1):
                 rc and rc.logger.info(
                     f"Number of partitions read is at limit ({limit_partitions}): skipping remaining"
@@ -367,9 +350,5 @@ class PartitionCollection:
                 break
         end_len = len(self)
         rc and rc.logger.info(
-            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(self)} read in total)"
+            f"Reading completed: {end_len - start_len} of {n_source_partitions} partitions read from source ({len(self)} read in total)"
         )
-
-
-
-

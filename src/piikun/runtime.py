@@ -5,13 +5,12 @@ import sys
 import logging
 import datetime
 import pathlib
+import json
 from rich.rule import Rule
 from rich import progress
 from rich.console import Console
 from rich.theme import Theme
 from rich.logging import RichHandler
-
-
 
 def get_logger(
     logging_level=logging.INFO,
@@ -79,26 +78,11 @@ def get_logger(
     return logger
 
 
-class RuntimeClient:
+class RuntimeContext:
 
     _stderr_console = Console(
         stderr=True,
     )
-    # _logger = get_logger(console=_stderr_console)
-
-    # @staticmethod
-    # def ensure_random_seed(random_seed=None):
-    #     if random_seed is None:
-    #         rtmp = random.Random()
-    #         random_seed = rtmp.getrandbits(32)
-    #     return random_seed
-
-    # @staticmethod
-    # def get_rng(random_seed=None):
-    #     random_seed = RuntimeClient.ensure_random_seed(random_seed)
-    #     rng = random.Random(random_seed)
-    #     rng._random_seed = random_seed
-    #     return rng
 
     def __init__(
         self,
@@ -123,7 +107,7 @@ class RuntimeClient:
             not hasattr(self, "_console")
             or self._console is None
         ):
-            self._console = RuntimeClient._stderr_console
+            self._console = RuntimeContext._stderr_console
         return self._console
     @console.setter
     def console(self, value):
@@ -234,6 +218,19 @@ class RuntimeClient:
         )
         return data_store
 
+    def open_json_list_writer(
+        self,
+        *args,
+        **kwargs
+    ):
+        if "ext" not in kwargs:
+            kwargs["ext"] = "json"
+        output_handle = self.open_output(**kwargs)
+        data_store = JsonListWriter(
+            file_handle=output_handle,
+        )
+        return data_store
+
     def sleep(self, *args, **kwargs):
         # to avoid importing time everywhere when debugging
         time.sleep(*args, **kwargs)
@@ -242,7 +239,7 @@ class RuntimeClient:
         self,
         output_title=None,
         source_paths=None,
-        is_merge_output=None,
+        is_merge_output=True,
         title_from_source_stem_fn=None,
         title_from_source_path_fn=None,
         default_output_title=None,
@@ -256,15 +253,49 @@ class RuntimeClient:
                 title_from_source_stem_fn = lambda x: x
             if not title_from_source_path_fn:
                 title_from_source_path_fn = lambda path: title_from_source_stem_fn(pathlib.Path(path).stem)
-            if len(source_paths) == 1:
+            if not is_merge_output or len(source_paths) == 1:
                 output_title = title_from_source_path_fn(source_paths[0])
-            elif is_merge_output and len(source_paths) > 1:
-                 output_title = (
+            elif len(source_paths) > 1:
+                output_title = (
                     title_from_source_path_fn(source_paths[0]) + "+others"
                 )
         self.output_title = output_title
         return self.output_title
 
+class JsonListWriter:
+    def __init__(
+        self,
+        file_handle,
+    ):
+        # self.filename = filename
+        self.file_handle = file_handle
+        self.first_item = True
+
+    def __enter__(self):
+        # self.file_handle = open(self.filename, 'w')
+        self.file_handle.write('[')
+        self.first_item = True
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.file_handle.write(']')
+        # self.file_handle.close()
+
+    @property
+    def path(self):
+        if not hasattr(self, "_path") or self._path is None:
+            self._path = pathlib.Path(self.file_handle.name)
+        return self._path
+
+    def write(self, item):
+        if not self.first_item:
+            self.file_handle.write(',\n')
+        else:
+            self.first_item = False
+        json.dump(item, self.file_handle)
+
+    def close(self):
+        self.file_handle.close()
 
 class DataStore:
     def __init__(self, file_handle, config_d):

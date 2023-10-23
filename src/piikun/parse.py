@@ -58,7 +58,7 @@ def parse_piikun_json(
 def parse_delineate(
     source_stream,
     partition_factory,
-    # runtime_client,
+    # runtime_context,
 ):
     # import time
     source_data = source_stream.read()

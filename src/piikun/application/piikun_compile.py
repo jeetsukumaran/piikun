@@ -38,8 +38,8 @@ import json
 from piikun import runtime
 from piikun import partitionmodel
 
+
 def main():
-    rc = runtime.RuntimeClient()
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
@@ -64,6 +64,41 @@ def main():
             "spart-xml",
         ],
         help="Format of source species delimitation model data [default='%(default)s'].",
+    )
+
+    data_options = parser.add_argument_group("Data Options")
+
+    data_options.add_argument(
+        "--store-source-path",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        dest="is_store_source_path",
+        help="Store/do not add a field with the data filepath as value inthe exported data.",
+    )
+
+    def _field_name_value_type(field_spec):
+        try:
+            field_name, field_value = field_spec.split("=")
+        except IndexError:
+            sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
+        d = {field_name: field_value}
+        return d
+
+    data_options.add_argument(
+        "--add-metadata",
+        dest="add_metadata",
+        action="append",
+        default=None,
+        nargs="+",
+        type=_field_name_value_type,
+        help=(
+            "Add data field/values to the exported data using the syntax"
+            " '<field_name>=<field_value>'. Multiple field/values"
+            " can be specified."
+            " For e.g., '--add-metadata n_genes=65 guide_tree=starbeast-20231023.04'."
+            " This can be useful in pipelines or analyses to track workflow "
+            " metadata or provenance."
+        ),
     )
     source_options.add_argument(
         "--limit-partitions",
@@ -103,6 +138,7 @@ def main():
     )
     args = parser.parse_args()
 
+    rc = runtime.RuntimeContext()
     rc.logger.info("Starting: [b]piikun-compile[/b]")
 
     if not args.source_paths:
@@ -117,6 +153,12 @@ def main():
         is_merge_output=args.is_merge_output,
     )
 
+    update_metadata = {}
+    if args.add_metadata:
+        for a1 in args.add_metadata:
+            for a2 in a1:
+                update_metadata.update(a2)
+
     partitions = None
     for src_idx, source_path in enumerate(source_paths):
         # rc.console.rule()
@@ -124,22 +166,29 @@ def main():
         #     f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
         # )
         if not args.is_merge_output:
-            rc.output_title = runtime.compose_output_title(source_paths=[source_path])
+            rc.output_title = runtime.compose_output_title(
+                source_paths=[source_path],
+            )
         if not partitions or not args.is_merge_output:
             partitions = partitionmodel.PartitionCollection()
         partitions.read(
             source_path=source_path,
             source_format=args.source_format,
             limit_partitions=args.limit_partitions,
+            is_store_source_path=args.is_store_source_path,
+            update_metadata=update_metadata,
             rc=rc,
         )
-        if not args.is_merge_output or src_idx == len(source_paths)-1:
+        # partitions.update_metadata()
+        if not args.is_merge_output or src_idx == len(source_paths) - 1:
             # rc.console.rule()
             if args.is_validate:
                 partitions.validate(rc=rc)
             if rc.output_title:
                 out = rc.open_output(subtitle="partitions", ext="json")
-                rc.logger.info(f"Writing {len(partitions)} partitions to file: '{out.name}'")
+                rc.logger.info(
+                    f"Writing {len(partitions)} partitions to file: '{out.name}'"
+                )
             else:
                 out = sys.stdout
                 rc.logger.info("(Writing to standard output)")
@@ -147,6 +196,7 @@ def main():
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
+
 
 if __name__ == "__main__":
     main()

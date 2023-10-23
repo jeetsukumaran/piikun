@@ -8,5 +8,4 @@ scipy
 rich
 plotly
 kaleido
-yakherd @ git+https://github.com/jeetsukumaran/yakherd@main
-# dendropy @ git+https://github.com/jeetsukumaran/dendropy@development-main
+dendropy @ git+https://github.com/jeetsukumaran/dendropy@development-main
