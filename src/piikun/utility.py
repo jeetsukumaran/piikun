@@ -16,6 +16,9 @@ import yakherd
 
 import csv
 
+class UnavailableFieldException(Exception):
+    pass
+
 def extract_profile(df, key_col, prop_col_filter_fn):
     prop_cols = [
             col for col in df.columns if prop_col_filter_fn(col)

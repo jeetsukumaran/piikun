@@ -54,6 +54,8 @@ def visualize_support_cdf(
     palette="Portland",
 ):
     x = profile_df["label"].astype(str)
+    if "support" not in profile_df.columns:
+        raise utility.UnavailableFieldException("ptn1_support")
     y1 = profile_df["support"]
     y2 = profile_df["support"].cumsum()
     fig = go.Figure()
@@ -98,6 +100,8 @@ def visualize_distances_on_regionalized_support_space(
         distance_quantiles = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
     distance_df = distance_df.copy()
+    if "ptn1_support" not in distance_df.columns:
+        raise utility.UnavailableFieldException("ptn1_support")
     if is_log_scale:
         distance_df["ptn1_support"] = distance_df["ptn1_support"].clip(lower=1e-9)
         distance_df["ptn2_support"] = distance_df["ptn2_support"].clip(lower=1e-9)
@@ -420,12 +424,15 @@ def main(args=None):
         plot_kwargs = dict(common_plot_kwargs)
         if "plot_kwargs" in visualization_d:
             plot_kwargs.update(visualization_d["plot_kwargs"])
-        plotter.generate_plot(
-            plot_name = visualization_name,
-            plot_fn = visualization_d["plot_fn"],
-            plot_kwargs = plot_kwargs,
-            plot_system = visualization_d.get("plot_system", "plotly")
-        )
+        try:
+            plotter.generate_plot(
+                plot_name = visualization_name,
+                plot_fn = visualization_d["plot_fn"],
+                plot_kwargs = plot_kwargs,
+                plot_system = visualization_d.get("plot_system", "plotly")
+            )
+        except utility.UnavailableFieldException as e:
+            _log_info(f"- Required data field unavailable")
 
 
 if __name__ == "__main__":

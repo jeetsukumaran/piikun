@@ -85,6 +85,7 @@ def parse_delineate(
         metadata_d = {}
         exclude_keys = set([
             "species_leafsets",
+            "lineage_species_name_map",
         ])
         for k, v in src_partition.items():
             if k not in exclude_keys:
