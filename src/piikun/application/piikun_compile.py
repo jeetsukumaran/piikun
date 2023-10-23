@@ -71,27 +71,30 @@ def main():
     data_options.add_argument(
         "--store-source-path",
         action=argparse.BooleanOptionalAction,
+        default=False,
         dest="is_store_source_path",
         help="Store/do not add a field with the data filepath as value inthe exported data.",
     )
 
-    def _datafield_type(field_spec):
+    def _field_name_value_type(field_spec):
         try:
             field_name, field_value = field_spec.split("=")
         except IndexError:
             sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
+        return {"field_name": field_value}
 
     data_options.add_argument(
-        "--add-data",
+        "--add-metadata",
+        dest="add_metadata",
         action="append",
         default=None,
         nargs="+",
-        type=_datafield_type,
+        type=_field_name_value_type,
         help=(
             "Add data field/values to the exported data using the syntax"
             " '<field_name>=<field_value>'. Multiple field/values"
             " can be specified."
-            " For e.g., '--add-data n_genes=65 guide_tree=starbeast-20231023.04'."
+            " For e.g., '--add-metadata n_genes=65 guide_tree=starbeast-20231023.04'."
             " This can be useful in pipelines or analyses to track workflow "
             " metadata or provenance."
         ),
@@ -149,6 +152,12 @@ def main():
         is_merge_output=args.is_merge_output,
     )
 
+    update_metadata = {}
+    if args.add_metadata:
+        for a1 in args.add_metadata:
+            for a2 in a1:
+                update_metadata.update(a2)
+
     partitions = None
     for src_idx, source_path in enumerate(source_paths):
         # rc.console.rule()
@@ -163,6 +172,8 @@ def main():
             source_path=source_path,
             source_format=args.source_format,
             limit_partitions=args.limit_partitions,
+            is_store_source_path=args.is_store_source_path,
+            update_metadata=update_metadata,
             rc=rc,
         )
         # partitions.update_metadata()

@@ -320,6 +320,7 @@ class PartitionCollection:
         source_format,
         limit_partitions=None,
         is_store_source_path=True,
+        update_metadata=None,
         rc=None,
     ):
         rc and rc.logger.info(f"Reading source: '{source_path}'")
@@ -340,6 +341,8 @@ class PartitionCollection:
             # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
             if is_store_source_path:
                 ptn.metadata_d["source"] = str(pathlib.Path(source_path).absolute())
+            if update_metadata:
+                ptn.metadata_d.update(update_metadata)
             if limit_partitions and (pidx >= limit_partitions - 1):
                 rc and rc.logger.info(
                     f"Number of partitions read is at limit ({limit_partitions}): skipping remaining"
