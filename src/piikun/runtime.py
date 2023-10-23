@@ -217,6 +217,17 @@ class RuntimeContext:
         )
         return data_store
 
+    def open_output_json_list_file(
+        self,
+        *args,
+        **kwargs
+    ):
+        output_handle = self.open_output(**kwargs)
+        data_store = JsonListFile(
+            file_handle=output_handle,
+        )
+        return data_store
+
     def sleep(self, *args, **kwargs):
         # to avoid importing time everywhere when debugging
         time.sleep(*args, **kwargs)
@@ -248,6 +259,30 @@ class RuntimeContext:
         self.output_title = output_title
         return self.output_title
 
+class JsonListFile:
+    def __init__(
+        self,
+        file_handle,
+    ):
+        self.filename = filename
+        self.file_handle = None
+
+    def __enter__(self):
+        # self.file_handle = open(self.filename, 'w')
+        self.file_handle.write('[')
+        self.first_item = True
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.file_handle.write(']')
+        # self.file_handle.close()
+
+    def write(self, item):
+        if not self.first_item:
+            self.file_handle.write(',')
+        else:
+            self.first_item = False
+        json.dump(item, self.file_handle)
 
 class DataStore:
     def __init__(self, file_handle, config_d):
