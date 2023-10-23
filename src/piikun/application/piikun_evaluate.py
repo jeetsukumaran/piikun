@@ -222,7 +222,6 @@ def compare_partitions(
 #         f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
 #     )
 def main():
-    rc = runtime.RuntimeClient()
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
@@ -284,9 +283,9 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
-    args.source_format = "piikun"
-
+    rc = runtime.RuntimeContext()
     rc.logger.info("Starting: [b]piikun-evaluate[/b]")
+    args.source_format = "piikun"
 
     if not args.source_paths:
         rc.terminate_error("Standard input piping is under development", exit_code=1)

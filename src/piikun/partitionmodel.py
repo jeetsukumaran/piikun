@@ -326,10 +326,11 @@ class PartitionCollection:
                     assert element not in ptn_elements
                     ptn_elements.add(element)
             if all_elements is None:
-                rc and rc.logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
                 all_elements = ptn_elements
+                rc and rc.logger.info(f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}")
             else:
                 assert all_elements == ptn_elements
+        rc and rc.logger.info(f"All partitions are mutually-exclusive and jointly comprehensive with respect to {len(ptn_elements)} elements: {sorted(ptn_elements)}")
 
     def read(
         self,

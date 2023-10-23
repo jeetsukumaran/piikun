@@ -8,7 +8,7 @@ from matplotlib.patches import Patch
 import pandas as pd
 from collections import namedtuple
 
-class Regionalizer(utility.RuntimeClient):
+class Regionalizer(utility.RuntimeContext):
 
     def __init__(
         self,

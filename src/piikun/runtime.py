@@ -77,26 +77,11 @@ def get_logger(
     return logger
 
 
-class RuntimeClient:
+class RuntimeContext:
 
     _stderr_console = Console(
         stderr=True,
     )
-    # _logger = get_logger(console=_stderr_console)
-
-    # @staticmethod
-    # def ensure_random_seed(random_seed=None):
-    #     if random_seed is None:
-    #         rtmp = random.Random()
-    #         random_seed = rtmp.getrandbits(32)
-    #     return random_seed
-
-    # @staticmethod
-    # def get_rng(random_seed=None):
-    #     random_seed = RuntimeClient.ensure_random_seed(random_seed)
-    #     rng = random.Random(random_seed)
-    #     rng._random_seed = random_seed
-    #     return rng
 
     def __init__(
         self,
@@ -121,7 +106,7 @@ class RuntimeClient:
             not hasattr(self, "_console")
             or self._console is None
         ):
-            self._console = RuntimeClient._stderr_console
+            self._console = RuntimeContext._stderr_console
         return self._console
     @console.setter
     def console(self, value):

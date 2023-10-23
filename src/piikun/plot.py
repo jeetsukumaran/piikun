@@ -493,7 +493,7 @@ def visualize_distances_on_regionalized_support_space(
     }
 
 
-class Plotter(utility.RuntimeClient):
+class Plotter(utility.RuntimeContext):
     def __init__(
         self,
         config_d=None,

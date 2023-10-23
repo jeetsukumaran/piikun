@@ -56,7 +56,7 @@ from piikun import utility
 from piikun import parsebpp
 
 
-class PartitionCoordinator(utility.RuntimeClient):
+class PartitionCoordinator(utility.RuntimeContext):
     def __init__(
         self,
         config_d=None,

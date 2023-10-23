@@ -39,7 +39,6 @@ from piikun import runtime
 from piikun import partitionmodel
 
 def main():
-    rc = runtime.RuntimeClient()
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
@@ -103,6 +102,7 @@ def main():
     )
     args = parser.parse_args()
 
+    rc = runtime.RuntimeContext()
     rc.logger.info("Starting: [b]piikun-compile[/b]")
 
     if not args.source_paths:
