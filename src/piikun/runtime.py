@@ -218,11 +218,13 @@ class RuntimeContext:
         )
         return data_store
 
-    def open_json_writer(
+    def open_json_list_writer(
         self,
         *args,
         **kwargs
     ):
+        if "ext" not in kwargs:
+            kwargs["ext"] = "json"
         output_handle = self.open_output(**kwargs)
         data_store = JsonListWriter(
             file_handle=output_handle,
@@ -279,12 +281,21 @@ class JsonListWriter:
         self.file_handle.write(']')
         # self.file_handle.close()
 
+    @property
+    def path(self):
+        if not hasattr(self, "_path") or self._path is None:
+            self._path = pathlib.Path(self.file_handle.name)
+        return self._path
+
     def write(self, item):
         if not self.first_item:
             self.file_handle.write(',\n')
         else:
             self.first_item = False
         json.dump(item, self.file_handle)
+
+    def close(self):
+        self.file_handle.close()
 
 class DataStore:
     def __init__(self, file_handle, config_d):

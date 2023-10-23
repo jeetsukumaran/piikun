@@ -54,10 +54,10 @@ def create_full_profile_distance_df(
 ):
     if not profiles_df:
         assert profiles_path
-        profiles_df = pd.read_csv(profiles_path, delimiter=delimiter,)
+        profiles_df = pd.read_json(profiles_path)
     if not distances_df:
         assert distances_path
-        distances_df = pd.read_csv(distances_path, delimiter=delimiter,)
+        distances_df = pd.read_json(distances_path)
     if export_profile_columns:
         profile_columns = list(export_profile_columns)
     else:
@@ -139,17 +139,15 @@ def compare_partitions(
     n_expected_cmps = int(len(partitions) * len(partitions) / 2) + int(len(partitions)/2)
     n_comparisons = 0
     seen_compares = set()
-    partition_profile_store = rc.open_output_datastore(
+    partition_profile_store = rc.open_json_list_writer(
         subtitle="profile",
-        ext="tsv",
     )
-    partition_oneway_distances = rc.open_output_datastore(
+    partition_oneway_distances = rc.open_json_list_writer(
         subtitle="1d",
-        ext="tsv",
     )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
     # with runtime.get_progress_bar(text="Memory usage: {task.fields[memory_usage]}") as progress_bar:
-    with progress.Progress(
+    progress_bar = progress.Progress(
         progress.TextColumn("({task.fields[memory_usage]} MB)"),
         progress.SpinnerColumn(),
         progress.TextColumn("Comparison:"),
@@ -159,7 +157,12 @@ def compare_partitions(
         progress.TimeElapsedColumn(),
         progress.TimeRemainingColumn(),
         transient=True,
-    ) as progress_bar:
+    )
+    with (
+        partition_profile_store,
+        partition_oneway_distances,
+        progress_bar,
+    ):
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
         for pkey1, ptn1 in partitions._partitions.items():
             profile_d = {
@@ -170,7 +173,7 @@ def compare_partitions(
             }
             if ptn1.metadata_d:
                 profile_d.update(ptn1.metadata_d)
-            partition_profile_store.write_d(profile_d)
+            partition_profile_store.write(profile_d)
             ptn1_metadata = {}
             for k, v in ptn1.metadata_d.items():
                 ptn1_metadata[f"ptn1_{k}"] = v
@@ -200,7 +203,7 @@ def compare_partitions(
                     ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
-                partition_oneway_distances.write_d(comparison_d)
+                partition_oneway_distances.write(comparison_d)
     rc.logger.info("Comparison completed")
     partition_profile_store.close()
     partition_oneway_distances.close()
