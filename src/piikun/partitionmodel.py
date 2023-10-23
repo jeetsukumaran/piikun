@@ -319,6 +319,7 @@ class PartitionCollection:
         source_path,
         source_format,
         limit_partitions=None,
+        is_store_source_path=True,
         rc=None,
     ):
         rc and rc.logger.info(f"Reading source: '{source_path}'")
@@ -327,24 +328,18 @@ class PartitionCollection:
         )
         parser.partition_factory = self.new_partition
         start_len = len(self)
+        n_source_partitions = None
         for pidx, ptn in enumerate(parser.read_path(source_path)):
             rc and rc.logger.info(
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 # f"Partition {pidx+1:>5d} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
                 f"Partition {ptn._origin_offset+1} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
             )
+            if not n_source_partitions:
+                n_source_partitions = ptn._origin_size
             # ptn.metadata_d["source_path"] = str(pathlib.Path(src_path).absolute())
-            ptn.metadata_d["origin"] = {}
-            ptn.metadata_d["origin"]["source_path"] = str(
-                pathlib.Path(source_path).absolute()
-            )
-            ptn.metadata_d["origin"]["source_size"] = ptn._origin_size
-            ptn.metadata_d["origin"]["source_offset"] = ptn._origin_offset
-            # ptn.metadata_d["origin"]["source_read"] = src_idx + 1
-            # if rc.output_title and rc.output_title != "-":
-            # if args.is_validate:
-            #     partitions.validate(logger=rc.logger)
-            # -1 as we need to anticipate limit being reached in the next loop
+            if is_store_source_path:
+                ptn.metadata_d["source"] = pathlib.Path(source_path).absolute()
             if limit_partitions and (pidx >= limit_partitions - 1):
                 rc and rc.logger.info(
                     f"Number of partitions read is at limit ({limit_partitions}): skipping remaining"
@@ -352,5 +347,5 @@ class PartitionCollection:
                 break
         end_len = len(self)
         rc and rc.logger.info(
-            f"Reading completed: {end_len - start_len} of {ptn.metadata_d['origin']['source_size']} partitions read from source ({len(self)} read in total)"
+            f"Reading completed: {end_len - start_len} of {n_source_partitions} partitions read from source ({len(self)} read in total)"
         )
