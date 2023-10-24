@@ -60,8 +60,8 @@ def main():
             "delineate",
             "bpp-a10",
             "bpp-a11",
-            "json-lists",
             "spart-xml",
+            "nested-lists",
         ],
         help="Format of source species delimitation model data [default='%(default)s'].",
     )
@@ -138,16 +138,16 @@ def main():
     )
     args = parser.parse_args()
 
-    rc = runtime.RuntimeContext()
-    rc.logger.info("Starting: [b]piikun-compile[/b]")
+    runtime_context = runtime.RuntimeContext()
+    runtime_context.logger.info("Starting: [b]piikun-compile[/b]")
 
     if not args.source_paths:
-        rc.terminate_error("Standard input piping is under development", exit_code=1)
+        runtime_context.terminate_error("Standard input piping is under development", exit_code=1)
     source_paths = args.source_paths
-    rc.logger.info(f"{len(source_paths)} sources to parse")
+    runtime_context.logger.info(f"{len(source_paths)} sources to parse")
 
-    rc.output_directory = args.output_directory
-    rc.compose_output_title(
+    runtime_context.output_directory = args.output_directory
+    runtime_context.compose_output_title(
         output_title=args.output_title,
         source_paths=source_paths,
         is_merge_output=args.is_merge_output,
@@ -161,12 +161,12 @@ def main():
 
     partitions = None
     for src_idx, source_path in enumerate(source_paths):
-        # rc.console.rule()
-        # rc.logger.info(
+        # runtime_context.console.rule()
+        # runtime_context.logger.info(
         #     f"Reading source {src_idx+1} of {len(source_paths)}: '{source_path}'"
         # )
         if not args.is_merge_output:
-            rc.output_title = runtime.compose_output_title(
+            runtime_context.output_title = runtime.compose_output_title(
                 source_paths=[source_path],
             )
         if not partitions or not args.is_merge_output:
@@ -177,21 +177,21 @@ def main():
             limit_partitions=args.limit_partitions,
             is_store_source_path=args.is_store_source_path,
             update_metadata=update_metadata,
-            rc=rc,
+            runtime_context=runtime_context,
         )
         # partitions.update_metadata()
         if not args.is_merge_output or src_idx == len(source_paths) - 1:
-            # rc.console.rule()
+            # runtime_context.console.rule()
             if args.is_validate:
-                partitions.validate(rc=rc)
-            if rc.output_title:
-                out = rc.open_output(subtitle="partitions", ext="json")
-                rc.logger.info(
+                partitions.validate(runtime_context=runtime_context)
+            if runtime_context.output_title:
+                out = runtime_context.open_output(subtitle="partitions", ext="json")
+                runtime_context.logger.info(
                     f"Writing {len(partitions)} partitions to file: '{out.name}'"
                 )
             else:
                 out = sys.stdout
-                rc.logger.info("(Writing to standard output)")
+                runtime_context.logger.info("(Writing to standard output)")
             partition_definition_d = partitions.export_definition_d()
             out.write(json.dumps(partition_definition_d))
             out.write("\n")

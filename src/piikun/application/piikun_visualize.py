@@ -46,6 +46,7 @@ import matplotlib.pyplot as plt
 
 from piikun import plot
 from piikun import utility
+from piikun import runtime
 
 
 def visualize_support_cdf(
@@ -235,28 +236,18 @@ class PlotGenerator:
 
     def __init__(
         self,
-        output_directory=None,
-        output_name_stem=None,
         output_formats=None,
         is_show_plot=False,
         is_save_plot=True,
+        runtime_context=None,
     ):
-        if output_directory:
-            self.output_directory = pathlib.Path(output_directory)
-        else:
-            self.output_directory = pathlib.Path.cwd()
-        if output_name_stem:
-            self.output_name_stem = output_name_stem
-        else:
-            self.output_name_stem = "piikun"
-        self.output_name_stem = output_name_stem
         if output_formats is None:
             self.output_formats = ["html", "jpg"]
         else:
             self.output_formats = output_formats
         self.is_show_plot = is_show_plot
         self.is_save_plot = is_save_plot
-
+        self.runtime_context = runtime_context
 
     def generate_plot(
         self,
@@ -279,7 +270,8 @@ class PlotGenerator:
                     ext = format_type
                 else:
                     ext = f".{format_type}"
-                output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
+                # output_filepath = self.output_directory / f"{self.output_name_stem}_{plot_name}{ext}"
+                output_filepath = self.runtime_context.compose_output_path(subtitle=plot_name, ext=format_type)
                 _log_info(f"- Saving to: '{output_filepath}'")
                 if plot_system == "plotly":
                     if format_type == "html":
@@ -386,6 +378,15 @@ def main(args=None):
     )
     args = parent_parser.parse_args(args)
     src_paths = [i for sublist in args.src_path for i in sublist]
+    runtime_context = runtime.RuntimeContext()
+    runtime_context.logger.info("Starting: [b]piikun-visualize[/b]")
+    # runtime_context.logger.info(f"{len(source_paths)} sources to parse")
+    runtime_context.output_directory = args.output_directory
+    runtime_context.compose_output_title(
+        output_title=args.output_title,
+        source_paths=src_paths,
+        is_merge_output=True,
+    )
     distance_df = utility.read_files_to_dataframe(filepaths=src_paths, format_type="json")
     output_format = []
     if args.output_format:
@@ -398,8 +399,9 @@ def main(args=None):
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
-        output_directory = args.output_directory,
-        output_name_stem = pathlib.Path(src_paths[0]).stem,
+        runtime_context=runtime_context,
+        # output_directory = args.output_directory,
+        # output_name_stem = pathlib.Path(src_paths[0]).stem,
         output_formats = output_format,
     )
     if args.selected_visualizations:

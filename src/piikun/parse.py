@@ -155,8 +155,8 @@ class Parser:
         "delineate": parse_delineate,
         "bpp-a10": parsebpp.parse_bpp_a10,
         "bpp-a11": parsebpp.parse_bpp_a11,
-        "json-lists": parse_json_generic_lists,
         "spart-xml": parse_spart_xml,
+        "nested-lists": parse_json_generic_lists,
     }
 
     def __init__(

@@ -299,202 +299,202 @@ def visualize_distances_on_quantized_support_space(
 
 
 
-def visualize_distances_on_regionalized_support_space(
-    df,
-    support_quantiles=None,
-    distance_quantiles=None,
-    gradient_calibration="shared",
-    background_palette="coolwarm",
-    scatterplot_palette="coolwarm",
-    is_log_scale=True,
-):
-    if not support_quantiles:
-        support_quantiles = [0.25, 0.5, 0.75]
-    if not distance_quantiles:
-        distance_quantiles = [
-            0.1,
-            0.2,
-            0.3,
-            0.4,
-            0.5,
-            0.6,
-            0.7,
-            0.8,
-        ]
-    df = df.copy()
-    # df = df[ df["vi_distance"] > 1e-8 ]
-    if is_log_scale:
-        df["ptn1_support"] = np.log2(df["ptn1_support"])
-        df["ptn2_support"] = np.log2(df["ptn2_support"])
+# def visualize_distances_on_regionalized_support_space(
+#     df,
+#     support_quantiles=None,
+#     distance_quantiles=None,
+#     gradient_calibration="shared",
+#     background_palette="coolwarm",
+#     scatterplot_palette="coolwarm",
+#     is_log_scale=True,
+# ):
+#     if not support_quantiles:
+#         support_quantiles = [0.25, 0.5, 0.75]
+#     if not distance_quantiles:
+#         distance_quantiles = [
+#             0.1,
+#             0.2,
+#             0.3,
+#             0.4,
+#             0.5,
+#             0.6,
+#             0.7,
+#             0.8,
+#         ]
+#     df = df.copy()
+#     # df = df[ df["vi_distance"] > 1e-8 ]
+#     if is_log_scale:
+#         df["ptn1_support"] = np.log2(df["ptn1_support"])
+#         df["ptn2_support"] = np.log2(df["ptn2_support"])
 
-    padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
-    internal_thresholds = df["ptn1_support"].quantile(support_quantiles).tolist()
-    thresholds = [df["ptn1_support"].min() - padding]
-    thresholds.extend(internal_thresholds)
-    thresholds.append(df["ptn1_support"].max() + padding)
-    bounds = np.array(thresholds)
+#     padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
+#     internal_thresholds = df["ptn1_support"].quantile(support_quantiles).tolist()
+#     thresholds = [df["ptn1_support"].min() - padding]
+#     thresholds.extend(internal_thresholds)
+#     thresholds.append(df["ptn1_support"].max() + padding)
+#     bounds = np.array(thresholds)
 
-    fig, ax = plt.subplots(figsize=(16, 16))
-    ax.set_xlim(bounds[0], bounds[-1])
-    ax.set_ylim(bounds[0], bounds[-1])
+#     fig, ax = plt.subplots(figsize=(16, 16))
+#     ax.set_xlim(bounds[0], bounds[-1])
+#     ax.set_ylim(bounds[0], bounds[-1])
 
-    range_fns = []
-    for idx, threshold in enumerate(thresholds[:-1]):
-        next_threshold = thresholds[idx + 1]
-        range_fns.append(
-            lambda x, t1=threshold, t2=next_threshold: (x >= t1) & (x < t2)
-        )
+#     range_fns = []
+#     for idx, threshold in enumerate(thresholds[:-1]):
+#         next_threshold = thresholds[idx + 1]
+#         range_fns.append(
+#             lambda x, t1=threshold, t2=next_threshold: (x >= t1) & (x < t2)
+#         )
 
-    n_ranges = len(range_fns)
-    mean_values = np.zeros((n_ranges, n_ranges))
-    quantile_data = {
-        "quantile_ptn1_support_idx": [],
-        "quantile_ptn2_support_idx": [],
-        "quantile_ptn1_support_max": [],
-        "quantile_ptn1_support_min": [],
-        "quantile_ptn2_support_max": [],
-        "quantile_ptn2_support_min": [],
-        "quantile_support_mean": [],
-        "quantile_metric_mean": [],
-        "quantile_metric_max": [],
-        "quantile_metric_min": [],
-    }
-    quantile_data_stacked = {
-        "quantile_support": [],
-        "metric_value": [],
-    }
+#     n_ranges = len(range_fns)
+#     mean_values = np.zeros((n_ranges, n_ranges))
+#     quantile_data = {
+#         "quantile_ptn1_support_idx": [],
+#         "quantile_ptn2_support_idx": [],
+#         "quantile_ptn1_support_max": [],
+#         "quantile_ptn1_support_min": [],
+#         "quantile_ptn2_support_max": [],
+#         "quantile_ptn2_support_min": [],
+#         "quantile_support_mean": [],
+#         "quantile_metric_mean": [],
+#         "quantile_metric_max": [],
+#         "quantile_metric_min": [],
+#     }
+#     quantile_data_stacked = {
+#         "quantile_support": [],
+#         "metric_value": [],
+#     }
 
-    bgdf = df[df["vi_distance"] > 1e-8]
-    for i, ptn1_condition in enumerate(range_fns):
-        for j, ptn2_condition in enumerate(range_fns):
-            subset = bgdf[
-                ptn1_condition(bgdf["ptn1_support"])
-                & ptn2_condition(bgdf["ptn2_support"])
-            ]
-            mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
+#     bgdf = df[df["vi_distance"] > 1e-8]
+#     for i, ptn1_condition in enumerate(range_fns):
+#         for j, ptn2_condition in enumerate(range_fns):
+#             subset = bgdf[
+#                 ptn1_condition(bgdf["ptn1_support"])
+#                 & ptn2_condition(bgdf["ptn2_support"])
+#             ]
+#             mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
 
-            mean_support = (
-                sum(
-                    [
-                        thresholds[i],
-                        thresholds[j],
-                        thresholds[i + 1],
-                        thresholds[j + 1],
-                    ]
-                )
-                / 4
-            )
+#             mean_support = (
+#                 sum(
+#                     [
+#                         thresholds[i],
+#                         thresholds[j],
+#                         thresholds[i + 1],
+#                         thresholds[j + 1],
+#                     ]
+#                 )
+#                 / 4
+#             )
 
-            quantile_data["quantile_ptn1_support_idx"].append(i)
-            quantile_data["quantile_ptn2_support_idx"].append(j)
-            quantile_data["quantile_ptn1_support_min"].append(thresholds[i])
-            quantile_data["quantile_ptn2_support_min"].append(thresholds[j])
-            quantile_data["quantile_ptn1_support_max"].append(thresholds[i + 1])
-            quantile_data["quantile_ptn2_support_max"].append(thresholds[j + 1])
+#             quantile_data["quantile_ptn1_support_idx"].append(i)
+#             quantile_data["quantile_ptn2_support_idx"].append(j)
+#             quantile_data["quantile_ptn1_support_min"].append(thresholds[i])
+#             quantile_data["quantile_ptn2_support_min"].append(thresholds[j])
+#             quantile_data["quantile_ptn1_support_max"].append(thresholds[i + 1])
+#             quantile_data["quantile_ptn2_support_max"].append(thresholds[j + 1])
 
-            quantile_data["quantile_support_mean"].append(mean_support),
-            quantile_data["quantile_metric_mean"].append(subset["vi_distance"].mean()),
-            quantile_data["quantile_metric_max"].append(subset["vi_distance"].max()),
-            quantile_data["quantile_metric_min"].append(subset["vi_distance"].min()),
+#             quantile_data["quantile_support_mean"].append(mean_support),
+#             quantile_data["quantile_metric_mean"].append(subset["vi_distance"].mean()),
+#             quantile_data["quantile_metric_max"].append(subset["vi_distance"].max()),
+#             quantile_data["quantile_metric_min"].append(subset["vi_distance"].min()),
 
-            for v in subset["vi_distance"]:
-                quantile_data_stacked["quantile_support"].append(mean_support)
-                quantile_data_stacked["metric_value"].append(v)
+#             for v in subset["vi_distance"]:
+#                 quantile_data_stacked["quantile_support"].append(mean_support)
+#                 quantile_data_stacked["metric_value"].append(v)
 
-    # Define quartile boundaries for the color scale
-    background_cmap = plt.get_cmap(background_palette)
-    scatterplot_cmap = plt.get_cmap(scatterplot_palette)
-    if gradient_calibration == "shared":
-        if not distance_quantiles:
-            distance_quantiles = support_quantiles
-        distance_quantiles.insert(0, 0)
-        distance_quantiles.append(1)
-        color_bounds = df["vi_distance"].quantile(distance_quantiles).tolist()
-        background_norm = BoundaryNorm(color_bounds, background_cmap.N)
-        scatterplot_norm = BoundaryNorm(color_bounds, scatterplot_cmap.N)
-        scatterplot_legend = False
-    elif gradient_calibration == "independent":
-        background_norm = None
-        scatterplot_norm = None
-        scatterplot_legend = "brief"
+#     # Define quartile boundaries for the color scale
+#     background_cmap = plt.get_cmap(background_palette)
+#     scatterplot_cmap = plt.get_cmap(scatterplot_palette)
+#     if gradient_calibration == "shared":
+#         if not distance_quantiles:
+#             distance_quantiles = support_quantiles
+#         distance_quantiles.insert(0, 0)
+#         distance_quantiles.append(1)
+#         color_bounds = df["vi_distance"].quantile(distance_quantiles).tolist()
+#         background_norm = BoundaryNorm(color_bounds, background_cmap.N)
+#         scatterplot_norm = BoundaryNorm(color_bounds, scatterplot_cmap.N)
+#         scatterplot_legend = False
+#     elif gradient_calibration == "independent":
+#         background_norm = None
+#         scatterplot_norm = None
+#         scatterplot_legend = "brief"
 
-    for bound in bounds[1:-1]:
-        ax.axvline(x=bound, color="#000000", alpha=0.3, linestyle=":")
-        ax.axhline(y=bound, color="#000000", alpha=0.3, linestyle=":")
+#     for bound in bounds[1:-1]:
+#         ax.axvline(x=bound, color="#000000", alpha=0.3, linestyle=":")
+#         ax.axhline(y=bound, color="#000000", alpha=0.3, linestyle=":")
 
-    for (quantile, threshold) in zip(support_quantiles, internal_thresholds):
-        txt = ax.annotate(
-            f"{quantile} support quantile",
-            xy=(threshold, 1),
-            xycoords=("data", "axes fraction"),
-            xytext=(threshold, 1.05),
-            textcoords=("data", "axes fraction"),
-            arrowprops=dict(arrowstyle="->"),
-            horizontalalignment="center",
-            verticalalignment="bottom",
-            fontsize=8,
-            wrap=True,
-        )
-        txt._get_wrap_line_width = lambda: 60
-        txt = ax.annotate(
-            f"{quantile} support quantile",
-            xy=(0, threshold),
-            xycoords=(
-                "axes fraction",
-                "data",
-            ),
-            xytext=(-0.125, threshold),
-            textcoords=(
-                "axes fraction",
-                "data",
-            ),
-            arrowprops=dict(arrowstyle="->"),
-            horizontalalignment="center",
-            verticalalignment="bottom",
-            rotation=90,
-            fontsize=8,
-            wrap=True,
-        )
-        txt._get_wrap_line_width = lambda: 60
+#     for (quantile, threshold) in zip(support_quantiles, internal_thresholds):
+#         txt = ax.annotate(
+#             f"{quantile} support quantile",
+#             xy=(threshold, 1),
+#             xycoords=("data", "axes fraction"),
+#             xytext=(threshold, 1.05),
+#             textcoords=("data", "axes fraction"),
+#             arrowprops=dict(arrowstyle="->"),
+#             horizontalalignment="center",
+#             verticalalignment="bottom",
+#             fontsize=8,
+#             wrap=True,
+#         )
+#         txt._get_wrap_line_width = lambda: 60
+#         txt = ax.annotate(
+#             f"{quantile} support quantile",
+#             xy=(0, threshold),
+#             xycoords=(
+#                 "axes fraction",
+#                 "data",
+#             ),
+#             xytext=(-0.125, threshold),
+#             textcoords=(
+#                 "axes fraction",
+#                 "data",
+#             ),
+#             arrowprops=dict(arrowstyle="->"),
+#             horizontalalignment="center",
+#             verticalalignment="bottom",
+#             rotation=90,
+#             fontsize=8,
+#             wrap=True,
+#         )
+#         txt._get_wrap_line_width = lambda: 60
 
-    c = ax.pcolormesh(
-        bounds,
-        bounds[::-1],
-        mean_values,
-        shading="auto",
-        cmap=background_cmap,
-        norm=background_norm,
-        alpha=0.5,
-    )
+#     c = ax.pcolormesh(
+#         bounds,
+#         bounds[::-1],
+#         mean_values,
+#         shading="auto",
+#         cmap=background_cmap,
+#         norm=background_norm,
+#         alpha=0.5,
+#     )
 
-    sns.scatterplot(
-        x=df["ptn1_support"],
-        y=df["ptn2_support"],
-        hue="vi_distance",
-        data=df,
-        palette=scatterplot_cmap,
-        hue_norm=scatterplot_norm,
-        edgecolor=None,
-        # edgecolor='grey',
-        # edgecolor="#888888cc",
-        # linewidth=0.2,
-        legend=scatterplot_legend,
-        ax=ax,
-    )
+#     sns.scatterplot(
+#         x=df["ptn1_support"],
+#         y=df["ptn2_support"],
+#         hue="vi_distance",
+#         data=df,
+#         palette=scatterplot_cmap,
+#         hue_norm=scatterplot_norm,
+#         edgecolor=None,
+#         # edgecolor='grey',
+#         # edgecolor="#888888cc",
+#         # linewidth=0.2,
+#         legend=scatterplot_legend,
+#         ax=ax,
+#     )
 
-    plt.xlabel("log(ptn1_support)")
-    plt.ylabel("log(ptn2_support)")
-    if scatterplot_legend is not False:
-        plt.legend(title="vi_distance", loc="upper left")
+#     plt.xlabel("log(ptn1_support)")
+#     plt.ylabel("log(ptn2_support)")
+#     if scatterplot_legend is not False:
+#         plt.legend(title="vi_distance", loc="upper left")
 
-    cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])
-    plt.colorbar(c, cax=cbar_ax, label="vi_distance")
-    # fig.tight_layout()
-    fig.subplots_adjust(right=0.88)
-    return {
-        "quantile_df": pd.DataFrame(quantile_data),
-        "quantile_stacked_df": pd.DataFrame(quantile_data_stacked),
-    }
+#     cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])
+#     plt.colorbar(c, cax=cbar_ax, label="vi_distance")
+#     # fig.tight_layout()
+#     fig.subplots_adjust(right=0.88)
+#     return {
+#         "quantile_df": pd.DataFrame(quantile_data),
+#         "quantile_stacked_df": pd.DataFrame(quantile_data_stacked),
+#     }
 
 
 # class Plotter(utility.RuntimeContext):
@@ -958,8 +958,6 @@ def visualize_distances_on_regionalized_support_space(
 #         plt.close()
 
 
-class Other:
-
     # def plot_size_vs_support_plotly(self, x, y1, y2, is_add_lines=True):
     #     import plotly.graph_objects as go
     #     fig = go.Figure()
@@ -977,44 +975,44 @@ class Other:
     #     )
     #     fig.show()
 
-    def plot_support_distance_analyses(self):
-        for distance_key in self.distance_keys:
-            self._execute_plot(
-                plot_fn=sns.pairplot,
-                kwargs={
-                    "data": self.data[["ptn1_support", "ptn2_support", distance_key]]
-                },
-                name_parts=[f"support-vs-{distance_key}-matrix"],
-            )
-        self._execute_plot(
-            # plot_fn=self.plot_support_vs_distance_scatter,
-            plot_fn=self.plot_support_vs_distance_scatterheat,
-            kwargs={},
-            name_parts=["support-vs-distance-scatter"],
-        )
+    # def plot_support_distance_analyses(self):
+    #     for distance_key in self.distance_keys:
+    #         self._execute_plot(
+    #             plot_fn=sns.pairplot,
+    #             kwargs={
+    #                 "data": self.data[["ptn1_support", "ptn2_support", distance_key]]
+    #             },
+    #             name_parts=[f"support-vs-{distance_key}-matrix"],
+    #         )
+    #     self._execute_plot(
+    #         # plot_fn=self.plot_support_vs_distance_scatter,
+    #         plot_fn=self.plot_support_vs_distance_scatterheat,
+    #         kwargs={},
+    #         name_parts=["support-vs-distance-scatter"],
+    #     )
 
-    def plot_comparisons(
-        self,
-    ):
-        # self.plot_profiles(self)
-        self._execute_plot(
-            plot_fn=sns.pairplot,
-            kwargs={"data": self.data[self.distance_keys]},
-            name_parts=[f"distance-types-matrix"],
-        )
-        self.plot_clustermaps()
+    # def plot_comparisons(
+    #     self,
+    # ):
+    #     # self.plot_profiles(self)
+    #     self._execute_plot(
+    #         plot_fn=sns.pairplot,
+    #         kwargs={"data": self.data[self.distance_keys]},
+    #         name_parts=[f"distance-types-matrix"],
+    #     )
+    #     self.plot_clustermaps()
 
-    def plot_support_vs_distance_scatter(
-        self,
-    ):
-        plt.figure(figsize=(10, 10))
-        g = sns.scatterplot(
-            x=self.data["ptn1_support"],
-            y=self.data["ptn2_support"],
-            hue="vi_distance",
-            palette="coolwarm",
-            marker="o",
-            s=20,
-            data=self.data,
-        )
-        plt.legend(bbox_to_anchor=(1.02, 1), loc="upper left", borderaxespad=0)
+    # def plot_support_vs_distance_scatter(
+    #     self,
+    # ):
+    #     plt.figure(figsize=(10, 10))
+    #     g = sns.scatterplot(
+    #         x=self.data["ptn1_support"],
+    #         y=self.data["ptn2_support"],
+    #         hue="vi_distance",
+    #         palette="coolwarm",
+    #         marker="o",
+    #         s=20,
+    #         data=self.data,
+    #     )
+    #     plt.legend(bbox_to_anchor=(1.02, 1), loc="upper left", borderaxespad=0)

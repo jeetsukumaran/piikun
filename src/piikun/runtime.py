@@ -206,18 +206,6 @@ class RuntimeContext:
         self.opened_output_handles[output_path] = output_handle
         return output_handle
 
-    def open_output_datastore(
-        self,
-        *args,
-        **kwargs
-    ):
-        output_handle = self.open_output(**kwargs)
-        data_store = DataStore(
-            file_handle=output_handle,
-            config_d=kwargs.get("datastore_config_d", None),
-        )
-        return data_store
-
     def open_json_list_writer(
         self,
         *args,

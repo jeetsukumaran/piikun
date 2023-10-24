@@ -290,7 +290,7 @@ class PartitionCollection:
 
     def validate(
         self,
-        rc=None,
+        runtime_context=None,
     ):
         """
         Ensure every partition is: jointly-comprehensive and mutually-exclusive
@@ -305,12 +305,12 @@ class PartitionCollection:
                     ptn_elements.add(element)
             if all_elements is None:
                 all_elements = ptn_elements
-                rc and rc.logger.info(
+                runtime_context and runtime_context.logger.info(
                     f"Validating partitioning of {len(ptn_elements)} elements: {sorted(ptn_elements)}"
                 )
             else:
                 assert all_elements == ptn_elements
-        rc and rc.logger.info(
+        runtime_context and runtime_context.logger.info(
             f"All partitions are mutually-exclusive and jointly comprehensive with respect to {len(ptn_elements)} elements."
         )
 
@@ -321,9 +321,9 @@ class PartitionCollection:
         limit_partitions=None,
         is_store_source_path=True,
         update_metadata=None,
-        rc=None,
+        runtime_context=None,
     ):
-        rc and rc.logger.info(f"Reading source: '{source_path}'")
+        runtime_context and runtime_context.logger.info(f"Reading source: '{source_path}'")
         parser = parse.Parser(
             source_format=source_format,
         )
@@ -331,7 +331,7 @@ class PartitionCollection:
         start_len = len(self)
         n_source_partitions = None
         for pidx, ptn in enumerate(parser.read_path(source_path)):
-            rc and rc.logger.info(
+            runtime_context and runtime_context.logger.info(
                 # f"Partition {pidx+1:>5d} of {len(src_partitions)} ({len(subsets)} subsets)"
                 # f"Partition {pidx+1:>5d} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
                 f"Partition {ptn._origin_offset+1} of {ptn._origin_size}: {ptn.n_elements} lineages organized into {ptn.n_subsets} species"
@@ -344,11 +344,11 @@ class PartitionCollection:
             if update_metadata:
                 ptn.metadata_d.update(update_metadata)
             if limit_partitions and (pidx >= limit_partitions - 1):
-                rc and rc.logger.info(
+                runtime_context and runtime_context.logger.info(
                     f"Number of partitions read is at limit ({limit_partitions}): skipping remaining"
                 )
                 break
         end_len = len(self)
-        rc and rc.logger.info(
+        runtime_context and runtime_context.logger.info(
             f"Reading completed: {end_len - start_len} of {n_source_partitions} partitions read from source ({len(self)} read in total)"
         )

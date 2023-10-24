@@ -205,7 +205,7 @@ See ``--help`` for details on this and other options, such as setting the output
 
 #### Output
 
-``piikun-evaluate`` will generate two tab-delimited (``.tsv``) files (named and located based on the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options):
+``piikun-evaluate`` will generate two data files (named and located based on the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options):
 
 - ``output-directory/output-title-profiles.tsv``
 - ``output-directory/output-title-comparisons.tsv``
@@ -216,13 +216,12 @@ Both of these files can be directly loaded as a PANDAS data frame for more detai
 
 ```bash
 >>> import pandas as pd
->>> df1 = pd.read_cs(
-...     "output-directory/output-title-comparisons.tsv",
-...     delimiter="\t"
+>>> df1 = pd.read_json(
+...     "output-directory/output-title-comparisons.json",
 ... )
 ```
 
-The ``-comparisons`` file includes the variance of information distance statistics: ``vi_distance`` and ``vi_normalized_kraskov``.
+The ``__distances`` file includes the variance of information distance statistics: ``vi_distance`` and ``vi_normalized_kraskov``.
 
 ## Reference
 
@@ -232,12 +231,13 @@ The ``-comparisons`` file includes the variance of information distance statisti
 
 | Command              | Input                       | Output                                |
 |----------------------|-----------------------------|---------------------------------------|
-| ``piikun-compile``   | (Various)                   | ``<title>-partitions.json``           |
-| ``piikun-evaluate``  | ``<title>-partitions.json`` | ``<title>-partitions-profiles.json``  |
-|                      |                             | ``<title>-partitions-distances.json`` |
-| ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>-<visualization-name>.html`` |
-|                      |                             | ``<title>-<visualization-name>.jpg``  |
-|                      |                             | ``<title>-<visualization-name>.pdf``  |
+| ``piikun-compile``   | (Various)                   | ``<title>__partitions.json``          |
+| ``piikun-evaluate``  | ``<title>-partitions.json`` | ``<title>__profiles.json``            |
+|                      |                             | ``<title>__distances.json``           |
+| ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>__<visualization-name>.html`` |
+|                      |                             | ``<title>__<visualization-name>.jpg``  |
+|                      |                             | ``<title>__<visualization-name>.pdf``  |
+|                      |                             | ``<title>__<visualization-name>.png``  |
 
 
 
@@ -247,7 +247,7 @@ The ``-comparisons`` file includes the variance of information distance statisti
 #### ``piikun`` or ``json-dicts``
 
 
-#### ``json-lists``
+#### ``nested-lists``
 
 ``` json
 [

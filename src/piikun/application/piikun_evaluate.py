@@ -50,7 +50,7 @@ def create_full_profile_distance_df(
     distances_path=None,
     merged_path=None,
     delimiter="\t",
-    rc=None,
+    runtime_context=None,
 ):
     if not profiles_df:
         assert profiles_path
@@ -88,7 +88,7 @@ def create_full_profile_distance_df(
         n_expected_cmps = len(partition_keys) * len(partition_keys)
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
         for pkd_idx, pk1 in enumerate(partition_keys):
-            # rc and rc.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
+            # runtime_context and runtime_context.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
             seen_comparisons = set()
             # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
             # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
@@ -126,23 +126,23 @@ def create_full_profile_distance_df(
                     raise NotImplementedError()
     df = pd.DataFrame.from_records(new_dataset)
     if merged_path:
-        rc.logger.info(f"Exported distances to: '{merged_path}'")
+        runtime_context.logger.info(f"Exported distances to: '{merged_path}'")
         df.to_json(merged_path, orient="records")
     return df
 
 
 def compare_partitions(
-    rc,
+    runtime_context,
     partitions,
 ):
-    partitions.validate(rc=rc)
+    partitions.validate(runtime_context=runtime_context)
     n_expected_cmps = int(len(partitions) * len(partitions) / 2) + int(len(partitions)/2)
     n_comparisons = 0
     seen_compares = set()
-    partition_profile_store = rc.open_json_list_writer(
-        subtitle="profile",
+    partition_profile_store = runtime_context.open_json_list_writer(
+        subtitle="profiles",
     )
-    partition_oneway_distances = rc.open_json_list_writer(
+    partition_oneway_distances = runtime_context.open_json_list_writer(
         subtitle="1d",
     )
     # f"[ {int(n_comparisons * 100/n_expected_cmps): 4d} % ] Comparison {n_comparisons} of {n_expected_cmps}: Partition {ptn1.label} vs. partition {ptn2.label}"
@@ -204,17 +204,17 @@ def compare_partitions(
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
                 partition_oneway_distances.write(comparison_d)
-    rc.logger.info("Comparison completed")
+    runtime_context.logger.info("Comparison completed")
     partition_profile_store.close()
     partition_oneway_distances.close()
-    partition_twoway_distances = rc.open_json_list_writer(
+    partition_twoway_distances = runtime_context.open_json_list_writer(
         subtitle="distances",
     )
     create_full_profile_distance_df(
         profiles_path=partition_profile_store.path,
         distances_path=partition_oneway_distances.path,
         merged_path=partition_twoway_distances.path,
-        rc=rc,
+        runtime_context=runtime_context,
     )
     partition_twoway_distances.close()
 
@@ -285,15 +285,15 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     args = parser.parse_args()
-    rc = runtime.RuntimeContext()
-    rc.logger.info("Starting: [b]piikun-evaluate[/b]")
+    runtime_context = runtime.RuntimeContext()
+    runtime_context.logger.info("Starting: [b]piikun-evaluate[/b]")
     args.source_format = "piikun"
 
     if not args.source_paths:
-        rc.terminate_error("Standard input piping is under development", exit_code=1)
+        runtime_context.terminate_error("Standard input piping is under development", exit_code=1)
 
-    rc.output_directory = args.output_directory
-    rc.compose_output_title(
+    runtime_context.output_directory = args.output_directory
+    runtime_context.compose_output_title(
         output_title=args.output_title,
         source_paths=args.source_paths,
         title_from_source_stem_fn=lambda x: x.split("__")[0],
@@ -305,11 +305,11 @@ def main():
             source_path=source_path,
             source_format=args.source_format,
             limit_partitions=args.limit_partitions,
-            rc=rc,
+            runtime_context=runtime_context,
         )
     compare_partitions(
         partitions=partitions,
-        rc=rc,
+        runtime_context=runtime_context,
     )
 
 if __name__ == "__main__":
