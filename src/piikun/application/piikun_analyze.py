@@ -141,7 +141,7 @@ def main():
     args = parser.parse_args()
 
     runtime_context = runtime.RuntimeContext()
-    runtime_context.logger.info("Starting: [b]piikun-run[/b]")
+    runtime_context.logger.info("Starting: [b]piikun-analyze[/b]")
 
     runtime_context.output_directory = args.output_directory
     runtime_context.compose_output_title(

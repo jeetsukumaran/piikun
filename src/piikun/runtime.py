@@ -226,7 +226,7 @@ class RuntimeContext:
             subtitle=subtitle,
             ext=ext,
         )
-        output_path = pathlib.Path(self.output_directory) / output_name
+        output_path = pathlib.Path(self.output_directory).absolute() / output_name
         return output_path
 
     def open_output(
