@@ -289,7 +289,7 @@ def main():
         dest="is_print_output_paths",
         action="store_true",
         default=None,
-        help="Print a (JSON) dictionary of output files: ``{ '<source-filepath>': '<output-filepath>' }``.",
+        help="Print a (JSON) dictionary of output files: ``{ '<output-type>': '<output-filepath>' }``.",
     )
     args = parser.parse_args()
     runtime_context = runtime.RuntimeContext()
@@ -318,6 +318,8 @@ def main():
         partitions=partitions,
         runtime_context=runtime_context,
     )
+    if args.is_print_output_paths:
+        sys.stdout.write(json.dumps(runtime_context.output_tracker) + "\n")
 
 if __name__ == "__main__":
     main()

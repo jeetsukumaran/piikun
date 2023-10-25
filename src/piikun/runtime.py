@@ -137,6 +137,7 @@ class RuntimeContext:
         self.output_title = output_title
         self.output_directory = output_directory
         self.output_subtitle_prefix = "__"
+        self.output_tracker = {}
 
     @property
     def console(self):
@@ -233,6 +234,7 @@ class RuntimeContext:
         subtitle=None,
         ext=None,
         mode="w",
+        tracker_key=None,
         is_internally_disambiguate=True,
     ):
         if self.output_title == "-":
@@ -245,6 +247,9 @@ class RuntimeContext:
                 output_path = self.compose_output_path(subtitle=f"{subtitle}-{disambigution_idx}", ext=ext)
         output_handle = open(output_path, mode)
         self.opened_output_handles[output_path] = output_handle
+        if not tracker_key and subtitle:
+            tracker_key = subtitle
+        self.output_tracker[tracker_key] = subtitle
         return output_handle
 
     def open_json_list_writer(

@@ -38,12 +38,10 @@ import json
 import subprocess
 from piikun import runtime
 
-def generate_arguments(args):
+def generate_arguments(args, exclude=None):
     cmd = []
     if args.is_store_source_path:
         cmd.append("--store-source-path")
-    else:
-        cmd.append("--no-store-source-path")
     if args.add_metadata:
         cmd.append("--add-metadata")
         for d1 in args.add_metadata:
@@ -57,7 +55,7 @@ def generate_arguments(args):
         cmd.append(args.output_directory)
     return cmd
 
-def execute_command(cmd):
+def execute_command(cmd, runtime_context):
     cp = subprocess.run(
         cmd,
         stdout=subprocess.PIPE,
@@ -146,7 +144,6 @@ def main():
     command_sets = []
     source_paths = [str(pathlib.Path(p).absolute()) for p in args.source_paths]
 
-
     if is_run_compiler:
         cmd = [ "piikun-compile" ]
         if args.source_format:
@@ -157,15 +154,20 @@ def main():
         cmd.extend(generate_arguments(args=args))
         cmd.extend(source_paths)
         runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
-        cp = execute_command(cmd)
+        cp = execute_command(cmd, runtime_context)
         source_paths = cp.output_paths
 
     if is_run_evaluator:
         cmd = [ "piikun-evaluate" ]
         cmd.append("--print-output-paths")
-        cmd.extend(generate_arguments(args=args))
+        args.is_store_source_paths = None
+        cmd.extend(generate_arguments(
+            args=args,
+        ))
         cmd.extend(source_paths)
         runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
+        cp = execute_command(cmd, runtime_context)
+        source_paths = cp.output_paths
 
 
 if __name__ == "__main__":
