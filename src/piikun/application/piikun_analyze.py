@@ -69,7 +69,8 @@ def execute_command(
         stdout = None
     cp = subprocess.run(
         cmd,
-        stdout=stdout,
+        stdout=subprocess.PIPE,
+        stderr=None,
         text=True,
     )
     if cp.returncode:

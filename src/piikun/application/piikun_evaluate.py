@@ -84,6 +84,7 @@ def create_full_profile_distance_df(
         progress.TimeRemainingColumn(),
         # progress.TextColumn("(Mem: {task.fields[memory_usage]} MB)"),
         transient=True,
+        console=runtime_context.console,
     ) as progress_bar:
         n_expected_cmps = len(partition_keys) * len(partition_keys)
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)

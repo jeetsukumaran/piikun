@@ -500,8 +500,8 @@ def visualize_value_on_quantized_space(
 class Plotter:
     def __init__(
         self,
+        runtime_context,
         config_d=None,
-        runtime_context=None,
     ):
         self.runtime_context=runtime_context
         self.distance_keys = [
@@ -517,20 +517,6 @@ class Plotter:
         if not hasattr(self, "_data") or self._data is None:
             raise ValueError("Data not set")
         return self._data
-
-    def plot_data(self):
-        self.plot_partition_profiles()
-        self.plot_partition_distances()
-
-    def plot_partition_profiles(self):
-        self.plot_partition_support_cdf()
-        self.plot_partition_profile_comparison()
-        self.plot_size_entropy_support()
-        self.plot_size_vs_support()
-        self.plot_entropy_vs_support()
-
-    def plot_partition_distances(self):
-        self.plot_clustermaps()
 
     def plot_quantile_data(
         self,
@@ -624,13 +610,13 @@ class Plotter:
             plot_subtitle="partition-profile-comparison",
         )
 
-    def plot_partition_support_cdf(self):
+    def plot_cdf(self, df, x, y):
         # self._profile_df.sort_values("support", ascending=True)
         self._execute_plot(
             plot_fn=sns.scatterplot,
             kwargs={
-                "x": self._profile_df["label"],
-                "y": self._profile_df[self.support_key].cumsum(),
+                "x": df[x],
+                "y": df[y].cumsum(),
                 # "size": self._profile_df["label"],
             },
             plot_subtitle="cumulative-support",
