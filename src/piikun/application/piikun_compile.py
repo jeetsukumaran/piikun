@@ -136,6 +136,13 @@ def main():
         default=os.curdir,
         help="Directory for output files [default='%(default)s'].",
     )
+    output_options.add_argument(
+        "--print-output-paths",
+        dest="is_print_output_paths",
+        action="store_true",
+        default=None,
+        help="Print a (JSON) dictionary of output files: ``{ '<source-filepath>': '<output-filepath>' }``.",
+    )
     args = parser.parse_args()
 
     runtime_context = runtime.RuntimeContext()
@@ -160,6 +167,7 @@ def main():
                 update_metadata.update(a2)
 
     partitions = None
+    output_paths = {}
     for src_idx, source_path in enumerate(source_paths):
         # runtime_context.console.rule()
         # runtime_context.logger.info(
@@ -189,14 +197,18 @@ def main():
                 runtime_context.logger.info(
                     f"Writing {len(partitions)} partitions to file: '{out.name}'"
                 )
+                output_path = pathlib.Path(out.name).absolute()
             else:
                 out = sys.stdout
+                output_path = "<stdin>"
                 runtime_context.logger.info("(Writing to standard output)")
+            output_paths[str(pathlib.Path(source_path).absolute())] = str(output_path)
             partition_definition_d = partitions.export_definition_d()
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
-
+    if args.is_print_output_paths:
+        sys.stdout.write(json.dumps(output_paths) + "\n")
 
 if __name__ == "__main__":
     main()
