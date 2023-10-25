@@ -209,7 +209,8 @@ def read_files_to_dataframe(
     dfs = []
     if df is not None:
         dfs.append(df)
-    for fp in filepaths:
+    for fpath in filepaths:
+        fp = open(fpath)
         if format_type == "json":
             d = pd.read_json(fp)
         elif format_type == "csv":
@@ -217,7 +218,7 @@ def read_files_to_dataframe(
         else:
             raise ValueError(format_type)
         if is_record_source_filepath:
-            d["file"] = fp
+            d["file"] = str(pathlib.Path(fpath).absolute())
         dfs.append(d)
     df = pd.concat(dfs, ignore_index=True)
     return df

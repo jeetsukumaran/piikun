@@ -318,8 +318,8 @@ def main(args=None):
     parent_parser = argparse.ArgumentParser()
     data_source_options = parent_parser.add_argument_group("Data Source Options")
     data_source_options.add_argument(
-        "src_path",
-        action="append",
+        "source_paths",
+        action="store",
         metavar="DATAFILE",
         nargs="+",
         help="Path to data source file(s).",
@@ -377,17 +377,19 @@ def main(args=None):
         help="Save / do not save plots in interactive viewer",
     )
     args = parent_parser.parse_args(args)
-    src_paths = [i for sublist in args.src_path for i in sublist]
     runtime_context = runtime.RuntimeContext()
     runtime_context.logger.info("Starting: [b]piikun-visualize[/b]")
-    # runtime_context.logger.info(f"{len(source_paths)} sources to parse")
+    source_paths = args.source_paths
     runtime_context.output_directory = args.output_directory
     runtime_context.compose_output_title(
         output_title=args.output_title,
-        source_paths=src_paths,
+        source_paths=source_paths,
         is_merge_output=True,
     )
-    distance_df = utility.read_files_to_dataframe(filepaths=src_paths, format_type="json")
+    distance_df = utility.read_files_to_dataframe(
+        filepaths=source_paths,
+        format_type="json",
+    )
     output_format = []
     if args.output_format:
         for fspecs in args.output_format:

@@ -55,15 +55,26 @@ def generate_arguments(args, exclude=None):
         cmd.append(args.output_directory)
     return cmd
 
-def execute_command(cmd, runtime_context):
+def execute_command(
+    cmd,
+    runtime_context,
+    is_stdout_pipe=True,
+):
+    if is_stdout_pipe:
+        stdout = subprocess.PIPE
+    else:
+        stdout = None
     cp = subprocess.run(
         cmd,
-        stdout=subprocess.PIPE,
+        stdout=stdout,
         text=True,
     )
     if cp.returncode:
         runtime_context.terminate_error("Subprocess exited with errors", exit_code=cp.returncode)
-    cp.output_paths = [list(json.loads(cp.stdout).values())[0]]
+    if cp.stdout:
+        cp.response_d = json.loads(cp.stdout)
+    else:
+        cp.response_d = {}
     return cp
 
 def main():
@@ -155,7 +166,7 @@ def main():
         cmd.extend(source_paths)
         runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
         cp = execute_command(cmd, runtime_context)
-        source_paths = cp.output_paths
+        source_paths = [list(cp.response_d.values())[0]]
 
     if is_run_evaluator:
         cmd = [ "piikun-evaluate" ]
@@ -167,7 +178,22 @@ def main():
         cmd.extend(source_paths)
         runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
         cp = execute_command(cmd, runtime_context)
-        source_paths = cp.output_paths
+        source_paths = [cp.response_d["distances"]]
+
+    if is_run_visualizer:
+        cmd = [ "piikun-visualize" ]
+        # cmd.append("--print-output-paths")
+        args.is_store_source_paths = None
+        cmd.extend(generate_arguments(
+            args=args,
+        ))
+        cmd.extend(source_paths)
+        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
+        cp = execute_command(
+            cmd,
+            runtime_context,
+            is_stdout_pipe=True,
+        )
 
 
 if __name__ == "__main__":
