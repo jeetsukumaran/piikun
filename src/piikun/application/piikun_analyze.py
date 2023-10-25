@@ -60,6 +60,9 @@ def execute_command(
     runtime_context,
     is_stdout_pipe=True,
 ):
+    runtime_context.console.rule("Executing")
+    sys.stdout.write(f"{' '.join(cmd)}\n")
+    runtime_context.console.rule()
     if is_stdout_pipe:
         stdout = subprocess.PIPE
     else:
@@ -76,6 +79,7 @@ def execute_command(
     else:
         cp.response_d = {}
     return cp
+
 
 def main():
     parser = argparse.ArgumentParser(description=None)
@@ -164,7 +168,6 @@ def main():
         cmd.append("--print-output-paths")
         cmd.extend(generate_arguments(args=args))
         cmd.extend(source_paths)
-        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
         cp = execute_command(cmd, runtime_context)
         source_paths = [list(cp.response_d.values())[0]]
 
@@ -176,7 +179,6 @@ def main():
             args=args,
         ))
         cmd.extend(source_paths)
-        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
         cp = execute_command(cmd, runtime_context)
         source_paths = [cp.response_d["distances"]]
 
@@ -188,13 +190,11 @@ def main():
             args=args,
         ))
         cmd.extend(source_paths)
-        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
         cp = execute_command(
             cmd,
             runtime_context,
             is_stdout_pipe=True,
         )
-
 
 if __name__ == "__main__":
     main()

@@ -303,7 +303,7 @@ def main(args=None):
         #     "plot_fn": visualize_scatter,
         # }
         "distance-vs-support-quantiles": {
-            "plot_fn": plot.visualize_distances_on_quantized_support_space,
+            "plot_fn": plot.visualize_value_on_quantized_space,
             "plot_system": "matplotlib",
         },
         "distance-vs-support-regions": {
@@ -398,6 +398,11 @@ def main(args=None):
     else:
         output_format.append("html")
         output_format.append("jpg")
+
+    plotter_old = plot.Plotter(runtime_context=runtime_context)
+    plotter_old.load_data(data=distance_df)
+    plotter_old.plot_data()
+
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
         is_save_plot = args.is_save_plot,
@@ -420,7 +425,6 @@ def main(args=None):
         "distance_df": distance_df,
         "palette": args.palette,
     }
-
     for visualization_type_key in visualizations:
         visualization_name = visualization_type_key
         visualization_d = visualization_types[visualization_type_key]
