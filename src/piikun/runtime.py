@@ -77,6 +77,42 @@ def get_logger(
     logger._runtime_handler = handler
     return logger
 
+def field_name_value_option_type(
+    field_spec_str,
+    name_value_separator="=",
+    is_exit_on_error=True,
+):
+    if name_value_separator not in field_spec_str:
+        if is_exit_on_error:
+            sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec_str}'")
+        else:
+            raise ValueError(field_spec_str)
+    field_name, field_value = field_spec_str.split(name_value_separator)
+    d = {field_name: field_value}
+    return d
+
+def field_name_value_argument_kwargs(
+    argument_flag="--add-metadata",
+    **kwargs,
+):
+    help_text = kwargs.get("help",
+    (
+        "Add data field/values to the exported data using the syntax"
+        " '<field_name>=<field_value>'. Multiple field/values"
+        " can be specified."
+        f" For e.g., '{argument_flag} n_genes=65 guide_tree=starbeast-20231023.04'."
+        " This can be useful in pipelines or analyses to track workflow "
+        " metadata or provenance."
+    ))
+    kwargs = {
+        "dest": kwargs.get("dest", "add_metadata"),
+        "action": kwargs.get("action", "append"),
+        "default": kwargs.get("default", None),
+        "nargs": kwargs.get("nargs", "+"),
+        "type": kwargs.get("type", field_name_value_option_type),
+        "help": help_text,
+    }
+    return kwargs
 
 class RuntimeContext:
 
@@ -100,6 +136,7 @@ class RuntimeContext:
         self.opened_output_handles = {}
         self.output_title = output_title
         self.output_directory = output_directory
+        self.output_subtitle_prefix = "__"
 
     @property
     def console(self):
@@ -165,13 +202,17 @@ class RuntimeContext:
     def output_directory(self):
         del self._output_directory
 
-    def compose_output_name(self, subtitle=None, ext=None,):
+    def compose_output_name(
+        self,
+        subtitle=None,
+        ext=None,
+    ):
         s = []
         if self.output_title:
             s.append(self.output_title)
         if subtitle:
             s.append(subtitle.strip())
-        output_name = "__".join(s)
+        output_name = self.output_subtitle_prefix.join(s)
         if ext:
             ext = ext.strip()
             if not ext.startswith(".") and not output_name.endswith("."):

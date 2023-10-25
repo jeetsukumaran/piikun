@@ -38,7 +38,6 @@ import json
 from piikun import runtime
 import subprocess
 
-
 def main():
     parser = argparse.ArgumentParser(description=None)
     source_options = parser.add_argument_group("Source Options")
@@ -74,28 +73,9 @@ def main():
         dest="is_store_source_path",
         help="Store/do not add a field with the data filepath as value inthe exported data.",
     )
-    def _field_name_value_type(field_spec):
-        try:
-            field_name, field_value = field_spec.split("=")
-        except IndexError:
-            sys.exit(f"Specification not in '<name>=<value>' format: '{field_spec}'")
-        d = {field_name: field_value}
-        return d
     data_options.add_argument(
         "--add-metadata",
-        dest="add_metadata",
-        action="append",
-        default=None,
-        nargs="+",
-        type=_field_name_value_type,
-        help=(
-            "Add data field/values to the exported data using the syntax"
-            " '<field_name>=<field_value>'. Multiple field/values"
-            " can be specified."
-            " For e.g., '--add-metadata n_genes=65 guide_tree=starbeast-20231023.04'."
-            " This can be useful in pipelines or analyses to track workflow "
-            " metadata or provenance."
-        ),
+        **runtime.field_name_value_argument_kwargs(),
     )
     source_options.add_argument(
         "--limit-partitions",
@@ -134,6 +114,7 @@ def main():
     is_run_evaluator = True
     is_run_visualizer = True
     command_sets = []
+
     if is_run_compiler:
         cmd = [ "piikun-compile" ]
         if args.source_format:
@@ -154,7 +135,10 @@ def main():
         if args.output_directory:
             cmd.append("--output-directory")
             cmd.append(args.output_directory)
-        print(cmd)
+        cmd.extend(args.source_paths)
+        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
+        cp = subprocess.run(cmd)
+
 
 
 
