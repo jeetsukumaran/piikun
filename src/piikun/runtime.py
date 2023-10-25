@@ -249,7 +249,7 @@ class RuntimeContext:
         self.opened_output_handles[output_path] = output_handle
         if not tracker_key and subtitle:
             tracker_key = subtitle
-        self.output_tracker[tracker_key] = subtitle
+        self.output_tracker[tracker_key] = str(output_path)
         return output_handle
 
     def open_json_list_writer(
