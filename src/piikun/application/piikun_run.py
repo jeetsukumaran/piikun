@@ -35,8 +35,38 @@ import pathlib
 import sys
 import argparse
 import json
-from piikun import runtime
 import subprocess
+from piikun import runtime
+
+def generate_arguments(args):
+    cmd = []
+    if args.is_store_source_path:
+        cmd.append("--store-source-path")
+    else:
+        cmd.append("--no-store-source-path")
+    if args.add_metadata:
+        cmd.append("--add-metadata")
+        for d1 in args.add_metadata:
+            for d2 in d1:
+                cmd.append(d2)
+    if args.limit_partitions:
+        cmd.append("--limit-partitions")
+        cmd.append(str(args.limit_partitions))
+    if args.output_directory:
+        cmd.append("--output-directory")
+        cmd.append(args.output_directory)
+    return cmd
+
+def execute_command(cmd):
+    cp = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    if cp.returncode:
+        runtime_context.terminate_error("Subprocess exited with errors", exit_code=cp.returncode)
+    cp.output_paths = [list(json.loads(cp.stdout).values())[0]]
+    return cp
 
 def main():
     parser = argparse.ArgumentParser(description=None)
@@ -114,43 +144,28 @@ def main():
     is_run_evaluator = True
     is_run_visualizer = True
     command_sets = []
+    source_paths = [str(pathlib.Path(p).absolute()) for p in args.source_paths]
 
-    source_paths = args.source_paths
+
     if is_run_compiler:
         cmd = [ "piikun-compile" ]
         if args.source_format:
             cmd.append("--format")
             cmd.append(args.source_format)
-        if args.is_store_source_path:
-            cmd.append("--store-source-path")
-        else:
-            cmd.append("--no-store-source-path")
-        if args.add_metadata:
-            cmd.append("--add-metadata")
-            for d1 in args.add_metadata:
-                for d2 in d1:
-                    cmd.append(d2)
-        if args.limit_partitions:
-            cmd.append("--limit-partitions")
-            cmd.append(str(args.limit_partitions))
-        if args.output_directory:
-            cmd.append("--output-directory")
-            cmd.append(args.output_directory)
         cmd.append("--merge")
         cmd.append("--print-output-paths")
+        cmd.extend(generate_arguments(args=args))
         cmd.extend(source_paths)
         runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
-        cp = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            text=True,
-        )
-        source_paths = cp.stdout.values()[0]
+        cp = execute_command(cmd)
+        source_paths = cp.output_paths
 
-
-
-
-
+    if is_run_evaluator:
+        cmd = [ "piikun-evaluate" ]
+        cmd.append("--print-output-paths")
+        cmd.extend(generate_arguments(args=args))
+        cmd.extend(source_paths)
+        runtime_context.logger.info(f"Executing command:\n  [bold][italic]{' '.join(cmd)}[/italic][/bold]")
 
 
 if __name__ == "__main__":

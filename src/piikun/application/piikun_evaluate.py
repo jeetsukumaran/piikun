@@ -284,6 +284,13 @@ def main():
     #         action="store",
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
+    output_options.add_argument(
+        "--print-output-paths",
+        dest="is_print_output_paths",
+        action="store_true",
+        default=None,
+        help="Print a (JSON) dictionary of output files: ``{ '<source-filepath>': '<output-filepath>' }``.",
+    )
     args = parser.parse_args()
     runtime_context = runtime.RuntimeContext()
     runtime_context.logger.info("Starting: [b]piikun-evaluate[/b]")
