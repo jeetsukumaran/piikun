@@ -399,13 +399,13 @@ def main(args=None):
         output_format.append("html")
         output_format.append("jpg")
 
-    plotter_old = plot.Plotter(runtime_context=runtime_context)
-    plotter_old.plot_partition_support_cdf()
-    plotter_old.plot_partition_profile_comparison()
-    plotter_old.plot_size_entropy_support()
-    plotter_old.plot_size_vs_support()
-    plotter_old.plot_entropy_vs_support()
-    plotter.plot_clustermaps()
+    # plotter_old = plot.Plotter(runtime_context=runtime_context)
+    # plotter_old.plot_partition_support_cdf()
+    # plotter_old.plot_partition_profile_comparison()
+    # plotter_old.plot_size_entropy_support()
+    # plotter_old.plot_size_vs_support()
+    # plotter_old.plot_entropy_vs_support()
+    # plotter.plot_clustermaps()
 
     plotter = PlotGenerator(
         is_show_plot = args.is_show_plot,
