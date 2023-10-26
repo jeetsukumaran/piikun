@@ -60,9 +60,9 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 ```
 
 
-### Detailed Toolchain Pipelines
+### Tool Details
 
-### Compiling the Partitions: Extracting the Partition Data from the Species Delimitation Model Sources
+#### Compiling the Partitions: Extracting the Partition Data from the Species Delimitation Model Sources
 
 ``piikun-compile`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
 ``piikun-compile`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
@@ -150,7 +150,7 @@ $ piikun-compile \
 See ``--help`` for details on this and other options, such as setting the output file names and paths using the ``-o``/``--output-title`` and ``-O``/``--output-directory``, etc.
 
 
-### ``piikun-evaluate``: Calculate Statistics and Distances
+#### ``piikun-evaluate``: Calculate Statistics and Distances
 
 This command carries out the main calculations of this package.
 It takes as its input the ``.partitions.json`` data file produced by ``piikun-compile``.
