@@ -1,6 +1,9 @@
+## Set up for users to experiment with data
 # ignore all files in this directory
 /*
-# but not files in subdirectories off this directory
-!/*/
-# and not this files
+# Expect for:
 !.gitignore
+# Exclude all subdirectories
+# !/*/
+# Exclude following specific subdirectories
+# data/
