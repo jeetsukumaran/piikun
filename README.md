@@ -49,6 +49,14 @@ We can compare the species delimitation results across all these analyses becaus
 This is why we can also include and compare the results from, not just across different genetic datasets of the same samples, but also across analyses that integrate morphological data, or take into account arrangements described in literature, speculatively, etc.
 As long as the the "elements" of the subsets of the partitions map to the same concept, the resulting partitions can be compared, regardless of method of conceptualization or identification.
 
+### Quick Run: Single-Step Analysis
+
+The program ``piikun-analyze`` connects together three separate programs (discussed individually below): ``piikun-compile``, ``piikun-evaluate``, and ``piikun-visualize``.
+You can run this on the example dataset:
+
+
+### Detailed Toolchain Pipelines
+
 ### Compiling the Partitions: Extracting the Partition Data from the Species Delimitation Model Sources
 
 ``piikun-compile`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
