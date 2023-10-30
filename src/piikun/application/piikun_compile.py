@@ -192,6 +192,9 @@ def main():
             # runtime_context.console.rule()
             if args.is_validate:
                 partitions.validate(runtime_context=runtime_context)
+            partitions.summarize(
+                runtime_context=runtime_context,
+            )
             if runtime_context.output_title:
                 out = runtime_context.open_output(subtitle="partitions", ext="json")
                 runtime_context.logger.info(

@@ -36,6 +36,7 @@ import math
 import functools
 import collections
 import pathlib
+import collections
 from piikun import parse
 
 # https://stackoverflow.com/a/30134039
@@ -239,6 +240,7 @@ class Partition:
         return jensenshannon(P, Q, base=self.log_base)
 
 
+
 class PartitionCollection:
     def __init__(self, log_base=2.0):
         self.log_base = log_base
@@ -353,9 +355,25 @@ class PartitionCollection:
             f"Reading completed: {end_len - start_len} of {n_source_partitions} partitions read from source ({len(self)} read in total)"
         )
 
-
-    def summarize_partitions(
+    def summarize(
         self,
         runtime_context,
     ):
-        pass
+        ptn_data_maps = {}
+        model_aspect_score_maps = {
+            "summaries.num_species": {
+                "identity_fn": lambda ptn: ptn.n_subsets,
+                "score_fn": lambda ptn: ptn.metadata_d.get("score", 1.0),
+            }
+
+        }
+        ptn_summaries = {}
+        for summary_idx, (summary_name, summary_config) in enumerate(model_aspect_score_maps.items()):
+            ptn_summaries[summary_name] = collections.Counter()
+            for ptn_key, ptn in self._partitions.items():
+                ptn.metadata_d["key"] = ptn_key
+                aspect_id = summary_config["identity_fn"](ptn)
+                aspect_score = summary_config["score_fn"](ptn)
+                ptn_summaries[summary_name][aspect_id] += aspect_score
+        print(ptn_summaries)
+
