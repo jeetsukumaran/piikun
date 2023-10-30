@@ -40,6 +40,8 @@ from piikun import runtime
 
 def generate_arguments(args, exclude=None):
     cmd = []
+    if not exclude:
+        exclude = set()
     if args.is_store_source_path:
         cmd.append("--store-source-path")
     if args.add_metadata:
@@ -47,7 +49,7 @@ def generate_arguments(args, exclude=None):
         for d1 in args.add_metadata:
             for d2 in d1:
                 cmd.append(d2)
-    if args.limit_partitions:
+    if args.limit_partitions and "--limit-partitions" not in exclude:
         cmd.append("--limit-partitions")
         cmd.append(str(args.limit_partitions))
     if args.output_directory:
@@ -189,6 +191,7 @@ def main():
         args.is_store_source_paths = None
         cmd.extend(generate_arguments(
             args=args,
+            exclude={"--limit-partitions"}
         ))
         cmd.extend(source_paths)
         cp = execute_command(
