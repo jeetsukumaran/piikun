@@ -72,10 +72,10 @@ class Regionalizer(utility.RuntimeContext):
 
 def visualize_grid_stats_heatmap(df, low_threshold_quantile, high_threshold_quantile, statistic="mean"):
     # Determine thresholds from quantiles
-    low_threshold_ptn1 = df['ptn1_support'].quantile(low_threshold_quantile)
-    high_threshold_ptn1 = df['ptn1_support'].quantile(high_threshold_quantile)
-    low_threshold_ptn2 = df['ptn2_support'].quantile(low_threshold_quantile)
-    high_threshold_ptn2 = df['ptn2_support'].quantile(high_threshold_quantile)
+    low_threshold_ptn1 = df['ptn1_score'].quantile(low_threshold_quantile)
+    high_threshold_ptn1 = df['ptn1_score'].quantile(high_threshold_quantile)
+    low_threshold_ptn2 = df['ptn2_score'].quantile(low_threshold_quantile)
+    high_threshold_ptn2 = df['ptn2_score'].quantile(high_threshold_quantile)
 
     # Define ranges for the 3x3 grid
     ranges = [
@@ -90,24 +90,24 @@ def visualize_grid_stats_heatmap(df, low_threshold_quantile, high_threshold_quan
     # Fill the matrix with the values of the specified statistic
     for i, (_, ptn1_condition) in enumerate(ranges[::-1]): # Reverse the order of the y-axis labels
         for j, (_, ptn2_condition) in enumerate(ranges):
-            subset = df[ptn1_condition(df['ptn1_support']) & ptn2_condition(df['ptn2_support'])]
+            subset = df[ptn1_condition(df['ptn1_score']) & ptn2_condition(df['ptn2_score'])]
             matrix[i, j] = getattr(subset['vi_distance'], statistic)()
 
     # Create the heatmap using Seaborn
     sns.heatmap(matrix, annot=True, xticklabels=["low", "mid", "high"], yticklabels=["high", "mid", "low"])
     plt.title(f"Heatmap of {statistic} vi_distance")
-    plt.xlabel("ptn1_support")
-    plt.ylabel("ptn2_support")
+    plt.xlabel("ptn1_score")
+    plt.ylabel("ptn2_score")
     plt.show()
 
 def log_log_scatterplot(df):
     plt.figure(figsize=(10, 8))
-    sns.scatterplot(x='ptn1_support', y='ptn2_support', hue='vi_distance', data=df, palette="viridis", edgecolor=None)
+    sns.scatterplot(x='ptn1_score', y='ptn2_score', hue='vi_distance', data=df, palette="viridis", edgecolor=None)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('Log-Log Scatter Plot of ptn1_support vs ptn2_support')
-    plt.xlabel('ptn1_support (log scale)')
-    plt.ylabel('ptn2_support (log scale)')
+    plt.title('Log-Log Scatter Plot of ptn1_score vs ptn2_score')
+    plt.xlabel('ptn1_score (log scale)')
+    plt.ylabel('ptn2_score (log scale)')
     plt.legend(title='vi_distance', loc='upper left')
     plt.show()
 
@@ -120,10 +120,10 @@ def regionalize_data(
     stats_suffix=None,
 ):
     # Determine thresholds from quantiles
-    low_threshold_ptn1 = df['ptn1_support'].quantile(low_threshold_quantile)
-    high_threshold_ptn1 = df['ptn1_support'].quantile(high_threshold_quantile)
-    low_threshold_ptn2 = df['ptn2_support'].quantile(low_threshold_quantile)
-    high_threshold_ptn2 = df['ptn2_support'].quantile(high_threshold_quantile)
+    low_threshold_ptn1 = df['ptn1_score'].quantile(low_threshold_quantile)
+    high_threshold_ptn1 = df['ptn1_score'].quantile(high_threshold_quantile)
+    low_threshold_ptn2 = df['ptn2_score'].quantile(low_threshold_quantile)
+    high_threshold_ptn2 = df['ptn2_score'].quantile(high_threshold_quantile)
 
     # Define regions based on thresholds
     ranges1 = [
@@ -141,10 +141,10 @@ def regionalize_data(
     regionalized_df = df.copy()
     regionalized_df['region_key'] = ''
 
-    # Assign region_key based on ptn1_support and ptn2_support values
+    # Assign region_key based on ptn1_score and ptn2_score values
     for ptn1_label, ptn1_condition in ranges1:
         for ptn2_label, ptn2_condition in ranges2:
-            condition = ptn1_condition(regionalized_df['ptn1_support']) & ptn2_condition(regionalized_df['ptn2_support'])
+            condition = ptn1_condition(regionalized_df['ptn1_score']) & ptn2_condition(regionalized_df['ptn2_score'])
             regionalized_df.loc[condition, 'region_key'] = f"{ptn1_label}-{ptn2_label}"
 
     # Defining the statistics namedtuple

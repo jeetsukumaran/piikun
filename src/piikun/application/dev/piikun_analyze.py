@@ -93,7 +93,7 @@ class PartitionCoordinator(utility.RuntimeContext):
     ):
         yfn = None
         if data_format == "bpp-a10":
-            self.logger.log_critical("Unfortunately, support for this format is still under development.")
+            self.logger.log_critical("Unfortunately, score for this format is still under development.")
             sys.exit(1)
         elif data_format == "bpp-a11":
             yfn = self.parse_bpp_a11
@@ -131,7 +131,7 @@ class PartitionCoordinator(utility.RuntimeContext):
                 "unconstrained_probability": src_partition.get(
                     "unconstrained_probability", 0
                 ),
-                "support": src_partition.get("unconstrained_probability", 0),
+                "score": src_partition.get("unconstrained_probability", 0),
             }
             kwargs = {
                 "label": spart_idx + 1,
@@ -226,7 +226,7 @@ class PartitionCoordinator(utility.RuntimeContext):
                 f"Storing partition {ptn_idx+1} of {len(partition_info)}"
             )
             metadata_d = {
-                "support": ptn_info["frequency"],
+                "score": ptn_info["frequency"],
             }
             kwargs = {
                 "label": ptn_idx + 1,
@@ -302,15 +302,15 @@ class PartitionCoordinator(utility.RuntimeContext):
     def partition_twoway_distances(self):
         if (
             not hasattr(self, "_partition_twoway_distance_store")
-            or self._partition_support_distance_store is None
+            or self._partition_score_distance_store is None
         ):
-            self._partition_support_distance_store = self.runtime_context.ensure_store(
+            self._partition_score_distance_store = self.runtime_context.ensure_store(
                 key="partition-twoway-distances",
                 name_parts=["distances"],
                 separator="-",
                 extension="tsv",
             )
-        return self._partition_support_distance_store
+        return self._partition_score_distance_store
 
     # @property
     # def partition_profiled_comparison_store(self):

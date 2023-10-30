@@ -198,7 +198,7 @@ def parse_bpp_a10(
                 continue
 
         metadata_d = {
-            "support": float(model_def["posterior_probability"]),
+            "score": float(model_def["posterior_probability"]),
             "prior_probability": float(model_def["prior_probability"]),
             "posterior_probability": float(model_def["posterior_probability"]),
         }
@@ -322,7 +322,7 @@ def parse_bpp_a11(
         metadata_d = {
             "count": ptn_info["count"],
             "frequency": ptn_info["frequency"],
-            "support": ptn_info["frequency"],
+            "score": ptn_info["frequency"],
         }
         kwargs = {
             "metadata_d": metadata_d,

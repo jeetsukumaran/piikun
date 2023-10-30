@@ -60,22 +60,22 @@ def bin_indices(X, Y, num_bins):
 
 def get_binning_info(df):
     binning_info = {
-        "ptn1_support": {
-            "bins": list(df["ptn1_support_bin"].cat.categories),
+        "ptn1_score": {
+            "bins": list(df["ptn1_score_bin"].cat.categories),
             "data_points": {
-                bin_label: df[df["ptn1_support_bin"] == bin_label][
-                    ["ptn1_support", "ptn2_support", "vi_distance"]
+                bin_label: df[df["ptn1_score_bin"] == bin_label][
+                    ["ptn1_score", "ptn2_score", "vi_distance"]
                 ]
-                for bin_label in df["ptn1_support_bin"].cat.categories
+                for bin_label in df["ptn1_score_bin"].cat.categories
             },
         },
-        "ptn2_support": {
-            "bins": list(df["ptn2_support_bin"].cat.categories),
+        "ptn2_score": {
+            "bins": list(df["ptn2_score_bin"].cat.categories),
             "data_points": {
-                bin_label: df[df["ptn2_support_bin"] == bin_label][
-                    ["ptn1_support", "ptn2_support", "vi_distance"]
+                bin_label: df[df["ptn2_score_bin"] == bin_label][
+                    ["ptn1_score", "ptn2_score", "vi_distance"]
                 ]
-                for bin_label in df["ptn2_support_bin"].cat.categories
+                for bin_label in df["ptn2_score_bin"].cat.categories
             },
         },
     }

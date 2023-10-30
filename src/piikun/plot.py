@@ -20,7 +20,7 @@ from piikun import utility
 
 
 def matrix_plot(data):
-    selected_data = data[["ptn1_support", "ptn2_support", "vi_distance"]]
+    selected_data = data[["ptn1_score", "ptn2_score", "vi_distance"]]
     sns.pairplot(selected_data)
     plt.show()
 
@@ -119,19 +119,19 @@ def visualize_value_on_quantized_space(
         ]
     df = distance_df.copy()
     # df = df[ df["vi_distance"] > 1e-8 ]
-    if "ptn1_support" not in df.columns:
-        raise utility.UnavailableFieldException("ptn1_support")
+    if "ptn1_score" not in df.columns:
+        raise utility.UnavailableFieldException("ptn1_score")
     if is_log_scale:
-        df["ptn1_support"] = df["ptn1_support"].clip(lower=1e-9)
-        df["ptn2_support"] = df["ptn2_support"].clip(lower=1e-9)
-        df["ptn1_support"] = np.log2(df["ptn1_support"])
-        df["ptn2_support"] = np.log2(df["ptn2_support"])
+        df["ptn1_score"] = df["ptn1_score"].clip(lower=1e-9)
+        df["ptn2_score"] = df["ptn2_score"].clip(lower=1e-9)
+        df["ptn1_score"] = np.log2(df["ptn1_score"])
+        df["ptn2_score"] = np.log2(df["ptn2_score"])
 
-    padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
-    internal_thresholds = df["ptn1_support"].quantile(region_quantiles).tolist()
-    thresholds = [df["ptn1_support"].min() - padding]
+    padding = (df["ptn1_score"].max() - df["ptn1_score"].min()) * 0.05
+    internal_thresholds = df["ptn1_score"].quantile(region_quantiles).tolist()
+    thresholds = [df["ptn1_score"].min() - padding]
     thresholds.extend(internal_thresholds)
-    thresholds.append(df["ptn1_support"].max() + padding)
+    thresholds.append(df["ptn1_score"].max() + padding)
     bounds = np.array(thresholds)
 
     fig, ax = plt.subplots(figsize=(16, 16))
@@ -148,19 +148,19 @@ def visualize_value_on_quantized_space(
     n_ranges = len(range_fns)
     mean_values = np.zeros((n_ranges, n_ranges))
     quantile_data = {
-        "quantile_ptn1_support_idx": [],
-        "quantile_ptn2_support_idx": [],
-        "quantile_ptn1_support_max": [],
-        "quantile_ptn1_support_min": [],
-        "quantile_ptn2_support_max": [],
-        "quantile_ptn2_support_min": [],
-        "quantile_support_mean": [],
+        "quantile_ptn1_score_idx": [],
+        "quantile_ptn2_score_idx": [],
+        "quantile_ptn1_score_max": [],
+        "quantile_ptn1_score_min": [],
+        "quantile_ptn2_score_max": [],
+        "quantile_ptn2_score_min": [],
+        "quantile_score_mean": [],
         "quantile_metric_mean": [],
         "quantile_metric_max": [],
         "quantile_metric_min": [],
     }
     quantile_data_stacked = {
-        "quantile_support": [],
+        "quantile_score": [],
         "metric_value": [],
     }
 
@@ -168,12 +168,12 @@ def visualize_value_on_quantized_space(
     for i, ptn1_condition in enumerate(range_fns):
         for j, ptn2_condition in enumerate(range_fns):
             subset = bgdf[
-                ptn1_condition(bgdf["ptn1_support"])
-                & ptn2_condition(bgdf["ptn2_support"])
+                ptn1_condition(bgdf["ptn1_score"])
+                & ptn2_condition(bgdf["ptn2_score"])
             ]
             mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
 
-            mean_support = (
+            mean_score = (
                 sum(
                     [
                         thresholds[i],
@@ -185,20 +185,20 @@ def visualize_value_on_quantized_space(
                 / 4
             )
 
-            quantile_data["quantile_ptn1_support_idx"].append(i)
-            quantile_data["quantile_ptn2_support_idx"].append(j)
-            quantile_data["quantile_ptn1_support_min"].append(thresholds[i])
-            quantile_data["quantile_ptn2_support_min"].append(thresholds[j])
-            quantile_data["quantile_ptn1_support_max"].append(thresholds[i + 1])
-            quantile_data["quantile_ptn2_support_max"].append(thresholds[j + 1])
+            quantile_data["quantile_ptn1_score_idx"].append(i)
+            quantile_data["quantile_ptn2_score_idx"].append(j)
+            quantile_data["quantile_ptn1_score_min"].append(thresholds[i])
+            quantile_data["quantile_ptn2_score_min"].append(thresholds[j])
+            quantile_data["quantile_ptn1_score_max"].append(thresholds[i + 1])
+            quantile_data["quantile_ptn2_score_max"].append(thresholds[j + 1])
 
-            quantile_data["quantile_support_mean"].append(mean_support),
+            quantile_data["quantile_score_mean"].append(mean_score),
             quantile_data["quantile_metric_mean"].append(subset["vi_distance"].mean()),
             quantile_data["quantile_metric_max"].append(subset["vi_distance"].max()),
             quantile_data["quantile_metric_min"].append(subset["vi_distance"].min()),
 
             for v in subset["vi_distance"]:
-                quantile_data_stacked["quantile_support"].append(mean_support)
+                quantile_data_stacked["quantile_score"].append(mean_score)
                 quantile_data_stacked["metric_value"].append(v)
 
     # Define quartile boundaries for the color scale
@@ -224,7 +224,7 @@ def visualize_value_on_quantized_space(
 
     for (quantile, threshold) in zip(region_quantiles, internal_thresholds):
         txt = ax.annotate(
-            f"{quantile} support quantile",
+            f"{quantile} score quantile",
             xy=(threshold, 1),
             xycoords=("data", "axes fraction"),
             xytext=(threshold, 1.05),
@@ -237,7 +237,7 @@ def visualize_value_on_quantized_space(
         )
         txt._get_wrap_line_width = lambda: 60
         txt = ax.annotate(
-            f"{quantile} support quantile",
+            f"{quantile} score quantile",
             xy=(0, threshold),
             xycoords=(
                 "axes fraction",
@@ -268,8 +268,8 @@ def visualize_value_on_quantized_space(
     )
 
     sns.scatterplot(
-        x=df["ptn1_support"],
-        y=df["ptn2_support"],
+        x=df["ptn1_score"],
+        y=df["ptn2_score"],
         hue="vi_distance",
         data=df,
         palette=scatterplot_cmap,
@@ -282,8 +282,8 @@ def visualize_value_on_quantized_space(
         ax=ax,
     )
 
-    plt.xlabel("log(ptn1_support)")
-    plt.ylabel("log(ptn2_support)")
+    plt.xlabel("log(ptn1_score)")
+    plt.ylabel("log(ptn2_score)")
     if scatterplot_legend is not False:
         plt.legend(title="vi_distance", loc="upper left")
 
@@ -299,17 +299,17 @@ def visualize_value_on_quantized_space(
 
 
 
-# def visualize_distances_on_regionalized_support_space(
+# def visualize_distances_on_regionalized_score_space(
 #     df,
-#     support_quantiles=None,
+#     score_quantiles=None,
 #     distance_quantiles=None,
 #     gradient_calibration="shared",
 #     background_palette="coolwarm",
 #     scatterplot_palette="coolwarm",
 #     is_log_scale=True,
 # ):
-#     if not support_quantiles:
-#         support_quantiles = [0.25, 0.5, 0.75]
+#     if not score_quantiles:
+#         score_quantiles = [0.25, 0.5, 0.75]
 #     if not distance_quantiles:
 #         distance_quantiles = [
 #             0.1,
@@ -324,14 +324,14 @@ def visualize_value_on_quantized_space(
 #     df = df.copy()
 #     # df = df[ df["vi_distance"] > 1e-8 ]
 #     if is_log_scale:
-#         df["ptn1_support"] = np.log2(df["ptn1_support"])
-#         df["ptn2_support"] = np.log2(df["ptn2_support"])
+#         df["ptn1_score"] = np.log2(df["ptn1_score"])
+#         df["ptn2_score"] = np.log2(df["ptn2_score"])
 
-#     padding = (df["ptn1_support"].max() - df["ptn1_support"].min()) * 0.05
-#     internal_thresholds = df["ptn1_support"].quantile(support_quantiles).tolist()
-#     thresholds = [df["ptn1_support"].min() - padding]
+#     padding = (df["ptn1_score"].max() - df["ptn1_score"].min()) * 0.05
+#     internal_thresholds = df["ptn1_score"].quantile(score_quantiles).tolist()
+#     thresholds = [df["ptn1_score"].min() - padding]
 #     thresholds.extend(internal_thresholds)
-#     thresholds.append(df["ptn1_support"].max() + padding)
+#     thresholds.append(df["ptn1_score"].max() + padding)
 #     bounds = np.array(thresholds)
 
 #     fig, ax = plt.subplots(figsize=(16, 16))
@@ -348,19 +348,19 @@ def visualize_value_on_quantized_space(
 #     n_ranges = len(range_fns)
 #     mean_values = np.zeros((n_ranges, n_ranges))
 #     quantile_data = {
-#         "quantile_ptn1_support_idx": [],
-#         "quantile_ptn2_support_idx": [],
-#         "quantile_ptn1_support_max": [],
-#         "quantile_ptn1_support_min": [],
-#         "quantile_ptn2_support_max": [],
-#         "quantile_ptn2_support_min": [],
-#         "quantile_support_mean": [],
+#         "quantile_ptn1_score_idx": [],
+#         "quantile_ptn2_score_idx": [],
+#         "quantile_ptn1_score_max": [],
+#         "quantile_ptn1_score_min": [],
+#         "quantile_ptn2_score_max": [],
+#         "quantile_ptn2_score_min": [],
+#         "quantile_score_mean": [],
 #         "quantile_metric_mean": [],
 #         "quantile_metric_max": [],
 #         "quantile_metric_min": [],
 #     }
 #     quantile_data_stacked = {
-#         "quantile_support": [],
+#         "quantile_score": [],
 #         "metric_value": [],
 #     }
 
@@ -368,12 +368,12 @@ def visualize_value_on_quantized_space(
 #     for i, ptn1_condition in enumerate(range_fns):
 #         for j, ptn2_condition in enumerate(range_fns):
 #             subset = bgdf[
-#                 ptn1_condition(bgdf["ptn1_support"])
-#                 & ptn2_condition(bgdf["ptn2_support"])
+#                 ptn1_condition(bgdf["ptn1_score"])
+#                 & ptn2_condition(bgdf["ptn2_score"])
 #             ]
 #             mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
 
-#             mean_support = (
+#             mean_score = (
 #                 sum(
 #                     [
 #                         thresholds[i],
@@ -385,20 +385,20 @@ def visualize_value_on_quantized_space(
 #                 / 4
 #             )
 
-#             quantile_data["quantile_ptn1_support_idx"].append(i)
-#             quantile_data["quantile_ptn2_support_idx"].append(j)
-#             quantile_data["quantile_ptn1_support_min"].append(thresholds[i])
-#             quantile_data["quantile_ptn2_support_min"].append(thresholds[j])
-#             quantile_data["quantile_ptn1_support_max"].append(thresholds[i + 1])
-#             quantile_data["quantile_ptn2_support_max"].append(thresholds[j + 1])
+#             quantile_data["quantile_ptn1_score_idx"].append(i)
+#             quantile_data["quantile_ptn2_score_idx"].append(j)
+#             quantile_data["quantile_ptn1_score_min"].append(thresholds[i])
+#             quantile_data["quantile_ptn2_score_min"].append(thresholds[j])
+#             quantile_data["quantile_ptn1_score_max"].append(thresholds[i + 1])
+#             quantile_data["quantile_ptn2_score_max"].append(thresholds[j + 1])
 
-#             quantile_data["quantile_support_mean"].append(mean_support),
+#             quantile_data["quantile_score_mean"].append(mean_score),
 #             quantile_data["quantile_metric_mean"].append(subset["vi_distance"].mean()),
 #             quantile_data["quantile_metric_max"].append(subset["vi_distance"].max()),
 #             quantile_data["quantile_metric_min"].append(subset["vi_distance"].min()),
 
 #             for v in subset["vi_distance"]:
-#                 quantile_data_stacked["quantile_support"].append(mean_support)
+#                 quantile_data_stacked["quantile_score"].append(mean_score)
 #                 quantile_data_stacked["metric_value"].append(v)
 
 #     # Define quartile boundaries for the color scale
@@ -406,7 +406,7 @@ def visualize_value_on_quantized_space(
 #     scatterplot_cmap = plt.get_cmap(scatterplot_palette)
 #     if gradient_calibration == "shared":
 #         if not distance_quantiles:
-#             distance_quantiles = support_quantiles
+#             distance_quantiles = score_quantiles
 #         distance_quantiles.insert(0, 0)
 #         distance_quantiles.append(1)
 #         color_bounds = df["vi_distance"].quantile(distance_quantiles).tolist()
@@ -422,9 +422,9 @@ def visualize_value_on_quantized_space(
 #         ax.axvline(x=bound, color="#000000", alpha=0.3, linestyle=":")
 #         ax.axhline(y=bound, color="#000000", alpha=0.3, linestyle=":")
 
-#     for (quantile, threshold) in zip(support_quantiles, internal_thresholds):
+#     for (quantile, threshold) in zip(score_quantiles, internal_thresholds):
 #         txt = ax.annotate(
-#             f"{quantile} support quantile",
+#             f"{quantile} score quantile",
 #             xy=(threshold, 1),
 #             xycoords=("data", "axes fraction"),
 #             xytext=(threshold, 1.05),
@@ -437,7 +437,7 @@ def visualize_value_on_quantized_space(
 #         )
 #         txt._get_wrap_line_width = lambda: 60
 #         txt = ax.annotate(
-#             f"{quantile} support quantile",
+#             f"{quantile} score quantile",
 #             xy=(0, threshold),
 #             xycoords=(
 #                 "axes fraction",
@@ -468,8 +468,8 @@ def visualize_value_on_quantized_space(
 #     )
 
 #     sns.scatterplot(
-#         x=df["ptn1_support"],
-#         y=df["ptn2_support"],
+#         x=df["ptn1_score"],
+#         y=df["ptn2_score"],
 #         hue="vi_distance",
 #         data=df,
 #         palette=scatterplot_cmap,
@@ -482,8 +482,8 @@ def visualize_value_on_quantized_space(
 #         ax=ax,
 #     )
 
-#     plt.xlabel("log(ptn1_support)")
-#     plt.ylabel("log(ptn2_support)")
+#     plt.xlabel("log(ptn1_score)")
+#     plt.ylabel("log(ptn2_score)")
 #     if scatterplot_legend is not False:
 #         plt.legend(title="vi_distance", loc="upper left")
 
@@ -526,8 +526,8 @@ class Plotter:
         is_show_metric_mean=True,
         is_show_metric_min=True,
     ):
-        qdf.sort_values("quantile_support_mean", ascending=True)
-        x = qdf["quantile_support_mean"]
+        qdf.sort_values("quantile_score_mean", ascending=True)
+        x = qdf["quantile_score_mean"]
         y1 = qdf["quantile_metric_max"]
         y2 = qdf["quantile_metric_mean"]
         y3 = qdf["quantile_metric_min"]
@@ -581,7 +581,7 @@ class Plotter:
                 edgecolor="grey",
                 linewidth=0.5,
             )
-        plt.xlabel("support")
+        plt.xlabel("score")
         # plt.ylabel("n_subsets / 2^vi_entropy")
         legend = plt.legend(
             loc="center left",
@@ -596,7 +596,7 @@ class Plotter:
     def plot_partition_profile_comparison(self):
         df = self._profile_df
         fields = {
-            "log(support)": np.log2(df["support"]),
+            "log(score)": np.log2(df["score"]),
             "vi_entropy": df["vi_entropy"],
             "n_subsets": df["n_subsets"],
         }
@@ -611,7 +611,7 @@ class Plotter:
         )
 
     def plot_cdf(self, df, x, y):
-        # self._profile_df.sort_values("support", ascending=True)
+        # self._profile_df.sort_values("score", ascending=True)
         self._execute_plot(
             plot_fn=sns.scatterplot,
             kwargs={
@@ -619,48 +619,48 @@ class Plotter:
                 "y": df[y].cumsum(),
                 # "size": self._profile_df["label"],
             },
-            plot_subtitle="cumulative-support",
+            plot_subtitle="cumulative-score",
         )
 
-    def plot_size_entropy_support(self):
+    def plot_size_entropy_score(self):
         if self.config_d.get("is_add_jitter", True):
             df = self._profile_df.copy()
             add_jitter(
                 df=self._profile_df,
-                columns=[self.support_key],
+                columns=[self.score_key],
             )
         else:
             df = self._profile_df
 
-    def plot_size_vs_support(self):
+    def plot_size_vs_score(self):
         self._execute_plot(
-            plot_fn=self._plot_size_vs_support,
+            plot_fn=self._plot_size_vs_score,
             kwargs={"is_add_lines": True},
-            plot_subtitle="size-vs-support-v1",
+            plot_subtitle="size-vs-score-v1",
         )
         self._execute_plot(
-            plot_fn=self._plot_size_vs_support,
+            plot_fn=self._plot_size_vs_score,
             kwargs={"is_add_lines": False},
-            plot_subtitle="size-vs-support-v0",
+            plot_subtitle="size-vs-score-v0",
         )
 
     # x: log-likelihood
     # y: entropy
-    def plot_entropy_vs_support(self):
+    def plot_entropy_vs_score(self):
         self._execute_plot(
             plot_fn=sns.scatterplot,
             kwargs={
-                "x": np.log2(self._profile_df["support"]),
+                "x": np.log2(self._profile_df["score"]),
                 "y": self._profile_df["vi_entropy"],
                 # "size": self._profile_df["label"],
             },
-            plot_subtitle="entropy-vs-support",
+            plot_subtitle="entropy-vs-score",
         )
 
     # x: log-likelihood
     # y1: number of clusters
     # y2: 2^entropy
-    def _plot_size_vs_support(
+    def _plot_size_vs_score(
         self,
         is_add_lines=True,
     ):
@@ -668,15 +668,15 @@ class Plotter:
             df = self._profile_df.copy()
             add_jitter(
                 df=self._profile_df,
-                columns=[self.support_key],
+                columns=[self.score_key],
             )
         else:
             df = self._profile_df
-        x = np.log2(df["support"])
+        x = np.log2(df["score"])
         y1 = df["n_subsets"]
         y2 = np.power(2, df["vi_entropy"])
 
-        # self.plot_size_vs_support_plotly( x=x, y1=y1, y2=y2,)
+        # self.plot_size_vs_score_plotly( x=x, y1=y1, y2=y2,)
         fig, ax = plt.subplots(figsize=(10, 6))
         if is_add_lines:
             for xi, y1i, y2i in zip(x, y1, y2):
@@ -764,7 +764,7 @@ class Plotter:
             **plot_kwargs,
         )
 
-    def plot_support_vs_distance_scatterheat(
+    def plot_score_vs_distance_scatterheat(
         self,
         num_bins=8,
     ):
@@ -772,21 +772,21 @@ class Plotter:
         fig_size = 10
         n_parts = len(df["ptn1"].unique())
         plt.figure(figsize=(fig_size, fig_size))
-        num_bins = self.config_d.get("num_support_vs_distance_bins", 8)
+        num_bins = self.config_d.get("num_score_vs_distance_bins", 8)
         if self.config_d.get("is_drop_autocomparisons", True):
             df = df[df["ptn1"] != df["ptn2"]].copy()
         df["heat"] = pd.cut(df["vi_distance"], bins=num_bins, labels=False)
         # df["euclidean"] = np.sqrt(
-        #     np.power(np.log2(df["ptn1_support"]) - np.log2(df["ptn2_support"]), 2)
+        #     np.power(np.log2(df["ptn1_score"]) - np.log2(df["ptn2_score"]), 2)
         # )
         # df["power_scaled"] = (
-        #     np.power(df["ptn1_support"], 2) + np.power(df["ptn2_support"], 2)
+        #     np.power(df["ptn1_score"], 2) + np.power(df["ptn2_score"], 2)
         # ) / 2
         sz = max(80000 / (n_parts * n_parts), 1)
         g = sns.scatterplot(
             data=df,
-            x=np.log2(df["ptn1_support"]),
-            y=np.log2(df["ptn2_support"]),
+            x=np.log2(df["ptn1_score"]),
+            y=np.log2(df["ptn2_score"]),
             hue="heat",
             s=sz,
             palette="coolwarm",
@@ -857,7 +857,7 @@ class Plotter:
         plt.close()
 
 
-    # def plot_size_vs_support_plotly(self, x, y1, y2, is_add_lines=True):
+    # def plot_size_vs_score_plotly(self, x, y1, y2, is_add_lines=True):
     #     import plotly.graph_objects as go
     #     fig = go.Figure()
     #     fig.add_trace(go.Scatter(x=x, y=y1, mode='markers', marker=dict(color='blue')))
@@ -874,20 +874,20 @@ class Plotter:
     #     )
     #     fig.show()
 
-    # def plot_support_distance_analyses(self):
+    # def plot_score_distance_analyses(self):
     #     for distance_key in self.distance_keys:
     #         self._execute_plot(
     #             plot_fn=sns.pairplot,
     #             kwargs={
-    #                 "data": self.data[["ptn1_support", "ptn2_support", distance_key]]
+    #                 "data": self.data[["ptn1_score", "ptn2_score", distance_key]]
     #             },
-    #             name_parts=[f"support-vs-{distance_key}-matrix"],
+    #             name_parts=[f"score-vs-{distance_key}-matrix"],
     #         )
     #     self._execute_plot(
-    #         # plot_fn=self.plot_support_vs_distance_scatter,
-    #         plot_fn=self.plot_support_vs_distance_scatterheat,
+    #         # plot_fn=self.plot_score_vs_distance_scatter,
+    #         plot_fn=self.plot_score_vs_distance_scatterheat,
     #         kwargs={},
-    #         name_parts=["support-vs-distance-scatter"],
+    #         name_parts=["score-vs-distance-scatter"],
     #     )
 
     # def plot_comparisons(
@@ -901,13 +901,13 @@ class Plotter:
     #     )
     #     self.plot_clustermaps()
 
-    # def plot_support_vs_distance_scatter(
+    # def plot_score_vs_distance_scatter(
     #     self,
     # ):
     #     plt.figure(figsize=(10, 10))
     #     g = sns.scatterplot(
-    #         x=self.data["ptn1_support"],
-    #         y=self.data["ptn2_support"],
+    #         x=self.data["ptn1_score"],
+    #         y=self.data["ptn2_score"],
     #         hue="vi_distance",
     #         palette="coolwarm",
     #         marker="o",

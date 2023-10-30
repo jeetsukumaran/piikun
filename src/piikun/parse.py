@@ -91,7 +91,7 @@ def parse_delineate(
             if k not in exclude_keys:
                 metadata_d[k] = v
         if "constrained_probability" in metadata_d:
-            metadata_d["support"] = metadata_d["unconstrained_probability"]
+            metadata_d["score"] = metadata_d["unconstrained_probability"]
         kwargs = {
             # "label": ptn_idx + 1,
             "metadata_d": metadata_d,

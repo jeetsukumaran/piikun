@@ -49,16 +49,16 @@ from piikun import utility
 from piikun import runtime
 
 
-def visualize_support_cdf(
+def visualize_score_cdf(
     distance_df,
     profile_df,
     palette="Portland",
 ):
     x = profile_df["label"].astype(str)
-    if "support" not in profile_df.columns:
-        raise utility.UnavailableFieldException("ptn1_support")
-    y1 = profile_df["support"]
-    y2 = profile_df["support"].cumsum()
+    if "score" not in profile_df.columns:
+        raise utility.UnavailableFieldException("ptn1_score")
+    y1 = profile_df["score"]
+    y2 = profile_df["score"].cumsum()
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=x,
@@ -84,36 +84,36 @@ def visualize_support_cdf(
     return fig
 
 
-def visualize_distances_on_regionalized_support_space(
+def visualize_distances_on_regionalized_score_space(
     distance_df,
     profile_df,
     palette="Geyser",
-    support_quantiles=None,
+    score_quantiles=None,
     distance_quantiles=None,
     gradient_calibration="shared",
     is_log_scale=True,
 ):
     background_palette = palette
     scatterplot_palette = palette
-    if not support_quantiles:
-        support_quantiles = [0.25, 0.5, 0.75]
+    if not score_quantiles:
+        score_quantiles = [0.25, 0.5, 0.75]
     if not distance_quantiles:
         distance_quantiles = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
 
     distance_df = distance_df.copy()
-    if "ptn1_support" not in distance_df.columns:
-        raise utility.UnavailableFieldException("ptn1_support")
+    if "ptn1_score" not in distance_df.columns:
+        raise utility.UnavailableFieldException("ptn1_score")
     if is_log_scale:
-        distance_df["ptn1_support"] = distance_df["ptn1_support"].clip(lower=1e-9)
-        distance_df["ptn2_support"] = distance_df["ptn2_support"].clip(lower=1e-9)
-        distance_df["ptn1_support"] = np.log2(distance_df["ptn1_support"])
-        distance_df["ptn2_support"] = np.log2(distance_df["ptn2_support"])
+        distance_df["ptn1_score"] = distance_df["ptn1_score"].clip(lower=1e-9)
+        distance_df["ptn2_score"] = distance_df["ptn2_score"].clip(lower=1e-9)
+        distance_df["ptn1_score"] = np.log2(distance_df["ptn1_score"])
+        distance_df["ptn2_score"] = np.log2(distance_df["ptn2_score"])
 
-    padding = (distance_df["ptn1_support"].max() - distance_df["ptn1_support"].min()) * 0.05
-    internal_thresholds = distance_df["ptn1_support"].quantile(support_quantiles).tolist()
-    thresholds = [distance_df["ptn1_support"].min() - padding]
+    padding = (distance_df["ptn1_score"].max() - distance_df["ptn1_score"].min()) * 0.05
+    internal_thresholds = distance_df["ptn1_score"].quantile(score_quantiles).tolist()
+    thresholds = [distance_df["ptn1_score"].min() - padding]
     thresholds.extend(internal_thresholds)
-    thresholds.append(distance_df["ptn1_support"].max() + padding)
+    thresholds.append(distance_df["ptn1_score"].max() + padding)
     bounds = np.array(thresholds)
 
     range_fns = []
@@ -130,8 +130,8 @@ def visualize_distances_on_regionalized_support_space(
     for i, ptn1_condition in enumerate(range_fns):
         for j, ptn2_condition in enumerate(range_fns):
             subset = bgdf[
-                ptn1_condition(bgdf["ptn1_support"])
-                & ptn2_condition(bgdf["ptn2_support"])
+                ptn1_condition(bgdf["ptn1_score"])
+                & ptn2_condition(bgdf["ptn2_score"])
             ]
             # mean_values[n_ranges - 1 - i, j] = subset["vi_distance"].mean()
             mean_values[i, j] = subset["vi_distance"].mean()
@@ -157,15 +157,15 @@ def visualize_distances_on_regionalized_support_space(
     #         content.
 
     distance_df["scatter_hovertext"] = distance_df.apply(
-        lambda row: f"ptn1: {row.ptn1}<br>ptn2: {row.ptn2}<br>ptn1_support: {row.ptn1_support}<br>ptn2_support: {row.ptn2_support}<br>vi_distance: {row.vi_distance}",
+        lambda row: f"ptn1: {row.ptn1}<br>ptn2: {row.ptn2}<br>ptn1_score: {row.ptn1_score}<br>ptn2_score: {row.ptn2_score}<br>vi_distance: {row.vi_distance}",
         axis=1,
     )
 
     # hover_data = list(distance_df.columns)
     fig.add_trace(
         go.Scattergl(
-            x=distance_df["ptn1_support"],
-            y=distance_df["ptn2_support"],
+            x=distance_df["ptn1_score"],
+            y=distance_df["ptn2_score"],
             mode="markers",
             marker=dict(
                 color=distance_df["vi_distance"], colorscale=scatterplot_palette, size=6
@@ -177,8 +177,8 @@ def visualize_distances_on_regionalized_support_space(
 
     # Set axis labels and title
     fig.update_layout(
-        xaxis_title="log(ptn1_support)",
-        yaxis_title="log(ptn2_support)",
+        xaxis_title="log(ptn1_score)",
+        yaxis_title="log(ptn2_score)",
         title="Distances on Regionalized Support Space",
     )
 
@@ -192,8 +192,8 @@ def visualize_scatter(
     gradient_calibration="shared",
     is_log_scale=True,
 ):
-    if not support_quantiles:
-        support_quantiles = [0.25, 0.5, 0.75]
+    if not score_quantiles:
+        score_quantiles = [0.25, 0.5, 0.75]
     if not distance_quantiles:
         distance_quantiles = [
             0.1,
@@ -207,17 +207,17 @@ def visualize_scatter(
         ]
     df = df.copy()
     if is_log_scale:
-        df["ptn1_support"] = np.log2(df["ptn1_support"])
-        df["ptn2_support"] = np.log2(df["ptn2_support"])
+        df["ptn1_score"] = np.log2(df["ptn1_score"])
+        df["ptn2_score"] = np.log2(df["ptn2_score"])
 
     fig = px.scatter(
         df,
-        x="ptn1_support",
-        y="ptn2_support",
+        x="ptn1_score",
+        y="ptn2_score",
         color="vi_distance",
         labels={
-            "ptn1_support": "log(ptn1_support)",
-            "ptn2_support": "log(ptn2_support)",
+            "ptn1_score": "log(ptn1_score)",
+            "ptn2_score": "log(ptn2_score)",
         },
         hover_data=["vi_distance"],
         title="Scatterplot with Hover Annotations",
@@ -299,18 +299,18 @@ class PlotGenerator:
 
 def main(args=None):
     visualization_types = {
-        # "partition-support-profile": {
+        # "partition-score-profile": {
         #     "plot_fn": visualize_scatter,
         # }
-        "distance-vs-support-quantiles": {
+        "distance-vs-score-quantiles": {
             "plot_fn": plot.visualize_value_on_quantized_space,
             "plot_system": "matplotlib",
         },
-        "distance-vs-support-regions": {
-            "plot_fn": visualize_distances_on_regionalized_support_space,
+        "distance-vs-score-regions": {
+            "plot_fn": visualize_distances_on_regionalized_score_space,
         },
-        "cumulative-support": {
-            "plot_fn": visualize_support_cdf,
+        "cumulative-score": {
+            "plot_fn": visualize_score_cdf,
         },
     }
     visualization_types_str = ", ".join(f"'{vkey}'" for vkey in visualization_types)
@@ -400,11 +400,11 @@ def main(args=None):
         output_format.append("jpg")
 
     # plotter_old = plot.Plotter(runtime_context=runtime_context)
-    # plotter_old.plot_partition_support_cdf()
+    # plotter_old.plot_partition_score_cdf()
     # plotter_old.plot_partition_profile_comparison()
-    # plotter_old.plot_size_entropy_support()
-    # plotter_old.plot_size_vs_support()
-    # plotter_old.plot_entropy_vs_support()
+    # plotter_old.plot_size_entropy_score()
+    # plotter_old.plot_size_vs_score()
+    # plotter_old.plot_entropy_vs_score()
     # plotter.plot_clustermaps()
 
     plotter = PlotGenerator(

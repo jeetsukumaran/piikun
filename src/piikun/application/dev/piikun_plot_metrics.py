@@ -101,8 +101,8 @@ from piikun import plot
 #     config_d,
 # ):
 
-#     pf1_key = "ptn1_support"
-#     pf2_key = "ptn2_support"
+#     pf1_key = "ptn1_score"
+#     pf2_key = "ptn2_score"
 #     dist_key = "vi_distance"
 #     X = df[pf1_key]
 #     Y = df[pf2_key]
@@ -167,11 +167,11 @@ from piikun import plot
 #     plt.colorbar(m, shrink=0.5, aspect=5)
 
 
-# # Updated heatmap_plot_by_support function working with copies to avoid warnings
+# # Updated heatmap_plot_by_score function working with copies to avoid warnings
 
 # def x_heatmap_plot(df, config_d):
-#     pf1_key = "ptn1_support"
-#     pf2_key = "ptn2_support"
+#     pf1_key = "ptn1_score"
+#     pf2_key = "ptn2_score"
 #     dist_key = "vi_normalized_kraskov"
 
 #     # Work with copies of the series to avoid modifying the original DataFrame
@@ -324,8 +324,8 @@ def main(args=None):
     )
     plot_options = parent_parser.add_argument_group("Plot Options")
     plot_options.add_argument(
-            "--num-support-vs-distance-hue-bins",
-            dest="num_support_vs_distance_bins",
+            "--num-score-vs-distance-hue-bins",
+            dest="num_score_vs_distance_bins",
             action="store",
             type=int,
             default=25,
@@ -333,10 +333,10 @@ def main(args=None):
             help="Number of bins for distance color gradient.")
     plot_options.add_argument(
             "--add-jitter",
-            dest="is_jitter_support",
+            dest="is_jitter_score",
             action=argparse.BooleanOptionalAction,
             default=True,
-            help="Add / do not add small noise to separate identical support value when plotting.",
+            help="Add / do not add small noise to separate identical score value when plotting.",
         )
     output_options = parent_parser.add_argument_group("Output Options")
     output_options.add_argument(
