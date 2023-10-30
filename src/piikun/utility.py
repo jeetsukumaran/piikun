@@ -19,6 +19,19 @@ import csv
 class UnavailableFieldException(Exception):
     pass
 
+def dataframe_from_counter(
+    counter,
+    column_names=None,
+):
+    df = pd.DataFrame.from_dict(
+        counter,
+        orient='index',
+        columns=["score"]
+    ).reset_index()
+    if column_names:
+        df.columns = column_names
+    return df
+
 def extract_profile(df, key_col, prop_col_filter_fn):
     prop_cols = [
             col for col in df.columns if prop_col_filter_fn(col)

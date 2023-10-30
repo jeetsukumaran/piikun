@@ -37,7 +37,9 @@ import functools
 import collections
 import pathlib
 import collections
+import pandas as pd
 from piikun import parse
+from piikun import utility
 
 # https://stackoverflow.com/a/30134039
 def iterate_partitions(collection):
@@ -359,21 +361,38 @@ class PartitionCollection:
         self,
         runtime_context,
     ):
-        ptn_data_maps = {}
+
         model_aspect_score_maps = {
-            "summaries.num_species": {
+            "num_species": {
                 "identity_fn": lambda ptn: ptn.n_subsets,
                 "score_fn": lambda ptn: ptn.metadata_d.get("score", 1.0),
             }
 
         }
+
+        metadata_key_exclude_fn = lambda key: True
+
         ptn_summaries = {}
+        aspect_scores = collections.defaultdict( collections.Counter )
+        metadata_keys = collections.Counter()
         for summary_idx, (summary_name, summary_config) in enumerate(model_aspect_score_maps.items()):
             ptn_summaries[summary_name] = collections.Counter()
             for ptn_key, ptn in self._partitions.items():
-                ptn.metadata_d["key"] = ptn_key
+                for md_key, md_value in ptn.metadata_d.items():
+                    if not md_key.startswith("__piikun") and metadata_key_exclude_fn(md_key):
+                        metadata_keys[md_key] += 1
+                ptn.metadata_d["__piikun_key"] = ptn_key
                 aspect_id = summary_config["identity_fn"](ptn)
                 aspect_score = summary_config["score_fn"](ptn)
                 ptn_summaries[summary_name][aspect_id] += aspect_score
-        print(ptn_summaries)
+        ptn_summaries["metadata_keys"] = metadata_keys
+        for summary_idx, (summary_name, summary_results) in enumerate(ptn_summaries.items()):
+            runtime_context.logger.info(f"Summarizing {summary_name}")
+            df = utility.dataframe_from_counter(
+                summary_results,
+                column_names=[summary_name, "score"],
+            )
+            runtime_context.logger.info(df)
+
+
 
