@@ -242,15 +242,15 @@ The ``__distances`` file includes the variance of information distance statistic
 
 ### Standard Workflow Tool Chain
 
-| Command              | Input                       | Output                                |
-|----------------------|-----------------------------|---------------------------------------|
-| ``piikun-compile``   | (Various)                   | ``<title>__partitions.json``          |
-| ``piikun-evaluate``  | ``<title>-partitions.json`` | ``<title>__profiles.json``            |
-|                      |                             | ``<title>__distances.json``           |
-| ``piikun-visualize`` | ``<title>-distances.json``  | ``<title>__<visualization-name>.html`` |
-|                      |                             | ``<title>__<visualization-name>.jpg``  |
-|                      |                             | ``<title>__<visualization-name>.pdf``  |
-|                      |                             | ``<title>__<visualization-name>.png``  |
+| Command              | Purpose                    | Input                        | Output                                            |
+|----------------------|----------------------------|------------------------------|---------------------------------------------------|
+| ``piikun-compile``   | Dataset assembly           | (Various)                    | ``<title>__partitions.json``                      |
+| ``piikun-evaluate``  | Scoring and comparing      | ``<title>__partitions.json`` | ``<title>__profiles.json``                        |
+|                      |                            |                              | ``<title>__distances.json``                       |
+| ``piikun-visualize`` | Plotting and visualization | ``<title>__distances.json``  | ``<title>__distances__<visualization-name>.html`` |
+|                      |                            |                              | ``<title>__distances__<visualization-name>.jpg``  |
+|                      |                            |                              | ``<title>__distances__<visualization-name>.pdf``  |
+|                      |                            |                              | ``<title>__distances__<visualization-name>.png``  |
 
 
 
