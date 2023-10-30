@@ -358,3 +358,4 @@ class PartitionCollection:
         self,
         runtime_context,
     ):
+        pass
