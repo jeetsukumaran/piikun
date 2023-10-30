@@ -22,6 +22,7 @@ class UnavailableFieldException(Exception):
 def dataframe_from_counter(
     counter,
     column_names=None,
+    is_summarize_frequencies=True,
 ):
     df = pd.DataFrame.from_dict(
         counter,

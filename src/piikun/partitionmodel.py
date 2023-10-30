@@ -362,10 +362,12 @@ class PartitionCollection:
         runtime_context,
     ):
 
-        model_aspect_score_maps = {
+        metadata_keys = collections.Counter()
+        summary_name_config_maps = {
             "num_species": {
                 "identity_fn": lambda ptn: ptn.n_subsets,
                 "score_fn": lambda ptn: ptn.metadata_d.get("score", 1.0),
+                "column_names": ["num_species", "score"],
             }
 
         }
@@ -373,9 +375,7 @@ class PartitionCollection:
         metadata_key_exclude_fn = lambda key: True
 
         ptn_summaries = {}
-        aspect_scores = collections.defaultdict( collections.Counter )
-        metadata_keys = collections.Counter()
-        for summary_idx, (summary_name, summary_config) in enumerate(model_aspect_score_maps.items()):
+        for summary_idx, (summary_name, summary_config) in enumerate(summary_name_config_maps.items()):
             ptn_summaries[summary_name] = collections.Counter()
             for ptn_key, ptn in self._partitions.items():
                 for md_key, md_value in ptn.metadata_d.items():
@@ -386,11 +386,18 @@ class PartitionCollection:
                 aspect_score = summary_config["score_fn"](ptn)
                 ptn_summaries[summary_name][aspect_id] += aspect_score
         ptn_summaries["metadata_keys"] = metadata_keys
+        summary_name_config_maps["metadata_keys"] = {
+            "column_names": ["metadata-key", "occupancy"],
+        }
         for summary_idx, (summary_name, summary_results) in enumerate(ptn_summaries.items()):
             runtime_context.logger.info(f"Summarizing {summary_name}")
+            summary_config = summary_name_config_maps.get(summary_name, {})
+            column_names = summary_config.get("column_names")
+            if not column_names:
+                column_names = [summary_name, "score"]
             df = utility.dataframe_from_counter(
                 summary_results,
-                column_names=[summary_name, "score"],
+                column_names=column_names,
             )
             runtime_context.logger.info(df)
 
