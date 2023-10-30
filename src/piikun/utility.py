@@ -22,7 +22,8 @@ class UnavailableFieldException(Exception):
 def dataframe_from_counter(
     counter,
     column_names=None,
-    is_summarize_frequencies=True,
+    sort="descending",
+    is_summarize_frequencies=False,
 ):
     df = pd.DataFrame.from_dict(
         counter,
@@ -31,6 +32,16 @@ def dataframe_from_counter(
     ).reset_index()
     if column_names:
         df.columns = column_names
+    column_names = list(df.columns)
+    df_score = df[column_names[1]]
+    if is_summarize_frequencies:
+        df["frequency"] = df_score / df_score.sum()
+    if sort:
+        kwargs = {
+            "by": column_names[1],
+            "ascending": sort == "ascending"
+        }
+        df = df.sort_values(**kwargs)
     return df
 
 def extract_profile(df, key_col, prop_col_filter_fn):

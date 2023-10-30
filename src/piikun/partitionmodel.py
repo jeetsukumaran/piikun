@@ -363,6 +363,7 @@ class PartitionCollection:
     ):
 
         metadata_keys = collections.Counter()
+        distinct_species = collections.Counter()
         summary_name_config_maps = {
             "num_species": {
                 "identity_fn": lambda ptn: ptn.n_subsets,
@@ -384,11 +385,19 @@ class PartitionCollection:
                 ptn.metadata_d["__piikun_key"] = ptn_key
                 aspect_id = summary_config["identity_fn"](ptn)
                 aspect_score = summary_config["score_fn"](ptn)
+                for subset in ptn._subsets:
+                    species_lineage_set = frozenset(subset._elements)
+                    distinct_species[species_lineage_set] += aspect_score
                 ptn_summaries[summary_name][aspect_id] += aspect_score
+
         ptn_summaries["metadata_keys"] = metadata_keys
         summary_name_config_maps["metadata_keys"] = {
             "column_names": ["metadata-key", "occupancy"],
         }
+
+        ptn_summaries["distinct_species"] = distinct_species
+
+
         for summary_idx, (summary_name, summary_results) in enumerate(ptn_summaries.items()):
             runtime_context.logger.info(f"Summarizing {summary_name}")
             summary_config = summary_name_config_maps.get(summary_name, {})
