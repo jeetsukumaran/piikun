@@ -352,3 +352,9 @@ class PartitionCollection:
         runtime_context and runtime_context.logger.info(
             f"Reading completed: {end_len - start_len} of {n_source_partitions} partitions read from source ({len(self)} read in total)"
         )
+
+
+    def summarize_partitions(
+        self,
+        runtime_context,
+    ):

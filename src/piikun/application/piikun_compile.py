@@ -137,8 +137,8 @@ def main():
         help="Directory for output files [default='%(default)s'].",
     )
     output_options.add_argument(
-        "--print-output-paths",
-        dest="is_print_output_paths",
+        "--print-artifact-paths",
+        dest="is_print_artifact_paths",
         action="store_true",
         default=None,
         help="Print a (JSON) dictionary of output files: ``{ '<source-filepath>': '<output-filepath>' }``.",
@@ -207,7 +207,7 @@ def main():
             out.write(json.dumps(partition_definition_d))
             out.write("\n")
             out.close()
-    if args.is_print_output_paths:
+    if args.is_print_artifact_paths:
         sys.stdout.write(json.dumps(output_paths) + "\n")
 
 if __name__ == "__main__":

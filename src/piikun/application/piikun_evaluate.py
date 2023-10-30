@@ -286,7 +286,7 @@ def main():
     #         default=3,
     #         help="Run noise level [default=%(default)s].")
     output_options.add_argument(
-        "--print-output-paths",
+        "--print-artifact-paths",
         dest="is_print_output_paths",
         action="store_true",
         default=None,

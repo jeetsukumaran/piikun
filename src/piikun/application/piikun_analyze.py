@@ -166,7 +166,7 @@ def main():
             cmd.append("--format")
             cmd.append(args.source_format)
         cmd.append("--merge")
-        cmd.append("--print-output-paths")
+        cmd.append("--print-artifact-paths")
         cmd.extend(generate_arguments(args=args))
         cmd.extend(source_paths)
         cp = execute_command(cmd, runtime_context)
@@ -174,7 +174,7 @@ def main():
 
     if is_run_evaluator:
         cmd = [ "piikun-evaluate" ]
-        cmd.append("--print-output-paths")
+        cmd.append("--print-artifact-paths")
         args.is_store_source_paths = None
         cmd.extend(generate_arguments(
             args=args,
@@ -185,7 +185,7 @@ def main():
 
     if is_run_visualizer:
         cmd = [ "piikun-visualize" ]
-        # cmd.append("--print-output-paths")
+        # cmd.append("--print-artifact-paths")
         args.is_store_source_paths = None
         cmd.extend(generate_arguments(
             args=args,
