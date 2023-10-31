@@ -1,0 +1,25 @@
+S1_i1    S1.sub1
+S1_i2    S1.sub1
+S1_i3    S1.sub1
+S1_i4    S1.sub1
+S4_i1    S4.sub1
+S4_i2    S4.sub1
+S4_i3    S4.sub1
+S4_i4    S4.sub1
+S3_i1    S3.sub1
+S3_i2    S3.sub1
+S3_i3    S3.sub1
+S3_i4    S3.sub1
+S6_i1    S6.sub1
+S6_i2    S6.sub1
+S6_i3    S6.sub1
+S6_i4    S6.sub1
+S5_i1    S5.sub1
+S5_i2    S5.sub1
+S5_i3    S5.sub1
+S5_i4    S5.sub1
+S2_i1    S2.sub1
+S2_i2    S2.sub1
+S2_i3    S2.sub1
+S2_i4    S2.sub1
+

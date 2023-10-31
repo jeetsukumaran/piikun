@@ -1,0 +1,5 @@
+#! /bin/bash
+
+set -e -o pipefail
+bpp --cfile bpprun_00001.input.bpp.ctl
+spdw-extract-bpp-a10-tree.py -p 0.95 -o bpprun_00001.results.summary bpprun_00001.results.out.txt bpprun_00001.guide-tree.nex

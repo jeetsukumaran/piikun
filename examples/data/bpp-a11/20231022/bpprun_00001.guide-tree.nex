@@ -1,0 +1,18 @@
+#NEXUS
+
+BEGIN TAXA;
+    DIMENSIONS NTAX=6;
+    TAXLABELS
+        S1.sub1
+        S4.sub1
+        S3.sub1
+        S6.sub1
+        S5.sub1
+        S2.sub1
+  ;
+END;
+
+BEGIN TREES;
+    TREE 1 = [&R] ((S1.sub1:11.32998213731602[&true_population_id=S1],(S4.sub1:8.523765245996941[&true_population_id=S4],(S3.sub1:5.722613229155453[&true_population_id=S3],(S6.sub1:2.900799021868888[&true_population_id=S6],S5.sub1:2.900799021868888[&true_population_id=S5]):2.8218142072865646[&true_population_id=null]):2.8011520168414883[&true_population_id=null]):2.806216891319078[&true_population_id=null]):6.043995703647904[&true_population_id=null],S2.sub1:17.373977840963924[&true_population_id=S2]):-1e-10[&true_population_id=null];
+END;
+
