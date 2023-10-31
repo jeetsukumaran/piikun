@@ -1,0 +1,7 @@
+#! /bin/bash
+#$ -cwd
+#$ -V
+#$ -S /bin/bash
+#$ -l h_vmem=12G
+#$ -l virtual_free=12G
+bpp --cfile bpprun_00001.input.bpp.ctl
