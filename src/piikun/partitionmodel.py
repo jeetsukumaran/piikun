@@ -365,9 +365,11 @@ class PartitionCollection:
         ptn_summaries = {}
         summary_name_config_maps = {}
 
-        metadata_key_exclude_fn = lambda key: True
+        metadata_key_filter_fn = lambda key: True
         summary_name_config_maps["metadata_keys"] = {
-                "summary_fn": lambda ptn: [ (md_key, 1) for md_key in ptn.metadata_d ],
+                "summary_fn": lambda ptn: [ (md_key, 1) for md_key in ptn.metadata_d
+                                                if ( (not md_key.startswith("__piikun")) and metadata_key_filter_fn(md_key))
+                                          ],
                 "column_names": ["metadata", "count"],
         }
 
