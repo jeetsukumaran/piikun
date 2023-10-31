@@ -368,29 +368,22 @@ class PartitionCollection:
         metadata_key_exclude_fn = lambda key: True
         summary_name_config_maps["metadata_keys"] = {
                 "summary_fn": lambda ptn: [ (md_key, 1) for md_key in ptn.metadata_d ],
-                "column_names": ["species", "score"],
+                "column_names": ["metadata", "count"],
         }
 
         summary_name_config_maps["species_defs"] = {
-                "summary_fn": lambda ptn: [ (frozenset(subset._elements), ptn.metadata_d.get("score", 1.0)) for subset in ptn._subsets ],
-                "column_names": ["species", "score"],
+                "summary_fn": lambda ptn: [ ("; ".join(sorted(subset._elements)), ptn.metadata_d.get("score", 1.0)) for subset in ptn._subsets ],
+                "column_names": ["species_composition", "weight"],
         }
         summary_name_config_maps["num_species"] = {
                 "summary_fn": lambda ptn: [(ptn.n_subsets, ptn.metadata_d.get("score", 1.0))],
-                "column_names": ["num_species", "score"],
+                "column_names": ["num_species", "weight"],
         }
 
         for summary_idx, (summary_name, summary_config) in enumerate(summary_name_config_maps.items()):
             ptn_summaries[summary_name] = collections.Counter()
             for ptn_key, ptn in self._partitions.items():
-                # for md_key, md_value in ptn.metadata_d.items():
-                #     if not md_key.startswith("__piikun") and metadata_key_exclude_fn(md_key):
-                #         metadata_keys[md_key] += 1
                 ptn.metadata_d["__piikun_key"] = ptn_key
-                # for subset in ptn._subsets:
-                #     species_lineage_set = frozenset(subset._elements)
-                #     distinct_species[species_lineage_set] += aspect_score
-
                 if "summary_fn" in summary_config:
                     for (aspect_id, aspect_score) in summary_config["summary_fn"](ptn):
                         ptn_summaries[summary_name][aspect_id] += aspect_score
