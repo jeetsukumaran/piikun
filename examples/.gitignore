@@ -6,4 +6,4 @@
 # Exclude all subdirectories
 # !/*/
 # Exclude following specific subdirectories
-# data/
+!data/
