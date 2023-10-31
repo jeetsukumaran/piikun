@@ -365,17 +365,13 @@ class PartitionCollection:
         ptn_summaries = {}
         summary_name_config_maps = {}
 
-        metadata_keys = collections.Counter()
-        ptn_summaries["metadata_keys"] = metadata_keys
-        summary_name_config_maps["metadata_keys"] = {
-            "column_names": ["metadata-key", "occupancy"],
-        }
         metadata_key_exclude_fn = lambda key: True
+        summary_name_config_maps["metadata_keys"] = {
+                "summary_fn": lambda ptn: [ (md_key, 1) for md_key in ptn.metadata_d ],
+                "column_names": ["species", "score"],
+        }
 
-        # distinct_species = collections.Counter()
-        # ptn_summaries["distinct_species"] = distinct_species
-
-        summary_name_config_maps["distinct_species"] = {
+        summary_name_config_maps["species_defs"] = {
                 "summary_fn": lambda ptn: [ (frozenset(subset._elements), ptn.metadata_d.get("score", 1.0)) for subset in ptn._subsets ],
                 "column_names": ["species", "score"],
         }
@@ -387,9 +383,9 @@ class PartitionCollection:
         for summary_idx, (summary_name, summary_config) in enumerate(summary_name_config_maps.items()):
             ptn_summaries[summary_name] = collections.Counter()
             for ptn_key, ptn in self._partitions.items():
-                for md_key, md_value in ptn.metadata_d.items():
-                    if not md_key.startswith("__piikun") and metadata_key_exclude_fn(md_key):
-                        metadata_keys[md_key] += 1
+                # for md_key, md_value in ptn.metadata_d.items():
+                #     if not md_key.startswith("__piikun") and metadata_key_exclude_fn(md_key):
+                #         metadata_keys[md_key] += 1
                 ptn.metadata_d["__piikun_key"] = ptn_key
                 # for subset in ptn._subsets:
                 #     species_lineage_set = frozenset(subset._elements)
