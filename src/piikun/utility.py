@@ -25,10 +25,12 @@ def dataframe_from_counter(
     sort="descending",
     is_summarize_frequencies=False,
 ):
+    if not column_names:
+        column_names = ["state", "weight"]
     df = pd.DataFrame.from_dict(
         counter,
         orient='index',
-        columns=["score"]
+        columns=[column_names[1]]
     ).reset_index()
     if column_names:
         df.columns = column_names
@@ -41,7 +43,7 @@ def dataframe_from_counter(
             "by": column_names[1],
             "ascending": sort == "ascending"
         }
-        df = df.sort_values(**kwargs)
+        df = df.sort_values(**kwargs).reset_index(drop=True)
     return df
 
 def extract_profile(df, key_col, prop_col_filter_fn):

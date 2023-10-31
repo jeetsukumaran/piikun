@@ -371,7 +371,7 @@ class PartitionCollection:
                 "column_names": ["metadata", "count"],
         }
 
-        summary_name_config_maps["species_defs"] = {
+        summary_name_config_maps["species_comps"] = {
                 "summary_fn": lambda ptn: [ ("; ".join(sorted(subset._elements)), ptn.metadata_d.get("score", 1.0)) for subset in ptn._subsets ],
                 "column_names": ["species_composition", "weight"],
         }
