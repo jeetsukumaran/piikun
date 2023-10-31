@@ -362,20 +362,28 @@ class PartitionCollection:
         runtime_context,
     ):
 
+        ptn_summaries = {}
+        summary_name_config_maps = {}
+
         metadata_keys = collections.Counter()
-        distinct_species = collections.Counter()
-        summary_name_config_maps = {
-            "num_species": {
-                "identity_fn": lambda ptn: ptn.n_subsets,
-                "score_fn": lambda ptn: ptn.metadata_d.get("score", 1.0),
-                "column_names": ["num_species", "score"],
-            }
-
+        ptn_summaries["metadata_keys"] = metadata_keys
+        summary_name_config_maps["metadata_keys"] = {
+            "column_names": ["metadata-key", "occupancy"],
         }
-
         metadata_key_exclude_fn = lambda key: True
 
-        ptn_summaries = {}
+        # distinct_species = collections.Counter()
+        # ptn_summaries["distinct_species"] = distinct_species
+
+        summary_name_config_maps["distinct_species"] = {
+                "summary_fn": lambda ptn: [ (frozenset(subset._elements), ptn.metadata_d.get("score", 1.0)) for subset in ptn._subsets ],
+                "column_names": ["species", "score"],
+        }
+        summary_name_config_maps["num_species"] = {
+                "summary_fn": lambda ptn: [(ptn.n_subsets, ptn.metadata_d.get("score", 1.0))],
+                "column_names": ["num_species", "score"],
+        }
+
         for summary_idx, (summary_name, summary_config) in enumerate(summary_name_config_maps.items()):
             ptn_summaries[summary_name] = collections.Counter()
             for ptn_key, ptn in self._partitions.items():
@@ -383,24 +391,18 @@ class PartitionCollection:
                     if not md_key.startswith("__piikun") and metadata_key_exclude_fn(md_key):
                         metadata_keys[md_key] += 1
                 ptn.metadata_d["__piikun_key"] = ptn_key
-                aspect_id = summary_config["identity_fn"](ptn)
-                aspect_score = summary_config["score_fn"](ptn)
-                for subset in ptn._subsets:
-                    species_lineage_set = frozenset(subset._elements)
-                    distinct_species[species_lineage_set] += aspect_score
-                ptn_summaries[summary_name][aspect_id] += aspect_score
+                # for subset in ptn._subsets:
+                #     species_lineage_set = frozenset(subset._elements)
+                #     distinct_species[species_lineage_set] += aspect_score
 
-        ptn_summaries["metadata_keys"] = metadata_keys
-        summary_name_config_maps["metadata_keys"] = {
-            "column_names": ["metadata-key", "occupancy"],
-        }
-
-        ptn_summaries["distinct_species"] = distinct_species
-
+                if "summary_fn" in summary_config:
+                    for (aspect_id, aspect_score) in summary_config["summary_fn"](ptn):
+                        ptn_summaries[summary_name][aspect_id] += aspect_score
 
         for summary_idx, (summary_name, summary_results) in enumerate(ptn_summaries.items()):
-            runtime_context.logger.info(f"Summarizing {summary_name}")
+            output_filepath = runtime_context.compose_output_path(subtitle=f"summary-{summary_name}", ext="tsv")
             summary_config = summary_name_config_maps.get(summary_name, {})
+            runtime_context.logger.info(f"Summarizing {summary_config.get('description', summary_name)}: {output_filepath}")
             column_names = summary_config.get("column_names")
             if not column_names:
                 column_names = [summary_name, "score"]
@@ -408,6 +410,7 @@ class PartitionCollection:
                 summary_results,
                 column_names=column_names,
             )
+            df.to_csv(output_filepath, sep="\t")
             runtime_context.logger.info(df)
 
 
