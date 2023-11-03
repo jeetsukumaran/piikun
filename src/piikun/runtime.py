@@ -129,7 +129,6 @@ class RuntimeContext:
         output_configuration=None,
     ):
         self.logger = logger
-            # from yakherd import Logger
         self.logger.info(
             f"Runtime context {id(self)} initialized at {datetime.datetime.now()}"
         )

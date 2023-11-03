@@ -38,7 +38,6 @@ import json
 import math
 import xml.etree.ElementTree as ET
 
-import yakherd
 from piikun import partitionmodel
 from piikun import utility
 
