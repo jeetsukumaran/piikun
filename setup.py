@@ -40,7 +40,7 @@ setup(
             "piikun-evaluate = piikun.application.piikun_evaluate:main",
             "piikun-visualize = piikun.application.piikun_visualize:main",
             "piikun-analyze = piikun.application.piikun_analyze:main",
-            # "piikun-analyze = piikun.application.piikun_analyze:main",
+            "piikun-amova = piikun.application.piikun_amova:main",
             # "piikun-plot-metrics = piikun.application.piikun_plot_metrics:main",
             # "piikun-visualize = piikun.application.piikun_visualize:main",
             # "piikun-enumerate = piikun.application.piikun_enumerate:main",
