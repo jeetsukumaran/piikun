@@ -429,6 +429,7 @@ def main(args=None):
         "distance_df": distance_df,
         "palette": args.palette,
     }
+    distance_df["score"] = distance_df["vi_distance"]
     for visualization_type_key in visualizations:
         visualization_name = visualization_type_key
         visualization_d = visualization_types[visualization_type_key]
@@ -444,7 +445,7 @@ def main(args=None):
                 plot_system = visualization_d.get("plot_system", "plotly")
             )
         except utility.UnavailableFieldException as e:
-            _log_info(f"- Required data field unavailable")
+            _log_info(f"- Required data field unavailable: {e}")
 
 
 if __name__ == "__main__":
