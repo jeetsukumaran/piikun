@@ -268,6 +268,32 @@ class RuntimeContext:
         # to avoid importing time everywhere when debugging
         time.sleep(*args, **kwargs)
 
+
+    def open_data_writer(
+        self,
+        *args,
+        format="json",
+        **kwargs
+    ):
+        if "ext" not in kwargs:
+            kwargs["ext"] = format
+        output_handle = self.open_output(**kwargs)
+
+        if format == "json":
+            data_store = JsonListWriter(
+                file_handle=output_handle,
+            )
+        else:
+            config_d = {
+                "delimiter": "," if format == "csv" else "\t",
+                "is_write_header": True,
+            }
+            data_store = DataStore(
+                file_handle=output_handle,
+                config_d=config_d,
+            )
+        return data_store
+
     def compose_output_title(
         self,
         output_title=None,
