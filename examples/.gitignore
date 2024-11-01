@@ -7,3 +7,4 @@
 # !/*/
 # Exclude following specific subdirectories
 !data/
+!bin/
