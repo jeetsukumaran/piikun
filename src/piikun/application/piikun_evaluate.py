@@ -161,6 +161,13 @@ def compare_partitions(
         progress_bar,
     ):
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
+        comparison_evaluation_fns = (
+            ("vi_mi", lambda ptn1, ptn2: ptn1.vi_mutual_information(ptn2)),
+            ("vi_joint_entropy", lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2)),
+            ("vi_distance", lambda ptn1, ptn2: ptn1.vi_distance(ptn2)),
+            ("vi_normalized_kraskov", lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2)),
+            ("hamming_loss", lambda ptn1, ptn2: ptn1.hamming_loss(ptn2)),
+        )
         for pkey1, ptn1 in partitions._partitions.items():
             profile_d = {
                 "partition_id": pkey1,
@@ -193,14 +200,8 @@ def compare_partitions(
                     comparison_d[f"ptn2_{k}"] = v
                 comparison_d["vi_entropy_ptn1"] = ptn1.vi_entropy()
                 comparison_d["vi_entropy_ptn2"] = ptn2.vi_entropy()
-                for value_fieldname, value_fn in (
-                    ("vi_mi", ptn1.vi_mutual_information),
-                    ("vi_joint_entropy", ptn1.vi_joint_entropy),
-                    ("vi_distance", ptn1.vi_distance),
-                    ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
-                    ("hamming_loss", ptn1.hamming_loss),
-                ):
-                    comparison_d[value_fieldname] = value_fn(ptn2)
+                for value_fieldname, value_fn in comparison_evaluation_fns:
+                    comparison_d[value_fieldname] = value_fn(ptn1, ptn2)
                 partition_oneway_distances.write(comparison_d)
     runtime_context.logger.info("Comparison completed")
     partition_profile_store.close()
