@@ -1,35 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-##############################################################################
-## Copyright (c) 2023 Jeet Sukumaran.
-## All rights reserved.
-##
-## Redistribution and use in source and binary forms, with or without
-## modification, are permitted provided that the following conditions are met:
-##
-##     * Redistributions of source code must retain the above copyright
-##       notice, this list of conditions and the following disclaimer.
-##     * Redistributions in binary form must reproduce the above copyright
-##       notice, this list of conditions and the following disclaimer in the
-##       documentation and/or other materials provided with the distribution.
-##     * The names of its contributors may not be used to endorse or promote
-##       products derived from this software without specific prior written
-##       permission.
-##
-## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-## ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-## WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-## DISCLAIMED. IN NO EVENT SHALL JEET SUKUMARAN BE LIABLE FOR ANY DIRECT,
-## INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-## BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-## DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-##
-##############################################################################
-
 import os
 import pathlib
 import sys
@@ -42,11 +13,119 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
 
 from piikun import plot
 from piikun import utility
 from piikun import runtime
+
+import seaborn as sns
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+def visualize_distance_correlations(
+    distance_df,
+    profile_df,
+    palette="RdYlBu",
+):
+    """Create correlation matrix heatmap between different distance metrics"""
+    distance_cols = [
+        'vi_mi', 'vi_joint_entropy', 'vi_distance',
+        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+    ]
+    corr_matrix = distance_df[distance_cols].corr()
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    im = sns.heatmap(
+        corr_matrix,
+        annot=True,
+        # cmap=palette, # <== k
+        center=0,
+        vmin=-1,
+        vmax=1,
+        square=True,
+        ax=ax
+    )
+    plt.title('Correlations Between Distance Metrics')
+    return fig
+
+def visualize_distance_distributions(
+    distance_df,
+    profile_df,
+    palette="Geyser",
+):
+    """Create violin plots showing distribution of each distance metric"""
+    distance_cols = [
+        'vi_mi', 'vi_joint_entropy', 'vi_distance',
+        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+    ]
+
+    # Create plotly figure
+    fig = go.Figure()
+
+    for metric in distance_cols:
+        fig.add_trace(go.Violin(
+            y=distance_df[metric],
+            name=metric,
+            box_visible=True,
+            meanline_visible=True,
+        ))
+
+    fig.update_layout(
+        title="Distribution of Distance Metrics",
+        xaxis_title="Distance Metric",
+        yaxis_title="Value",
+        showlegend=False,
+    )
+    return fig
+
+def visualize_distance_matrices(
+    distance_df,
+    profile_df,
+    palette="Viridis",
+):
+    """Create heatmaps showing pairwise distances for each metric"""
+    distance_cols = [
+        'vi_mi', 'vi_joint_entropy', 'vi_distance',
+        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+    ]
+
+    fig = go.Figure()
+
+    # Create subplot grid
+    fig = make_subplots(
+        rows=2, cols=3,
+        subplot_titles=distance_cols
+    )
+
+    for idx, metric in enumerate(distance_cols):
+        row = idx // 3 + 1
+        col = idx % 3 + 1
+
+        # Reshape data into matrix form
+        matrix = distance_df.pivot(
+            index='ptn1',
+            columns='ptn2',
+            values=metric
+        )
+
+        fig.add_trace(
+            go.Heatmap(
+                z=matrix,
+                colorscale=palette,
+                showscale=True,
+                name=metric
+            ),
+            row=row, col=col
+        )
+
+    fig.update_layout(
+        title="Distance Matrices by Metric",
+        height=800,
+        showlegend=False,
+    )
+
+    return fig
 
 
 def visualize_score_cdf(
@@ -311,6 +390,18 @@ def main(args=None):
         },
         "cumulative-score": {
             "plot_fn": visualize_score_cdf,
+        },
+        "distance-correlations": {
+            "plot_fn": visualize_distance_correlations,
+            "plot_system": "matplotlib",
+        },
+        "distance-distributions": {
+            "plot_fn": visualize_distance_distributions,
+            "plot_system": "plotly",
+        },
+        "distance-matrices": {
+            "plot_fn": visualize_distance_matrices,
+            "plot_system": "plotly",
         },
     }
     visualization_types_str = ", ".join(f"'{vkey}'" for vkey in visualization_types)
