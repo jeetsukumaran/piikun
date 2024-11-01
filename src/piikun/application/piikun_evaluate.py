@@ -69,8 +69,11 @@ def create_full_profile_distance_df(
         distance_columns = list(export_distance_columns)
     else:
         distances_columns = [
+            "vi_mi",
+            "vi_joint_entropy",
             "vi_distance",
             "vi_normalized_kraskov",
+            "hamming_loss",
         ]
     partition_keys = list(profiles_df["partition_id"])
     new_dataset = []
@@ -91,18 +94,11 @@ def create_full_profile_distance_df(
         for pkd_idx, pk1 in enumerate(partition_keys):
             # runtime_context and runtime_context.logger.info(f"Exporting partition {pkd_idx+1} of {len(partition_keys)}: '{pk1}'")
             seen_comparisons = set()
-            # pk1_ptn1_df = distances_df[ distances_df["ptn1"] == pk1 ]
-            # pk1_ptn2_df = distances_df[ distances_df["ptn2"] == pk1 ]
-            # pk1_ptns_df = pd.concat([pk1_ptn1_df, pk1_ptn2_df])
             for pk2 in partition_keys:
                 key = (pk1, pk2)
                 if key in seen_comparisons:
                     continue
-                # print(f"---- {key}: PK1 = {pk1}, PK2 = {pk2} ")
                 seen_comparisons.add(key)
-                # message_kwargs = {}
-                # message_kwargs["memory_usage"] = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
-                # progress_bar.update(task1, advance=1, **message_kwargs)
                 progress_bar.update(task1, advance=1)
                 progress_bar.refresh()
                 condition = ((distances_df["ptn1"] == pk1) & (distances_df["ptn2"] == pk2)) | ((distances_df["ptn1"] == pk2) & (distances_df["ptn2"] == pk1))
