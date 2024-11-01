@@ -194,7 +194,8 @@ def compare_partitions(
         "vi_joint_entropy": lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2),
         "vi_distance": lambda ptn1, ptn2: ptn1.vi_distance(ptn2),
         "vi_normalized_kraskov": lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2),
-        "hamming_loss": lambda ptn1, ptn2: ptn1.hamming_loss(ptn2),
+        "misclassification_error_meila_heckerman": lambda ptn1, ptn2: ptn1.mirkin_metric(ptn2),
+        "mirkin_metric": lambda ptn1, ptn2: ptn1.mirkin_metric(ptn2),
         "ahrens_match_ratio": lambda ptn1, ptn2: ptn1.ahrens_match_ratio(ptn2),
     }
 

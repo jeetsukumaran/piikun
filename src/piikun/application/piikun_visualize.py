@@ -31,7 +31,7 @@ def visualize_distance_correlations(
     """Create correlation matrix heatmap between different distance metrics"""
     distance_cols = [
         'vi_mi', 'vi_joint_entropy', 'vi_distance',
-        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+        'vi_normalized_kraskov', 'mirkin_metric', 'ahrens_match_ratio'
     ]
     corr_matrix = distance_df[distance_cols].corr()
 
@@ -57,7 +57,7 @@ def visualize_distance_distributions(
     """Create violin plots showing distribution of each distance metric"""
     distance_cols = [
         'vi_mi', 'vi_joint_entropy', 'vi_distance',
-        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+        'vi_normalized_kraskov', 'mirkin_metric', 'ahrens_match_ratio'
     ]
 
     # Create plotly figure
@@ -87,7 +87,7 @@ def visualize_distance_matrices(
     """Create heatmaps showing pairwise distances for each metric"""
     distance_cols = [
         'vi_mi', 'vi_joint_entropy', 'vi_distance',
-        'vi_normalized_kraskov', 'hamming_loss', 'ahrens_match_ratio'
+        'vi_normalized_kraskov', 'mirkin_metric', 'ahrens_match_ratio'
     ]
 
     fig = go.Figure()
