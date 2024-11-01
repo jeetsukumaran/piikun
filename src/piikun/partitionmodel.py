@@ -242,6 +242,48 @@ class Partition:
         return jensenshannon(P, Q, base=self.log_base)
 
 
+    @functools.cache
+    def hamming_loss(self, other):
+        """
+        Calculate the Hamming loss between two partitions.
+        Hamming loss measures the fraction of element pairs that are clustered
+        differently between the two partitions.
+        """
+        assert self._elements == other._elements
+
+        total_pairs = 0
+        mismatched_pairs = 0
+
+        # Get list of elements to ensure consistent ordering
+        elements = list(self._elements)
+
+        # Create maps from elements to their subset indices
+        self_element_to_subset = {}
+        other_element_to_subset = {}
+
+        for idx, subset in enumerate(self._subsets):
+            for element in subset._elements:
+                self_element_to_subset[element] = idx
+
+        for idx, subset in enumerate(other._subsets):
+            for element in subset._elements:
+                other_element_to_subset[element] = idx
+
+        # Compare all pairs of elements
+        for i in range(len(elements)):
+            for j in range(i + 1, len(elements)):
+                elem1, elem2 = elements[i], elements[j]
+                total_pairs += 1
+
+                # Check if elements are in same subset in both partitions
+                same_subset_self = (self_element_to_subset[elem1] == self_element_to_subset[elem2])
+                same_subset_other = (other_element_to_subset[elem1] == other_element_to_subset[elem2])
+
+                if same_subset_self != same_subset_other:
+                    mismatched_pairs += 1
+
+        return mismatched_pairs / total_pairs if total_pairs > 0 else 0.0
+
 
 class PartitionCollection:
     def __init__(self, log_base=2.0):

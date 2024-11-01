@@ -202,6 +202,7 @@ def compare_partitions(
                     ("vi_joint_entropy", ptn1.vi_joint_entropy),
                     ("vi_distance", ptn1.vi_distance),
                     ("vi_normalized_kraskov", ptn1.vi_normalized_kraskov),
+                    ("hamming_loss", pt1.hamming_loss),
                 ):
                     comparison_d[value_fieldname] = value_fn(ptn2)
                 partition_oneway_distances.write(comparison_d)
