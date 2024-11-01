@@ -16,5 +16,6 @@
 export DATABANK_ROOT=../data/
 
 piikun-compile --format nested-lists ${DATABANK_ROOT}/nested-lists/ex1.json
+piikun-evaluate ex1__partitions.json
 
 

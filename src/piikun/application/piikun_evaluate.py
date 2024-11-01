@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -53,46 +52,6 @@ class OutputFormatRegistry:
         """List of supported format names"""
         return list(self._formats.keys())
 
-class OutputManager:
-    """Manages multiple output formats and file handles"""
-
-    def __init__(self, runtime_context, format_registry):
-        self.runtime_context = runtime_context
-        self.format_registry = format_registry
-        self.active_formats = set()
-        self.writers = {}
-
-    def add_format(self, format_name: str):
-        """Add an output format to the active set"""
-        if format_name not in self.format_registry.supported_formats:
-            raise ValueError(f"Unsupported format: {format_name}")
-        self.active_formats.add(format_name)
-
-    def open_writers(self, subtitle: str) -> Dict:
-        """Open writers for all active formats"""
-        writers = {}
-        for fmt in self.active_formats:
-            format_config = self.format_registry.get_format(fmt)
-            writer = self.runtime_context.open_data_writer(
-                subtitle=f"{subtitle}.{fmt}",
-                format=fmt,
-            )
-            writers[fmt] = writer
-        return writers
-
-    def write_data(self, writers: Dict, data: Dict):
-        """Write data to all active format writers"""
-        for fmt, writer in writers.items():
-            if self.format_registry.get_format(fmt).is_delimited:
-                writer.write_d(data)
-            else:
-                writer.write(data)
-
-    def close_writers(self, writers: Dict):
-        """Close all writers"""
-        for writer in writers.values():
-            writer.close()
-
 def read_data_file(
     filepath: Union[str, pathlib.Path],
     format: str,
@@ -100,25 +59,10 @@ def read_data_file(
 ) -> pd.DataFrame:
     """
     Read data from a file in the specified format into a pandas DataFrame.
-
-    Parameters
-    ----------
-    filepath : str or pathlib.Path
-        Path to the data file
-    format : str
-        Format of the data file
-    format_registry : OutputFormatRegistry
-        Registry containing format configurations
-
-    Returns
-    -------
-    pandas.DataFrame
-        Data from the file as a DataFrame
     """
     format_config = format_registry.get_format(format)
-
     if format == "json":
-        return pd.read_json(filepath)
+        return pd.read_json(filepath, lines=True)
     elif format_config.is_delimited:
         return pd.read_csv(filepath, sep=format_config.delimiter)
     else:
@@ -138,34 +82,6 @@ def create_full_profile_distance_df(
 ) -> pd.DataFrame:
     """
     Create a full profile distance DataFrame by combining profile and distance data.
-
-    Parameters
-    ----------
-    profiles_df : pandas.DataFrame, optional
-        DataFrame containing profile data
-    distances_df : pandas.DataFrame, optional
-        DataFrame containing distance data
-    export_profile_columns : list of str, optional
-        Specific profile columns to export
-    export_distance_columns : list of str, optional
-        Specific distance columns to export
-    profiles_path : str or pathlib.Path, optional
-        Path to profiles data file if profiles_df not provided
-    distances_path : str or pathlib.Path, optional
-        Path to distances data file if distances_df not provided
-    merged_path : str or pathlib.Path, optional
-        Path to write merged data
-    output_format : str, default="json"
-        Format for output file
-    format_registry : OutputFormatRegistry, optional
-        Registry of format configurations
-    runtime_context : RuntimeContext, optional
-        Runtime context for logging and progress tracking
-
-    Returns
-    -------
-    pandas.DataFrame
-        Combined profile and distance data
     """
     if format_registry is None:
         format_registry = OutputFormatRegistry()
@@ -251,7 +167,7 @@ def create_full_profile_distance_df(
     if merged_path:
         format_config = format_registry.get_format(output_format)
         if output_format == "json":
-            df.to_json(merged_path, orient="records")
+            df.to_json(merged_path, orient="records", lines=True)
         elif format_config.is_delimited:
             df.to_csv(merged_path, sep=format_config.delimiter, index=False)
         if runtime_context:
@@ -264,25 +180,7 @@ def compare_partitions(
     partitions,
     output_formats: List[str],
 ):
-    """
-    Compare partitions and output results in specified formats.
-
-    Parameters
-    ----------
-    runtime_context : RuntimeContext
-        Runtime context for logging and output management
-    partitions : PartitionCollection
-        Collection of partitions to compare
-    output_formats : list of str
-        List of output formats to generate
-    """
-    format_registry = OutputFormatRegistry()
-    output_manager = OutputManager(runtime_context, format_registry)
-
-    # Add requested formats
-    for fmt in output_formats:
-        output_manager.add_format(fmt)
-
+    """Compare partitions and output results in specified formats."""
     partitions.validate(runtime_context=runtime_context)
     n_expected_cmps = int(len(partitions) * len(partitions) / 2) + int(
         len(partitions) / 2
@@ -290,9 +188,30 @@ def compare_partitions(
     n_comparisons = 0
     seen_compares = set()
 
-    # Open writers for all formats
-    profile_writers = output_manager.open_writers("profiles")
-    oneway_distance_writers = output_manager.open_writers("1d")
+    comparison_evaluation_fns = {
+        "vi_mi": lambda ptn1, ptn2: ptn1.vi_mutual_information(ptn2),
+        "vi_joint_entropy": lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2),
+        "vi_distance": lambda ptn1, ptn2: ptn1.vi_distance(ptn2),
+        "vi_normalized_kraskov": lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2),
+        "hamming_loss": lambda ptn1, ptn2: ptn1.hamming_loss(ptn2),
+        "ahrens_match_ratio": lambda ptn1, ptn2: ptn1.ahrens_match_ratio(ptn2),
+    }
+
+    # Initialize output files for each format
+    output_files = {}
+    for fmt in output_formats:
+        profiles_path = runtime_context.compose_output_path(subtitle=f"profiles.{fmt}")
+        distances1d_path = runtime_context.compose_output_path(subtitle=f"1d.{fmt}")
+        distances2d_path = runtime_context.compose_output_path(subtitle=f"distances.{fmt}")
+
+        output_files[fmt] = {
+            "profiles": open(profiles_path, "w"),
+            "1d": open(distances1d_path, "w"),
+            "distances": distances2d_path,  # Path for final output
+        }
+        runtime_context.output_tracker[f"profiles.{fmt}"] = str(profiles_path)
+        runtime_context.output_tracker[f"1d.{fmt}"] = str(distances1d_path)
+        runtime_context.output_tracker[f"distances.{fmt}"] = str(distances2d_path)
 
     progress_bar = progress.Progress(
         progress.TextColumn("({task.fields[memory_usage]} MB)"),
@@ -307,15 +226,6 @@ def compare_partitions(
     )
 
     with progress_bar:
-        comparison_evaluation_fns = {
-            "vi_mi": lambda ptn1, ptn2: ptn1.vi_mutual_information(ptn2),
-            "vi_joint_entropy": lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2),
-            "vi_distance": lambda ptn1, ptn2: ptn1.vi_distance(ptn2),
-            "vi_normalized_kraskov": lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2),
-            "hamming_loss": lambda ptn1, ptn2: ptn1.hamming_loss(ptn2),
-            "ahrens_match_ratio": lambda ptn1, ptn2: ptn1.ahrens_match_ratio(ptn2),
-        }
-
         task1 = progress_bar.add_task(
             "Comparing ...", total=n_expected_cmps, memory_usage=0
         )
@@ -329,7 +239,19 @@ def compare_partitions(
             }
             if ptn1.metadata_d:
                 profile_d.update(ptn1.metadata_d)
-            output_manager.write_data(profile_writers, profile_d)
+
+            # Write profile data in all formats
+            for fmt in output_formats:
+                if fmt == "json":
+                    json.dump(profile_d, output_files[fmt]["profiles"])
+                    output_files[fmt]["profiles"].write("\n")
+                else:
+                    if not hasattr(output_files[fmt]["profiles"], "header_written"):
+                        header = ",".join(profile_d.keys())
+                        output_files[fmt]["profiles"].write(header + "\n")
+                        output_files[fmt]["profiles"].header_written = True
+                    values = ",".join(str(v) for v in profile_d.values())
+                    output_files[fmt]["profiles"].write(values + "\n")
 
             ptn1_metadata = {}
             for k, v in ptn1.metadata_d.items():
@@ -366,38 +288,39 @@ def compare_partitions(
                 for value_fieldname, value_fn in comparison_evaluation_fns.items():
                     comparison_d[value_fieldname] = value_fn(ptn1, ptn2)
 
-                output_manager.write_data(oneway_distance_writers, comparison_d)
+                # Write comparison data in all formats
+                for fmt in output_formats:
+                    if fmt == "json":
+                        json.dump(comparison_d, output_files[fmt]["1d"])
+                        output_files[fmt]["1d"].write("\n")
+                    else:
+                        if not hasattr(output_files[fmt]["1d"], "header_written"):
+                            header = ",".join(comparison_d.keys())
+                            output_files[fmt]["1d"].write(header + "\n")
+                            output_files[fmt]["1d"].header_written = True
+                        values = ",".join(str(v) for v in comparison_d.values())
+                        output_files[fmt]["1d"].write(values + "\n")
 
     runtime_context.logger.info("Comparison completed")
-    output_manager.close_writers(profile_writers)
-    output_manager.close_writers(oneway_distance_writers)
 
-    # Handle two-way distances for each format
-    twoway_distance_writers = output_manager.open_writers("distances")
-
+    # Close intermediate files
     for fmt in output_formats:
-        format_config = format_registry.get_format(fmt)
+        output_files[fmt]["profiles"].close()
+        output_files[fmt]["1d"].close()
+
+    # Create final distance files for each format
+    for fmt in output_formats:
         df = create_full_profile_distance_df(
-            profiles_path=profile_writers[fmt].path,
-            distances_path=oneway_distance_writers[fmt].path,
+            profiles_path=runtime_context.output_tracker[f"profiles.{fmt}"],
+            distances_path=runtime_context.output_tracker[f"1d.{fmt}"],
+            merged_path=output_files[fmt]["distances"],
             export_distance_columns=list(comparison_evaluation_fns.keys()),
             runtime_context=runtime_context,
             output_format=fmt,
-            format_registry=format_registry,
         )
 
-        if format_config.is_delimited:
-            for record in df.to_dict('records'):
-                twoway_distance_writers[fmt].write_d(record)
-        else:
-            df.to_json(twoway_distance_writers[fmt].file_handle, orient="records")
-    output_manager.close_writers(twoway_distance_writers)
-
 def main():
-    """Main entry point for the piikun-evaluate script."""
-    parser = argparse.ArgumentParser(
-        description="Evaluate and compare partitions with flexible output format support"
-    )
+    parser = argparse.ArgumentParser(description="Evaluate and compare partitions with flexible output format support")
 
     source_options = parser.add_argument_group("Source Options")
     source_options.add_argument(
