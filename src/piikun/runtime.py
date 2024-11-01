@@ -362,6 +362,12 @@ class DataStore:
         self.is_preamble_written = False
         self.configure(config_d)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
     def configure(self, config_d=None):
         if not config_d:
             config_d = {}
