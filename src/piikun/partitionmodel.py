@@ -241,6 +241,44 @@ class Partition:
                 Q.append(len(ptn2_subset) / other.n_elements)
         return jensenshannon(P, Q, base=self.log_base)
 
+    @functools.cache
+    def ahrens_match_ratio(self, other):
+        """
+        Calculate match ratio (Ahrens, 2006) between this partition and another
+        partition.
+
+        Match ratio = 2 * Nm / (Np + Nq) where:
+
+        - Nm is number of exact matches between subsets
+        - Np is number of subsets in this partition
+        - Nq is number of subsets in other partition
+
+        Args:
+            other: Another Partition instance to compare against
+
+        Returns:
+            float: Match ratio between 0 and 1
+        """
+        # Count exact matches
+        n_matches = 0
+        for subset1 in self._subsets:
+            for subset2 in other._subsets:
+                if subset1._elements == subset2._elements:
+                    n_matches += 1
+                    break
+
+        # Get total number of subsets in each partition
+        n_subsets_p = len(self._subsets)
+        n_subsets_q = len(other._subsets)
+
+        if n_subsets_p == 0 and n_subsets_q == 0:
+            return 1.0
+
+        # Calculate ratio
+        ratio = (2 * n_matches) / (n_subsets_p + n_subsets_q)
+
+        return ratio
+
 
     @functools.cache
     def hamming_loss(self, other):

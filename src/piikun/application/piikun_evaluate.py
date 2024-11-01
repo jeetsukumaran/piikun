@@ -69,11 +69,7 @@ def create_full_profile_distance_df(
         distances_columns = list(export_distance_columns)
     else:
         distances_columns = [
-            "vi_mi",
-            "vi_joint_entropy",
-            "vi_distance",
-            "vi_normalized_kraskov",
-            "hamming_loss",
+            key for key in distances_df.columns if not key.startswith("ptn")
         ]
     partition_keys = list(profiles_df["partition_id"])
     new_dataset = []
@@ -168,6 +164,7 @@ def compare_partitions(
             "vi_distance"          : lambda ptn1, ptn2: ptn1.vi_distance(ptn2),
             "vi_normalized_kraskov": lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2),
             "hamming_loss"         : lambda ptn1, ptn2: ptn1.hamming_loss(ptn2),
+            "ahrens_match_ratio"          : lambda ptn1, ptn2: ptn1.ahrens_match_ratio(ptn2),
         }
 
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
