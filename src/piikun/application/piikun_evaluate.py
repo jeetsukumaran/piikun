@@ -200,7 +200,8 @@ def compare_partitions(
     # Initialize output files for each format
     output_files = {}
     for fmt in output_formats:
-        profiles_path = runtime_context.compose_output_path(subtitle=f"profiles.{fmt}")
+        # profiles_path = runtime_context.compose_output_path(subtitle=f"profiles.{fmt}")
+        profiles_path = runtime_context.compose_output_path(subtitle="profiles", ext=fmt)
         distances1d_path = runtime_context.compose_output_path(subtitle=f"1d.{fmt}")
         distances2d_path = runtime_context.compose_output_path(subtitle=f"distances.{fmt}")
 
