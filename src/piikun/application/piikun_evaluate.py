@@ -66,7 +66,7 @@ def create_full_profile_distance_df(
             "label",
         ])]
     if export_distance_columns:
-        distance_columns = list(export_distance_columns)
+        distances_columns = list(export_distance_columns)
     else:
         distances_columns = [
             "vi_mi",
@@ -160,14 +160,17 @@ def compare_partitions(
         partition_oneway_distances,
         progress_bar,
     ):
+
+        ## TODO: allow client code to add/remove to this list
+        comparison_evaluation_fns = {
+            "vi_mi"                : lambda ptn1, ptn2: ptn1.vi_mutual_information(ptn2),
+            "vi_joint_entropy"     : lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2),
+            "vi_distance"          : lambda ptn1, ptn2: ptn1.vi_distance(ptn2),
+            "vi_normalized_kraskov": lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2),
+            "hamming_loss"         : lambda ptn1, ptn2: ptn1.hamming_loss(ptn2),
+        }
+
         task1 = progress_bar.add_task("Comparing ...", total=n_expected_cmps, memory_usage=0)
-        comparison_evaluation_fns = (
-            ("vi_mi", lambda ptn1, ptn2: ptn1.vi_mutual_information(ptn2)),
-            ("vi_joint_entropy", lambda ptn1, ptn2: ptn1.vi_joint_entropy(ptn2)),
-            ("vi_distance", lambda ptn1, ptn2: ptn1.vi_distance(ptn2)),
-            ("vi_normalized_kraskov", lambda ptn1, ptn2: ptn1.vi_normalized_kraskov(ptn2)),
-            ("hamming_loss", lambda ptn1, ptn2: ptn1.hamming_loss(ptn2)),
-        )
         for pkey1, ptn1 in partitions._partitions.items():
             profile_d = {
                 "partition_id": pkey1,
@@ -200,7 +203,7 @@ def compare_partitions(
                     comparison_d[f"ptn2_{k}"] = v
                 comparison_d["vi_entropy_ptn1"] = ptn1.vi_entropy()
                 comparison_d["vi_entropy_ptn2"] = ptn2.vi_entropy()
-                for value_fieldname, value_fn in comparison_evaluation_fns:
+                for value_fieldname, value_fn in comparison_evaluation_fns.items():
                     comparison_d[value_fieldname] = value_fn(ptn1, ptn2)
                 partition_oneway_distances.write(comparison_d)
     runtime_context.logger.info("Comparison completed")
@@ -213,6 +216,7 @@ def compare_partitions(
         profiles_path=partition_profile_store.path,
         distances_path=partition_oneway_distances.path,
         merged_path=partition_twoway_distances.path,
+        export_distance_columns=list(comparison_evaluation_fns.keys()),
         runtime_context=runtime_context,
     )
     partition_twoway_distances.close()
