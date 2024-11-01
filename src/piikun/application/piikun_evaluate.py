@@ -167,7 +167,8 @@ def create_full_profile_distance_df(
     if merged_path:
         format_config = format_registry.get_format(output_format)
         if output_format == "json":
-            df.to_json(merged_path, orient="records", lines=True)
+            df.to_json(merged_path, orient="records", lines=False)
+            df.to_json("DEBUG.json", orient="records", lines=False)
         elif format_config.is_delimited:
             df.to_csv(merged_path, sep=format_config.delimiter, index=False)
         if runtime_context:
