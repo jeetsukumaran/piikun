@@ -280,106 +280,104 @@ class Partition:
         return ratio
 
 
-    @functools.cache
-    def mirkin_metric(self, other):
-        """
-        Calculate the Hamming loss between two partitions.
-        Hamming loss measures the fraction of element pairs that are clustered
-        differently between the two partitions.
-        """
-        assert self._elements == other._elements
+    # @functools.cache
+    # def mirkin_metric(self, other):
+    #     """
+    #     The fraction of element pairs that are clustered differently between the two partitions.
+    #     """
+    #     assert self._elements == other._elements
 
-        total_pairs = 0
-        mismatched_pairs = 0
+    #     total_pairs = 0
+    #     mismatched_pairs = 0
 
-        # Get list of elements to ensure consistent ordering
-        elements = list(self._elements)
+    #     # Get list of elements to ensure consistent ordering
+    #     elements = list(self._elements)
 
-        # Create maps from elements to their subset indices
-        self_element_to_subset = {}
-        other_element_to_subset = {}
+    #     # Create maps from elements to their subset indices
+    #     self_element_to_subset = {}
+    #     other_element_to_subset = {}
 
-        for idx, subset in enumerate(self._subsets):
-            for element in subset._elements:
-                self_element_to_subset[element] = idx
+    #     for idx, subset in enumerate(self._subsets):
+    #         for element in subset._elements:
+    #             self_element_to_subset[element] = idx
 
-        for idx, subset in enumerate(other._subsets):
-            for element in subset._elements:
-                other_element_to_subset[element] = idx
+    #     for idx, subset in enumerate(other._subsets):
+    #         for element in subset._elements:
+    #             other_element_to_subset[element] = idx
 
-        # Compare all pairs of elements
-        for i in range(len(elements)):
-            for j in range(i + 1, len(elements)):
-                elem1, elem2 = elements[i], elements[j]
-                total_pairs += 1
+    #     # Compare all pairs of elements
+    #     for i in range(len(elements)):
+    #         for j in range(i + 1, len(elements)):
+    #             elem1, elem2 = elements[i], elements[j]
+    #             total_pairs += 1
 
-                # Check if elements are in same subset in both partitions
-                same_subset_self = (self_element_to_subset[elem1] == self_element_to_subset[elem2])
-                same_subset_other = (other_element_to_subset[elem1] == other_element_to_subset[elem2])
+    #             # Check if elements are in same subset in both partitions
+    #             same_subset_self = (self_element_to_subset[elem1] == self_element_to_subset[elem2])
+    #             same_subset_other = (other_element_to_subset[elem1] == other_element_to_subset[elem2])
 
-                if same_subset_self != same_subset_other:
-                    mismatched_pairs += 1
+    #             if same_subset_self != same_subset_other:
+    #                 mismatched_pairs += 1
 
-        return mismatched_pairs / total_pairs if total_pairs > 0 else 0.0
+    #     return mismatched_pairs / total_pairs if total_pairs > 0 else 0.0
 
-    @functools.cache
-    def misclassification_error_meila_heckerman(self, other):
-        """
-        Calculate the classification error between two partitions as defined by Meilă-Heckerman.
+    # @functools.cache
+    # def misclassification_error_meila_heckerman(self, other):
+    #     """
+    #     Calculate the classification error between two partitions as defined by Meilă-Heckerman.
 
-        H(Δ,Δ') = (1/n) ∑_{k,k'=match(k)} n_{kk'}
+    #     H(Δ,Δ') = (1/n) ∑_{k,k'=match(k)} n_{kk'}
 
-        where:
-        - n is total number of elements
-        - n_{kk'} is the number of elements in subset k that are placed in non-matching subset k'
-        - match(k) determines the best matching between subsets
-        """
-        assert self._elements == other._elements
+    #     where:
+    #     - n is total number of elementk
+    #     - n_{kk'} is the number of elements in subset k that are placed in non-matching subset k'
+    #     - match(k) determines the best matching between subsets
+    #     """
+    #     assert self._elements == other._elements
 
-        # Get total number of elements
-        n = len(self._elements)
+    #     # Get total number of elements
+    #     n = len(self._elements)
 
-        # Create contingency matrix
-        contingency = {}
-        for i, subset1 in enumerate(self._subsets):
-            for j, subset2 in enumerate(other._subsets):
-                intersection = subset1._elements.intersection(subset2._elements)
-                contingency[(i,j)] = len(intersection)
+    #     # Create contingency matrix
+    #     contingency = {}
+    #     for i, subset1 in enumerate(self._subsets):
+    #         for j, subset2 in enumerate(other._subsets):
+    #             intersection = subset1._elements.intersection(subset2._elements)
+    #             contingency[(i,j)] = len(intersection)
 
-        # Find optimal matching between subsets to minimize misclassifications
-        # Using greedy matching - for each subset in self, match to largest overlapping subset in other
-        matches = {}
-        used_other_subsets = set()
+    #     # Find optimal matching between subsets to minimize misclassifications
+    #     # Using greedy matching - for each subset in self, match to largest overlapping subset in other
+    #     matches = {}
+    #     used_other_subsets = set()
 
-        for i in range(len(self._subsets)):
-            best_overlap = -1
-            best_j = None
-            for j in range(len(other._subsets)):
-                if j not in used_other_subsets:
-                    overlap = contingency.get((i,j), 0)
-                    if overlap > best_overlap:
-                        best_overlap = overlap
-                        best_j = j
-            if best_j is not None:
-                matches[i] = best_j
-                used_other_subsets.add(best_j)
+    #     for i in range(len(self._subsets)):
+    #         best_overlap = -1
+    #         best_j = None
+    #         for j in range(len(other._subsets)):
+    #             if j not in used_other_subsets:
+    #                 overlap = contingency.get((i,j), 0)
+    #                 if overlap > best_overlap:
+    #                     best_overlap = overlap
+    #                     best_j = j
+    #         if best_j is not None:
+    #             matches[i] = best_j
+    #             used_other_subsets.add(best_j)
 
-        # Calculate misclassification count
-        misclassifications = 0
-        for i in range(len(self._subsets)):
-            matched_j = matches.get(i)
-            if matched_j is not None:
-                # Add elements not in matched subset
-                misclassifications += sum(contingency.get((i,j), 0)
-                                    for j in range(len(other._subsets))
-                                    if j != matched_j)
-            else:
-                # If no match found, all elements are misclassified
-                misclassifications += sum(contingency.get((i,j), 0)
-                                        for j in range(len(other._subsets)))
+    #     # Calculate misclassification count
+    #     misclassifications = 0
+    #     for i in range(len(self._subsets)):
+    #         matched_j = matches.get(i)
+    #         if matched_j is not None:
+    #             # Add elements not in matched subset
+    #             misclassifications += sum(contingency.get((i,j), 0)
+    #                                 for j in range(len(other._subsets))
+    #                                 if j != matched_j)
+    #         else:
+    #             # If no match found, all elements are misclassified
+    #             misclassifications += sum(contingency.get((i,j), 0)
+    #                                     for j in range(len(other._subsets)))
 
-        # Return normalized error
-        return misclassifications / n if n > 0 else 0.0
+    #     # Return normalized error
+    #     return misclassifications / n if n > 0 else 0.0
 
 
 class PartitionCollection:
