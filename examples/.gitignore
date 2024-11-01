@@ -1,7 +1,7 @@
 ## Set up for users to experiment with data
 # ignore all files in this directory
 /*
-# Expect for:
+# Except for:
 !.gitignore
 # Exclude all subdirectories
 # !/*/
