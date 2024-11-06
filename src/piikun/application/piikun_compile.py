@@ -51,7 +51,7 @@ def main():
     )
     source_options.add_argument(
         "-f",
-        "--format",
+        "--source-format",
         action="store",
         dest="source_format",
         default="piikun",
