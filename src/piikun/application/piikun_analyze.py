@@ -96,7 +96,7 @@ def main():
     )
     source_options.add_argument(
         "-f",
-        "--format",
+        "--source-format",
         action="store",
         dest="source_format",
         default="piikun",
@@ -165,7 +165,7 @@ def main():
     if is_run_compiler:
         cmd = [ "piikun-compile" ]
         if args.source_format:
-            cmd.append("--format")
+            cmd.append("--source-format")
             cmd.append(args.source_format)
         cmd.append("--merge")
         cmd.append("--print-artifact-paths")

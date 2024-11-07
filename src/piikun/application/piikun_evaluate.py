@@ -343,7 +343,7 @@ def main():
 
     output_options = parser.add_argument_group("Output Options")
     output_options.add_argument(
-        "--format",
+        "--output-format",
         action="append",
         choices=OutputFormatRegistry().supported_formats,
         default=None,
@@ -381,8 +381,8 @@ def main():
     args = parser.parse_args()
 
     # Set default format if none specified
-    if not args.format:
-        args.format = ["json"]
+    if not args.output_format:
+        args.output_format = ["json"]
 
     runtime_context = runtime.RuntimeContext()
     runtime_context.logger.info("Starting: [b]piikun-evaluate[/b]")
@@ -412,7 +412,7 @@ def main():
     compare_partitions(
         partitions=partitions,
         runtime_context=runtime_context,
-        output_formats=args.format,
+        output_formats=args.output_format,
     )
 
     if args.is_print_output_paths:

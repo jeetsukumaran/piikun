@@ -88,23 +88,23 @@ class PartitionCoordinator(utility.RuntimeContext):
     def read_partitions(
         self,
         src_paths,
-        data_format,
+        source_format,
         limit_records=None,
     ):
         yfn = None
-        if data_format == "bpp-a10":
+        if source_format == "bpp-a10":
             self.logger.log_critical("Unfortunately, score for this format is still under development.")
             sys.exit(1)
-        elif data_format == "bpp-a11":
+        elif source_format == "bpp-a11":
             yfn = self.parse_bpp_a11
-        elif data_format == "json-list":
+        elif source_format == "json-list":
             yfn = self.parse_json
-        elif data_format == "spart-xml":
+        elif source_format == "spart-xml":
             yfn = self.parse_spart_xml
-        elif data_format == "delineate" or not data_format:
+        elif source_format == "delineate" or not source_format:
             yfn = self.parse_delineate
         else:
-            raise ValueError(data_format)
+            raise ValueError(source_format)
         n_partitions_parsed = 0
         for src_idx, src_path in enumerate(src_paths):
             self.logger.log_info(
@@ -652,9 +652,9 @@ def main(args=None):
     )
     input_options.add_argument(
         "-f",
-        "--format",
+        "--source-format",
         action="store",
-        dest="data_format",
+        dest="source_format",
         default=None,
         choices=[
             "delineate",
@@ -740,18 +740,18 @@ def main(args=None):
         args.output_title = str(pathlib.Path(args.src_path[0]).stem)
     config_d = dict(vars(args))
     logger = logger_configuration_parser.get_logger(args_d=config_d)
-    data_format = config_d["data_format"]
+    source_format = config_d["source_format"]
     # bpp_control_file = config_d["bpp_control_file"]
     # if bpp_control_file:
     #     logger.log_info(f"Processing output generated under BPP control file: '{bpp_control_file}'")
-    #     if not data_format or data_format.lower() not in ["bpp-a11", "bpp1"]:
+    #     if not source_format or source_format.lower() not in ["bpp-a11", "bpp1"]:
     #         logger.log_error(
     #             f"BPP results analysis requires '--data-format=bpp-a10 or '--data-format=bpp-a11'",
     #             )
     #         sys.exit(1)
-    logger.log_info(f"Data source format: '{data_format}'")
-    if not data_format:
-        data_format = "delineate"
+    logger.log_info(f"Data source format: '{source_format}'")
+    if not source_format:
+        source_format = "delineate"
     if args.output_title is None:
         args.output_title = pathlib.Path(config_d["src_path"]).stem
     runtime_context = utility.RuntimeContext(
@@ -767,7 +767,7 @@ def main(args=None):
     )
     pc.read_partitions(
         src_paths=config_d["src_path"],
-        data_format=data_format,
+        source_format=source_format,
         limit_records=config_d["limit_partitions"],
     )
     df = pc.analyze_partitions()
