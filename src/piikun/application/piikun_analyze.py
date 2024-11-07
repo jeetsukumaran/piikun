@@ -183,7 +183,8 @@ def main():
         ))
         cmd.extend(source_paths)
         cp = execute_command(cmd, runtime_context)
-        source_paths = [cp.response_d["distances"]]
+        print(f"\n\n\n{cp.response_d}\n\n\n")
+        source_paths = [cp.response_d["distances.json"]]
 
     if is_run_visualizer:
         cmd = [ "piikun-visualize" ]
