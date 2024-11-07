@@ -65,7 +65,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 #### Compiling the Partitions: Extracting the Partition Data from the Species Delimitation Model Sources
 
 ``piikun-compile`` is a command-line program that parses and formats data about species delimitation models from various sources and concats them in a common ``.json``-formatted datastore.
-``piikun-compile`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--format`` options:
+``piikun-compile`` takes as its input a collection of partitions in one of the following data formats, specified using the ``-f`` or ``--source-format`` options:
 
 -   "``delineate``": [DELINEATE](https://github.com/jsukumaran/delineate) results
 
@@ -73,7 +73,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 
     ```bash
     $ piikun-compile -f delineate delineate-results.json
-    $ piikun-compile --format delineate delineate-results.json
+    $ piikun-compile --source-format delineate delineate-results.json
     ```
 
 -   "``bpp-a11``: BPP (A11 mode) format
@@ -82,7 +82,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 
     ```bash
     $ piikun-compile -f bpp-a11 output.txt
-    $ piikun-compile --format bpp-a11 output.txt
+    $ piikun-compile --source-format bpp-a11 output.txt
     ```
 
 -   "``spart-xml``": SPART-XML
@@ -91,7 +91,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 
     ```bash
     $ piikun-compile -f spart-xml data.xml
-    $ piikun-compile --format spart-xml data.xml
+    $ piikun-compile --source-format spart-xml data.xml
     ```
 
 - "``json-dict``": Generic JSON dictionary
@@ -100,7 +100,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 
     ```bash
     $ piikun-compile -f json-dict data.json
-    $ piikun-compile --format json-dict data.json
+    $ piikun-compile --source-format json-dict data.json
     ```
 
 - "``json-list``": Generic JSON list (of lists)
@@ -109,7 +109,7 @@ $ piikun-analyze -f delineate data/maddison-2020/lionepha-p090-hky.mcct-mean-age
 
     ```bash
     $ piikun-compile -f json-dict data.json
-    $ piikun-compile --format json-dict data.json
+    $ piikun-compile --source-format json-dict data.json
     ```
 
 The output file names and paths can be specified by using the ``-o``/``--output-title`` and ``-O``/``--output-directory`` options.
@@ -205,7 +205,7 @@ See ``--help`` for details on this and other options, such as setting the output
 
     ```bash
     $ piikun-evaluate \
-        --format delineate \
+        --source-format delineate \
         --output-title project42 \
         --output-directory analysis_dir \
         --limit-partitions 10 \
