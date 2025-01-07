@@ -11,6 +11,8 @@ The partition profiles report unitary information theoretic and other statistics
 
 The partition comparison tables, on the other hand, provide a range of bivariate statistics for every distinct pair of partitions, including the mutual information, joint entropy, etc., as well as a information theoretic distance statistics are true metrics on the space of species distribution models: the variance of information [@meila2007comparing] and the normalized joint variance of information distance [@vinh2010information].
 
+More details regarding the theory, metrics, and measures implemented in here can be found in [Sukumaran and Meila, 2024](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-024-05997-y).
+
 ## Installation
 
 ### Installing from the GitHub Repositories
@@ -325,7 +327,26 @@ For simpler structures, `piikun` also supports nested list formats. This is ofte
 Each nested list represents a partition structure, grouping populations or taxa for analysis.
 
 
+## Citation
 
+```bibtex
+@article{sukumaran2024piikun,
+  title = {Piikun: an information theoretic toolkit for analysis and visualization of species delimitation metric space},
+  shorttitle = {Piikun},
+  author = {Sukumaran, Jeet and Meila, Marina},
+  year = {2024},
+  month = dec,
+  journal = {BMC Bioinformatics},
+  volume = {25},
+  number = {1},
+  pages = {385},
+  issn = {1471-2105},
+  doi = {10.1186/s12859-024-05997-y},
+  url = {https://doi.org/10.1186/s12859-024-05997-y},
+  urldate = {2025-01-07},
+  abstract = {Existing software for comparison of species delimitation models do not provide a (true) metric or distance functions between species delimitation models, nor a way to compare these models in terms of relative clustering differences along a lattice of partitions.},
+}
+```
 
 
 
